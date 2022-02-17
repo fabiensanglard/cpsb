@@ -1,0 +1,908 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   version="1.1"
+   width="365.63623"
+   height="260.83643"
+   viewBox="0 0 365.63624 260.83643"
+   enable-background="new 0 0 320 527"
+   id="svg130"
+   sodipodi:docname="z-80.svg"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview132"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:snap-global="false"
+     inkscape:zoom="1.4159138"
+     inkscape:cx="143.72343"
+     inkscape:cy="106.64491"
+     inkscape:window-width="1920"
+     inkscape:window-height="1010"
+     inkscape:window-x="-6"
+     inkscape:window-y="-6"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg130"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <font
+     horiz-adv-x="1000"
+     id="font4"
+     horiz-origin-x="0"
+     horiz-origin-y="0"
+     vert-origin-x="512"
+     vert-origin-y="768"
+     vert-adv-y="1024">
+    <!-- Copyright 1987, 1988, 1990, 1991, 1995, 1998, 2001 , 2002Adobe Systems Incorporated. All Rights Reserved.  -->
+    <font-face
+       font-family="LetterGothicStd-Bold"
+       units-per-em="1000"
+       underline-position="-100"
+       underline-thickness="50"
+       id="font-face6" />
+    <missing-glyph
+       horiz-adv-x="600"
+       d="M50,0l500,0l0,700l-500,0M300,395l-170,255l340,0M330,350l170,255l0,-510M130,50l170,255l170,-255M100,605l170,-255l-170,-255z"
+       id="missing-glyph8" />
+    <glyph
+       unicode="A"
+       horiz-adv-x="600"
+       d="M301,780l-254,-780l81,0l64,212l219,0l64,-212l81,0M301,566l92,-291l-183,0z"
+       id="glyph10" />
+    <glyph
+       unicode="C"
+       horiz-adv-x="600"
+       d="M505,564C499,664 424,734 324,734C121,734 88,514 88,356C88,203 117,-14 315,-14C435,-14 506,59 514,176l-75,0C438,105 393,49 318,49C174,49 163,249 163,354C163,465 173,671 325,671C386,671 429,624 430,564z"
+       id="glyph12" />
+    <glyph
+       unicode="D"
+       horiz-adv-x="600"
+       d="M112,0l172,0C441,0 527,83 527,360C527,641 434,720 295,720l-183,0M187,657l90,0C373,657 452,636 452,360C452,92 383,63 279,63l-92,0z"
+       id="glyph14" />
+    <glyph
+       unicode="E"
+       horiz-adv-x="600"
+       d="M513,720l-374,0l0,-720l381,0l0,63l-306,0l0,275l215,0l0,63l-215,0l0,256l299,0z"
+       id="glyph16" />
+    <glyph
+       unicode="I"
+       horiz-adv-x="600"
+       d="M435,720l-270,0l0,-63l97,0l0,-594l-97,0l0,-63l270,0l0,63l-98,0l0,594l98,0z"
+       id="glyph18" />
+    <glyph
+       unicode="M"
+       horiz-adv-x="600"
+       d="M300,361l-151,359l-73,0l0,-720l75,0l0,546l2,2l147,-353l148,353l2,0l0,-548l75,0l0,720l-74,0z"
+       id="glyph20" />
+    <glyph
+       unicode="N"
+       horiz-adv-x="600"
+       d="M115,0l75,0l0,572l2,2l236,-581l71,0l0,727l-75,0l0,-538l-3,0l-219,538l-87,0z"
+       id="glyph22" />
+    <glyph
+       unicode="O"
+       horiz-adv-x="600"
+       d="M79,360C79,258 78,-14 300,-14C528,-14 521,264 521,360C521,494 510,734 300,734C179,734 79,661 79,360M300,49C150,49 154,278 154,360C154,402 140,671 300,671C456,671 446,426 446,360C446,99 375,49 300,49z"
+       id="glyph24" />
+    <glyph
+       unicode="Q"
+       horiz-adv-x="600"
+       d="M300,-14C333,-14 367,-6 396,10l50,-70l92,0l-88,114C512,124 522,227 522,360C522,432 536,734 300,734C179,734 78,662 78,360C78,268 72,-14 300,-14M153,360C153,390 136,671 300,671C376,671 447,616 447,360C447,124 388,49 300,49C225,49 153,104 153,360z"
+       id="glyph26" />
+    <glyph
+       unicode="R"
+       horiz-adv-x="600"
+       d="M131,0l75,0l0,298C242,299 278,299 314,300l175,-300l91,0l-194,317C486,374 514,442 514,516C514,558 498,720 318,720l-187,0M206,362l0,295l74,0C399,657 439,616 439,520C439,414 379,362 277,362z"
+       id="glyph28" />
+    <glyph
+       unicode="S"
+       horiz-adv-x="600"
+       d="M502,644C448,694 379,734 304,734C196,734 110,669 110,556C110,466 172,417 243,375l65,-39C435,260 439,240 439,182C439,105 377,49 302,49C233,49 177,93 142,149l-58,-46C140,31 209,-14 302,-14C428,-14 514,63 514,192C514,276 478,314 346,395l-57,35C192,489 185,523 185,561C185,627 237,671 301,671C363,671 413,629 457,590z"
+       id="glyph30" />
+    <glyph
+       unicode="T"
+       horiz-adv-x="600"
+       d="M541,720l-481,0l0,-63l201,0l0,-657l75,0l0,657l205,0z"
+       id="glyph32" />
+    <glyph
+       unicode="U"
+       horiz-adv-x="600"
+       d="M424,720l0,-522C424,117 392,49 300,49C242,49 175,85 175,189l0,531l-75,0l0,-491C100,30 222,-14 300,-14C397,-14 499,53 499,189l0,531z"
+       id="glyph34" />
+    <glyph
+       unicode="V"
+       horiz-adv-x="600"
+       d="M297,109l-2,0l-130,611l-82,0l160,-727l103,0l163,727l-83,0z"
+       id="glyph36" />
+    <glyph
+       unicode="W"
+       horiz-adv-x="600"
+       d="M297,519l-114,-361l-2,0l-38,562l-81,0l60,-727l83,0l92,312l91,-312l86,0l55,727l-81,0l-36,-562l-2,0z"
+       id="glyph38" />
+    <glyph
+       unicode="Y"
+       horiz-adv-x="600"
+       d="M282,394l-139,326l-83,0l184,-416l0,-304l75,0l0,304l184,416l-83,0z"
+       id="glyph40" />
+    <glyph
+       unicode="8"
+       horiz-adv-x="600"
+       d="M145,196C145,289 210,343 300,343C390,343 455,289 455,196C455,102 391,49 300,49C209,49 145,102 145,196M430,539C430,458 381,406 300,406C225,406 169,454 169,531C169,615 214,671 300,671C382,671 430,619 430,539M422,377C477,424 505,463 505,538C505,661 419,734 300,734C187,734 94,663 94,545C94,466 120,427 178,377C105,349 70,270 70,196C70,86 140,-14 300,-14C452,-14 530,79 530,196C530,270 495,349 422,377z"
+       id="glyph42" />
+    <glyph
+       unicode="5"
+       horiz-adv-x="600"
+       d="M460,720l-322,0l-30,-399l76,-15C212,352 250,388 307,388C362,388 430,336 430,215C430,139 385,49 299,49C236,49 185,95 158,149l-58,-43C145,38 208,-14 294,-14C426,-14 505,97 505,221C505,365 416,451 305,451C259,451 219,436 185,405l20,252l255,0z"
+       id="glyph44" />
+    <glyph
+       unicode="4"
+       horiz-adv-x="600"
+       d="M423,734l-97,0l-265,-499l0,-49l287,0l0,-186l75,0l0,186l103,0l0,63l-103,0M348,249l-201,0l199,383l2,0z"
+       id="glyph46" />
+    <glyph
+       unicode="9"
+       horiz-adv-x="600"
+       d="M163,486C163,572 200,671 301,671C388,671 425,578 425,504C425,415 367,324 286,324C196,324 163,408 163,486M97,30C137,5 184,-14 232,-14C375,-14 505,131 505,414C505,553 471,734 296,734C159,734 88,608 88,485C88,373 153,261 277,261C344,261 386,286 430,335C424,231 361,49 235,49C199,49 161,72 133,92z"
+       id="glyph48" />
+    <glyph
+       unicode="1"
+       horiz-adv-x="600"
+       d="M341,742l-216,-68l0,-57l141,43l0,-597l-135,0l0,-63l339,0l0,63l-129,0z"
+       id="glyph50" />
+    <glyph
+       unicode="("
+       horiz-adv-x="600"
+       d="M411,-29C293,56 250,192 250,332C250,472 293,608 411,692l-36,50C238,653 175,490 175,332C175,174 238,9 375,-78z"
+       id="glyph52" />
+    <glyph
+       unicode=")"
+       horiz-adv-x="600"
+       d="M189,692C307,608 350,471 350,332C350,192 307,55 189,-29l36,-49C362,10 425,174 425,332C425,490 362,653 225,742z"
+       id="glyph54" />
+    <glyph
+       unicode="."
+       horiz-adv-x="600"
+       d="M220,64C220,20 257,-14 301,-14C344,-14 381,20 381,64C381,108 344,141 301,141C258,141 220,108 220,64z"
+       id="glyph56" />
+    <glyph
+       unicode="7"
+       horiz-adv-x="600"
+       d="M93,720l0,-63l306,0l-264,-657l81,0l281,720z"
+       id="glyph58" />
+    <glyph
+       unicode="6"
+       horiz-adv-x="600"
+       d="M436,234C436,148 400,49 299,49C211,49 175,142 175,217C175,304 232,396 313,396C404,396 436,312 436,234M503,690C463,715 415,734 368,734C234,734 95,604 95,306C95,167 129,-14 304,-14C441,-14 511,112 511,235C511,347 447,459 323,459C256,459 213,434 170,386C175,489 239,671 365,671C405,671 436,649 467,628z"
+       id="glyph60" />
+    <glyph
+       unicode="/"
+       horiz-adv-x="600"
+       d="M187,-27l301,774l-75,0l-301,-774z"
+       id="glyph62" />
+    <glyph
+       unicode="3"
+       horiz-adv-x="600"
+       d="M248,354C354,364 438,307 438,192C438,103 375,49 288,49C210,49 166,94 136,162l-66,-39C120,40 184,-14 285,-14C415,-14 513,69 513,202C513,291 465,356 385,391C441,426 480,478 480,546C480,652 394,734 288,734C196,734 122,684 80,603l63,-36C167,620 218,671 280,671C347,671 405,623 405,552C405,466 329,413 248,417z"
+       id="glyph64" />
+    <glyph
+       unicode="2"
+       horiz-adv-x="600"
+       d="M175,63C179,155 223,213 288,272l52,47C413,385 501,452 501,560C501,669 426,734 320,734C191,734 121,643 114,521l75,0C193,599 231,671 319,671C387,671 426,626 426,559C426,478 335,405 278,357C165,260 100,190 100,32l0,-32l403,0l0,63z"
+       id="glyph66" />
+    <glyph
+       unicode="0"
+       horiz-adv-x="600"
+       d="M509,360C509,464 508,734 300,734C74,734 91,402 91,360C91,276 90,-14 300,-14C512,-14 509,260 509,360M166,360C166,428 158,671 300,671C372,671 434,615 434,360C434,96 366,49 300,49C164,49 166,268 166,360z"
+       id="glyph68" />
+  </font>
+  <font
+     horiz-adv-x="1000"
+     id="font70"
+     horiz-origin-x="0"
+     horiz-origin-y="0"
+     vert-origin-x="512"
+     vert-origin-y="768"
+     vert-adv-y="1024">
+    <!-- Copyright 1987, 1990, 1991, 1995, 1998, 2001 , 2002Adobe Systems Incorporated. All Rights Reserved.  -->
+    <font-face
+       font-family="LetterGothicStd"
+       units-per-em="1000"
+       underline-position="-100"
+       underline-thickness="50"
+       id="font-face72" />
+    <missing-glyph
+       horiz-adv-x="600"
+       d="M50,0l500,0l0,700l-500,0M300,395l-170,255l340,0M330,350l170,255l0,-510M130,50l170,255l170,-255M100,605l170,-255l-170,-255z"
+       id="missing-glyph74" />
+    <glyph
+       unicode="5"
+       horiz-adv-x="600"
+       d="M449,720l-301,0l-29,-388l56,-11C204,368 247,403 306,403C359,403 447,359 447,215C447,115 388,29 299,29C236,29 180,71 150,124l-35,-27C157,36 215,-11 293,-11C422,-11 494,100 494,219C494,366 405,443 305,443C247,443 199,414 165,368l24,312l260,0z"
+       id="glyph76" />
+    <glyph
+       unicode="6"
+       horiz-adv-x="600"
+       d="M453,230C453,133 411,29 298,29C200,29 158,127 158,211C158,343 249,410 314,410C415,410 453,318 453,230M488,697C454,719 409,734 369,734C238,734 105,598 105,304C105,60 201,-11 297,-11C435,-11 500,106 500,230C500,337 443,450 323,450C243,450 190,404 152,339C145,463 213,694 367,694C404,694 436,678 465,657z"
+       id="glyph78" />
+    <glyph
+       unicode="2"
+       horiz-adv-x="600"
+       d="M157,40C159,142 182,194 332,328C404,392 490,461 490,566C490,670 424,734 320,734C202,734 136,652 127,540l47,0C180,624 228,694 319,694C395,694 443,644 443,569C443,476 350,403 286,347C136,216 110,157 110,0l383,0l0,40z"
+       id="glyph80" />
+    <glyph
+       unicode="0"
+       horiz-adv-x="600"
+       d="M498,360C498,436 496,527 471,599C444,676 387,734 300,734C209,734 152,672 126,591C104,524 102,431 102,360C102,284 104,192 129,121C156,44 214,-14 300,-14C390,-14 448,48 474,129C496,195 498,290 498,360M451,360C451,301 449,221 436,165C419,97 379,25 300,25C226,25 185,90 168,153C150,215 149,296 149,360C149,419 151,498 164,555C181,623 221,695 300,695C374,695 415,630 432,566C450,505 451,424 451,360z"
+       id="glyph82" />
+  </font>
+  <defs
+     id="defs84">
+    <marker
+       style="overflow:visible"
+       id="DotM"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path68459" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotL"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotL"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.8,0,0,0.8,5.92,0.8)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path68456" />
+    </marker>
+    <rect
+       x="351.23679"
+       y="14.270433"
+       width="152.37138"
+       height="354.45914"
+       id="rect5339" />
+  </defs>
+  <!-- PIN 1 -->
+  <!-- PIN 15 -->
+  <text
+     xml:space="preserve"
+     id="text5337"
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect5339);fill:#000000;fill-opacity:1;stroke:none"
+     transform="translate(350.92336,-19.384953)" />
+  <rect
+     x="47.092651"
+     y="-355.72803"
+     fill="#e1e1e1"
+     stroke="#8c8c8c"
+     width="160.33984"
+     height="18.614258"
+     id="rect88"
+     transform="rotate(90)" />
+  <rect
+     x="47.092651"
+     y="-331.46338"
+     fill="#e1e1e1"
+     stroke="#8c8c8c"
+     width="160.33984"
+     height="18.61377"
+     id="rect90"
+     transform="rotate(90)" />
+  <rect
+     x="46.54834"
+     y="-306.80518"
+     fill="#e1e1e1"
+     stroke="#8c8c8c"
+     width="160.82275"
+     height="18.67041"
+     id="rect92"
+     transform="rotate(90)" />
+  <rect
+     x="46.54834"
+     y="-282.46826"
+     fill="#e1e1e1"
+     stroke="#8c8c8c"
+     width="160.82275"
+     height="18.67041"
+     id="rect94"
+     transform="rotate(90)" />
+  <rect
+     x="46.54834"
+     y="-256.83936"
+     fill="#e1e1e1"
+     stroke="#8c8c8c"
+     width="160.82275"
+     height="18.615723"
+     id="rect96"
+     transform="rotate(90)" />
+  <rect
+     x="46.54834"
+     y="-232.57472"
+     fill="#e1e1e1"
+     stroke="#8c8c8c"
+     width="160.34131"
+     height="18.614746"
+     id="rect98"
+     transform="rotate(90)" />
+  <rect
+     x="46.54834"
+     y="-207.85304"
+     fill="#e1e1e1"
+     stroke="#8c8c8c"
+     width="160.33936"
+     height="18.614258"
+     id="rect100"
+     transform="rotate(90)" />
+  <rect
+     x="46.54834"
+     y="-182.92436"
+     fill="#e1e1e1"
+     stroke="#8c8c8c"
+     width="160.34131"
+     height="18.615723"
+     id="rect102"
+     transform="rotate(90)" />
+  <rect
+     x="46.54834"
+     y="-158.66017"
+     fill="#e1e1e1"
+     stroke="#8c8c8c"
+     width="160.34131"
+     height="18.614258"
+     id="rect104"
+     transform="rotate(90)" />
+  <rect
+     x="46.54834"
+     y="-133.93703"
+     fill="#e1e1e1"
+     stroke="#8c8c8c"
+     width="160.34131"
+     height="18.615723"
+     id="rect106"
+     transform="rotate(90)" />
+  <rect
+     x="46.54834"
+     y="-108.04689"
+     fill="#e1e1e1"
+     stroke="#8c8c8c"
+     width="160.34131"
+     height="18.613281"
+     id="rect108"
+     transform="rotate(90)" />
+  <rect
+     x="46.54834"
+     y="-83.785172"
+     fill="#e1e1e1"
+     stroke="#8c8c8c"
+     width="160.34131"
+     height="18.615234"
+     id="rect110"
+     transform="rotate(90)" />
+  <rect
+     x="46.003662"
+     y="-59.062511"
+     fill="#e1e1e1"
+     stroke="#8c8c8c"
+     width="160.81836"
+     height="18.614258"
+     id="rect112"
+     transform="rotate(90)" />
+  <rect
+     x="46.003662"
+     y="-34.797863"
+     fill="#e1e1e1"
+     stroke="#8c8c8c"
+     width="160.81836"
+     height="18.615234"
+     id="rect114"
+     transform="rotate(90)" />
+  <g
+     id="g130"
+     transform="rotate(90,199.82916,174.414)">
+    <path
+       fill="#2e2e2e"
+       d="m 160.94434,9.1069336 c -0.0937,4.6303714 -3.94141,8.3579104 -8.6875,8.3579104 -4.74414,0 -8.59375,-3.727539 -8.6875,-8.3579104 H 89.254395 V 373.74316 H 215.01465 V 9.1069336 Z"
+       id="path132" />
+  </g>
+  <g
+     id="g134"
+     transform="rotate(90,199.82916,174.414)">
+    <path
+       fill="none"
+       stroke="#000000"
+       d="m 160.94434,9.1069336 c -0.0937,4.6303714 -3.94141,8.3579104 -8.6875,8.3579104 -4.74414,0 -8.59375,-3.727539 -8.6875,-8.3579104 H 89.254395 V 373.74316 H 215.01465 V 9.1069336 Z"
+       id="path136" />
+  </g>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="12px"
+     id="textp01"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="343.16211"
+     y="58.595215">1</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="14px"
+     id="textdp01"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end"
+     x="-20.256836"
+     y="351.82178"
+     transform="rotate(-90)">D4</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="12px"
+     id="textp02"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="318.47214"
+     y="58.752686">2</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="14px"
+     id="textdp02"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end"
+     x="-20.256836"
+     y="327.43213"
+     transform="rotate(-90)">D5</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="12px"
+     id="textp03"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="293.84033"
+     y="58.528076">3</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="14px"
+     id="textdp03"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end"
+     x="-20.256836"
+     y="302.74512"
+     transform="rotate(-90)">D6</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="12px"
+     id="textp04"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="269.25391"
+     y="58.796753">4</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="14px"
+     id="textdp04"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end"
+     x="-20.256836"
+     y="278.55713"
+     transform="rotate(-90)">D7</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="12px"
+     id="textp05"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="243.33253"
+     y="58.947998">5</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="14px"
+     id="textdp05"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end"
+     x="-11.479491"
+     y="252.95186"
+     transform="rotate(-90)">GND</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="12px"
+     id="textp06"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="219.3672"
+     y="58.645386">6</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="14px"
+     id="textdp06"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end"
+     x="-20.43457"
+     y="228.72414"
+     transform="rotate(-90)">RD</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="12px"
+     id="textp07"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="194.66359"
+     y="58.671265">7</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="14px"
+     id="textdp07"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end"
+     x="-11.31543"
+     y="203.99171"
+     transform="rotate(-90)">TO0</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="12px"
+     id="textp08"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="169.54887"
+     y="59.025269">8</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="14px"
+     id="textdp08"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end"
+     x="-11.315308"
+     y="179.08012"
+     transform="rotate(-90)">TO1</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="12px"
+     id="textp09"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="145.50148"
+     y="58.956055">9</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="14px"
+     id="textdp09"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end"
+     x="-11.31543"
+     y="154.78419"
+     transform="rotate(-90)">TO2</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="12px"
+     id="textp10"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="116.90334"
+     y="58.662964">10</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="14px"
+     id="textdp10"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end"
+     x="-3.5839844"
+     y="130.53323"
+     transform="rotate(-90)">IORQ</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="12px"
+     id="textp11"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="91.875992"
+     y="57.750732">11</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="14px"
+     id="textdp11"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end"
+     x="-11.985352"
+     y="104.13478"
+     transform="rotate(-90)">IEO</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="12px"
+     id="textp12"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="66.874039"
+     y="58.785522">12</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="14px"
+     id="textdp12"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end"
+     x="-11.985352"
+     y="81.930679"
+     transform="rotate(-90)">INT</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="12px"
+     id="textp13"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="42.198254"
+     y="58.553955">13</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="14px"
+     id="textdp13"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end"
+     x="-11.985352"
+     y="55.167004"
+     transform="rotate(-90)">IEI</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="12px"
+     id="textp14"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="17.436535"
+     y="58.950073">14</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="14px"
+     id="textdp14"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end"
+     x="-20.208862"
+     y="32.73048"
+     transform="rotate(-90)">M1</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="12px"
+     id="textp15"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="17.027355"
+     y="203.23315">15</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="14px"
+     id="textdp15"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="-244.23999"
+     y="28.768566"
+     transform="rotate(-90)">CLK</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="12px"
+     id="textp16"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="41.591808"
+     y="203.11304">16</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="14px"
+     id="textdp16"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="-235.073"
+     y="53.20509"
+     transform="rotate(-90)">CE</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="12px"
+     id="textp17"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="66.307632"
+     y="203.27124">17</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="14px"
+     id="textdp17"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="-261.32983"
+     y="81.967789"
+     transform="rotate(-90)">RESET</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="12px"
+     id="textp18"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="90.520523"
+     y="203.29175">18</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="14px"
+     id="textdp18"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="-243.5564"
+     y="102.17677"
+     transform="rotate(-90)">CS0</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="12px"
+     id="textp19"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="116.56837"
+     y="203.23608">19</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="14px"
+     id="textdp19"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="-241.40991"
+     y="128.11523"
+     transform="rotate(-90)">CS1</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="12px"
+     id="textp20"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="141.51466"
+     y="202.89038">20</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="14px"
+     id="textdp20"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="-251.2605"
+     y="152.82051"
+     transform="rotate(-90)">TRG3</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="12px"
+     id="textp21"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="166.72563"
+     y="202.02612">21</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="14px"
+     id="textdp21"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="-251.60229"
+     y="177.1179"
+     transform="rotate(-90)">TRG2</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="12px"
+     id="textp22"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="190.86327"
+     y="202.88452">22</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="14px"
+     id="textdp22"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="-249.59937"
+     y="202.02217"
+     transform="rotate(-90)">TRG1</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="12px"
+     id="textp23"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="215.69337"
+     y="202.67944">23</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="14px"
+     id="textdp23"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="-251.74585"
+     y="226.76826"
+     transform="rotate(-90)">TRG0</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="12px"
+     id="textp24"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="239.62453"
+     y="203.0603">24</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="14px"
+     id="textdp24"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="-244.06909"
+     y="250.85156"
+     transform="rotate(-90)">+5V</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="12px"
+     id="textp25"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="265.24072"
+     y="202.9314">25</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="14px"
+     id="textdp25"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="-235.48315"
+     y="276.59961"
+     transform="rotate(-90)">D0</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="12px"
+     id="textp26"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="289.71436"
+     y="202.80835">26</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="14px"
+     id="textdp26"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="-233.33667"
+     y="300.9126"
+     transform="rotate(-90)">D1</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="12px"
+     id="textp27"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="314.39502"
+     y="202.96948">27</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="14px"
+     id="textdp27"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="-235.3396"
+     y="325.74414"
+     transform="rotate(-90)">D2</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="12px"
+     id="textp28"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="338.53564"
+     y="202.9314">28</text>
+  <text
+     font-family="'LetterGothicStd-Bold'"
+     font-size="14px"
+     id="textdp28"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono'"
+     x="-234.9978"
+     y="349.85742"
+     transform="rotate(-90)">D3</text>
+  <line
+     x1="117.46107"
+     y1="1.5625005e-07"
+     x2="117.46107"
+     y2="36"
+     id="line2575"
+     style="stroke:#000000" />
+  <line
+     x1="67.461044"
+     y1="12"
+     x2="67.461044"
+     y2="36"
+     id="line120"
+     style="stroke:#000000" />
+  <line
+     x1="231.46106"
+     y1="16"
+     x2="231.46106"
+     y2="36"
+     id="line122"
+     style="stroke:#000000" />
+  <line
+     x1="19.46104"
+     y1="16"
+     x2="19.46104"
+     y2="36"
+     id="line124"
+     style="stroke:#000000" />
+  <line
+     x1="40.46104"
+     y1="218.83643"
+     x2="40.46104"
+     y2="236.83643"
+     id="line126"
+     style="stroke:#000000" />
+  <line
+     x1="67.461044"
+     y1="260.83643"
+     x2="67.461044"
+     y2="218.83643"
+     id="line128"
+     style="stroke:#000000" />
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke:none"
+     x="138.53185"
+     y="140.68452"
+     id="text14207"><tspan
+       sodipodi:role="line"
+       id="tspan14205"
+       x="138.53185"
+       y="140.68452"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#ffffff;fill-opacity:1">Z-80</tspan></text>
+</svg>

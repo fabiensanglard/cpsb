@@ -1,0 +1,49 @@
+\chapter{Programming the CPS-1}
+
+In this chapter is described how to generate content for all the ROM making a title. 
+
+There are five sets of EPROM in total with the graphics assets to generate the sprites and tilemap contained in the GFX ROM, 68000 instructions to pilot the control system, Z-80 instructions for the audio sub-system, YM2151 instructions to generate the FM music and MSM6295 ROM where are stored the audio samples.
+
+DRAWING of ALL SYSTEMS
+
+Additionally are described the layout and communication protocol of the interfaces used by each system to communicate. Namely the GFX RAM where the control system talks with the gfx system and the two one byte latches where control send commands to the audio system.
+
+If CPS-1 developers used 100\% assembly to program the CPS-1 as a matter of code compactness, this chapter only uses a little bit of assembly when absolutely needed. The rest of the time, programming is explained using C language which is easier to read.
+
+
+
+\section{Interfaces}
+
+\section{Programming the audio system}
+Programming the Z-80 is a rewarding experience that takes a programmer down to the metal. The goal of the exercise if to produce a raw block of 64 KiB of instructions that will be burned into an EPROM from which the CPU will start execution at address \icode{0x0200}. To help in this endeavor, the compiler can place R/W variables and the stack in RAM which are mapped at \icode{0xD000} in processor address space. Needless to say there are no memory protection, process, or even thread here.
+
+\nbdraw{interrupt_snd}
+
+\section{Z-80 crt0}
+To speak in concrete terms, let's take the example of a seemingly innocuous C code declaring three global variables.
+
+\lstinputlisting[language=C]{src/code/variablesDeclaration.c}
+
+Can you guess which address the compiler will use for each of these three variables?
+
+The first easy case is varA which is uninitialized with read and write purposes. The compiler will naturally use address 0xD000. If the variable is read before it is written it will have whatever value the RAM had at this location. 
+
+The second easy case if varB which is a const read-only. It can safely be placed around \icode{0x0200} in ROM since it will only be read.
+
+But what should be done with varB? It can be read but it can also be written to so it should be in RAM (likely \icode{0xD001}) but it is initialized with a value coming from the ROM. An operating system would 
+
+\section{Audio assets for the audio system}
+
+\section{Programming the control system}
+
+\nbdraw{interrupt_ctrl}
+
+\section{68000 crt0}
+\pagebreak
+\simg{0.53}{x68000_XVI.png}
+
+\section{GFX assets for the gfx system}
+
+\pagebreak
+\img{smc-70_ad.jpg}
+\img{smc-70_capcom.png}

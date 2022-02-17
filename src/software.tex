@@ -1,0 +1,156 @@
+\chapter{Software} 
+Bla
+\section{Architecture}
+
+\section{RAM test}
+\img{tests.png}
+
+\section{Attact mode}
+
+Max and Scott
+
+\subsection{Fading out}
+
+\img{demo_sketch.jpg}
+
+\img{intro0.png}
+
+\img{intro1.png}
+
+\subsection{Spinning title}
+
+After the sky and the building fade to black, the Street Fighter 2 logo spins forward the screen. 
+
+It was a showcase of how many sprite tile nearly covering the whole screen the machine could do but if you look closer it was not easy to implement. As we saw in the hardware section, the CPS-B can flip tiles horizontally or vertically but it cannot rotate them. Looking at still of the animation reveals that sometimes things can be approximated if they move very fast.
+
+
+\simg{0.89}{intro1.png}
+
+\simg{0.89}{intro2.png}
+
+\simg{0.89}{intro3.png}
+
+\simg{0.89}{intro4.png}
+
+\subsection{The World Warrier}
+\begin{trivia}{XXXX}
+Story of how they found a typo just before shipping. Assets had been burned so they had to cover it with tiles.
+
+\end{trivia}
+\begin{figure}[H]
+\img{worldwarrier.png}
+% \caption*{Original characters}
+\end{figure}
+\subsection{Replays}
+
+\section{Animations}
+Health bar
+
+\section{Randomness}
+\subsection{Moving stones}
+\subsection{Red Hadouken}
+\subsection{1/512}
+
+There is a 1/512 chance for characters to block any attack without pressing in the opposite direction, even interrupting a move. It is known as 512 Guard.
+
+\section{Collisions}
+Bla
+\section{Inputs}
+Bla
+
+\section{Drawing life bars}
+If may not looks like a difficulty at first sight but the tile system is not a great tool do draw something at a granularity less than 16 pixels. 
+
+The life bar is such an item since upon losing life, a smooth animation much deplete energy one pixel column per frame. The trick is to use 15 tiles.
+
+TODO: Drawing explaining tile lifebar trick.
+
+
+\subsection{Why combos are possible}
+Bla
+\section{AI}
+Bla
+
+Disable hit
+
+\section{Damage calculation}
+Bla + lower health -> lower damage
+
+\section{Music}
+lower health -> faster song like in muaithai
+
+\section{Characters}
+
+\begin{figure}[H]
+\img{april_fool.jpg}
+\caption*{Original characters}
+\end{figure}
+
+
+\subsection{Ryu} 
+Background = Koryama Castle
+\subsection{Honda} Bla
+\subsection{Blanka} Bla
+\subsection{Guile} Bla
+
+Handcuffs. Dude almost quit. 
+
+\begin{q}{otaquest.com\cite{otaquest}}
+Mr. Eshiro is still a team member at Capcom, and he still talks about his work on Street Fighter II. He’s revealed stories like how the company held a contest for voicing the “hadouken!” shout, which went to the character designer of Guile, and how despite his status as a programmer, his affection for Guile drove him to mess with Guile’s hitbox, landing him in hot water with the director.
+\end{q}
+
+\subsection{Ken}
+Background = hardtime
+\subsection{Chun Li} 
+
+In 2003, in an interview for the book Street Fighter 15, Akira Yasuda revealed that his first idea of Chun-Li was similar in appearance to the character Tao from Genma Wars \url{http://rainbow-mika.blogspot.com/2010/04/street-fighter-ii.html}.
+
+\subsection{Zangief} 
+Background = hardtime
+Nishitani stated in Gamest's Street Fighter II Special Edition that Zangief owes his name to a Soviet wrestler, and although he never names him, it is easy to deduce that he refers to Victor Dzantemirovich Zangiev, born in 1962 in the former Soviet Socialist Republic from Kazakhstan. \url{http://rainbow-mika.blogspot.com/2010/04/street-fighter-ii.html}
+
+\subsection{Dhalsim} Bla
+
+Invisible glitch -> Teleportation?\cite{dalhsimGlitch}
+
+\subsection{Bison} 
+Background = Golden Nugget in Vegas
+\subsection{Vega} Bla
+\subsection{Sagat} 
+Background = Ayutthaya Buddha
+\subsection{Balrog}
+Background = Templo Ramayana
+
+\section{Bonus Stages}
+\subsection{Level 1}
+ The car bears an extremely strong resemblance to the first generation Toyota Celsior (Lexus LS400 outside of Japan) which was produced from 1990–1994.
+
+\subsection{Level 2}
+Barrels are the same as in Final Fight!
+\subsection{Level 3}
+Barrels are the same as in Final Fight!
+\section{Debug}
+Bla
+\subsection{Diagnostic} Bla
+\subsection{Sprite Explorer} Bla
+\section{No round lost credit}
+\url{https://youtu.be/RfDbnSpke3A?t=2702}
+\section{Projective impact slowdown}
+\section{Statistics screen}
+Characters Statistics
+If you enter the classic Konami code UP(x2), DOWN(x2), LEFT, RIGHT, LEFT, RIGHT, MP, LP on the Player-2 side during the demo fight in attract mode, it makes a bunch of zeros appear: -
+
+First line contains 0001 0002 0003 0004
+Second line contains 0005 0006 0007 0008 0009 0010 0011 0012
+0001 = No idea, probably some sort of 'experience points' for 1P side.
+0002 = The no. of coins put in in the left-hand slot.
+0003 = Same as 0001, but for 2nd player.
+0004 = Same as 0002, but for right-hand slot.
+0005 = No. of times Ryu has been used.
+0006 = No. of times Honda has been used.
+0007 = No. of times Blanka has been used
+0008 = No. of times Guile has been used.
+0009 = No. of times Ken has been used.
+0010 = No. of times Chun-Li has been used.
+0011 = No. of times Zangief has been used.
+0012 = No. of times Dhalsim has been used.

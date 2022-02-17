@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="2.9691854in"
+   height="2.2754631in"
+   viewBox="0 0 75.417311 57.796764"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   sodipodi:docname="YM2151.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     units="in"
+     inkscape:zoom="2.787668"
+     inkscape:cx="173.80118"
+     inkscape:cy="144.20656"
+     inkscape:window-width="1920"
+     inkscape:window-height="1010"
+     inkscape:window-x="-6"
+     inkscape:window-y="-6"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:snap-global="false" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-8.2228937,-1.1572488)">
+    <rect
+       x="8.6959467"
+       y="-26.760883"
+       fill="#e1e1e1"
+       stroke="#8c8c8c"
+       width="42.423637"
+       height="4.9250221"
+       id="rect104"
+       transform="rotate(90)"
+       style="stroke-width:0.264583" />
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.175px"
+       id="textp09"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+       x="22.750145"
+       y="11.978822">22</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.70417px"
+       id="textdp09"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
+       x="-1.0161719"
+       y="25.567831"
+       transform="rotate(-90)">+5V</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.175px"
+       id="textp20"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+       x="23.282803"
+       y="50.061443">3</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.70417px"
+       id="textdp20"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
+       x="-52.431923"
+       y="25.463804"
+       transform="rotate(-90)">IC</text>
+    <rect
+       x="8.6959467"
+       y="-14.293451"
+       fill="#e1e1e1"
+       stroke="#8c8c8c"
+       width="42.423637"
+       height="4.9250221"
+       id="rect104-6"
+       transform="rotate(90)"
+       style="stroke-width:0.264583" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.564999"
+       id="rect71101"
+       width="4.4784584"
+       height="7.5691676"
+       x="8.2228937"
+       y="25.44146" />
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.175px"
+       id="textp09-7"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+       x="10.282714"
+       y="11.978822">24</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.70417px"
+       id="textdp09-5"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
+       x="-1.1065063"
+       y="13.495338"
+       transform="rotate(-90)">CLK</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.70417px"
+       id="textdp20-5"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
+       x="-52.46629"
+       y="12.996372"
+       transform="rotate(-90)">GND</text>
+    <rect
+       x="8.6959467"
+       y="-20.527166"
+       fill="#e1e1e1"
+       stroke="#8c8c8c"
+       width="42.423637"
+       height="4.9250221"
+       id="rect104-2"
+       transform="rotate(90)"
+       style="stroke-width:0.264583" />
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.175px"
+       id="textp09-9"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+       x="16.516428"
+       y="11.978822">23</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.70417px"
+       id="textdp09-1"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
+       x="-3.3547907"
+       y="19.334114"
+       transform="rotate(-90)">e1</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.175px"
+       id="textp20-2"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+       x="17.049086"
+       y="50.061443">2</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.70417px"
+       id="textdp20-7"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
+       x="-52.516933"
+       y="19.230087"
+       transform="rotate(-90)">IRQ</text>
+    <rect
+       x="8.6959467"
+       y="-32.994598"
+       fill="#e1e1e1"
+       stroke="#8c8c8c"
+       width="42.423637"
+       height="4.9250221"
+       id="rect104-9"
+       transform="rotate(90)"
+       style="stroke-width:0.264583" />
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.175px"
+       id="textp09-3"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+       x="28.98386"
+       y="11.978822">21</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.70417px"
+       id="textdp09-6"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
+       x="-3.3240433"
+       y="31.801546"
+       transform="rotate(-90)">SO</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.175px"
+       id="textp20-0"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+       x="29.516518"
+       y="50.061443">4</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.70417px"
+       id="textdp20-6"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
+       x="-52.379475"
+       y="31.697519"
+       transform="rotate(-90)">A0</text>
+    <rect
+       x="8.6959467"
+       y="-39.228313"
+       fill="#e1e1e1"
+       stroke="#8c8c8c"
+       width="42.423637"
+       height="4.9250221"
+       id="rect104-61"
+       transform="rotate(90)"
+       style="stroke-width:0.264583" />
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.175px"
+       id="textp09-8"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+       x="35.217575"
+       y="11.978822">20</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.70417px"
+       id="textdp09-7"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
+       x="-1.1011797"
+       y="38.035263"
+       transform="rotate(-90)">SH1</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.175px"
+       id="textp20-9"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+       x="35.750233"
+       y="50.061443">5</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.70417px"
+       id="textdp20-2"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
+       x="-52.469906"
+       y="37.931236"
+       transform="rotate(-90)">WR</text>
+    <rect
+       x="8.6959467"
+       y="-45.462029"
+       fill="#e1e1e1"
+       stroke="#8c8c8c"
+       width="42.423637"
+       height="4.9250221"
+       id="rect104-3"
+       transform="rotate(90)"
+       style="stroke-width:0.264583" />
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.175px"
+       id="textp09-75"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+       x="41.45129"
+       y="11.978822">19</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.70417px"
+       id="textdp09-9"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
+       x="-1.1011797"
+       y="44.268974"
+       transform="rotate(-90)">SH2</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.175px"
+       id="textp20-22"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+       x="41.983948"
+       y="50.061443">6</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.70417px"
+       id="textdp20-8"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
+       x="-52.46629"
+       y="44.164948"
+       transform="rotate(-90)">RD</text>
+    <rect
+       x="8.6959467"
+       y="-57.929459"
+       fill="#e1e1e1"
+       stroke="#8c8c8c"
+       width="42.423637"
+       height="4.9250221"
+       id="rect104-7"
+       transform="rotate(90)"
+       style="stroke-width:0.264583" />
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.175px"
+       id="textp09-36"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+       x="53.91872"
+       y="11.978822">17</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.70417px"
+       id="textdp09-12"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
+       x="-3.3909645"
+       y="56.736408"
+       transform="rotate(-90)">D6</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.175px"
+       id="textp20-93"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+       x="54.451378"
+       y="50.061443">8</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.70417px"
+       id="textdp20-1"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
+       x="-51.81155"
+       y="56.632381"
+       transform="rotate(-90)">CT1</text>
+    <rect
+       x="8.6959467"
+       y="-51.695744"
+       fill="#e1e1e1"
+       stroke="#8c8c8c"
+       width="42.423637"
+       height="4.9250221"
+       id="rect104-78"
+       transform="rotate(90)"
+       style="stroke-width:0.264583" />
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.175px"
+       id="textp09-4"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+       x="47.685005"
+       y="11.978822">18</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.70417px"
+       id="textdp09-50"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
+       x="-3.3909645"
+       y="50.502693"
+       transform="rotate(-90)">D7</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.175px"
+       id="textp20-36"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+       x="47.688496"
+       y="50.061443">7</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.70417px"
+       id="textdp20-10"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
+       x="-52.453629"
+       y="50.398666"
+       transform="rotate(-90)">CS</text>
+    <rect
+       x="8.6959467"
+       y="-64.163177"
+       fill="#e1e1e1"
+       stroke="#8c8c8c"
+       width="42.423637"
+       height="4.9250221"
+       id="rect104-20"
+       transform="rotate(90)"
+       style="stroke-width:0.264583" />
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.175px"
+       id="textp09-6"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+       x="60.152439"
+       y="11.978822">16</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.70417px"
+       id="textdp09-15"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
+       x="-3.3909645"
+       y="62.970123"
+       transform="rotate(-90)">D5</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.175px"
+       id="textp20-5"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+       x="60.15593"
+       y="50.061443">9</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.70417px"
+       id="textdp20-4"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
+       x="-51.961842"
+       y="62.96101"
+       transform="rotate(-90)">CT2</text>
+    <rect
+       x="8.6959467"
+       y="-70.396889"
+       fill="#e1e1e1"
+       stroke="#8c8c8c"
+       width="42.423637"
+       height="4.9250221"
+       id="rect104-65"
+       transform="rotate(90)"
+       style="stroke-width:0.264583" />
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.175px"
+       id="textp09-69"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+       x="66.386154"
+       y="11.978822">15</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.70417px"
+       id="textdp09-3"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
+       x="-3.3909645"
+       y="69.203842"
+       transform="rotate(-90)">D4</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.175px"
+       id="textp20-7"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+       x="65.860474"
+       y="50.061443">10</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.70417px"
+       id="textdp20-45"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
+       x="-52.379475"
+       y="69.099815"
+       transform="rotate(-90)">D0</text>
+    <rect
+       x="8.6959476"
+       y="-82.864319"
+       fill="#e1e1e1"
+       stroke="#8c8c8c"
+       width="42.423637"
+       height="4.9250221"
+       id="rect104-4"
+       transform="rotate(90)"
+       style="stroke-width:0.264583" />
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.175px"
+       id="textp09-74"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+       x="78.853577"
+       y="11.978822">13</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.70417px"
+       id="textdp09-4"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
+       x="-3.3909645"
+       y="81.671265"
+       transform="rotate(-90)">D2</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.175px"
+       id="textp20-30"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+       x="78.327904"
+       y="50.061443">12</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.70417px"
+       id="textdp20-78"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
+       x="-51.81155"
+       y="81.567238"
+       transform="rotate(-90)">D1</text>
+    <rect
+       x="8.6959476"
+       y="-76.6306"
+       fill="#e1e1e1"
+       stroke="#8c8c8c"
+       width="42.423637"
+       height="4.9250221"
+       id="rect104-8"
+       transform="rotate(90)"
+       style="stroke-width:0.264583" />
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.175px"
+       id="textp09-43"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+       x="72.619865"
+       y="11.978822">14</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.70417px"
+       id="textdp09-14"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
+       x="-3.3909645"
+       y="75.437553"
+       transform="rotate(-90)">D3</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.175px"
+       id="textp20-92"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+       x="72.094185"
+       y="50.061443">11</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.70417px"
+       id="textdp20-0"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
+       x="-52.46629"
+       y="75.333527"
+       transform="rotate(-90)">GND</text>
+    <path
+       id="rect77"
+       style="fill:#313131;fill-opacity:1;stroke:#000000;stroke-width:2.13543"
+       d="M 33.71875,50.720703 V 100.46484 A 11.429526,11.429526 0 0 1 44.927734,111.89062 11.429526,11.429526 0 0 1 33.71875,123.3125 v 49.74805 H 315.05273 V 50.720703 Z"
+       transform="scale(0.26458333)" />
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.175px"
+       id="textp20-3"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+       x="10.815369"
+       y="50.061443">1</text>
+    <text
+       xml:space="preserve"
+       style="font-size:11.2889px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;stroke-width:0.264583"
+       x="26.951866"
+       y="32.731709"
+       id="text72750"><tspan
+         sodipodi:role="line"
+         id="tspan72748"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.2889px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
+         x="26.951866"
+         y="32.731709">YM2151</tspan></text>
+  </g>
+</svg>
