@@ -7,7 +7,7 @@
    viewBox="0 0 190.5 234.95001"
    version="1.1"
    id="svg5"
-   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   inkscape:version="1.1.2 (b8e25be833, 2022-02-05)"
    sodipodi:docname="cover.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -27,14 +27,18 @@
      units="in"
      width="7.5in"
      inkscape:zoom="0.91201185"
-     inkscape:cx="364.5786"
-     inkscape:cy="452.84499"
-     inkscape:window-width="1920"
-     inkscape:window-height="1010"
-     inkscape:window-x="-6"
-     inkscape:window-y="-6"
+     inkscape:cx="567.42684"
+     inkscape:cy="813.58592"
+     inkscape:window-width="1464"
+     inkscape:window-height="851"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="layer1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
   <defs
      id="defs2">
     <linearGradient
@@ -138,14 +142,15 @@
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1">
+     id="layer1"
+     transform="translate(-0.98828572,0.40104347)">
     <rect
-       style="fill:#000000;stroke:none;stroke-width:0.846667;fill-opacity:1"
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.84994"
        id="rect880"
-       width="191.23329"
-       height="234.71785"
-       x="0.98828572"
-       y="0.98828572" />
+       width="191.54268"
+       height="236.15482"
+       x="0.45452955"
+       y="-0.98355246" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:25.4px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583"
@@ -160,7 +165,7 @@
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:25.4px;font-family:'FONTSPRING DEMO - Zaius Regular';-inkscape-font-specification:'FONTSPRING DEMO - Zaius Regular, ';fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
          x="17.310186"
-         y="96.936752"
+         y="96.23661"
          id="tspan2330" /></text>
     <text
        xml:space="preserve"
