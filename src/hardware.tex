@@ -1156,10 +1156,7 @@ The tilemap rasterize outputs directly to the video system but the sprite layer 
 
 The issue is visible on the next drawing. On frame 1, the scrolls of frame 1 are displayed. On frame 2, the scrolls of frame 2 are displayed but along with the sprite from frame 1. On frame3, the scrolls of frame 3 are displayed but along with the sprite from frame 2. 
 
-\begin{figure}[H]
-\nbimg{latency.png}
-\caption*{Backgrounds and Sprites are out of sync. Always.}
-\end{figure}
+\nbdraw{latency}
 
 \begin{trivia}
 The sync issue is particularly noticeable in Final Fight level 2. The subway wagon moves up and down to simulate rails but inside the handles on the ceiling and characters appears to lag behind.
@@ -1268,7 +1265,6 @@ This design allows RAM and SAM to be accessed simultaneously (although this neve
 
 \pagebreak
 
-\red{Why so much VRAM? You only need two framebuffer with palette data but there is almost 150 KiB too much there. Could it have been a provision for future improvements?}
 
 \red{Why so much VRAM? You only need two framebuffer with palette data but there is almost 150 KiB too much there. Could it have been a provision for future improvements?}
 
