@@ -1,3 +1,3 @@
-char varA;
-const char varB = 1;
-char varC = 5; 
+char varA, varB;
+const char varC = 26, varD = 38;
+char varE = 5; 

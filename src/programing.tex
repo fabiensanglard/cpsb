@@ -9,18 +9,17 @@ Along the way must be decided of communication protocols for each interfaces use
 
 \pagebreak
 
-\section{Languages}
+\section{Languages used}
 Historially CPS-1 developers used assembly to program. It is well suited for the kind of low-level operations to perform but most importantly it is second to none when it comes to instructions compactness. As we will see ROM space is not as plentiful as it seems.
 
-Since the objective of this chapter is to explains how things works, it uses C for its greater readability and wider knowledge base accross programmer.
+Since the objective of this chapter is to explains how things works, it uses C for its greater readability and wider knowledge base accross programmer. A little bit of assembly is used, only to bootstrap the CPUs.
 
 If you ever decide to take your CPS-1 program to the next level, you will without a doubt have to go the assembly way. Just not today.
-
 
 \section{Down to the metal}
 In a programming world were developers are more and more removed from the hardware, programming the Z-80 or the M68000 is a joy.
 
-Here, there are no libraries, no frameworks, no dynamic linking, no syscalls, no virtual memory, no linker, and no loader.
+Here, there are no libraries, no frameworks, no dynamic linker, no syscalls, no virtual memory, no linker, and no loader.
 
 We are down to the metal which it a great opportunity to appreciate all the work operating systems do for us on a dialy basis.
 
@@ -28,15 +27,22 @@ An innocent three-line C program is enough to get a glimpse of what awaits us.
 
 \lstinputlisting[language=C]{src/code/variablesDeclaration.c}
 
-After compilation and linking, this program will result into a \icode{program.rom} which will be burned into an EPROM, itself mapped somewhere in the CPU address space.
+After compilation and linking, this program will result into a \icode{program.rom} which will be burned into EPROMs which are mapped somewhere in the CPU address space.
 
+\vfill
 DRAWING
 
 Let's take a look at what the linker will have done with these three lines.
- For \icode{varA} which is uninitalized, readable, and writable, the linker will have assigned the first location in RAM \icode{B}. Any code that reads or write \icode{varA} in our C program will be using address \icode{B}.
+
+Variable \icode{varA} which is uninitalized, readable, and writable. The linker will have assigned the first location in RAM \icode{B}. Any code that reads or write \icode{varA} in our C program will result in instructions addressing \icode{B}. Likewise, reference to \icode{varB} will result in instructions manipulating \icode{B+1}.
+
+Variable  \icode{varC} is initialized, readable, but NOT writable. The linker will have assigned offset \icode{0x0} in \icode{program.rom} and set it to the desired value (\icode{6}. Knowing that ROM mapping start at \icode{A}, any code refering to \icode{varC} result in instructions manipulating \icode{A}. Likewise, variable \icode{varD} is placed in \icode{program.rom} at offset 1, where value \icode{38} is stored. Instructions manipulates address \icode{A+1}.
+
+Finally we come to variable \icode{varE}. Since it is writable, the linker will have used the next available address in RAM and used \icode{B+2}. But how can the linker initialize that location since it can only write to file \icode{program.rom} which is not mapped there? The answer is that it cannot. The "copy-down" must be done when the CPU starts, before executing the \icode{main} function of our program is called. This bootstrap is called \icode{crt0}.
+\pagebreak
 
 \section{Programming the audio system}
-Programming the Z-80 is a rewarding experience that takes a programmer down to the metal. The goal of the exercise if to produce a raw block of 64 KiB of instructions that will be burned into an EPROM from which the CPU will start execution at address \icode{0x0200}. To help in this endeavor, the compiler can place R/W variables and the stack in RAM which are mapped at \icode{0xD000} in processor address space. Needless to say there are no memory protection, process, or even thread here.
+Programming the Z-80 is a rewarding experience that takes a programmer down to the metal. The goal of the exercise if to produce a raw block of 64 KiB of instructions that will be burned into EPROM from which the CPU will start execution at address \icode{0x0200}. To help in this endeavor, the compiler can place R/W variables and the stack in RAM which are mapped at \icode{0xD000} in processor address space. Needless to say there are no memory protection, process, or even thread here.
 
 \nbdraw{interrupt_snd}
 
