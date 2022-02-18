@@ -2,8 +2,7 @@
 
 To program a CPS-1 board mean to produce five sets of ROMs. These are the graphics assets holdring the sprites and tilemap contained in the GFX ROM, the 68000 instructions to pilot the control system, Z-80 ROM which contains not only instructions but also YM2151 bytecode to generate the FM music, and finally MSM6295 ROM where are stored the audio samples.
 
-\vfill
-DRAWING of ALL SYSTEMS
+\nbdraw{prog_systems}
 
 Along the way must be decided of communication protocols for each interfaces used by each system to communicate. Namely the GFX RAM where the control system talks with the gfx system and the two 1-byte latches where control send commands to the audio system.
 
@@ -29,8 +28,7 @@ An innocent three-line C program is enough to get a glimpse of what awaits us.
 
 After compilation and linking, this program will result into a \icode{program.rom} which will be burned into EPROMs which are mapped somewhere in the CPU address space.
 
-\vfill
-DRAWING
+\nbdraw{prog_rom_mapping}
 
 Let's take a look at what the linker will have done with these three lines.
 
