@@ -7,7 +7,7 @@
    viewBox="0 0 210.67374 82.960701"
    version="1.1"
    id="svg276032"
-   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   inkscape:version="1.1.2 (b8e25be833, 2022-02-05)"
    sodipodi:docname="vram_rw.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -28,13 +28,13 @@
      fit-margin-right="0"
      fit-margin-bottom="0"
      inkscape:zoom="0.6649945"
-     inkscape:cx="572.18519"
-     inkscape:cy="146.61776"
-     inkscape:window-width="1810"
-     inkscape:window-height="807"
-     inkscape:window-x="24"
-     inkscape:window-y="109"
-     inkscape:window-maximized="0"
+     inkscape:cx="563.16255"
+     inkscape:cy="146.61775"
+     inkscape:window-width="1280"
+     inkscape:window-height="736"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
      inkscape:snap-global="false" />
   <defs
@@ -184,7 +184,7 @@
        sodipodi:nodetypes="cc" />
     <path
        style="fill:none;stroke:#000000;stroke-width:3.065;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutS-3-4)"
-       d="m 110.72634,45.965305 v -7.79796"
+       d="m 110.72634,45.965305 0,-18.489242"
        id="path276579-0-4"
        sodipodi:nodetypes="cc" />
     <path
