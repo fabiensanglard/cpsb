@@ -6,7 +6,6 @@ To program a CPS-1 board mean to produce five sets of ROMs. These are the graphi
 
 Along the way must be decided of communication protocols for each interfaces used by each system to communicate. Namely the GFX RAM where the control system talks with the gfx system and the two 1-byte latches where control send commands to the audio system.
 
-\pagebreak
 
 \section{Languages used}
 Historially CPS-1 developers used assembly to program. It is well suited for the kind of low-level operations to perform but most importantly it is second to none when it comes to instructions compactness. As we will see ROM space is not as plentiful as it seems.
@@ -37,7 +36,6 @@ Variable \icode{varA} which is uninitalized, readable, and writable. The linker 
 Variable  \icode{varC} is initialized, readable, but NOT writable. The linker will have assigned offset \icode{0x0} in \icode{program.rom} and set it to the desired value (\icode{6}. Knowing that ROM mapping start at \icode{A}, any code refering to \icode{varC} result in instructions manipulating \icode{A}. Likewise, variable \icode{varD} is placed in \icode{program.rom} at offset 1, where value \icode{38} is stored. Instructions manipulates address \icode{A+1}.
 
 Finally we come to variable \icode{varE}. Since it is writable, the linker will have used the next available address in RAM and used \icode{B+2}. But how can the linker initialize that location since it can only write to file \icode{program.rom} which is not mapped there? The answer is that it cannot. The "copy-down" must be done when the CPU starts, before executing the \icode{main} function of our program is called. This bootstrap is called \icode{crt0}.
-\pagebreak
 
 \section{Programming the audio system}
 Programming the Z-80 is a rewarding experience that takes a programmer down to the metal. The goal of the exercise if to produce a raw block of 64 KiB of instructions that will be burned into EPROM from which the CPU will start execution at address \icode{0x0200}. To help in this endeavor, the compiler can place R/W variables and the stack in RAM which are mapped at \icode{0xD000} in processor address space. Needless to say there are no memory protection, process, or even thread here.
