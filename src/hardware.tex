@@ -25,13 +25,13 @@ To re-invent itself, Capcom did not build a whole new machine. Thanks to the Jap
 A JAMMA port centralizes everything a game needs to operate. The port features 28 pins on each sides to provide inputs, outputs, and power supply. Among the inputs are a four-direction joystick and three buttons per player, two coin sensors, start button, and service button. On the list of outputs, mono speakers lines and CRT screen controls.
 
  \begin{figure}[H]
-\img{jamma.png}
-\caption*{JAMMA solder side pins}
+\draw{jamma_t}
+\caption*{JAMMA parts side pins}
 \end{figure}
 
  \begin{figure}[H]
-\img{jamma.png}
-\caption*{JAMMA chip side pins}
+\draw{jamma_b}
+\caption*{JAMMA bottom side pins}
 \end{figure}
 
 The problem with a standard is that if it improves interoperability, it also hinders innovation. A few pins on the port are not reserved for a specific usage but they could not be used for extra features since a JAMMA port was plugged to a harness which was usually a tangled mess of wires that operators did not touch after initial setup.
@@ -1234,7 +1234,7 @@ Explain 19-bit palette index as layer + paletteID + colorID
 
 Because it is the muscle of the tandem, the CPS-B is put under heavy contribution. At all time, it must not only compose all inputs toward the video system by reading the last-rendered sprite framebuffer and the five other layers but it must also write the sprite framebuffer for the next frame.
 
-\nbimg{vram_rw.png}
+\nbdraw{vram_rw}
 
 To keep up with the bandwidth requirements, the VRAM and GFX ROM systems are specifically crafted with wide data lines.
 
