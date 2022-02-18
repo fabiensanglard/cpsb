@@ -391,7 +391,7 @@ In fact, the \icode{BUSRQ} and \icode{BUSAK} pins are not even connected.  Becau
 \end{trivia}
 
 \subsection{Z-80 "Work RAM" and ROM}
-Little RAM is need by the Z-80 since it forwards request from the latches to the OKY6295 and feeds registers  of the YM2151 for music. The RAM is is a single 2Ki x 8-bit \icode{CXK5816SP-15L}. The ROM is a single 64Ki x 8-bit \icode{D27C512} which is larger to store musics on top of Z-80 instructions. 
+Little RAM is need by the Z-80 since it forwards request from the latches to the OKY6295 and feeds registers  of the YM2151 for music. The RAM is is a single 2Ki x 8-bit \icode{CXK5816SP-15L}. The ROM is a single 64Ki x 8-bit \icode{27C512} which is larger to store musics on top of Z-80 instructions. 
 
 % Sound commands are forwarded as ID/channel/volume to the OKI6295. 
 
@@ -1275,9 +1275,9 @@ All memory systems are built with either ROM or SRAM. The VRAM system is the onl
 
 
 \subsubsection{GFX ROM}
-To keep up with the much higher storage requirements, the GFX ROM system is not designed like the others.
+To keep up with the much higher storage requirements, the GFX ROM system is not designed like the others. 
 
-Instead of the \icode{27C010} (128 KiB x 8-bit) chips, we find MB834200B-15 (512 Kib x 8-bit) with 4x times the capacity. To make up for the access time, the chips are arranged in a four-way interleave resulting in a 32-bit data path.
+Even a summary glance at the Board-B will reveal that the chips are not like the others. Where we find \icode{27C010} and \icode{27C512} everywhere else, the GFXROM is made if \icode{ MB834200B-15} (512 Ki x 8-bit). To make up for the rather slow access time (150ns), they are arranged in a four-way interleave resulting in a 32-bit data path.
 
 \pagebreak
 
