@@ -303,14 +303,16 @@ Here, the first four out PAL pins must be programmed as follows.
 The first pair of chips is mapped to addresses \icode{0x000000} while the second pair is mapped to \icode{0x40000}. With the same logic, two more pairs of \icode{27C010} are mapped at \icode{0x80000} and \icode{0xFFFFF} for a total of 1 MiB ROM.
 
 
+\subsection{Chip Enabled / Chip Select}
 
+The \icode{CE} / \icode{CS} line is absolutely crucial to build a memory map. You will find it in every chips studied in the rest of the book (except CPUs).
 
 \subsection{68000 Memory Map}
 
-All chips in the board are mapped at a static address in memory space. Placing all values in a table give a clear picture of how the control system masterminds the whole machine.
+All chips are mapped at a static address in memory space. A table give a clear picture of how Control masterminds everything.
 
-\begin{figure}[H]
-{
+% \begin{figure}[H]
+% {
 \begin{tabularx}{\textwidth}{rrrX}
 \toprule    
   \textbf{Start } & \textbf{End  } & \textbf{Size } & \textbf{Function } \\               
@@ -332,16 +334,10 @@ All chips in the board are mapped at a static address in memory space. Placing a
   \texttt{0xFF0000} & \texttt{0xFFFFFF} & 64 KiB & RAM \\
   \toprule    
 \end{tabularx}%
-}\caption*{Control system memory map.}
-\end{figure}
+% }\caption*{Control system memory map.}
+% \end{figure}
 
-Upon startup, the 68000 bootstrap and starts retrieving instructions from ROM. For read/write operations and maintaining is stack, it uses RAM (a.k.a Work RAM). 
-
-Game configuration is retrieved from DIP switches. The game start where an infinite loop polls coins sensors and players inputs and generates video and audio outputs in response. 
-
-For the video, the 68000 describes an image to be displayed via the GFXRAM then instructs the graphic ASICS of where to find that data. 
-
-For the audio, the 68000 issues simple commands to the Z-80 via two 1 byte latches using a protocol detailed later.
+Upon startup, the 68000 bootstrap and starts retrieving instructions from ROM. For read/write operations and maintaining is stack, it uses "Work RAM". Game configuration is retrieved from DIP switches. The game start where an infinite loop polls coins sensors and players inputs and generates video and audio outputs in response. For the video, the 68000 describes an image to be displayed via the GFXRAM then instructs the graphic ASICS of where to find that data. For the audio, the 68000 issues simple commands to the Z-80 via two 1 byte latches using a protocol detailed later.
   
 
 
