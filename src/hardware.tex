@@ -1244,7 +1244,7 @@ To keep up with the bandwidth requirements, the VRAM and GFX ROM systems are spe
 \subsubsection{VRAM}
 Not only the VRAM system is optimized from an architecture standing point via two completely independants blocks A and B, it also benefit from exceptionally performant components.
 
-A glance at the \icode{HM53461P-10} chips shows that there is not here than the "simple" data, address, and control we have seen so far.
+A quick glance at the \icode{HM53461P-10} pins shows that this chip does more than the simple data, address, and control we have seen so far.
 
 \sdraw{0.7}{HM53461P-10}
 
@@ -1259,7 +1259,9 @@ This design allows RAM and SAM to be accessed simultaneously (although this neve
 
  This is a perfect component for a system that needs to write a few values at varying locations (like when the CPS-B renders a sprite buffer) but read a very large amount sequentially (like when the CPS-B must compose color code towards the palette system).
 
-\pagebreak
+ Twelves \icode{HM53461P-10} are combined into six pairs, resulting in 384 Ki * 8-bit.
+
+\nbdraw{vram}
 
 
 \red{Why so much VRAM? You only need two framebuffer with palette data but there is almost 150 KiB too much there. Could it have been a provision for future improvements?}
@@ -1276,8 +1278,9 @@ To keep up with the much higher storage requirements, the GFX ROM system is not 
 Even a summary glance at the Board-B will reveal that the chips are not like the others. Where we find \icode{27C010} and \icode{27C512} everywhere else, the GFXROM is made if \icode{ MB834200B-15} (256 Ki x 16-bit). To make up for the rather slow access time (150ns), they are arranged in a four-way interleave resulting in a 64-bit data path.
 
 \icode{BYTE} pin allows to select H or L byte.
-\pagebreak
 
+
+\nbdraw{MB834200B-15}
 
 \section{Copy protection system}
 
