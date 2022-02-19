@@ -1259,28 +1259,30 @@ This design allows RAM and SAM to be accessed simultaneously (although this neve
 
  This is a perfect component for a system that needs to write a few values at varying locations (like when the CPS-B renders a sprite buffer) but read a very large amount sequentially (like when the CPS-B must compose color code towards the palette system).
 
- Twelves \icode{HM53461P-10} are combined into six pairs, resulting in 384 Ki * 8-bit.
+ On the Street Fighter II board, twelves \icode{HM53461P-10} are combined into six pairs, resulting in 384 Ki * 8-bit.
 
 \nbdraw{vram}
 
 
-\red{Why so much VRAM? You only need two framebuffer with palette data but there is almost 150 KiB too much there. Could it have been a provision for future improvements?}
+% \red{Why so much VRAM? You only need two framebuffer with palette data but there is almost 150 KiB too much there. Could it have been a provision for future improvements?}
 
 
-\begin{trivia}
-All memory systems are built with either ROM or SRAM. The VRAM system is the only one built with DRAM and therefore has a memory refresh mechanism.
-\end{trivia}
+% \begin{trivia}
+% All memory systems are built with either ROM or SRAM. The VRAM system is the only one built with DRAM and therefore has a memory refresh mechanism.
+% \end{trivia}
 
 
 \subsubsection{GFX ROM}
 To keep up with the much higher storage requirements, the GFX ROM system is not designed like the others. 
 
-Even a summary glance at the Board-B will reveal that the chips are not like the others. Where we find \icode{27C010} and \icode{27C512} everywhere else, the GFXROM is made if \icode{ MB834200B-15} (256 Ki x 16-bit). To make up for the rather slow access time (150ns), they are arranged in a four-way interleave resulting in a 64-bit data path.
-
-\icode{BYTE} pin allows to select H or L byte.
+While other chips on the board-B are \icode{27C010} and \icode{27C512}, the GFXROM is made of \icode{ MB834200B-15} (256 Ki x 16-bit). Because of their slow access time of 150ns, they are arranged in a two-way interleave resulting in two 16-bit "channels" data path.
 
 
-\nbdraw{MB834200B-15}
+\sdraw{0.8}{MB834200B-15}
+
+On the Street Fighter II board, twelves \icode{ MB834200B-15} are combined for a total of 6 MiB of GFX assets.
+
+\nbdraw{gfxroms}
 
 \section{Copy protection system}
 
