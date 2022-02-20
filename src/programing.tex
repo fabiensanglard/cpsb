@@ -27,6 +27,7 @@ After compilation and linking, this program will result into a \icode{program.ro
 
 \nbdraw{prog_rom_mapping}
 
+<<<<<<< HEAD
 
 Variable \icode{varA} which is uninitialized, readable, and writable. The linker will have assigned the first location in RAM \icode{B}. Any code that reads or write \icode{varA} in our C program will result in instructions addressing \icode{B}. Likewise, reference to \icode{varB} will result in instructions manipulating \icode{B+1}.
 
@@ -88,6 +89,9 @@ Framework CCPS is the CPS-1 SDK companion of this book. It is free and opensourc
 
 \lstinputlisting[language=Bash]{src/code/clone_ccps.sh}
 
+=======
+Variable \icode{varA} which is uninitalized, readable, and writable. The linker will have assigned the first location in RAM \icode{B}. Any code that reads or write \icode{varA} in our C program will result in instructions addressing \icode{B}. Likewise, reference to \icode{varB} will result in instructions manipulating \icode{B+1}.
+>>>>>>> b555ec9 (More programming)
 
 
 
