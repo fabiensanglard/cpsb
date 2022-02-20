@@ -66,6 +66,11 @@ In the protocol we described, only one latch is used. The second one is complete
 Leveraging interrupt turns our single threaded CPU into dual threaded system (except one has to restard from the beginning every time). On both side, is a circular buffers where value are staged	.
 
 The interrupt thread consumes the buffer and, depending on which side of the latches they are, either read or write one byte.
+
+\nbdraw{latches_intercafe}
+
+\nbdraw{latches_uml}
+
 \pagebreak
 
 
