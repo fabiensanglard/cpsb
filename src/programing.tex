@@ -27,8 +27,6 @@ After compilation and linking, this program will result into a \icode{program.ro
 
 \nbdraw{prog_rom_mapping}
 
-<<<<<<< HEAD
-
 Variable \icode{varA} which is uninitialized, readable, and writable. The linker will have assigned the first location in RAM \icode{B}. Any code that reads or write \icode{varA} in our C program will result in instructions addressing \icode{B}. Likewise, reference to \icode{varB} will result in instructions manipulating \icode{B+1}.
 
 Variable  \icode{varC} is initialized, readable, but NOT writable. The linker will have assigned offset \icode{0x0} in \icode{program.rom} and set it to the desired value (\icode{6}. Knowing that ROM mapping start at \icode{A}, any code referring to \icode{varC} result in instructions manipulating \icode{A}. Likewise, variable \icode{varD} is placed in \icode{program.rom} at offset 1, where value \icode{38} is stored. Instructions manipulates address \icode{A+1}.
@@ -88,12 +86,6 @@ Sound also needs to keep track of wall time in order to feed YM2151 music instru
 Framework CCPS is the CPS-1 SDK companion of this book. It is free and opensource. You can get it with the following command.
 
 \lstinputlisting[language=Bash]{src/code/clone_ccps.sh}
-
-=======
-Variable \icode{varA} which is uninitalized, readable, and writable. The linker will have assigned the first location in RAM \icode{B}. Any code that reads or write \icode{varA} in our C program will result in instructions addressing \icode{B}. Likewise, reference to \icode{varB} will result in instructions manipulating \icode{B+1}.
->>>>>>> b555ec9 (More programming)
-
-
 
 
 \chapter{Programming the CPS-1: Practice}
