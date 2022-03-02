@@ -160,6 +160,13 @@
    moredelim=**[is][\textbf]{@h}{@h},
 }
 
+\lstdefinelanguage{z80}{
+    morekeywords={call, ld, or, jr,ldr, str,ldir},
+    sensitive=false, % keywords are not case-sensitive
+    morecomment=[l]{;}, % l is for line comment
+ %   morestring=[b]" % defines that strings are enclosed in double quotes
+}%
+
 % KANJIS!
 \usepackage{CJKutf8}
 

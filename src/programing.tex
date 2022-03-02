@@ -88,32 +88,60 @@ Framework CCPS is the CPS-1 SDK companion of this book. It is free and opensourc
 \lstinputlisting[language=Bash]{src/code/clone_ccps.sh}
 
 
-\chapter{Programming the CPS-1: Practice}
 
 
-\section{Programming the audio system}
-Programming the Z-80 is a rewarding experience that takes a programmer down to the metal. The goal of the exercise if to produce a raw block of 64 KiB of instructions that will be burned into EPROM from which the CPU will start execution at address \icode{0x0200}. To help in this endeavor, the compiler can place R/W variables and the stack in RAM which are mapped at \icode{0xD000} in processor address space. Needless to say there are no memory protection, process, or even thread here.
+\chapter{Programming the Z-80}
+
+The goal of the exercise if to produce a block of 64 KiB that will be burned into a ROM. Inside will be placed not only the Z-80 instructions but also the music tracks.
+
+The responsabilities of the Z-80 are to retrieve 68000 commands from the latches and feed the two sound generating chips. For the music it means not only writing YM2151 intructions but also writing MSM6295 instructions for sound effects used on the track. For the sound effects, it only involves writing to the MSM6295 regisers 
+
+\subsection{Z-80 bootstrap (crt0)}
+
+A Z-80 starts in the simplest way by executing instruction at address \icode{0x0000}. Since the ROM will be mapped at \icode{0x0000-0x7FFF} in Z-80 address space there is no offset to factor in when writing the bootstrap. We write a small piece of assembly and request to have it placed at zero (\icode{.org 0x0000}) at features in \icode{crt0.s}.
+\pagebreak
+
+\lstinputlisting[language=z80]{src/code/z80/crt0.s}
+
+The first thing we request from the Z-80 is to jump to label \icode{init} which we placed at \icode{0x100}. This is done to leave space for the interrupt handling routine.
+
+\icode{init} is simple. We setup the stack pointer, enable interrupt mode 1 and request the first interrupt. Note that all symbols provided by C functiosn are prefixed with underscore (\icode{\_}) and studied later.
+
+\subsection{Z-80 interrupt}
+The Z-80 can work in interrupt modes 0, 1, and 2. Modes 0 and 2 are the most powerful and the most complex since they imply retrieving the id of the peripheral requesting the interrupt by reading a byte on the data bus. This mecanim allows for many devices to get the attention of the Z-80 but in the case of the CPS-1 it is overkill. 
+
+Only one peripheral generates an interrupt (the YM2151 timer). For this case the Z-80 has a perfect interrupt mode 1 where if the \icode{INT} line is asserted, the CPU jumps to address \icode{0x38}. This explains why we have placed our interrupt handler at \icode{.org 0x38}.
 
 
+\lstinputlisting[language=C]{src/code/z80/interrupts.c}
+
+Function \icode{schedInterrupt} is fairly trivial. We write to the YM2151 counter register a value \icode{XXXXX}. Since the music chip is running at 3.58 MHz this result in an interrupt generate 3,580,000 x XXX = 4ms later.
+
+With this bootstrap, we have effecively implemented the system we envisioned in the "Theory" chapter with two "threads" running concurrently (but not in parallel).
+
+\subsection{Initializing variables}
+Before we can jump to \icode{main} function, the bootstrap needs to initalize C variables. As we saw earlier, initialized writable variables use RAM address but intiial values are stored in ROM. These must be copied.
+
+\lstinputlisting[language=z80]{src/code/z80/initVar.s}
+
+\lstinputlisting[language=z80]{src/code/z80/copyvar.s}
 
 
-To speak in concrete terms, let's take the example of a seemingly innocuous C code declaring three global variables.
+No initialization of BSS
 
-\section{Z-80 crt0}
+Also explain \icode{s\_} and \icode{l\_}
 
+\subsection{Linker script}
 
+The last piece of the memory map puzzle is to write a linker script to have \icode{\_CODE} and \icode{\_DATA} areas in the right location.
 
-Can you guess which address the compiler will use for each of these three variables?
+\lstinputlisting[]{src/code/z80/main.lk}
 
-The first easy case is varA which is uninitialized with read and write purposes. The compiler will naturally use address 0xD000. If the variable is read before it is written it will have whatever value the RAM had at this location. 
+Compiling is done via XXXX. See \icode{ccps} in verbose mode to see individual commands issued to \icode{sdcc} compiler and \icode{sdldz80} linker.
 
-The second easy case if varB which is a const read-only. It can safely be placed around \icode{0x0200} in ROM since it will only be read.
+Trick: Always check out the linker .map file to make sure things are were you wanted them.
 
-But what should be done with varB? It can be read but it can also be written to so it should be in RAM (likely \icode{0xD001}) but it is initialized with a value coming from the ROM. An operating system would 
-
-\section{Audio assets for the audio system}
-
-\section{Programming the control system}
+\chapter{Programming the 68000}
 
 
 
