@@ -1,4 +1,4 @@
-\chapter{Programming the CPS-1: Theory}
+\chapter{Programming the CPS-1}
 
 To program a CPS-1 board mean to produce five sets of ROMs. These are the graphics assets holding the sprites and tilemap contained in the GFX ROM, the 68000 instructions to pilot the control system, Z-80 ROM which contains not only instructions but also YM2151 bytecode to generate the FM music, and finally MSM6295 ROM where are stored the audio samples.
 
@@ -40,7 +40,7 @@ This bootstrap, called \icode{crt0}, and other subtle mecanims are detailed in t
 
 \section{Interrupts}
 
-All APIs and interfaces of the machine are well defined. The GFX system expects commands via the GFX RAM and the 68000 bus arbitrates read/write operations. On the Audio side, the YM2151 exposes a multiplexed register and so does the MSM6295 both access are arbitrated by the memory map. The on area which is undefined is the interface between the Control and Audio systems.
+All APIs and interfaces of the machine are well defined. The GFX system expects commands via the GFX RAM and the 68000 bus arbitrates read/write operations. On the Audio side, the YM2151 exposes two registers (cmd \& data) and so does the MSM6295 both access are arbitrated by the memory map. The on area which is undefined is the interface between the Control and Audio systems.
 
 Try to think of a design yourself. You have two 1 byte latches, a 68000 running at 10MHz which can write in them but not read. On the other end is a Z-80, working at 3.579 MHz which can read the latches but not write them. How do you make these two CPUs talk to each other with 100\% reliability?
 
@@ -86,84 +86,3 @@ Sound also needs to keep track of wall time in order to feed YM2151 music instru
 Framework CCPS is the CPS-1 SDK companion of this book. It is free and opensource. You can get it with the following command.
 
 \lstinputlisting[language=Bash]{src/code/clone_ccps.sh}
-
-
-
-
-\chapter{Programming the Z-80}
-
-The goal of the exercise if to produce a block of 64 KiB that will be burned into a ROM. Inside will be placed not only the Z-80 instructions but also the music tracks.
-
-The responsabilities of the Z-80 are to retrieve 68000 commands from the latches and feed the two sound generating chips. For the music it means not only writing YM2151 intructions but also writing MSM6295 instructions for sound effects used on the track. For the sound effects, it only involves writing to the MSM6295 regisers 
-
-\subsection{Z-80 bootstrap (crt0)}
-
-A Z-80 starts in the simplest way by executing instruction at address \icode{0x0000}. Since the ROM will be mapped at \icode{0x0000-0x7FFF} in Z-80 address space there is no offset to factor in when writing the bootstrap. We write a small piece of assembly and request to have it placed at zero (\icode{.org 0x0000}) at features in \icode{crt0.s}.
-\pagebreak
-
-\lstinputlisting[language=z80]{src/code/z80/crt0.s}
-
-The first thing we request from the Z-80 is to jump to label \icode{init} which we placed at \icode{0x100}. This is done to leave space for the interrupt handling routine.
-
-\icode{init} is simple. We setup the stack pointer, enable interrupt mode 1 and request the first interrupt. Note that all symbols provided by C functiosn are prefixed with underscore (\icode{\_}) and studied later.
-
-\subsection{Z-80 interrupt}
-The Z-80 can work in interrupt modes 0, 1, and 2. Modes 0 and 2 are the most powerful and the most complex since they imply retrieving the id of the peripheral requesting the interrupt by reading a byte on the data bus. This mecanim allows for many devices to get the attention of the Z-80 but in the case of the CPS-1 it is overkill. 
-
-Only one peripheral generates an interrupt (the YM2151 timer). For this case the Z-80 has a perfect interrupt mode 1 where if the \icode{INT} line is asserted, the CPU jumps to address \icode{0x38}. This explains why we have placed our interrupt handler at \icode{.org 0x38}.
-
-
-\lstinputlisting[language=C]{src/code/z80/interrupts.c}
-
-Function \icode{schedInterrupt} is fairly trivial. We write to the YM2151 counter register a value \icode{XXXXX}. Since the music chip is running at 3.58 MHz this result in an interrupt generate 3,580,000 x XXX = 4ms later.
-
-With this bootstrap, we have effecively implemented the system we envisioned in the "Theory" chapter with two "threads" running concurrently (but not in parallel).
-
-\subsection{Initializing variables}
-Before we can jump to \icode{main} function, the bootstrap needs to initalize C variables. As we saw earlier, initialized writable variables use RAM address but intiial values are stored in ROM. These must be copied.
-
-\lstinputlisting[language=z80]{src/code/z80/initVar.s}
-
-\lstinputlisting[language=z80]{src/code/z80/copyvar.s}
-
-
-No initialization of BSS
-
-Also explain \icode{s\_} and \icode{l\_}
-
-\subsection{Linker script}
-
-The last piece of the memory map puzzle is to write a linker script to have \icode{\_CODE} and \icode{\_DATA} areas in the right location.
-
-\lstinputlisting[]{src/code/z80/main.lk}
-
-Compiling is done via XXXX. See \icode{ccps} in verbose mode to see individual commands issued to \icode{sdcc} compiler and \icode{sdldz80} linker.
-
-Trick: Always check out the linker .map file to make sure things are were you wanted them.
-
-\subsection{Sound Effects with MSM6295}
-Bla
-
-\subsection{Music with YM2151}
-Bla
-
-
-
-
-\chapter{Programming the 68000}
-
-
-
-\section{68000 crt0}
-
-\lstinputlisting[language={[Motorola68k]Assembler}]{src/code/68000/crt0.s}
-
-
-\pagebreak
-\simg{0.53}{x68000_XVI.png}
-
-\section{GFX assets for the gfx system}
-
-\pagebreak
-\img{smc-70_ad.jpg}
-\img{smc-70_capcom.png}

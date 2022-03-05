@@ -1,0 +1,84 @@
+\chapter{Programming Sounds}
+
+Making a CPS-1 generate sound involves programming the Z-80, producing samples and producing music tracks. Because these three parts are packaged into only two ROM sets, they are not completely straight forward to build. 
+
+ \begin{figure}[H]
+\sdraw{0.8}{sound_deps}
+\caption*{Three parts, two ROMS}
+\end{figure}
+
+
+Since both sound effects and music samples contribute to its content, the OKI ROM must be generated in two steps.
+
+This is considerably facilitated by the structure of the target ROM which features a small database. Leveraging it allows to have a first pass where audio samples are ingested by the build system to generate an incomplete OKI ROM. In a later pass, the music tracks are processed. The new samples are simply added to the database.
+
+\nbdraw{build_graph_sfx}
+
+The build graph involves three phases driven by three tools, three resource types and a myriad of intermediate artifacts. 
+
+At the very top, \icode{ccps\_sfx} expect artists to provide sound samples contained in \icode{.wav} files which are universally supported. This stage generates a partial OKI ROM and a \icode{.h} header file so the Z-80 code can reference samples with a simple ID.
+
+The second stage involves \icode{ccps\_mus}, the music track processor. It expects \icode{.vgm} (Video Game Music) as input since it contains raw 2151 instructions which are easy to convert. It output a finalized OKI ROM containing the sample used by the soundtrack and also a \icode{.c} C file including a custom bytecode containing YM2151 register values, timing, and OKI sample timing.
+
+Finally, the last stage relies on the Small Device C Compiler (SDCC) toolchain. All artifacts generated in the two previous stages are used as input on top of the programmer \icode{.c} files and the bootstrap \icode{crt0.s} assembled by \icode{sdasz80} assembler. All resulting relocatable object files \icode{.rel} are linked together via ssdc's linker \icode{sdldz80}. 
+
+
+\begin{trivia}
+These are a lot of step but if you use \icode{ccps} build system, it is all taken care of with one keystroke resulting in two ROM sets ready to go.
+\end{trivia}
+
+\subsection{Z-80 bootstrap (crt0)}
+
+A Z-80 starts in the simplest way by executing instruction at address \icode{0x0000}. Since the ROM will be mapped at \icode{0x0000-0x7FFF} in Z-80 address space there is no offset to factor in when writing the bootstrap. We write a small piece of assembly and request to have it placed at zero (\icode{.org 0x0000}) at features in \icode{crt0.s}.
+\pagebreak
+
+\lstinputlisting[language=z80]{src/code/z80/crt0.s}
+
+The first thing we request from the Z-80 is to jump to label \icode{init} which we placed at \icode{0x100}. This is done to leave space for the interrupt handling routine.
+
+\icode{init} is simple. We setup the stack pointer, enable interrupt mode 1 and request the first interrupt. Note that all symbols provided by C functiosn are prefixed with underscore (\icode{\_}) and studied later.
+
+\subsection{Z-80 interrupt}
+The Z-80 can work in interrupt modes 0, 1, and 2. Modes 0 and 2 are the most powerful and the most complex since they imply retrieving the id of the peripheral requesting the interrupt by reading a byte on the data bus. This mecanim allows for many devices to get the attention of the Z-80 but in the case of the CPS-1 it is overkill. 
+
+Only one peripheral generates an interrupt (the YM2151 timer). For this case the Z-80 has a perfect interrupt mode 1 where if the \icode{INT} line is asserted, the CPU jumps to address \icode{0x38}. This explains why we have placed our interrupt handler at \icode{.org 0x38}.
+
+
+\lstinputlisting[language=C]{src/code/z80/interrupts.c}
+
+In function \icode{schedInterrupt} we write to the YM2151 counter register a value \icode{XXXXX}. Since the music chip is running at 3.58 MHz this result in an interrupt generate 3,580,000 x XXX = 4ms later. Notice \icode{\_\_att} which allows to manually place variables.
+
+With this bootstrap, we have effecively implemented the system we envisioned in the "Theory" chapter with two "threads" running concurrently (but not in parallel).
+
+\subsection{Initializing variables}
+Before we can jump to \icode{main} function, the bootstrap needs to initalize C variables. As we saw earlier, initialized writable variables use RAM address but intiial values are stored in ROM. These must be copied.
+
+\lstinputlisting[language=z80]{src/code/z80/initVar.s}
+
+\lstinputlisting[language=z80]{src/code/z80/copyvar.s}
+ 
+
+No initialization of BSS
+
+Also explain \icode{s\_} and \icode{l\_}
+
+\subsection{Linker script}
+
+The last piece of the memory map puzzle is to write a linker script to have \icode{\_CODE} and \icode{\_DATA} areas in the right location.
+
+\lstinputlisting[]{src/code/z80/main.lk}
+
+Compiling is done via XXXX. See \icode{ccps} in verbose mode to see individual commands issued to \icode{sdcc} compiler and \icode{sdldz80} linker.
+
+Trick: Always check out the linker .map file to make sure things are were you wanted them.
+
+\subsection{Latches Circular buffer}
+
+Tell about variation in Z-80 driver. Final fight uses the same sound id whereas SF2 uses a translation layer.
+
+
+\subsection{Sound Effects with MSM6295}
+Bla
+
+\subsection{Music with YM2151}
+Bla
