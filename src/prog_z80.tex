@@ -27,6 +27,10 @@ Finally, the last stage relies on the Small Device C Compiler (SDCC) toolchain. 
 These are a lot of step but if you use \icode{ccps} build system, it is all taken care of with one keystroke resulting in two ROM sets ready to go.
 \end{trivia}
 
+\subsection{Processing WAV files}
+
+\subsection{Processing VGM files}
+
 \subsection{Z-80 bootstrap (crt0)}
 
 A Z-80 starts in the simplest way by executing instruction at address \icode{0x0000}. Since the ROM will be mapped at \icode{0x0000-0x7FFF} in Z-80 address space there is no offset to factor in when writing the bootstrap. We write a small piece of assembly and request to have it placed at zero (\icode{.org 0x0000}) at features in \icode{crt0.s}.
