@@ -28,31 +28,78 @@ These are a lot of step but if you use \icode{ccps} build system, it is all take
 \end{trivia}
 
 \subsection{Processing WAV files}
+Wav files are simple container with a header describing the content. Three pieces of information are needed to read the payload properly. Once the sampling frequency, bit per sample, and number of channel is known, the PCM can be accessed.
+
+A PCM values stream directly drive the physical location of the cone of a loud speaker over time. The higher the sampling rate, the more often the cone location is adjusted. The higher the sampling rate, the more accurate the cone placement is. And the more channel, the more cones can be driven separately.
+
+The input can be of any any combination of these attributes. Artists can produce CD quality (44KHz, 16-bit, stereo) if they want but as a preprocessing step the build system must transform it into 8-bit, mono, 7575Hz because it is the format we need to transform to 4-bit ADPCM the OKI ROM needs.
+
+\begin{trivia}
+7575 Hz is often the figure mentioned but observant programmers will have noticed a High/Low \icode{0xF006} location in the Sound system. This allows to switch the OKI from 7575Hz to 6060Hz. Although it is possible it considerably complicate the logistic to combine sampling rates. 
+\end{trivia}
+
+\subsubsection{ADPCM}
+ADPCM is a simple way to compress PCM. In an era where every 1 KiB of ROM was precious, ADPCM was just a vessel allowing 50\% space saving. Upon usage, it is be decompressed by the OKI into PCM to drive a speaker cone.
+ 
+ 
+
+If decompression is transparently done in hardware by the OKI at runtime, our build system must understand the format in order to perform the compression properly. 
+
+A first step towards understanding ADPCM is to study an intermediate called DPCM (Delta Modulation). Here, instead of encoding discrete values, the difference is recorded. It does not seem like much when expressed with a sequence of digits.
+
+\lstinputlisting{src/code/pcm-dpcm.c}
+
+However if difference between sample are small like in three occurences above, the bit stream can considerably lower bandwidth requirements thanks for variable length encoding. In best case scenario where values do not change, a single bit is necessary.
+
+\img{dpcm.png}
+/
+ADPCM is an improvement over DPCM. The idea is still to use knowledge of the signal in the past time to predict values in the future. This time, instead of always using a single paste value, the algorithm adapts depending on whether it sees small or large samples.
+
+
+
+Notice that encoding is involved whereas decoding is extremely simple.t
+
+\img{adpcm.png}
 
 \subsection{Processing VGM files}
+The VGM (Video Game Music) is a community effort originating from \icode{smspower.org} to create an audio file format able to support many legacy systems (SEGA consoles, MSX, Neo Geo, and PC) as well as Arcade hardware.
+
+The advantage of VGM in our use case is that it stores raw instructions for the target soundchips. In our case this means YM2151 instructions. All is needed to do in our toolchain is to parse the stream of bytecode and extract Y2151 instructions as well as timing metadata (to know how much to wait between instructions).
+
+VGM allows composers to mix samples in their tracks. Many chip are supported for sample playback and of course, OKI's MSM6295 is on the list. However this is not what our build system is built to use.
+
+The problem is that, at the time of the authoring of this toolchain, there are no tracker able to produce music featuring YM2151 instructions with MSMS6295 samples. The best tool available, DefleMask, produces VGM featuring YM2151 and SegaPCM via its "Arcade" profile.
+
+SegaPCM was a chip used by SEGA in their AM2 (Amusement Machine 2) from 1985 to 1991. It is superior in capabilities to the MSM6295 since it relies on 16-bit PCM, up to 32kHZ sampling, has more channels. and a larger address space.
+
+What all this means for artists to write CPS-1 musics is that they can use all capabilities of the YM2151 but must limit themselves to two channels for audio samples in order to leave two channel to play audio effects. 
+
+Upon building, \icode{ccps} extracts YM2151 instructions and converts PCM samples to ADPCM. These samples are added according to where the first pass left available space in the OKI ROM.
+
 
 \subsection{Z-80 bootstrap (crt0)}
 
-A Z-80 starts in the simplest way by executing instruction at address \icode{0x0000}. Since the ROM will be mapped at \icode{0x0000-0x7FFF} in Z-80 address space there is no offset to factor in when writing the bootstrap. We write a small piece of assembly and request to have it placed at zero (\icode{.org 0x0000}) at features in \icode{crt0.s}.
+With assets generation/building taken care of, it is finally time to write code for the Z-80. The first thing to take care of ist to write the \icode{crt0} (C Runtime 0) to setup the CPU before calling \icode{main}.
+
+The Z-80 starts in the simplest way by executing instruction at address \icode{0x0000}. Since te ROM is mapped at \icode{0x0000-0x7FFF} so there is no offset to factor in (0x0 ROM = 0x0 address space). The small piece of assembly placed at zero (\icode{.org 0x0000}) is referred to as \icode{crt0.s}.
 \pagebreak
 
 \lstinputlisting[language=z80]{src/code/z80/crt0.s}
 
 The first thing we request from the Z-80 is to jump to label \icode{init} which we placed at \icode{0x100}. This is done to leave space for the interrupt handling routine.
 
-\icode{init} is simple. We setup the stack pointer, enable interrupt mode 1 and request the first interrupt. Note that all symbols provided by C functiosn are prefixed with underscore (\icode{\_}) and studied later.
+Initialization in \icode{init} is simple. The stack pointer \icode{sp} is setup, Interrupts handling is enabled in mode 1 and a first interrupt is requested. Note that all symbols provided by C functions (prefixed with underscore \icode{\_}) are studied later.
 
 \subsection{Z-80 interrupt}
 The Z-80 can work in interrupt modes 0, 1, and 2. Modes 0 and 2 are the most powerful and the most complex since they imply retrieving the id of the peripheral requesting the interrupt by reading a byte on the data bus. This mecanim allows for many devices to get the attention of the Z-80 but in the case of the CPS-1 it is overkill. 
 
 Only one peripheral generates an interrupt (the YM2151 timer). For this case the Z-80 has a perfect interrupt mode 1 where if the \icode{INT} line is asserted, the CPU jumps to address \icode{0x38}. This explains why we have placed our interrupt handler at \icode{.org 0x38}.
 
-
 \lstinputlisting[language=C]{src/code/z80/interrupts.c}
 
-In function \icode{schedInterrupt} we write to the YM2151 counter register a value \icode{XXXXX}. Since the music chip is running at 3.58 MHz this result in an interrupt generate 3,580,000 x XXX = 4ms later. Notice \icode{\_\_att} which allows to manually place variables.
+In function \icode{schedInterrupt} we write to the YM2151 counter register a value \icode{XXXXX}. Since the music chip is running at 3.58 MHz this result in an interrupt generate 3,580,000 x XXX = 4ms later. Notice \icode{\_\_at} which allows to manually place variables according to the memory map.
 
-With this bootstrap, we have effecively implemented the system we envisioned in the "Theory" chapter with two "threads" running concurrently (but not in parallel).
+With this bootstrap, we have effecively implemented the system we envisioned in the "Theory" chapter with two "threads" running concurrently.
 
 \subsection{Initializing variables}
 Before we can jump to \icode{main} function, the bootstrap needs to initalize C variables. As we saw earlier, initialized writable variables use RAM address but intiial values are stored in ROM. These must be copied.
@@ -76,13 +123,42 @@ Compiling is done via XXXX. See \icode{ccps} in verbose mode to see individual c
 
 Trick: Always check out the linker .map file to make sure things are were you wanted them.
 
+
+\subsection{Threads lock-step}
+
 \subsection{Latches Circular buffer}
 
 Tell about variation in Z-80 driver. Final fight uses the same sound id whereas SF2 uses a translation layer.
 
+\subsection{Buffer processing}
 
 \subsection{Sound Effects with MSM6295}
-Bla
+Trivia: Final Fight = No translation but SF2 uses one.
 
 \subsection{Music with YM2151}
 Bla
+
+\img{capcom_sound_team.png}
+
+The Capcom Sound team. L-R: Yoko Shimomura, Yoshihiro Sakaguchi, Manami Matsumae, Masaki Izumiya, Yasuaki Fujita, Mari Yamaguchi, Minae Fujii, Toshio Kajino, Isao Abe.
+
+\begin{q}{Yoshihiro Sakaguchi\cite{yoko_shimomura_interview}  }
+
+Generally speaking, we do the music and sound effects for Capcom’s games. We’ve got a centralized recording system setup on a PC-98, so that even if we’re writing music for different hardware, we can compose without needing to be able to program.
+\end{q}
+
+\begin{q}{Yoko Shimomura, Street Fighter 2 music Composer\cite{beep199010}}
+
+I also studied piano in college, but I loved the Famicom, and would often stay up all night playing it. Then the next day my shoulders would be all stiff, and my piano teacher would scold me, and my Mom even said “I don’t remember raising a daughter like this.” (laughs) I decided that when I graduated, I would go work at a place where I could play both music and Famicom all day without complaints!
+\end{q}
+
+\begin{q}{Yoko Shimomura, Street Fighter 2 music Composer\cite{beep199010}}
+  
+I did not know you could write music with a computer until I joined the company. At the entrance exam, I was asked “what sequencer do you use?” and I had to ask back "What? Is that like an electronic controller?".
+
+They had to teach me from the ground up, and after that it was less musical practice than it was technical. The first music data I turned in was thoroughly corrected, and I was feeling really glum.
+
+I was asked to talk about what I knew about FM generation at the entrance exam. I had no idea what it was, so I thought about AM/FM radio and wrote down "it sounds better these days than it used to."
+\end{q}
+
+

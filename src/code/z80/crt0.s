@@ -29,5 +29,5 @@ init:
    call _schedInterrupt   ; Request first int
    call  gsinit           ; Init global variables
 main:  
-   call  _main            ; Infinite loop
+   call  _main            ; Call C main()
    jp    main             ; Never happens
