@@ -624,7 +624,7 @@ It is barely noticeable but scanlines are not drawn straight. There is a slight 
 
 \nbdraw{p_scan}
 
-As long as the frequency of HSYNC is a multiple of the frequency of VSYNC, the CRT lines are always on the same location on the screen.
+As long as VSYNC is issued at the same time as a HSYNC, the CRT lines are always on the same location on the screen.
 
 Let's look at what happen if VSYNC happens in the middle of the last line being draw.
 
@@ -1016,10 +1016,10 @@ The STARs layers also proved useful when designers need a full black background.
 
 
 
-\subsubsection{Priority mask}
+\subsubsection{Draw order and Priority mask}
 
 
-The drawing order (also called "priority") of SCROLLs, STARTFIELDs, and the sprite layer we will see next is entirely configurable. Any order can be requested but there is an extra feature available to the SCROLL drawn just before the sprite layer.
+The drawing order (also called "priority") of SCROLLs and the sprite layer we will see next is entirely configurable (but both STARs must remain behind). Any order can be requested but there is an extra feature available to the SCROLL drawn just before the sprite layer.
 
 Take the example of Final Fight Level 1 where the main characters Haggar and Guy exit the subway. 
 
@@ -1050,16 +1050,18 @@ This feature allows to create complex effect where sprites are sandwitched by a 
 \pagebreak
 
 \subsubsection{Scrollrow}
-SCROLL 3 was given the special ability to scroll rows of a tile horizontally based on the vertical drawn position. This capability is commonly known as "scrollrow".
+SCROLL 2 was given the special ability to scroll rows of a tile horizontally based on the vertical drawn position. 
 
-Des feature stresses the cache system in the CPS-A because more than a tile width must be retrieved.
+This capability is commonly known as "scrollrow" and is implemented via a table of 256 9 bit integers (one for each line) in GFXRAM.
+
+This feature stresses the cache system in the CPS-A because more than a tile width must be retrieved.
 
 The starfield and rowscroll feature are good example of how difficult it is to design hardware because doing it well consist in accurately predicting what will be/ useful and what won't. 
 
 \vfill
 \begin{figure}[!b]
 \img{color-00016530.png}
- \caption*{Final Fight ... with layers!}%
+ \caption*{Street Fighter 2}%
  \end{figure}%
 \pagebreak
 
@@ -1077,7 +1079,7 @@ Ultimately, the balance of these two features found itself reversed when rowscro
 \vfill
 \begin{figure}[!b]
 \img{color-00016530.png}
- \caption*{Final Fight ... with layers!}%
+ \caption*{Street Fighter 2 ... with scrollrow!}%
  \end{figure}%
 \pagebreak
 
@@ -1144,7 +1146,7 @@ Likewise, by using built-in multiplexing, the Commodore Amiga placed an horizont
 \subsubsection{Line buffer}
 To scale better and increase the number of sprites supported, hardware designers introduced the concept of line buffers. 
 
-A linebuffer system requires a bigger buffer, as wide as a visible line on the CRT. The buffer is populated with color codes by a Pixel Processing Unit. The number of sprites, dimensions and rotation capabilities depends on how much work the PPU is able to do. 
+A linebuffer system requires a bigger buffer, as wide as a visible line on the CRT. The buffer is populated with pen codes by a Pixel Processing Unit. The number of sprites, dimensions and rotation capabilities depends on how much work the PPU is able to do. 
 
 The limiting factor is that the line buffer can be written only during HBLANK (16$\mu$s) since it is used the rest of the time to feed the CRT.
 
@@ -1158,7 +1160,7 @@ System like the Super Nintendo use a line buffer with an impressive PPU resultin
 
 
 \subsubsection{Double Line buffer}
-A straigh forward way to make a GFX more powerful is to simply give it more time to do its jobs. The merciless 8MHz pixel clock cannot be cheated but the pipeline can be made deeper.
+A straight forward way to make a GFX more powerful is to simply give it more time to do its jobs. The merciless 8MHz pixel clock cannot be cheated but the pipeline can be made deeper.
 
 By using two linebuffers in alternance, the GFX increases its latency but also frees itself from rendering only during HBLANK. While a linebuffer is fed to the video, another one is rendered. This allows drawing during one full scanline (64$\mu$s) and a GFX 4x more capable. 
 
@@ -1173,12 +1175,12 @@ Capcom hardware designers wanted something even more powerful than a double line
 
 With a double sprite framebuffer, the PPU does not just draw a line in advance but a whole screen. This technique gives even more time for the graphic chip to do its work since drawing time increases from (64$\mu$s) to 16.7ms (260x more time!). 
 
-The gain is massive but it comes with three drawbacks issues. 
+The gain is massive but it comes with three drawbacks. 
 
-First the price of the machine goes up since it requires much more buffering capacity. At the resolution of the CPS-1, this mean 384*240 * 2 * 4 / 8 = 92KiB of VRAM.
+First, the price of the machine goes up since it requires much more buffering capacity. At the resolution of the CPS-1, this mean 384*240 * 2 * 4 / 8 = 92KiB of VRAM.
 
 
-Second impact is on the bus because a massive amount of data is now written and read to/from the VRAM. It requires so much bandwidth that an especially large data bus connecting the GFX ROM and the VRAM had to be created.
+The second impact is on the bus because a massive amount of data is now written and read to/from the VRAM. It requires so much bandwidth that an especially large data bus connecting the GFX ROM and the VRAM had to be created.
 
 Lastly, there is the problem of tilemap and sprites rendering desynchronized. When the 68000 writes the desired layout in the GFXRAM, the graphic system picks it up but channels background tiles and sprites tiles to different locations.
 
