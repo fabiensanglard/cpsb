@@ -1,0 +1,81 @@
+\chapter{Pins Cheat Sheet}
+% It is dangerous out there. 
+% Many chips are studied in the hardware chapter and it can be easy to make "off-by-one" mistakes. 
+% Take this bits to capacity truth table to help.
+
+
+\begin{figure}[H]
+\begin{minipage}[t]{0.49\linewidth}
+{ 
+\setlength{\tabcolsep}{3.0pt}
+\setlength\cmidrulewidth{\heavyrulewidth} % Make cmidrule = 
+\begin{tabular}{rrr}
+
+  & \multicolumn{2}{c}{Capacity} \\
+  \cmidrule(lr){2-3}
+  
+ 
+  \textbf{Pins} & \textbf{KiB} & \textbf{Bytes}\\               
+            
+  \toprule    
+1            &    \texttt{-} &      \texttt{2}   \\
+2   &\texttt{-}            &      \texttt{4}   \\
+3  &    \texttt{-} &      \texttt{8}   \\
+4  &\texttt{-}            &      \texttt{16}   \\
+5  &    \texttt{-} &      \texttt{32}   \\
+6   &    \texttt{-} &      \texttt{64}   \\
+7   &    \texttt{-} &      \texttt{128}   \\
+8            &    \texttt{-} &      \texttt{256}   \\
+9           &    \texttt{-} &      \texttt{512}   \\
+10   &    \texttt{1}           &      \texttt{1,024} \\
+11   &    \texttt{2}           &\texttt{2,048}    \\
+12   &    \texttt{4}           &      \texttt{4,096} \\
+13   &    \texttt{8}          &      \texttt{8,192} \\
+14            &    \texttt{16}           &      \texttt{16,384} \\
+15  &    \texttt{32}           &\texttt{32,768}    \\
+16  &    \texttt{64}           &\texttt{65,536}    \\
+17   &    \texttt{128}           &      \texttt{131,072} \\
+18  &    \texttt{ 256}           &      \texttt{ 262,144} \\
+  \toprule    
+\end{tabular}%
+}
+\end{minipage}%
+% \hfill%
+\begin{minipage}[t]{0.49\linewidth}
+{ 
+\setlength{\tabcolsep}{3.0pt}
+\setlength\cmidrulewidth{\heavyrulewidth} % Make cmidrule = 
+\begin{tabular}{rrr}
+
+  & \multicolumn{2}{c}{Capacity} \\
+  \cmidrule(lr){2-3}
+  
+ 
+  \textbf{Pins}  & \textbf{KiB} & \textbf{Bytes}\\               
+            
+  \toprule    
+19   &    \texttt{512}           &\texttt{524,288}    \\
+20           &\texttt{1,024}            &      \texttt{1,048,576} \\
+21           &    \texttt{2,048} &\texttt{2,097,152}    \\
+22           &    \texttt{4,096} &\texttt{4,194,304}    \\
+23            &    \texttt{8,192} &      \texttt{8,388,608} \\
+24           &    \texttt{16,384} &\texttt{16,777,216}    \\
+25           &    \texttt{32,768} &      \texttt{33,554,432} \\
+26            &\texttt{65,536}            &\texttt{67,108,864}    \\
+27           &\texttt{131,072}            &\texttt{134,217,728}    \\
+28           &    \texttt{262,144} &\texttt{268,435,456}    \\
+29          &    \texttt{524,288} &\texttt{536,870,912}    \\
+30          &    \texttt{1,048,576} &      \texttt{1,073,741,824} \\
+31          &    \texttt{2,097,152} &      \texttt{2,147,483,648} \\
+32          &    \texttt{ 4,194,304} &      \texttt{ 4,294,967,296} \\
+            &              &         \\
+            &               &        \\
+             &               &         \\
+            &               &         \\
+  \toprule    
+\end{tabular}%
+}
+\end{minipage}
+\caption*{Pins to capacity truth table.}
+\end{figure}
+

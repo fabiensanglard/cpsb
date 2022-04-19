@@ -20,9 +20,9 @@ Most importantly was the problem of piracy. In a country like Mexico it was esti
 
 
 \section{JAMMA}
-Both a blessing and a curse, arcade operators owned  standardized cabinets able to hold new platform as long as Capcom built made it compatible with a standardized connector. 
+Both a blessing and a curse, arcade operators owned  standardized cabinets. They would welcome any motherboard as long as Capcom made it compatible with the ubiquitous Japan Amusement Machine and Marketing Association (JAMMA) connector. 
 
-A JAMMA (Japan Amusement Machine and Marketing Association) port has everything a game needs to operate. Its 28 pins on each sides provide inputs (four-direction joystick and three buttons per player, two coin sensors, start button, and service button), outputs (mono speakers lines and CRT screen controls), and even power supply.
+A JAMMA port has everything a game needs to operate. Its 28 pins on each sides provide inputs (four-direction joystick and three buttons per player, two coin sensors, start button, and service button), outputs (mono speakers lines and CRT screen controls), and even power supply.
 
  \begin{figure}[H]
 \draw{jamma_t}
@@ -34,7 +34,7 @@ A JAMMA (Japan Amusement Machine and Marketing Association) port has everything 
 \caption*{JAMMA bottom side pins}
 \end{figure}
 
-The problem with a standard is that if it improves interoperability, it also hinders innovation. A few pins on the port are not reserved for a specific usage but they could not be used for extra features since a JAMMA port was plugged to a harness which was usually a tangled mess of wires that operators did not touch after initial setup.
+The problem with a standard is that if it improves interoperability, it also hinders innovation. A few pins on the port are not reserved for a specific usage but they could not be used for extra features since a JAMMA port was plugged to a harness which was a tangled mess of wires that operators did not touch after initial cabinet setup.
 
 When Capcom had to retrofit Street Fighter 1 pneumatic buttons, they chose to do it with six buttons per player which was three more than are available in JAMMA. To circumvent the limitation, they designed a parallel input system. Since the three JAMMA buttons were used for punches, the extension was labeled the "kick harness".
 
@@ -76,7 +76,7 @@ When Capcom had to retrofit Street Fighter 1 pneumatic buttons, they chose to do
 
 
 \section{Physical Architecture}
- The CPS-1 is made of multiple PCBs stacked on top of each others. The biggest board at the bottom is Board "A". In the middle is the Board "B". On the top is the smaller Board "C". Boards "A" and "B" are connected via four (white) connectors featuring 32-pin each. Similarly, boards "B" and "C" are connected respectively with four and two connectors.
+ The CPS-1 is made of three PCBs stacked on top of each others. The biggest board at the bottom is Board "A". In the middle is the Board "B". On the top is the smaller Board "C". Boards "A" and "B" are connected via four white connectors featuring 2x32-pin each. Similarly, boards "B" and "C" are connected respectively two white 2x20-pin connectors.
 
 Over the years, the system was revised multiple times. What will be discussed in this section are the boards coming  with "Street Fighter 2: The World Warriors", A (88617A-7B), B (90629B), and C (90628-C).
 
@@ -86,12 +86,11 @@ Over the years, the system was revised multiple times. What will be discussed in
 \caption*{A full CPS-1 game made of three PCBs}
 \end{figure}
 
-% There are a lot of chips and part but they can be broken down in sub-systems. Hopefully it should all make sense by the end of this chapter
 
 \subsection{Board A} 
 The board "A" is the platform that never changes between games. It features all but one of the chips in charge of processing data, whether it is game logic, audio, or video.
 
-A summary look at page \pageref{fig:boarda} immediately reveals the powerhouse of the whole system. Even an untrained eye will notice the size of the Application-Specific Integrated Circuit (ASIC) and the shear number of bus lines leading to it. In the center left stands the "CPS-A", in charge of 50\% of the graphic system and its 16MHz oscillator. Just above is 384 KiB of VRAM to store a special kind of framebuffer.
+A summary look at page \pageref{fig:boarda} reveals the powerhouse of the whole system. Even an untrained eye will notice the size of the Application-Specific Integrated Circuit (ASIC) and the shear number of bus lines leading to it. In the center left stands the "CPS-A", in charge of 50\% of the graphic system and its 16MHz oscillator. Just above is 384 KiB of VRAM to store a special kind of framebuffer studied in later pages.
 
 Directly below the CPS-A is the video system and its 8 KiB of SRAM containing the palettes.
 
@@ -101,7 +100,7 @@ The middle right part is where the audio system lives. It is made of a Zilog-80,
 
 Finally, in the bottom part we find all the components taking care of the inputs and outputs leading to the JAMMA connector. Alongside are DIP switches which an arcade operator can use to configure things such as game difficulty or how many credits a coin grants.
 
-That is an impressive number of chips on this board yet it would be a mistake to conclude that combining many processors inevitably leads to better performance. That would be ignoring issues such as bus congestion, bus size difference, bus timings or even processor endianness. 
+There are many chips on these three boards but it would be a mistake to conclude that combining many processors inevitably leads to better performance. That would be ignoring issues such as bus congestion, bus size difference, bus timings or even processor endianness. 
 
 To design an effective multi-CPUs system able to avoid both instructions and data starvation is in fact far from trivial.
 
@@ -149,15 +148,23 @@ In the upper right, we find four CR connectors leading to board "B". Soldered on
 % We will study in the storage subsystem how all these ROMs can be used to build 8-bit, 16-bit, or even 32-bit data buses.
 
 
-  \nbdraw{90629B}
+\nbdraw{90629B}
 
+Notice, on the board "B" above, how the PAL \icode{STF29} controls the GFX ROM and the PAL \icode{IOB2} controls the m68k ROM.
+% \begin{figure}[H]
+% \centering
+% \nbdraw{90629B}
+% \caption*{STF29 }
+% \end{figure}
 
 
 
 \subsection{Board C}
-The last board hosts the "CPS-B" ASICs video chip. It is the heavy duty pixel generator, directly connected to both the video system and the GFX ROMs.
+Board "C" hosts the "CPS-B" ASICs video chip. It is the beefy pixel generator directly connected to both the video system and the GFX ROMs.
 
-Capcom released many revision of its hardware in order to remain one step ahead of pirates. Since it concentrated most of its countermeasures on the CPS-B, it made sense to have the chip be on its own board. This is discussed deeper in the copy-protection section of this chapter.
+Capcom concentrated its anti-piracy measures in that chips and as a result revised the board "C" many more times than the two others. This is discussed deeper in the copy-protection section of this chapter.
+
+% released many revision of its hardware in order to remain one step ahead of pirates. Since it concentrated most of its countermeasures on the CPS-B, it made sense to have the chip be on its own board.
 
 \begin{minipage}[t]{0.49\linewidth}
   \simg{1.0}{90628-C-2.jpg}
@@ -187,7 +194,8 @@ The audio system runs almost totally in isolation. It is connected to control on
 
 The graphic system needs more communications and exposes not only its CPS-A and CPS-B registers but also GFX RAM where the screen layout is described. The 68000 and the CPS-A use the same bus to access the GFXRAM so the demarcation is not as clean as with the audio system which result in a bit of bus contention.  
 
-The video system is directly connected to the CRT via JAMMA. This system is put under heavy duty to keep up with the 60Hz refresh rate. To this effect, all active palettes are stored locally in 8 KiB of SRAM.
+The video system produces a stream of palette addresses (pen). Combined with the palette SRAM (ink) and the DAC, it outputs a signal towards JAMMA.
+It is heavy duty to keep up with the 59.64Hz refresh rate.
 
 \begin{figure}[H]
 \nbdraw{arch}
@@ -204,7 +212,7 @@ At the core of the control system we find the immensely popular Motorola model 6
 
 \subsection{Motorola 68000}
 
- Released in 1979, and clocked at 10 MHz (later upgraded to 12 MHz), the MC68000 was not a particularly powerful chip by the late 80' standards with its two stage pipeline\cite{M68000fv} (prefetch, exec) and no cache. Its 1.7 MIPS place it on part with an Intel 286 10MHz. By 1989 it was already two generations old behind the 68020 (1984) and the 68030 (1987).
+ Released in 1979, and clocked at 10 MHz (later upgraded to 12 MHz), the MC68000 was not a particularly powerful chip by the late 80' standards with its two stage pipeline\cite{M68000fv} (prefetch, exec) and no cache. Its 1.7 MIPS place it on par with an Intel 286 10MHz. By 1989 it was already two generations old behind the 68020 (1984) and the 68030 (1987).
 
 Yet the Atari ST, Amiga, Sega's System 16, Genesis, and CD, NeXT Computer, Apple Macintosh, Sharp X68000, and SNK's Neo-Geo all used it as their backbone. The 68,000 transistors CPU was IBM's first choice for it PC but production issues allowed the Intel's 8088 to prevail\cite{ieee20170630}. 
 
@@ -252,18 +260,18 @@ Using cheaper of-the-shelves 8-bit RAM chips instead of 16-bit RAM chips helped 
 
 \begin{figure}[H]
 \nbdraw{64k_ram}
-\caption*{64 KiB x 16-bit RAM system with two 32 KiB x 8-bit chips}
+\caption*{32 Ki x 16-bit RAM system with two 32 KiB x 8-bit chips}
 \end{figure}
 
-The two chips are not aware of each others. They are connected to the same 14 address lines and the same control lines for write (\icode{WE}) and read (\icode{OE}). However, they are connected to different lines of the data bus. 
+The two chips are not aware of each others. They are connected to the same 15 address lines and the same control lines for write (\icode{WE}) and read (\icode{OE}). However, they are connected to different lines of the data bus. 
 
 % Notice how the 14 address lines of the RAM chips are connected to the bus lines [11-23], effectively placing the RAM at address \icode{0xFF0000}-\icode{0xFFFFFF}. Carefully selecting lines is one of the three building block of designing a memory map. The two others are explained in the next section.
 
  \begin{trivia}
- 64 KiB of RAM seems like a lot but was not always enough. Some tiles found themselves with not enough RAM and too much GFXRAM. Street Fighter 2 Champion Edition programmers resolved to generating and executing instructions from the GFXRAM\cite{mame_cps1_driver}!
+ 64 KiB of RAM seems like a lot but was not always enough. Some tiles found themselves with not enough RAM and too much GFXRAM. Street Fighter 2 Champion Edition programmers resolved to generating and executing instructions from the GFXRAM\cite{mame_driver}!
  \end{trivia}
 
-Notice how the address lines of the SRAM chips are directly connected to the 68000 address bus. There is no mechanism to prevent these two chips to respond to all requests made on \icode{[0x**0000-0x**8000]}. This is a simplification to introduce complexity progressively. We will see next how chips are organized to not overlap with each others.
+Notice how the address lines of the SRAM chips are directly connected to the 68000 address bus. There is no mechanism to prevent these two chips to respond to all requests made on \icode{[0x**0000-0x**7FFF]}. This is an over-simplification to introduce complexity progressively. We will see next how chips are organized to not overlap with each others.
 
 
 
@@ -273,23 +281,23 @@ Notice how the address lines of the SRAM chips are directly connected to the 680
 
 
 
-\subsection{Motorola 68000 ROM}
+\subsection{Motorola 68000 Program ROM}
 
 % \begin{trivia}
 % Notice how important alignment becomes with such a memory system. Reading 2-byte aligned addresses yields the correct result but to put unaligned memory on the 16-bit data bus is not possible. An unaligned read requires two 16-bit aligned read, two shifts and one OR. It is a very expensive operation.
 % \end{trivia}
 
-The 68000 instructions are provided by \icode{27C010} chips which are 128 KiB x 8-bit chips. They work exactly like the \icode{65256BLSP-10} except that they have more address lines.
+The 68000 instructions are provided by eight \icode{27C010} which are 128 Ki x 8-bit chips. They work like the \icode{65256BLSP-10} except that they have sixteen address lines instead of fifteen (and therefore higher capacity).
 
 Like the RAM, ROM chips are combined two-ways to provide 16-bit data. What is peculiar is how the four pairs are arranged to build a memory system with a larger capacity.
 
 
 \begin{figure}[H]
 \nbdraw{128k_ram}
-\caption*{128 KiB x 16-bit RAM system with four 32 KiB x 8-bit chips}
+\caption*{Two first pairs. 4 x (128 Ki x 8-bit) making a 256Ki x 16-bit system}
 \end{figure}
 
-In order to place one pair after another in memory space, the \icode{CE} (Chip Enabled) (sometimes labeled \icode{CS} for "Chip Selected") pin is leveraged. Asserting it let a chip respond to address request while de-asserted keep it dormant.
+To place one pair after another in memory space, the \icode{CE} (Chip Enabled, sometimes labeled \icode{CS} for "Chip Selected") pin is leveraged. Asserting it let a chip respond to address request while de-asserting it keeps it dormant. All CEs on all chips on all boards are controlled via PALs.
 
 Here, the first four out PAL pins must be programmed as follows.
 
@@ -300,12 +308,12 @@ Here, the first four out PAL pins must be programmed as follows.
 3 = A16 & ! (A17 | A18 | A19 | A20 | A21 | A22 | A23)  
 \end{code}
 
-The first pair of chips is mapped to addresses \icode{0x000000} while the second pair is mapped to \icode{0x40000}. With the same logic, two more pairs of \icode{27C010} are mapped at \icode{0x80000} and \icode{0xFFFFF} for a total of 1 MiB ROM.
+The first pair of chips is mapped to addresses \icode{0x000000} while the second pair is mapped to \icode{0x40000}. With the same logic, two more pairs of \icode{27C010} are mapped at \icode{0x80000} and \icode{0xc0000} for a total of 1 MiB ROM.
 
 
 \subsection{Chip Enabled / Chip Select}
 
-The \icode{CE} / \icode{CS} line is absolutely crucial to build a memory map. You will find it in every chips studied in the rest of the book (except CPUs).
+The \icode{CE} / \icode{CS} line is absolutely crucial to build a memory map. They are present in every chips studied in this book (except CPUs).
 
 \subsection{68000 Memory Map}
 
@@ -317,27 +325,27 @@ All chips are mapped at a static address in memory space. A table give a clear p
 \toprule    
   \textbf{Start } & \textbf{End  } & \textbf{Size } & \textbf{Function } \\               
   \toprule    
-  \texttt{0x000000} & \texttt{0x1FFFFF} & 2 MiB & ROM \\
+  \texttt{0x000000} & \texttt{0x3FFFFF} & 3 MiB & ROM \\
   \toprule    
-  \texttt{0x800000} & \texttt{0x800007} & 7 bytes & JAMMA players inputs \\
-  \texttt{0x800018} & \texttt{0x80001F} & 7 bytes & JAMMA Dip Switches \\
-  \texttt{0x800030} & \texttt{0x800037} & 7 bytes & JAMMA Coin sensors \\
-  \texttt{0x800176} & \texttt{0x800177} & 1 byte & Kick harness \\
+  \texttt{0x800000} & \texttt{0x800007} & 8 B & JAMMA players inputs \\
+  \texttt{0x800018} & \texttt{0x80001F} & 8 B & JAMMA Dip Switches \\
+  \texttt{0x800030} & \texttt{0x800037} & 8 B & JAMMA Coin sensors \\
+  \texttt{0x800176} & \texttt{0x800177} & 1 B & Kick harness \\
 \toprule    
-  \texttt{0x800100} & \texttt{0x80013f} & 64 bytes & CPS-A registers\\
-  \texttt{0x800140} & \texttt{0x80017f} & 63 bytes & CPS-B registers\\
+  \texttt{0x800100} & \texttt{0x80013f} & 64 B & CPS-A registers\\
+  \texttt{0x800140} & \texttt{0x80017f} & 64 B & CPS-B registers\\
 \toprule    
-  \texttt{0x800180} & \texttt{0x800187} & 1 byte & Sound commands (latch 1)\\
-  \texttt{0x800188} & \texttt{0x80018F} & 1 byte & Sound commands (latch 2)\\
+  \texttt{0x800180} & \texttt{0x800187} & 1 B & Sound commands (latch 1)\\
+  \texttt{0x800188} & \texttt{0x80018F} & 1 B & Sound commands (latch 2)\\
   \toprule    
-  \texttt{0x900000} & \texttt{0x92FFFF} & 129KiB & GFXRAM\\
+  \texttt{0x900000} & \texttt{0x92FFFF} & 196 KiB & GFXRAM\\
   \texttt{0xFF0000} & \texttt{0xFFFFFF} & 64 KiB & RAM \\
   \toprule    
 \end{tabularx}%
 % }\caption*{Control system memory map.}
 % \end{figure}
 
-Upon startup, the 68000 bootstrap and starts retrieving instructions from ROM. For read/write operations and maintaining is stack, it uses "Work RAM". Game configuration is retrieved from DIP switches. The game start where an infinite loop polls coins sensors and players inputs and generates video and audio outputs in response. For the video, the 68000 describes an image to be displayed via the GFXRAM then instructs the graphic ASICS of where to find that data. For the audio, the 68000 issues simple commands to the Z-80 via two 1 byte latches using a protocol detailed later.
+Upon startup, the 68000 bootstrap and starts retrieving instructions from ROM. For store/load instructions and to maintain its stack, it uses "Work RAM". Game configuration is retrieved from DIP switches. The game start where an infinite loop polls coins sensors and players inputs to generate video and audio outputs in response. For the video, the 68000 describes an image to be displayed via the GFXRAM then instructs the graphic ASICS of where to find that data. For the audio, the 68000 issues simple commands to the Z-80 via two 1 byte latches using a protocol detailed later.
   
 
 
@@ -363,7 +371,7 @@ It was one of the most widely used processors in home computers notably featured
 
 As an 8-bit era processor, the Z-80 features 8-bit data registers, 8-bit data bus, 16-bit address registers, and 16-bit address bus. In terms of processing power, it had become a particularly weak CPU by late 80s standards with 0.45 MIPS making it three times slower than the MC68000 in the control system. 
 
-The reason it was selected by Capcom (and by SNK for its Neo Geo) was not for its processing capacity but because it was an inexpensive CPU, well-known by programmers which would also integrate well with 8-bit interface chips such as ROM chips, RAM chips, and audio chips such as the MSM6295 and the YM2151.
+The reason it was selected by Capcom (and by SNK for its Neo Geo) was not for its processing capacity but because it was an inexpensive CPU, well-known by programmers which would also integrate well with 8-bit interface chips such as ROM chips, RAM chips, and audio chips such as the MSM6295 and the YM2151 (both also 8-bit).
 
 \sdraw{0.75}{z-80}
 
@@ -412,20 +420,20 @@ The solution Capcom engineers used was to map only the portion of the ROM that c
   \toprule    
   \texttt{0xD000} & \texttt{0xD7FF} & 2 KiB & RAM \\
 \toprule    
-  \texttt{0xF000} & \texttt{0xF001} & 2 byte & YM2151 registers\\
-  \texttt{0xF002} & \texttt{0xF002} & 1 byte & OKI OKI6295 registers\\
-  \texttt{0xF004} & \texttt{0xF004} & 1 byte & Bank Switch control (\icode{SOU1})\\
-  \texttt{0xF006} & \texttt{0xF006} & 1 byte & OKI MSM6295 H / L mode\\
+  \texttt{0xF000} & \texttt{0xF001} & 2 B & YM2151 registers\\
+  \texttt{0xF002} & \texttt{0xF002} & 1 B & OKI OKI6295 registers\\
+  \texttt{0xF004} & \texttt{0xF004} & 1 B & Bank Switch control (\icode{SOU1})\\
+  \texttt{0xF006} & \texttt{0xF006} & 1 B & OKI MSM6295 H / L mode\\
   \toprule    
-  \texttt{0xF008} & \texttt{0xF008} & 1 byte & Sound commands (latch 1)\\
-  \texttt{0xF00A} & \texttt{0xF00A} & 1 byte& Sound commands (latch 2)\\
+  \texttt{0xF008} & \texttt{0xF008} & 1 B & Sound commands (latch 1)\\
+  \texttt{0xF00A} & \texttt{0xF00A} & 1 B& Sound commands (latch 2)\\
   \toprule    
 \end{tabularx}%
 }\caption*{Audio memory map.}
 \end{figure}
 
 \begin{trivia}
-While the Z80 is little-endian, addresses of tracks and instruments found in ROM are big-endian. This is likely an artifact of using Sharp X68000 tools. Surprisingly, Capcom elected to fix endianness at runtime rather than compile time.
+Notice the awful bank switch control byte a programmer must juggle with to access data located beyond \icode{0x8000}. This memory map should leave no doubt with regards to why the 68000 and its 24-bit address space were the top choice among hardware designers. 
 \end{trivia}
 % CXK5816SP-15L is only 2 KiB RAM
 
@@ -440,7 +448,7 @@ The YM2151 is able to play 8 channels (a.k.a voices) of audio without requiring 
 
 Other parameters can be applied to the output sound such as Attack/Decay/Sustain/Release rate. The huge advantage is the small amount of data required to store a melody since only notes of each instruments are needed. The whole Sagat stage music (XmnXXs) takes less than one "Tiger Uppercut" ADPCM sample (Xs).
 
-Looking at the chip, we see previously discussed pins such as \icode{+5V}, \icode{GND}, and \icode{CS}. The \icode{CLK} is connected to the same oscillator as the Z-80 for a frequency of 3.58MHz. The \icode{D0-D7} address/data pins (multiplexed via \icode{A0}) fit exactly the Z80's 8-bit data bus with read (\icode{RD}) and write (\icode{WD}) control.
+Looking at the chip, we see previously discussed pins such as \icode{+5V}, \icode{GND}, and \icode{CS}. The \icode{CLK} is connected to the same oscillator as the Z-80 for a frequency of 3.58MHz. The \icode{D0-D7} address/data pins (multiplexed via \icode{A0}) fit exactly the Z80's 8-bit data bus with read (\icode{RD}) and write (\icode{WR}) control.
 
 The important pin is the \icode{INT} which allows the YM2151 to generate interrupt based on two internal counters. These will be crucial in the programming chapter.
 
@@ -452,11 +460,12 @@ The only drawback of this chip is that is features no DAC (Digital to Analog Con
 The YM3012 input is directly connected to the YM2151 output. It is the tailor made DAC which, as it name indicates, converts the digital stream from the YM2151 to an analog signal that later mixed with the analog signal of the OKI6295.
 
 \subsection{MSM6295}
-Capcom had used PCM capable chips by the past with the MSM5205 by OKI Semiconductor. For the CPS-1  they went with a steroids version, the MSM6295 (a.k.a OKI6295). 
+For audio sample playback, Capcom spared no expenses and selected a chip capable of 12-bit hardware ADPCM audio decompression over four channels, the MSM6295 (a.k.a OKI6295). 
+% capable chips by the past with the MSM5205 by OKI Semiconductor. For the CPS-1  they went with a steroids version,
 
 Despite running at only 1MHz the MSM6295 is a god sent to a game board designer. It does not need instructions since its function is fully hard-coded. Its address (\icode{A0-A15}) and data lines (\icode{D0-D7}) are directly connected to its own 256 KiB ROM, on a local bus where assets are stored. These make it a fully enclosed digitized sound system only communicated via its input lines (\icode{I0-I7}), perfect for the Z-80 data bus.
 
-To work, the OKI only needs a sample ID [1-127], a channel [1-4], and a volume. Then, via a lookup table in ROM the sample offset is retrieved and playback starts with an analog signal generated on \icode{DA0}. 
+To work, the OKI only needs a sample ID [1-127], a channel [1-4], and a volume. Via a lookup table in ROM the sample offset is retrieved and playback starts with an analog signal generated on \icode{DA0}. 
 
 \sdraw{0.75}{MSM6295}
 
@@ -470,7 +479,7 @@ If the choice of the Yamaha music chips left little ambiguity to the hardware de
 
 First off all, the sampling rate expected in ROM is directly correlated to the clock provided to the MSM6295. Second of all, the OKI can operate in two modes, a high quality (H) where the divisor is 132, and a low quality (L) where the divisor is 165.
 
-Clockable between [1MHz-5MHz] with two modes, the goals was to maximize quality while minimizing required storage. The table shows that the best quality (37kHz) only allowed to store 13 seconds of samples while the worse (6kHz) gave 69 seconds.
+Clockable between [1MHz-5MHz] with two modes, the goals was to maximize quality while minimizing required storage. The table shows that the best quality (37kHz) only allowed to store 13 seconds of samples while the worse (6060Hz) gave 69 seconds.
 \begin{figure}[H]
 {
 \setlength\cmidrulewidth{\heavyrulewidth} % Make cmidrule = 
@@ -497,12 +506,34 @@ In the end, Capcon connected the OKI to the GFX crystal (16MHz) and divided freq
 
 
 
+\subsection{The beauty of ADPCM compression}
+We cannot close the OKI section without taking a close look at how ADPCM works and how beautiful it is.
 
-Before moving blablba PCM
+Let's study first what is compressed. Whether it is recorded or played, PCM (Pulse-code modulation) is a stream of value directly representing the position of a device diaphragm.
+
+\nbdraw{speaker}
+
+The higher the sampling rate, the more often the diaphragm position can be adjusted. The higher the bit depth, the more accurately the current can position the diaphragm. With two PCM streams of values, stereo is achieved.
+
+This is system where sound quality increases linearly with it data rate. Land-line phones typically use 8000Hz sampling rate with 8-bit depth mono consuming 8,000 bytes per second while a CD uses 16-bit samples at 44100Hz in stereo taking its data usage to 176,400 bytes per second.
 \pagebreak
 
-ADPCM 
-\pagebreak
+ADPCM is able to take 12-bit sample and store then as 4-bit samples by remembering the value of the last sample and encoding a delta to apply on it. 
+
+The delta uses a system close to floating-point windows which is accurate for small amount but much coarser when values increase. 
+
+A nibble is made of 4 bits. The first one indicates the sign of the delta (+/-). The three other give a "magnitude". The magnitude depends on the "step size" of the ADPCM decompressor.
+
+\sdraw{0.3}{adpcm_nibble}
+
+In its initial state, the step size is equal to 16 which means bit three is +/-16, bit two +/-8 and bit one +/-4. In this state, the delta to be applied can vary from 0 (\icode{b000}) to 28 (\icode{b111}). 
+
+The decompressor constantly monitor how much of the step size was used. The step size is adjusted after each sample via a  predetermined transition table.
+
+\lstinputlisting[language=C]{src/code/adpcm_transition.c}
+
+
+ADPCM is aggressive in increasing its step size (\icode{2, 4, 6, 8} when high magnitude are used) and conservative in lowering it (\icode{-1, -1, -1, -1}). Note that \icode{stepSizeIndex} must be clamped to 0-48.
 
 
 
@@ -1295,11 +1326,15 @@ Upon release, Capcom then CEO Kenzo Tsujimoto, was confident the CPS-1 would sig
 
 \begin{q}{Kenzo Tsujimoto, Capcom CEO\cite{gamest38}}
     
-The new CP System arcade boards are very important to Capcom in two regards. First, they have much more memory than our previous hardware. Game developers will have free reign to explore new, exciting design ideas and take advantage of the latest technological developments. The CP System has upped the level of our developers already.
+The new CP System arcade boards are very important to Capcom in two regards. First, they have much more memory than our previous hardware. Game developers will have free reign to explore new, exciting design ideas and take advantage of the latest technological developments. 
+
+The CP System has upped the level of our developers already.
 
 The second big thing is copy protection. Illegal bootlegs have been a huge problem for us overseas; I believe the CP System is the only PCB hardware today that cannot be copied.
 
-The boards contain various copy protection methods, and their advanced hardware should make it difficult for bootleggers seeking to create knockoffs with today's components. Bootlegs don't only hurt us; they're also a nuisance for our customers who think they are getting a genuine board. We see copy protection as one of the main achievements of the CP System.
+The boards contain various copy protection methods, and their advanced hardware should make it difficult for bootleggers seeking to create knockoffs with today's components. 
+
+Bootlegs don't only hurt us; they're also a nuisance for our customers who think they are getting a genuine board. We see copy protection as one of the main achievements of the CP System.
 \end{q}
 
 

@@ -32,7 +32,7 @@
      inkscape:cy="1098.0045"
      inkscape:window-width="1790"
      inkscape:window-height="912"
-     inkscape:window-x="-5"
+     inkscape:window-x="0"
      inkscape:window-y="45"
      inkscape:window-maximized="0"
      inkscape:current-layer="layer12"
@@ -1052,15 +1052,20 @@
          id="tspan4561">PLAYERS INPUTS</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:12.7px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="116.69234"
-       y="164.94098"
+       style="font-style:normal;font-weight:normal;font-size:12.7px;line-height:1.25;font-family:sans-serif;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="134.01862"
+       y="155.72693"
        id="text3063"><tspan
          sodipodi:role="line"
          id="tspan3061"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12.7px;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';stroke-width:0.264583"
-         x="116.69234"
-         y="164.94098">CPSA</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12.7px;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';text-align:center;text-anchor:middle;stroke-width:0.264583"
+         x="134.01862"
+         y="155.72693">CPS</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12.7px;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';text-align:center;text-anchor:middle;stroke-width:0.264583"
+         x="134.01862"
+         y="172.07602"
+         id="tspan1659">A</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:12.7px;line-height:1.25;font-family:sans-serif;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
