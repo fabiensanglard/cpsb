@@ -7,7 +7,7 @@
    viewBox="0 0 208.68385 73.94223"
    version="1.1"
    id="svg5"
-   inkscape:version="1.1.2 (76b9e6a115, 2022-02-25)"
+   inkscape:version="1.1.2 (08b2f3d93c, 2022-04-05)"
    sodipodi:docname="sound_deps.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -29,8 +29,8 @@
      fit-margin-bottom="0"
      inkscape:snap-global="false"
      inkscape:zoom="2.3345674"
-     inkscape:cx="703.55648"
-     inkscape:cy="194.68275"
+     inkscape:cx="632.45122"
+     inkscape:cy="5.354311"
      inkscape:window-width="1280"
      inkscape:window-height="736"
      inkscape:window-x="0"
@@ -108,7 +108,7 @@
          id="tspan3398-5"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.76111px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono Bold';stroke-width:0.264583"
          x="154.73102"
-         y="11.939476">GFX ROM</tspan></text>
+         y="11.939476">OKI ROM</tspan></text>
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.766;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect14987"

@@ -1,18 +1,24 @@
-\chapter{Programming the CPS-1}
+\chapter{Programming concepts}
 
-To program a CPS-1 board mean to produce five sets of ROMs. These are the graphics assets holding the sprites and tilemap contained in the GFX ROM, the 68000 instructions to pilot the control system, Z-80 ROM which contains not only instructions but also YM2151 bytecode to generate the FM music, and finally MSM6295 ROM where are stored the audio samples.
+To program a CPS-1 board mean to produce four sets of ROMs. These are the graphics assets holding the sprites and tilemap contained in the GFX ROM, the 68000 instructions to pilot the control system, Z-80 ROM which contains not only instructions but also YM2151 bytecode to generate the FM music, and finally MSM6295 ROM where are stored the audio samples.
 
-\nbdraw{prog_systems}
+ \begin{figure}[H]
+\sdraw{1.0}{cps1_arch}
+\caption*{Three parts, two ROMS}
+\end{figure}
 
-Along the way must be decided of communication protocols for each interfaces used by each system to communicate. Namely the GFX RAM where the control system talks with the gfx system and the two 1-byte latches where control send commands to the audio system.
+To make things even more difficult each of these sets use a specific data width and interleaving according to what was described in the hardware chapter.
+
+\pagebreak
+% Along the way must be decided of communication protocols for each interfaces used by each system to communicate. Namely the GFX RAM where the control system talks with the gfx system and the two 1-byte latches where control send commands to the audio system.
 
 
 \section{Language}
-Historically CPS-1 developers used assembly to program. It is well suited for the kind of low-level operations to perform but most importantly it is second to none when it comes to instructions compactness. As we will see ROM space is not as plentiful as it seems.
+For all their CPS-1 titles, Capcom developers used z80/m68k assembly. They did not have much choice anyway since compilers were expensive in the late 80s and not that good at producing compact code. As we will see, ROM space was precious and controlling the volume of instructions with accuracy was paramount.
 
-Since the objective of this chapter is to explains how things works, it uses C for its greater readability and wider knowledge base across programmer. A little bit of assembly is used, only to bootstrap the CPUs.
+Since the goal of this chapter is to explains how things works, it uses C for its greater readability and wider knowledge base among programmer. A little bit of assembly is used but only to bootstrap the CPUs.
 
-If you ever decide to take your CPS-1 program to the next level, you will without a doubt have to go the assembly way. Just not today.
+If you ever decide to take your CPS-1 program to the next level, you will without a doubt have to go the assembly way.
 
 \section{Down to the metal}
 In a programming world were developers are more and more removed from the hardware, programming the Z-80 or the M68000 is a joy.
@@ -62,13 +68,20 @@ In the protocol we described, only one latch is used. The second one is complete
 \end{trivia}
 
 \subsection{Implementation details}
-Leveraging interrupt turns our single threaded CPU into dual threaded system (except one has to restard from the beginning every time). On both side, is a circular buffers where value are staged	.
+Leveraging interrupt turns our single threaded CPU into dual threaded system (except one has to restart from the beginning every time) able to reliably exchange values. But we still have to decide of what meaning give ot the data. 
+
+
+Many approach work. A quick and dirty implementation could use a single byte and divide its value space in two. A MSB set to one \icode{0x80} request a sound effect playback and a MSB set to zero \icode{0x00} indicates a music playback. This leaves 126 sound values and 126 music values. On the Z80 side, volume can be hard-coded, sample playback and use round-robin between two channels and the music track can use the two other channels to embellish YM2151 melodies. 
+
+On Street Fighter 2, developers used a circular buffers where value are staged	.
 
 The interrupt thread consumes the buffer and, depending on which side of the latches they are, either read or write one byte.
 
 \nbdraw{latches_intercafe}
 
 \nbdraw{latches_uml}
+
+On Final Fight, there is no translation table.
 
 \pagebreak
 
@@ -81,6 +94,7 @@ On the Control side it is useful to sample user input at an appropriate interval
 Sound also needs to keep track of wall time in order to feed YM2151 music instructions at the right pace. Here we have more flexibility. Whereas VSYNC frequency is fixed,  the Z-80 reprogram the YM2151 timer after each trigger. For the example we will see there is no need to do that so our timer progresses in 4ms increments.
 
 \section{Randomness}
+Generating a series of pseudo-random numbers can be achieved with a Maximum-Length LFSRs (Linear Feedback Shift Register) and a proper seed. The issue is what to use for the seed. We could use a timer keeper and use the first player inputs. But that would open our games to players gaming the system. A better seed source is to use uptime.
 
 \section{CCPS, the CPS-1 SDK}
 Framework CCPS is the CPS-1 SDK companion of this book. It is free and opensource. You can get it with the following command.

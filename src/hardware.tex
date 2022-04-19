@@ -16,13 +16,13 @@ To improve the development toolchain, the CPS-1 was designed to work hand-in-han
 
 More importantly, games would had to catch customer eyes and not pale in comparison to competition. The goal was to design a machine with graphic capabilities an order of magnitude above others and generate visuals like players had never seen before.
 
-Finally there was the problem of rampant piracy. In countries such as Mexico it was estimated that 200,000 bootlegs were in circulation\cite{sf2_oral_history} despite Capcom recording zero sales in that territory. Multiple concurrent copy-protection mechanisms were to be implemented.
+Most importantly was the problem of piracy. In a country like Mexico it was estimated that 200,000 bootlegs were in circulation\cite{sf2_oral_history} despite Capcom recording zero sales in that territory. Multiple concurrent copy-protection mechanisms were to be implemented.
 
 
 \section{JAMMA}
-To re-invent itself, Capcom did not build a whole new machine. Thanks to the Japan Amusement Machine and Marketing Association, the interface had been standardized so all cabinets offered the same connector. 
+Both a blessing and a curse, arcade operators owned  standardized cabinets able to hold new platform as long as Capcom built made it compatible with a standardized connector. 
 
-A JAMMA port centralizes everything a game needs to operate. The port features 28 pins on each sides to provide inputs, outputs, and power supply. Among the inputs are a four-direction joystick and three buttons per player, two coin sensors, start button, and service button. On the list of outputs, mono speakers lines and CRT screen controls.
+A JAMMA (Japan Amusement Machine and Marketing Association) port has everything a game needs to operate. Its 28 pins on each sides provide inputs (four-direction joystick and three buttons per player, two coin sensors, start button, and service button), outputs (mono speakers lines and CRT screen controls), and even power supply.
 
  \begin{figure}[H]
 \draw{jamma_t}
@@ -168,7 +168,7 @@ Capcom released many revision of its hardware in order to remain one step ahead 
 \end{minipage}
 
 \subsection{PALs}
-The black chips are PALs (Programmable Array Logic), crucial to the creation of a memory map. They define boolean (\&, \textbar, !) logic between their input and output lines to reduce complexity but more importantly allow changing the design between games without changing the PCB.
+The black chips are PALs (Programmable Array Logic) which are crucial to the creation of a memory map. They define boolean (\&, \textbar, !) logic between input and output lines to reduce complexity. More importantly they allow tuning the design between games without changing the PCB.
 
 \sdraw{0.45}{PAL16L8A}
 
@@ -462,7 +462,7 @@ To work, the OKI only needs a sample ID [1-127], a channel [1-4], and a volume. 
 
 Up to four channels can playback samples simultaneously. During a game, some channels are reserved for percussion instruments for the stage tune, other channels are kept free for game sound effects.
 
- By using 4-bit/sample ADPCM lossy compression, the OKI divides space consumption by two compared to 8-bit PCM. 
+ ADPCM lossy compression is able to divides space consumption by three by converting 12-bit PCM samples into 4-bit nibbles. 
 
 
 \subsubsection{Making choices}
@@ -498,6 +498,11 @@ In the end, Capcon connected the OKI to the GFX crystal (16MHz) and divided freq
 
 
 
+Before moving blablba PCM
+\pagebreak
+
+ADPCM 
+\pagebreak
 
 
 
@@ -1324,6 +1329,75 @@ The heart of the protection system is the CPS-B. The idea is to make it behaves 
 To this effect, twenty-five versions the CPS-B exist\cite{mame_cps1_video} sometimes differing between revision of the same game\cite{cpsBNumbers}.
 
 
+\begin{figure}[H]
+{ \setlength{\tabcolsep}{3.0pt}
+\begin{tabularx}{\textwidth}{Xrrr} 
+  \textbf{Game Name} & \textbf{Revision} & \textbf{ CPS-B }  & \textbf{ Year } \\               
+  \toprule    
+\href{}{Forgotten Worlds} & & CPS-B-01 & 1988 \\ 
+\href{}{Lost Worlds} & & CPS-B-01 & 1988 \\ 
+\href{}{Ghouls'n Ghosts} & & CPS-B-01 & 1988 \\ 
+  \toprule    
+\href{}{Strider} & & CPS-B-01 & 1989 \\ 
+\href{}{Dynasty Wars} & & CPS-B-02 & 1989 \\ 
+\href{}{Willow} & & CPS-B-03 & 1989 \\ 
+\href{}{U.N Squadron} & & CPS-B-11   & 1989 \\ 
+
+\href{}{Final Fight } & Original& CPS-B-04 & 1989 \\ %ffight
+\href{}{Final Fight } & 900112& CPS-B-01 & 1989 \\ %ffightua
+\href{}{Final Fight } & 900424& CPS-B-03 & 1989 \\ %ffightub
+\href{}{Final Fight } & 900613& CPS-B-05 & 1989 \\ %ffightuc
+
+  \toprule    
+\href{}{1941: Counter Attack} & & CPS-B-05 &  1990 \\ 
+\href{}{Mercs} & &  CPS-B-12 & 1990 \\ 
+\href{}{Mega Twins} & & CPS-B-14 & 1990 \\ 
+\href{}{Magic Sword} & & CPS-B-13 & 1990 \\ 
+\href{}{Carrier Air Wing} & & CPS-B-16  & 1990 \\ 
+\href{}{Nemo} & & CPS-B-15 &  1990 \\ 
+  \toprule    
+\href{}{Street Fighter II: The World Warrior }&  Original& CPS-B-11 & 1991 \\  %sf2
+\href{}{Street Fighter II: The World Warrior } & 910204& CPS-B-17 & 1991 \\  %sf2ea
+\href{}{Street Fighter II: The World Warrior } & 910318& CPS-B-05 & 1991 \\  %sf2ed
+\href{}{Street Fighter II: The World Warrior } & 910228& CPS-B-18 & 1991 \\  %sf2ee
+\href{}{Street Fighter II: The World Warrior } & 910411& CPS-B-15 & 1991 \\  %sf2ef
+\toprule    
+\end{tabularx}%
+}\caption*{A selection of the many Capcom CPS-1 games revisions.}
+\end{figure}
+
+Originally, the CPS-B chips changed frequenty. The table above only contains a few of the many PCB revisions, the full list give a good idea of how successful a game was. Street Figther 2 was revised 34 times, while Final Fight reveived 13 of them.
+
+With the released of "Three Wonders", Capcom singled out their chips differently. All CPS-B chips are CPS-B v21.
+
+\begin{figure}[H]
+{ \setlength{\tabcolsep}{3.0pt}
+\begin{tabularx}{\textwidth}{Xrr} 
+  \textbf{Game Name} & \textbf{ CPS-B }  & \textbf{ Year } \\               
+  \toprule    
+\href{}{Three Wonders} &  CPS-B-21 & 1991 \\ 
+\href{}{The King of Dragons} & CPS-B-21 & 1991 \\ 
+\href{}{Captain Commando} &  CPS-B-21 & 1991 \\ 
+\href{}{Knights of the Round} & CPS-B-21 & 1991 \\ 
+  \toprule    
+\href{}{Street Fighter II: Champion Edition} & CPS-B-21 & 1992 \\ 
+\href{}{Adventure Quiz: Capcom World 2} & CPS-B-21 & 1992 \\ 
+\href{}{Varth: Operation Thunderstorm} & CPS-B-21 & 1992 \\ 
+\href{}{Quiz \& Dragons: Capcom Quiz Game} & CPS-B-21 & 1992 \\ 
+\href{}{Street Fighter II' Turbo: Hyper Fighting} &  CPS-B-21 & 1992 \\ 
+  \toprule    
+\href{}{Ken Sei Mogura: Street Fighter II} & CPS-B-21 & 1993 \\ 
+\href{}{Pnickies} & CPS-B-21 & 1993 \\ 
+  \toprule    
+\href{}{Quiz Tonosama no Yabo 2} &  CPS-B-21 & 1995 \\ 
+\href{}{Pang! 3} & CPS-B-21  & 1995 \\ 
+Mega Man the Power Battle & CPS-B-21  & 1995 \\
+
+\toprule    
+\end{tabularx}%
+}\caption*{After 1991, all CPS-1 games used CPS-B v21.}
+\end{figure}
+
 
 \subsection{CPS-ID check}
 The simplest check available is the chip ID. By polling a register, the CPS-B returns its version number which must matches what the code expects. To make instructions patching of the 68000 ROMs more difficult, calls to verify the chip id are placed in several location in the code \red{(TODO verify with mame)}.
@@ -1331,6 +1405,7 @@ The simplest check available is the chip ID. By polling a register, the CPS-B re
 \subsection{Moving registers}
 Another variation between CPS-Bs is the registers locations. The 68000 memory map of the CPS-B registers does not change, but the offset inside that mapping was altered between versions. Accessing the scroll control, scroll priority, and palette upload registers is done using a different offset for each game.
 
+TODO: Talk about how scroll enable bit change in a same registers.
 
 \subsection{Multiplication check}
 Starting with vB-21, a slightly more robust feature gave the CPS-B the ability to perform multiplications. Two registers are written and a third one can be read. The 68000 code is expected to check that the returned multiplication result is the expected value.
