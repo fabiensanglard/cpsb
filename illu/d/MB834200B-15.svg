@@ -7,7 +7,7 @@
    viewBox="0 0 126.29624 61.141521"
    version="1.1"
    id="svg5"
-   inkscape:version="1.1.2 (b8e25be833, 2022-02-05)"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
    sodipodi:docname="MB834200B-15.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -25,12 +25,12 @@
      showgrid="false"
      units="in"
      inkscape:zoom="1.9711789"
-     inkscape:cx="74.828317"
-     inkscape:cy="111.35468"
-     inkscape:window-width="1280"
-     inkscape:window-height="736"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:cx="223.97764"
+     inkscape:cy="111.10103"
+     inkscape:window-width="1920"
+     inkscape:window-height="1010"
+     inkscape:window-x="-6"
+     inkscape:window-y="-6"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
      fit-margin-top="0"
@@ -846,26 +846,25 @@
        x="10.815369"
        y="50.061443">1</text>
     <g
-       id="g5516"
-       transform="translate(-0.46402325,0.21916578)">
+       id="g2781">
       <rect
          style="fill:#313131;fill-opacity:1;stroke:#000000;stroke-width:0.407001;stroke-opacity:1"
          id="rect2169"
          width="125.88924"
          height="32.842358"
-         x="8.7199488"
-         y="13.228669" />
+         x="8.2559252"
+         y="13.447835" />
       <text
          xml:space="preserve"
          style="font-size:11.2889px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;stroke-width:0.264583"
-         x="32.803802"
-         y="32.538757"
+         x="40.610752"
+         y="33.884621"
          id="text72750"><tspan
            sodipodi:role="line"
            id="tspan72748"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.2889px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
-           x="32.803802"
-           y="32.538757">MB834200B-15</tspan></text>
+           x="40.610752"
+           y="33.884621">MB834200B</tspan></text>
     </g>
   </g>
 </svg>

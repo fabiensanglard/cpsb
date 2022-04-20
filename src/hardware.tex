@@ -999,7 +999,7 @@ Other titles such as Forgotten World required all the sprites the machine could 
 \subsubsection{Starfields}
 Besides SCROLLs, the CPS-1 has two "STARfields" which are always behind the SCROLLs and always in order STAR1 then STAR2. 
 
-The star tiles are stored in GFXROM but a pseudo-random generator cycle the colors from the STAR1 and STAR2 set of 32 palettes. By using the palettes astutely, these two layers can simulate fields of stars. 
+The star tiles are stored in GFXROM but a pseudo-random generator cycles the colors from the STAR1 and STAR2 set of 32 palettes. By using the palettes astutely, these two layers can simulate fields of stars. 
 
 These STARs layers were a great feature for the many space shoot'em up released when the CPS-1 was designed since it saved considerable GFXROM space and artists time. The very first title released on CPS-1, Forgotten Worlds prominently showcased this feature.
 
@@ -1196,7 +1196,7 @@ With a double sprite framebuffer, the PPU does not just draw a line in advance b
 
 The gain is massive but it comes with three drawbacks. 
 
-First, the price of the machine goes up since it requires much more buffering capacity. At the resolution of the CPS-1, this mean 384*240 * 2 * 4 / 8 = 92KiB of VRAM.
+First, the price of the machine goes up since it requires much more buffering capacity. At the resolution of 384*224, 9-bit for each coordinate needs to be stored (5-bits palette index + 4-bit color index).
 
 
 The second impact is on the bus because a massive amount of data is now written and read to/from the VRAM. It requires so much bandwidth that an especially large data bus connecting the GFX ROM and the VRAM had to be created.
@@ -1280,9 +1280,7 @@ The two graphics chips closely work together by sharing custody of the GFX ROM a
 
 The CPS-A is truly the brain since besides deciding source and destination of data, it also generates LI: (Line increment) and FI: (Frame increment) towards the CPS-B where they are turned into HSYNC and VSYNC for the CRT.
 
-The 23-bit address line to the GFX ROM is special. It is not a raw address but a descriptor containing the layerID and a tileID within this layer. Since all layers have known tile dimensions, the CPS-B can decode address into a raw offset with a simple addition and a multiplication.
-
-Explain 19-bit palette index as layer + paletteID + colorID
+The 23-bit address line to the GFX ROM is special. It is not a raw address but a descriptor containing the layerID and a tileID within this layer. Since all layers have known tile dimensions, the PAL \icode{STF29} can decode addresses into a raw offset.
 
 
 Because it is the muscle of the tandem, the CPS-B is put under heavy contribution. At all time, it must not only compose all inputs toward the video system by reading the last-rendered sprite framebuffer and the five other layers but it must also write the sprite framebuffer for the next frame.
@@ -1299,13 +1297,13 @@ To keep up with the bandwidth requirements, the VRAM and GFX ROM systems are spe
 
 
 \subsubsection{VRAM}
-Not only the VRAM system is optimized from an architecture standing point via two completely independants blocks A and B, it also benefit from exceptionally performant components.
+Not only the VRAM system is optimized from an architecture standing point via two completely independents blocks A and B, it also benefit from exceptionally performant components.
 
-A quick glance at the \icode{HM53461P-10} pins shows that this chip does more than the simple data, address, and control we have seen so far.
+A quick glance at the \icode{HM53461P} pins shows that this chip does more than the simple data, address, and control we have seen so far.
 
 \sdraw{0.7}{HM53461P-10}
 
-Able to store 65,536 Ki x 4-bit, the \icode{HM53461P-10} is peculiar because it not only features a RAM port (\icode{D1-D4}), it also features a SAM "serial" port (\icode{SD1-SD4}).
+Able to store 65,536 Ki x 4-bit, the \icode{HM53461P} is peculiar because it not only features a RAM port (\icode{D1-D4}), it also features a SAM "serial" port (\icode{SD1-SD4}).
  
 The RAM port is accessed "normally" by first asserting the address lines along with the control lines and then reading or writing on the data lines.
 
@@ -1316,7 +1314,7 @@ This design allows RAM and SAM to be accessed simultaneously (although this neve
 
  This is a perfect component for a system that needs to write a few values at varying locations (like when the CPS-B renders a sprite buffer) but read a very large amount sequentially (like when the CPS-B must compose color code towards the palette system).
 
- On the Street Fighter II board, twelves \icode{HM53461P-10} are combined into six pairs, resulting in 384 Ki * 8-bit.
+ On the Street Fighter II board, twelves \icode{HM53461P} are combined into six pairs, resulting in 384 Ki * 8-bit.
 
 \nbdraw{vram}
 
@@ -1332,7 +1330,7 @@ This design allows RAM and SAM to be accessed simultaneously (although this neve
 \subsubsection{GFX ROM}
 To keep up with the much higher storage requirements, the GFX ROM system is not designed like the others. 
 
-While other chips on the board-B are \icode{27C010} and \icode{27C512}, the GFXROM is made of \icode{ MB834200B-15} (256 Ki x 16-bit). Because of their slow access time of 150ns, they are arranged in a two-way interleave resulting in two 16-bit "channels" data path.
+While other chips on the board-B are \icode{27C010} and \icode{27C512}, the GFXROM is made of \icode{MB834200B} (256 Ki x 16-bit). Because of their slow access time of 150ns, they are arranged in a two-way interleave resulting in two 16-bit "channels" data path.
 
 
 \sdraw{0.8}{MB834200B-15}
@@ -1363,9 +1361,9 @@ There were good reasons to be optimistic since Capcom engineers had crammed thei
 
 \subsection{Hard piracy}
 
-Hardware pirates produced bootlegs by physically copying Capcom PCBs. All counterfeiters had to do was dump the ROMs content from a legitimate board, buy the same off-the-shelf CPUs and TTLs components, assemble, burn new ROMs, and sell at a discounted rate.
+Hardware pirates produced bootlegs by physically copying Capcom PCBs. All counterfeiters had to do was dump the ROMs content from a legitimate board, buy the same off-the-shelf CPUs and TTLs components (Transistor–transistor Logic), assemble, burn new ROMs, and sell at a discounted rate.
 
-The CPS-1 answer was to use chips which were not readily available to the public. Capcom had Ricoh exclusively fabricate the two custom ASICs, the CPS-A and CPS-B. To protect against reverse-engineered by decapping followed by miscroscope analysis, M2 guard bars were layered on top of the chip\cite{arcadeHackerCPS1Rev} lines. 
+The CPS-1 answer was to use chips which were not readily available to the public. Capcom had Ricoh exclusively fabricate the two custom ASICs, the CPS-A and CPS-B. To protect against reverse-engineered by decapping followed by microscope analysis, metal grids were layered on top of the chip\cite{arcadeHackerCPS1Rev} lines. 
 
 
 \subsection{Soft piracy}
@@ -1456,15 +1454,16 @@ Mega Man the Power Battle & CPS-B-21  & 1995 \\
 
 
 \subsection{CPS-ID check}
-The simplest check available is the chip ID. By polling a register, the CPS-B returns its version number which must matches what the code expects. To make instructions patching of the 68000 ROMs more difficult, calls to verify the chip id are placed in several location in the code \red{(TODO verify with mame)}.
+The simplest check available is the chip ID. By polling a register, the CPS-B returns its version number which must matches what the code expects. To make instructions patching of the 68000 ROMs more difficult, calls to verify the chip id are placed in several location in the code.
+
+That did not prevent people from trying anyway\cite{strider_conversion}!
 
 \subsection{Moving registers}
 Another variation between CPS-Bs is the registers locations. The 68000 memory map of the CPS-B registers does not change, but the offset inside that mapping was altered between versions. Accessing the scroll control, scroll priority, and palette upload registers is done using a different offset for each game.
 
-TODO: Talk about how scroll enable bit change in a same registers.
+Additionally, the meaning of each bit in a register can changes like for example SCROLL\_ENABLE.
 
-\subsection{Multiplication check}
-Starting with vB-21, a slightly more robust feature gave the CPS-B the ability to perform multiplications. Two registers are written and a third one can be read. The 68000 code is expected to check that the returned multiplication result is the expected value.
+
 
 
 \subsection{Unexpected behavior detection}
@@ -1474,11 +1473,11 @@ The game still runs in the background and the audio is also behaving properly bu
 
 \subsection{Invalid offset detection}
 
-Each game uses a different amount of assets for each of its SCROLL and OBJ layers. On the "B" board, PAL chips such as the STF29 discussed earlier are hard-coded with knowledge of the amount of GFX ROM attributed to each layers.
+Each game uses a different amount of assets for each of its SCROLL and OBJ layers. On the "B" board, PAL chips such as the \icode{STF29} discussed earlier are hard-coded with knowledge of the amount of GFX ROM attributed to each layers.
 
 Tile references pointing beyong a range are ignored resulting in rendering "holes" if a game ROMs are inserted in a non-matching "B" board.
 
-\begin{q}{Mame cps-1 driver}
+\begin{q}{Mame cps-1 video driver}
 All graphics are
 stored together in the same ROMs but the hardware knows which part of the ROM space
 is 8x8 tiles, 16x16 tiles, 16x16 spites, 32x32 tiles, and all games tested only
@@ -1486,6 +1485,13 @@ draw tiles if their code falls in the valid range.
 
 If a tile is out of range, it is replaced by transparent pixels.
 \end{q}
+
+\begin{trivia}
+This is why transparent is encoded \icode{0xf}. Pull-up resistors are placed on the board data line. If not data signal is detected, \icode{0xf} is automatically "inserted".
+\end{trivia}
+
+\subsection{Multiplication check}
+Starting with vB-21, a slightly more robust feature gave the CPS-B the ability to perform multiplications. Two registers are written and a third one can be read. The 68000 code is expected to check that the returned multiplication result is the expected value.
 
 \subsection{Configuration Key}
 Up to 1991, all CPS-B variations were burned at the factory. They were set in silicon without a way to re-purpose them after the fact. This was not only expensive to have to revise the hardware circuits for each game, it was also a logistic difficulty to provision enough chips for a success and not be stuck with inventory on an unappreciated game.
@@ -1501,14 +1507,15 @@ These battery worked remarkably well since thirty years later you can still find
 \end{trivia}
 
 \subsection{Suicide batteries}
-The infamous "suicide" nickname came from the effect of losing power. A CPS-B without power lose its configuration and resets all its registers to values that none of the games use. Capcom offered a battery replacement to ressurect boards "C" which had committed sepuku but overtime ceased. Only recently people have found ways to "phoenix" them \red{bibliography missing}.
+The infamous "suicide" nickname came from the effect of losing power. A CPS-B without power lose its configuration and resets all its registers to "default" values that none of the games use. Capcom offered a battery replacement to ressurect boards "C" which had committed sepuku but overtime ceased. 
 
+As the reader will have guessed, passionate fan found a way to bring these games back to life.
 
-% \subsection{Sound}
-% Ask ben about "was full of tamper protection".
+The first method is called "phoenix". It is a tedious process which consist in dumping a game ROM and patch the CPS-B register access to use the "default value"\cite{csp1_phoenix}. The insane people doing this are so good at it that they even change the splash screen of the game to feature a "Phoenix Edition" icon.
 
+The second method is even more impressive since it involved circuit surgery by re-uploading the configuration into the CPB-B, essentially de-suiciding them\cite{arcadeHackerCPS1Desuicide}.
 
-
+\nbimg{phoenix_screen.png}
 
 
 
@@ -1523,9 +1530,9 @@ Everybody won. Even those who where not supposed to. The one aspect upon which t
 
  The CPS-1 not only featured a high level of security, it kept on adding more. But a copy-protection system exists to deter reasonably motivated attackers. Capcom's games were so loved and so successful that they became the object of an unprecedented level of scrutiny over an extended period of time.
 
-If the security by obscurity of the PAL chips was not the strongest, it was fair to assume the ASICs would be rock solid. Astonishingly, CPS-A and CPS-B replicas were manufactured under the name "COMCO"\cite{arcadeHackerCPS1}. It is unknown if an insider leaked the schematics or if someone made it their life mission to reverse-engineer these chips but it did happen.
+Of all the security measures, it would have been fair to assume the ASICs would be a rock. Astonishingly, CPS-A and CPS-B replicas were manufactured under the name "COMCO"\cite{arcadeHackerCPS1}. It is unknown if an insider leaked the schematics or if someone made it their life mission to reverse-engineer these chips but it did happen.
 
-As crack appeared in its shield, Capcom did not give up on protecting its tiles. As it had proved itself able to evolve and compete in the arcades, it  embraced the challenge to always remain one step ahead of bootlegers.
+As crack appeared in its shield, Capcom did not give up on protecting its tiles. As it had proved itself able to evolve and compete in the arcades, it embraced the challenge to always remain one step ahead of bootlegers.
 
 \subsection{CPS-1.5 Kabuki}
 In 1992, Capcom released the CP System Dash (a.k.a CPS-1.5). Fully encased in a gray plastic box, it introduced a fourth satellite "Qboard" PCB to handle playback of positional three-dimensional Qsound audio. In total, five games would be produced until late 1993.
@@ -1546,7 +1553,7 @@ In 1992, Capcom released the CP System Dash (a.k.a CPS-1.5). Fully encased in a 
 }\caption*{Capcom CPS-1.5 based arcades games.}
 \end{figure}
 
-The CPS 1.5 is noteworthy for its improved copy-protection where the audio instructions are stored in encrypted ROM. The audio CPU is a special kind of Z-80 dubbed Kabuki\cite{arcadeHackerKabuki} able to decrypt instructions on the fly.
+The CPS 1.5 is noteworthy for its improved copy-protection where the audio instructions are stored in encrypted ROM. The audio CPU is a special Z-80 dubbed Kabuki\cite{arcadeHackerKabuki} able to decrypt instructions on the fly.
 
 The encryption scheme is symmetric with the private key being stored in the Z-80. It is not burned in the silicon but, alike the CPS-1 configuration, stored via RAM. To keep that key alive, pin 28 is re-purposed from "DRAM refresh" (the sound system uses SRAM) to provide power via a second "suicide battery". 
 

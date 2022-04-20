@@ -7,7 +7,7 @@
    viewBox="0 0 274.94607 129.93645"
    version="1.1"
    id="svg52696"
-   inkscape:version="1.1 (c4e8f9e, 2021-05-24)"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
    sodipodi:docname="shared_custody.svg"
    inkscape:export-filename="/Users/sanglardf/sf2b/shared_custody.png"
    inkscape:export-xdpi="96"
@@ -326,7 +326,7 @@
          id="tspan12646-6"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
          x="153.289"
-         y="95.957802">8-bit</tspan></text>
+         y="95.957802">4-bit</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
@@ -337,7 +337,7 @@
          id="tspan12646-3"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
          x="153.289"
-         y="78.674126">4-bit</tspan></text>
+         y="78.674126">9-bit</tspan></text>
     <path
        sodipodi:type="star"
        style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:30.2362;stroke-miterlimit:4;stroke-dasharray:none"
@@ -400,7 +400,7 @@
          id="tspan12646-6-3"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
          x="153.289"
-         y="129.52426">8-bit</tspan></text>
+         y="129.52426">4-bit</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
@@ -411,7 +411,7 @@
          id="tspan12646-3-4"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
          x="153.289"
-         y="112.24059">4-bit</tspan></text>
+         y="112.24059">9-bit</tspan></text>
     <path
        sodipodi:type="star"
        style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:30.2362;stroke-miterlimit:4;stroke-dasharray:none"
@@ -490,9 +490,9 @@
          id="text12648-9-5"><tspan
            sodipodi:role="line"
            id="tspan12646-7-4"
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';fill:#ff0000;fill-opacity:1;stroke-width:0.264583"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
            x="146.36295"
-           y="56.42202">?-bit</tspan></text>
+           y="56.42202">13-bit</tspan></text>
     </g>
     <g
        id="g14067-5-0-8"
@@ -513,9 +513,9 @@
          id="text12648-9-5-2"><tspan
            sodipodi:role="line"
            id="tspan12646-7-4-6"
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';fill:#ff0000;fill-opacity:1;stroke-width:0.264583"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
            x="146.36295"
-           y="56.42202">?-bit</tspan></text>
+           y="56.42202">13-bit</tspan></text>
     </g>
     <rect
        style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:1"
@@ -560,7 +560,7 @@
          id="text61067"><tspan
            sodipodi:role="line"
            id="tspan61065"
-           style="font-weight:bold;stroke-width:0.264583"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';stroke-width:0.264583"
            x="199.93428"
            y="95.620918">CPS-B</tspan></text>
     </g>
@@ -582,7 +582,7 @@
          id="text61067-6"><tspan
            sodipodi:role="line"
            id="tspan61065-2"
-           style="font-weight:bold;stroke-width:0.264583"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';stroke-width:0.264583"
            x="-25.15888"
            y="95.306671">CPS-A</tspan></text>
     </g>
