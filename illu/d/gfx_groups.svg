@@ -35,7 +35,8 @@
      inkscape:window-x="-6"
      inkscape:window-y="-6"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="layer1"
+     inkscape:snap-global="false" />
   <defs
      id="defs4807" />
   <g
@@ -43,6 +44,28 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0.13124861,-0.34236395)">
+    <g
+       id="g43821"
+       transform="translate(6.9882353)">
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.670141"
+         id="rect25131"
+         width="91.778671"
+         height="13.976471"
+         x="42.707039"
+         y="123.12704" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:8.46667px;line-height:1.25;font-family:sans-serif;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="75.408546"
+         y="133.12489"
+         id="text18129-6-1"><tspan
+           sodipodi:role="line"
+           id="tspan18127-7-2"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
+           x="75.408546"
+           y="133.12489">TILE ID</tspan></text>
+    </g>
     <rect
        style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.750001"
        id="rect25131-6"
@@ -72,11 +95,11 @@
        x="39.526993"
        y="44.018837" />
     <rect
-       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.750001"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.783013"
        id="rect25131-5-0"
-       width="69.532936"
+       width="75.788788"
        height="13.976471"
-       x="-113.72648"
+       x="-119.98233"
        y="31.057289"
        transform="rotate(-90)" />
     <rect
@@ -101,7 +124,7 @@
        width="56.255287"
        height="44.375294"
        x="122.687"
-       y="92.761772"
+       y="100.69928"
        ry="5.2411842" />
     <rect
        style="fill:#898989;fill-opacity:1;stroke:#000000;stroke-width:0.750001"
@@ -125,13 +148,13 @@
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
        x="135.25597"
-       y="106.69086"
+       y="114.62833"
        id="text6431-0"><tspan
          sodipodi:role="line"
          id="tspan6429-6"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Roboto;-inkscape-font-specification:Roboto;stroke-width:0.264583"
          x="135.25597"
-         y="106.69086">CPS-A</tspan></text>
+         y="114.62833">CPS-A</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
@@ -144,70 +167,45 @@
          x="22.657068"
          y="35.900864">GFXROM</tspan></text>
     <rect
-       style="fill:#666666;fill-opacity:1;stroke:#000000;stroke-width:0.750001"
-       id="rect4994-1-5-2"
-       width="34.591759"
-       height="13.277643"
-       x="19.711498"
-       y="78.934769" />
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:8.46667px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="23.691397"
-       y="88.655571"
-       id="text18129"><tspan
-         sodipodi:role="line"
-         id="tspan18127"
-         style="font-size:8.46667px;stroke-width:0.264583"
-         x="23.691397"
-         y="88.655571">STF29</tspan></text>
-    <rect
        style="fill:#898989;fill-opacity:1;stroke:#000000;stroke-width:0.750001"
        id="rect4994-1-5-3"
        width="32.743824"
        height="14.18666"
        x="134.96828"
-       y="115.79702" />
+       y="123.7345" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:8.46667px;line-height:1.25;font-family:sans-serif;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
        x="136.78191"
-       y="125.97234"
+       y="133.90976"
        id="text18129-6"><tspan
          sodipodi:role="line"
          id="tspan18127-7"
-         style="font-size:8.46667px;stroke-width:0.264583"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;font-family:Roboto;-inkscape-font-specification:Roboto;stroke-width:0.264583"
          x="136.78191"
-         y="125.97234">CACHE</tspan></text>
+         y="133.90976">CACHE</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:8.46659px;line-height:1.25;font-family:sans-serif;word-spacing:0px;writing-mode:vertical-lr;text-orientation:upright;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264581"
        x="150.54131"
-       y="57.511002"
+       y="61.35453"
        id="text18129-6-6"><tspan
          sodipodi:role="line"
          id="tspan18127-7-7"
-         style="font-size:8.46659px;writing-mode:vertical-lr;text-orientation:upright;fill:#ffffff;fill-opacity:1;stroke-width:0.264581"
-         x="58.908649"
-         y="149.14366">SYNC</tspan></text>
-    <rect
-       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.750001"
-       id="rect25131"
-       width="114.95646"
-       height="13.976471"
-       x="7.9052224"
-       y="110.05766" />
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46659px;font-family:Roboto;-inkscape-font-specification:Roboto;writing-mode:vertical-lr;text-orientation:upright;fill:#ffffff;fill-opacity:1;stroke-width:0.264581"
+         x="57.511002"
+         y="154.38484">SYNC</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:8.46667px;line-height:1.25;font-family:sans-serif;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="74.394089"
-       y="119.91495"
-       id="text18129-6-1"><tspan
+       style="font-style:normal;font-weight:normal;font-size:8.46659px;line-height:1.25;font-family:sans-serif;word-spacing:0px;writing-mode:vertical-lr;text-orientation:upright;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264581"
+       x="37.812733"
+       y="56.731945"
+       id="text18129-6-6-6"><tspan
          sodipodi:role="line"
-         id="tspan18127-7-2"
-         style="font-size:8.46667px;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
-         x="74.394089"
-         y="119.91495">ADDRESS</tspan></text>
+         id="tspan18127-7-7-3"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46659px;font-family:Roboto;-inkscape-font-specification:Roboto;writing-mode:vertical-lr;text-orientation:upright;fill:#ffffff;fill-opacity:1;stroke-width:0.264581"
+         x="57.261112"
+         y="37.283566">ADDRESS</tspan></text>
     <g
        id="g12959">
       <text
@@ -218,7 +216,7 @@
          id="text18129-6-1-1"><tspan
            sodipodi:role="line"
            id="tspan18127-7-2-9"
-           style="font-size:6.35px;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
            x="87.596428"
            y="19.143744">DATA</tspan></text>
       <text
@@ -229,7 +227,7 @@
          id="text18129-6-1-1-5"><tspan
            sodipodi:role="line"
            id="tspan18127-7-2-9-8"
-           style="font-size:6.35px;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
            x="87.596428"
            y="29.253138">DATA</tspan></text>
       <text
@@ -240,7 +238,7 @@
          id="text18129-6-1-1-2"><tspan
            sodipodi:role="line"
            id="tspan18127-7-2-9-7"
-           style="font-size:6.35px;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
            x="87.596428"
            y="39.36253">DATA</tspan></text>
       <text
@@ -251,7 +249,7 @@
          id="text18129-6-1-1-7"><tspan
            sodipodi:role="line"
            id="tspan18127-7-2-9-3"
-           style="font-size:6.35px;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
            x="87.596428"
            y="49.471924">DATA</tspan></text>
     </g>
@@ -266,5 +264,23 @@
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.61792px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.407;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          x="87.813843"
          y="19.466593" /></text>
+    <rect
+       style="fill:#4b4b4b;fill-opacity:1;stroke:#000000;stroke-width:0.750001"
+       id="rect4994-1-5-2"
+       width="65.340225"
+       height="21.663528"
+       x="7.4820876"
+       y="117.27107" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:8.46667px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="28.132257"
+       y="131.11247"
+       id="text18129"><tspan
+         sodipodi:role="line"
+         id="tspan18127"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;font-family:Roboto;-inkscape-font-specification:Roboto;stroke-width:0.264583"
+         x="28.132257"
+         y="131.11247">STF29</tspan></text>
   </g>
 </svg>

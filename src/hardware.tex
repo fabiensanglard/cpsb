@@ -616,7 +616,7 @@ By detecting VSYNC and HSYNC, the CRT can "synchronize" the signal with the guns
 
 \subsection{Fields}
 
-The scanline algorithm we described earlier is flawed. If the gun draws a line and upon HSYNC goes back to the left, it would be drawing the same upper left line over and over. 
+The process of drawing scanlines over the screen, also called "Raster scan", is flawed as described. If the gun draws a line and upon HSYNC goes back to the left, it would be drawing the same upper left line over and over again. 
 
 It is barely noticeable but scanlines are not drawn straight. There is a slight downward slope. This way, when HSYNC is received and horizontally position is reset, the next line is drawn below the previous.
 
@@ -684,6 +684,11 @@ To check all the boxes, Capcom had the choice between only two resolutions, 288x
 
 Going for 384x224 was an interesting decision from an aspect-ratio standing point. Other manufacturers such as SNK had also dropped 4:3 with their Neo-Geo using 320×224 but the resulting aspect ratio of 10:7 was close to 4:3. With its 12:7, the CPS-1 drew many more dots horizontally and the image appeared vertically compressed. 
 
+
+
+% \begin{trivia}12:7 is to closed to 16:9 that, years later, people new to emulation actually wondered if Capcom actually intended games to be played in 16:9 instead of 4:3!
+% \end{trivia}
+
 The result was that the CPS-1 did not have square pixels which was a huge problem for artists.  
 
 \begin{q}{Akiman\cite{akiman}}
@@ -698,7 +703,7 @@ Later I protested again to which my boss replied it was a calculation error.
 
 
 \begin{trivia}
-The lost beauty of the CRT system is that they had tolerances. The designers of R-Type in 1987 played on these in order to craft a video system with increased horizontal resolution. 
+The designers of R-Type in 1987 played on CRT tolerance in order to craft a video system with increased horizontal resolution. 
 
 They chose the VSYNC to pulse at 55Hz. This gave them extra time between frames so they had to sacrifice fewer lines to VBLANK. They reinvested this saving into more vertical lines to reach 256. As we have seen before, increasing horizontal resolution is just about improving the analog signal. This is what the people at Irem did to push it to 384. In the end, the game enjoyed a higher than competitors resolution of 384x256 at the cost of a 5Hz refresh penalty.
 \end{trivia}
@@ -708,7 +713,7 @@ They chose the VSYNC to pulse at 55Hz. This gave them extra time between frames 
 \subsection{Colors}
 With a resolution and a refresh rate, the last characteristic of the video system to decide on was the color depth. 
 
-On the CPS-1, palettes encode colors using 4 bits per RGB components for a total of 12 bits totaling 4,096 colors. 
+Colors are expressed with 16 bits. 4 bits per RGB components for a total of 12 bits allow 4,096 colors. 
 
 
 \begin{figure}[H]
@@ -722,11 +727,11 @@ On the CPS-1, palettes encode colors using 4 bits per RGB components for a total
 \caption*{CPS-1's 12-bit per color cube.}
 \end{figure}
   
-With the four remaining bits, 16 shades of a color can be achieved which means overall, 65,536 different colors are available.
+The four remaining bits express brightness so 16 shades of a color can be achieved. Overall, 65,536 different colors are available.
 
 \begin{figure}[H]
 \nbdraw{brightness}
-\caption*{Architecture of the GFX}
+\caption*{All 15 brightness possible using Red \icode{\{0xF,0x0, 0x0\}} base.}
 \end{figure}
 
 \subsection{Putting it all together}
@@ -747,19 +752,24 @@ The horizontal blank between the end of a scanline and hsync is called the "fron
 
 Keep in mind that if HSYNC happens 262 tiles (blue vertical line), VSYNC occurs only once. The dashed horizontal red line is only here to represent where the electron gun reset to the top of the screen.
 
-Although the last drawing is a "classic", it may not be for everybody. The same timing with a CRT syncing may be more intuitive to some.
+Note on the previous drawing how large vertical blanking is. It allows more operations in the background. On CPS-1, 16 lines are required for a palette page (32) upload, limiting the rate to two per frame.
 
+\begin{figure}[H]
 \nbdraw{sf2_withoverscan}
+\caption*{Same concept but with image as it appears on a CRT.}
+\end{figure}
+
 
 \subsection{From pen to palette to color}
 
-To generate the color signals, the CPS-1 uses a palette system holding up to 4,096 entries via 4 x 2KiB \icode{CXK5814P-35L} SRAM chips.
+To generate the color signals, the CPS-1 uses a palette system storing colors via 4 x 2Ki x 1B \icode{CXK5814P-35L} SRAM chips.
 
 \sdraw{0.45}{CXK5814P-35L} 
 
-Individually these are simple memory elements with pinouts explained earlier. Power \icode{+5V}, Ground \icode{GND}, Addresses \icode{A0-A11}, Data \icode{D0-D7}, Write (\icode{WE}), Read (\icode{OW}), and Chip Enabled (\icode{CE}).
+Individually these are simple memory elements with pinouts explained earlier. Power \icode{+5V}, Ground \icode{GND}, Addresses \icode{A0-A10}, Data \icode{D0-D7}, Write (\icode{WE}), Read (\icode{OW}), and Chip Enabled (\icode{CE}).
 
-What is uncanny is that the component connected to the address lines is not connected to the data lines. Instead data is routed towards a DAC.
+What is uncanny is that the component connected to the address lines is not the one connected to the data lines.
+ % Instead data is routed towards a DAC.
 
 
 
@@ -768,11 +778,14 @@ What is uncanny is that the component connected to the address lines is not conn
 
 \nbdraw{video_lookup}
 
- The GFX drives a 12-bit address bus at 8MHz with. One line is used for \icode{CE}ing chip pairs. The value of the 11 remaining bits is an "index" (referred to as "pen" from now-on) into the SRAM chips, . 
+The CPS-B drives the address bus at 8MHz to generate the DAC 16-bit inputs which in turn generates three analog Red, Green, and Blue signals. In parallel, the GFX generates the HSYNC and VSYNC signals, composited into CSYNC.
+Notice how one line is used not for addressing but to \icode{CE}ing chip pairs. 
 
- The pen receives ink from the palette and a 16-bit color is generated on the data bus towards the DAC. Three analog Red, Green, and Blue signals are generated. Notice that, in parallel, the GFX also generates the horizontal and vertical sync signal, composited into CSYNC. Through JAMMA, these signals are fed unaltered to the electrons guns of the CRT.
+Colors are grouped into palettes containing 16 units (the last index is always transparent). As will be studied later, the GFX system features 6 layers and each of them allows 32 palettes. This brings the total to 6*32*15 = 2, 880 colors which requires 12-bit to be indexed.
 
- Note that the palette SRAM chip are nearly constantly used by the CRT to generated colors and can only be updated during VBLANK. Designing the machine why long blanking allows for more background operations. 
+% 3,072 colors accounts for 3,072*2= 6,144 bytes. There is a little bit of palette SRAM not used.
+
+ The palette SRAM chip are nearly constantly used to generate colors. It can only be updated during VBLANK. Designing the machine with long blanking was paramount to allow updates. 
 
 
 
@@ -842,15 +855,16 @@ The graphic system is the most complicated to understand in the whole machine. I
 
 On one side, there is Control which requests an elaborated composition of backgrounds and sprites to appear on the screen. The description is much more verbose than a simple integer received by the Sound system to play a sample or a music. The only way to remain efficient is to bend the the rules of layering and share access to resources. 
 
-Not only the graphic registers are exposed, Control also has a direct access to the video palette, and more importantly write access to a shared portion of "GFX RAM" where the 68000 edicts what to draw.
+Not only the graphic registers are exposed, there is also a huge portion of "GFX RAM" which is shared. Control's 68000 writes "draw commands" which the GFX system eventually reads.
 
-On the other side is the CRT which mercilessly demand a pixel color every 125ns. The problem is a matter of timing and latency since no memory is fast enough to satisfy color request on the fly on a per-pixel basis. A color must be issued on the dot, not matter what.
+On the other side is the 8 MHz Video system which mercilessly demand a pixel color every 125ns. A color must be issued on the dot, no matter what. The problem is a matter of timing and latency since no memory is fast enough to satisfy a pipeline if it were to work on a per-pixel basis. 
 
 Solving both these problems exceptionally well is what made the CPS-1 stand out. It is unarguably the "secret sauce" of the machine. 
 
-To make their dream machine become a reality, Capcom did not rely on another company's product. They crafted their own ASICs, tailored to their needs.
+\subsection{CPS-A and CPS-B: The ASICs powerhouse}
+To make their dream machine become a reality, Capcom did not rely on another company's product. They crafted their own ASICs (Application-Specific Integrated Circuit), tailored to their needs.
 
-The architecture summary shows the heart of GFX is made of not one but two chips called the CPS-A and the CPS-B. 
+% The architecture summary shows the heart of GFX is made of not one but two chips called the CPS-A and the CPS-B. 
 
 \begin{figure}[H]
 \nbdraw{ppus}
@@ -860,10 +874,12 @@ The architecture summary shows the heart of GFX is made of not one but two chips
 
 
 
-\subsection{Pixel format and Palette}
-The elementary unit of work is a 4-bit value which is an index into a 16 colors palette. Everything, from backgrounds to sprites uses these 4-bit nibbles. As a result, this system is completely unaware of what color will end up being issued by the video system to the CRT.
+\subsection{Pens and Ink}
+The elementary unit of work is a 4-bit value which is an index into a 16 colors palette. Everything, from backgrounds to sprites uses these 4-bit nibbles. A good analogy, and the terminology uses in this chapter, is to picture the GFX manipulating "pens" (palette indexes). The color to appear on the screen is decided not by the pen but by the value at this index, which we will call "ink".
 
-All graphic assets are stored in GFXROM (except for the palette which are described later). Each 4 bits of a value are stored across four bytes in a planar fashion.
+% As a result, this system is completely unaware of what color will end up being issued by the video system to the CRT.
+
+All graphic assets are stored in GFXROM (except for the palette which are described later). Pen values are stored across four bytes in a planar fashion.
 
 
 
@@ -891,22 +907,25 @@ A naive design would work at the same speed as the video system (8MHz). For each
 
 Even thought the machine uses the fastest type of SRAM, the response time of these component does not permit so many roundtrip. The overhead is too important to complete the operation in just 125ns.
 
-The solution to this problem is to increase throughput (read pixels in advance) and cache the result. To this effect, the CPS-A features 256 bytes to cache information retrieved from the GFXRAM during HBLANK.
+The solution to this problem is to increase throughput by reading pen values in advance and caching the result. To this effect, the CPS-A features 256 bytes to cache information retrieved from the GFXRAM during HBLANK.
 
  \begin{figure}[H]%
  \nbimg{DL-0311.png}%
- \caption*{CPS-A die. Notice the real estate dedicated to GFXRAM caching.}%
+ \caption*{CPS-A die. Notice the real estate dedicated to tilemap caching.}%
  \end{figure}%
 
 
 
-There is another optimization that allows the GFX to keep up with the pixel clock where colors codes are "streamed" without intermediate storage. 
+Another optimization that allows the GFX to keep up with the pixel clock is the streaming of colors codes without intermediate storage. 
 
-The system works with the GFXROM addresses lines connected to the CPS-A which acts as the brain but the data lines are connected to the CPS-B where color codes are processed before being sent to the video system.
+The system works with the GFXROM addresses lines connected to the CPS-A which acts as the brain but the data lines  connected to the CPS-B (the legs) where pen values are selected/discarded before being sent to the video system.
 
-The grid aligment works well with streaming because of the predictable screen location of the tiles in the map.
+The grid alignment works well with streaming because of the predictable screen location of the tiles in the map.
 
+ \begin{figure}[H]%
 \nbdraw{gfx_groups}
+ \caption*{In Street Fighter 2, a PAL \icode{STF29} decode tile ids into memory offsets.}%
+ \end{figure}%
 
 Notice how the GFXROM data is retrieved four bytes at a time via lines groups APD, BPD, CPD, and DPD. 
 
@@ -978,9 +997,9 @@ Other titles such as Forgotten World required all the sprites the machine could 
 
 
 \subsubsection{Starfields}
-Besides SCROLLs, the CPS-1 has two "STARfields" which work without using a single tile. 
+Besides SCROLLs, the CPS-1 has two "STARfields" which are always behind the SCROLLs and always in order STAR1 then STAR2. 
 
-When enabled, the CPS-B circuits uses a pseudo-random generator to generate spots of one color surrounded by a plain second color. By using the palettes astutely, these two layers can simulate fields of stars. 
+The star tiles are stored in GFXROM but a pseudo-random generator cycle the colors from the STAR1 and STAR2 set of 32 palettes. By using the palettes astutely, these two layers can simulate fields of stars. 
 
 These STARs layers were a great feature for the many space shoot'em up released when the CPS-1 was designed since it saved considerable GFXROM space and artists time. The very first title released on CPS-1, Forgotten Worlds prominently showcased this feature.
 
@@ -1052,7 +1071,7 @@ This feature allows to create complex effect where sprites are sandwitched by a 
 \subsubsection{Scrollrow}
 SCROLL 2 was given the special ability to scroll rows of a tile horizontally based on the vertical drawn position. 
 
-This capability is commonly known as "scrollrow" and is implemented via a table of 256 9 bit integers (one for each line) in GFXRAM.
+This capability is commonly known as "scrollrow" and is implemented via a table of 256 9-bit integers (one for each line) in GFXRAM.
 
 This feature stresses the cache system in the CPS-A because more than a tile width must be retrieved.
 
