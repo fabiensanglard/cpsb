@@ -1,31 +1,53 @@
-\chapter{Programming concepts}
+\chapter{General Concepts}
 
-To program a CPS-1 board mean to produce four sets of ROMs. These are the graphics assets holding the sprites and tilemap contained in the GFX ROM, the 68000 instructions to pilot the control system, Z-80 ROM which contains not only instructions but also YM2151 bytecode to generate the FM music, and finally MSM6295 ROM where are stored the audio samples.
+A CPS-1 game production pipeline features, at the top, the programmers who write code and the artists who produce audio assets (\icode{.wav}, and \icode{.mvg}) and graphics assets (\icode{.png}). All these resources are injected into a build system resulting in four sets of ROMs. 
+
+%  \begin{figure}[H]
+% \sdraw{1.0}{cps1_arch}
+% \caption*{Three parts, two ROMS}
+% \end{figure}
 
  \begin{figure}[H]
-\sdraw{1.0}{cps1_arch}
-\caption*{Three parts, two ROMS}
+\sdraw{1.0}{game_pipeline}
+\caption*{Game ROMs dependency graph}
 \end{figure}
 
-To make things even more difficult each of these sets use a specific data width and interleaving according to what was described in the hardware chapter.
+Some dependencies in the graph make a lot of sense. The Z-80 source code (\icode{.c} and \icode{.s}) impacts the Z-80 ROM only. Likewise, the 68k code (also \icode{.c} and \icode{.s}) ends up in the 68k ROM.
 
-\pagebreak
+Other dependencies are more convoluted. The \icode{.wav} files for example need to be compressed to ADPCM for the OKI ROM but they must also generate a \icode{.h} header file containing sound ID so the 68k can refer to them when requesting playback to the Z-80.
+
+Likewise, the \icode{.png} files are processed and formatted into the GFX ROM. But they also require to generate a \icode{.h} header file containing tile ID and a \icode{.c} file containing the tile palettes which are compiled into the 68k ROM. 
+
+An even more complicated graph emerge from the music \icode{.mvg} files. The music track contains YM2151 commands that must be transformed in a \icode{.c} compiled along with the Z-80 code. These end up in the Z-80 ROM. To be referred to, the header file containing music ID must also be compiled with the 68k ROM. Lastly, music are emblished with audio samples which must also be compressed to ADPCM and added to the OKI ROM.
+
+To complicate things even further, each of the four ROM mentioned must use different word size and interleaving across chips containing it.
+
+\subsection{ccps: The CPS-1 SDK}
+The next chapters are dedicated to studying the whole pipeline where each assets is processed to produce the four ROMs making a game. 
+
+The technique presented have been tested via tools authored during the redaction of this book. These tools were combined together into a SDK called \icode{ccps}. 
+
+It is both free and open source. You can get it with the following commands.
+
+\lstinputlisting[language=Bash]{src/code/clone_ccps.sh}
+
+
 % Along the way must be decided of communication protocols for each interfaces used by each system to communicate. Namely the GFX RAM where the control system talks with the gfx system and the two 1-byte latches where control send commands to the audio system.
 
 
-\section{Language}
+\section{Programming Language}
 For all their CPS-1 titles, Capcom developers used z80/m68k assembly. They did not have much choice anyway since compilers were expensive in the late 80s and not that good at producing compact code. As we will see, ROM space was precious and controlling the volume of instructions with accuracy was paramount.
 
 Since the goal of this chapter is to explains how things works, it uses C for its greater readability and wider knowledge base among programmer. A little bit of assembly is used but only to bootstrap the CPUs.
 
 If you ever decide to take your CPS-1 program to the next level, you will without a doubt have to go the assembly way.
-
-\section{Down to the metal}
+	
+\section{CPUs bootstrapping}
 In a programming world were developers are more and more removed from the hardware, programming the Z-80 or the M68000 is a joy.
 
 Without libraries, frameworks, dynamic linker, syscalls, virtual memory, and loader, development happens down to the metal.
 
-An innocent three-line C program is enough to get a glimpse of what awaits us.
+Even an innocent three-line C program is enough to get a glimpse of what bootstrapping involves.
 
 \lstinputlisting[language=C]{src/code/variablesDeclaration.c}
 
@@ -41,33 +63,63 @@ Finally we come to variable \icode{varE}. Since it is writable, the linker will 
 
 The answer is that it cannot. The "copy-down" must be done when the CPU starts, before executing the \icode{main} function of our program is called. 
 
-This bootstrap, called \icode{crt0}, and other subtle mecanims are detailed in the CPU sections.
+This bootstrap, called \icode{crt0}, and other subtle mechanisms are detailed in the CPU sections.
 
 
-\section{Interrupts}
 
-All APIs and interfaces of the machine are well defined. The GFX system expects commands via the GFX RAM and the 68000 bus arbitrates read/write operations. On the Audio side, the YM2151 exposes two registers (cmd \& data) and so does the MSM6295 both access are arbitrated by the memory map. The on area which is undefined is the interface between the Control and Audio systems.
 
-Try to think of a design yourself. You have two 1 byte latches, a 68000 running at 10MHz which can write in them but not read. On the other end is a Z-80, working at 3.579 MHz which can read the latches but not write them. How do you make these two CPUs talk to each other with 100\% reliability?
 
-There are many ways to solve this problem. Here is how Street Fighter II board solved it. The first issue is that the reader runs slower than the writer which makes it possible to "miss" a command. Inverting the ratio is done via CPU interrupts. The 68000's IPL1 line is directly connected to the VSYNC line of the video system. Likewise, the Z-80 INT line is connected to the timer (CT1) line of the YM2151.
+\section{Systems communication}
 
+There are many chip in the machine that need to talk to each others. In the hierarchy we studied in the first chapter, each line is an interface. 
+
+\nbdraw{arch_hierarchy}
+
+Most of these interfaces are registers where values are written and read. To arbitrate these access, the CPU buses are leveraged.
+
+The GFX system reads draw commands and the 68000 writes draw commands via the GFX RAM with the 68000 bus arbitrates.
+
+The Z-80 writes commands to the YM2151 and the OKI via registers. Again, these access is arbitrated by the Z-80 bus.
+
+This leave the interface between the Control system and Audio system undefined. Try to think of a design yourself with the following constraints.
+
+There are two 1 byte latches. On one side is a 68000 running at 10MHz which can write in them but not read. On the other end is a Z-80, working at 3.579 MHz which can read the latches but not write them. 
+
+How can you make these two CPUs talk to each other reliably, making sure the stream of commands features no duplicates and no drops?
+
+\subsection{Interrupts}
+
+Both the Z-80 and the 68k have interrupt system. These are used to solve many problems and in particular the issue of communicating over the latches.
+
+Since the reader (z80) runs slower than the writer (68k) it possible is for a latch value to be overwritten (write twice) before it is read. 
+
+Inverting the ratio is done precisely via interrupts. The 68k's IPL1 line is directly connected to the VSYNC line of the video system. Likewise, the Z-80 INT line is connected to the timer (CT1) line of the YM2151.
+
+\begin{figure}[H]
 \nbdraw{interrupt_snd}
+\caption*{z80 interrupt system}
+\end{figure}
 
-This way the writer ticks every 16ms while the reader ticks every 4ms. 
+This configuration lets the writer ticks every 16ms while the reader ticks every 4ms. This ensures no latch value can be dropped but introduces the problem of duplicates reads.
 
+To avoid these, the Z-80 commits to disregards a latch content if its content did not change since the last time it was checked.
+
+\begin{figure}[H]
 \nbdraw{interrupt_ctrl}
+\caption*{68k interrupt system}
+\end{figure}
 
-This ensures no commands can be dropped but introduces the problem of duplicates. To avoid these, the Z-80 disregards an input if it is the same as the last one.
+This introduces an ultimate problem. It is not possible for the 68k CPU to send the same byte twice in a row. To work around this, the writer commits on never writing the same byte twice which is done via a no-op byte (0xFF) written after every byte.
 
-This introduces an ultimate problem if the 68000 needs to send the same command twice in a row. To work around this, the writer commits on never writing the same byte twice which is done via a no-op byte (0xFF) written after every command.
 
+
+
+\subsection{How they did it in 1989}
 
 \begin{trivia}
 In the protocol we described, only one latch is used. The second one is completely disregarded. This is exactly the way Street Fighter II board operates	.
 \end{trivia}
 
-\subsection{Implementation details}
 Leveraging interrupt turns our single threaded CPU into dual threaded system (except one has to restart from the beginning every time) able to reliably exchange values. But we still have to decide of what meaning give ot the data. 
 
 
@@ -96,7 +148,3 @@ Sound also needs to keep track of wall time in order to feed YM2151 music instru
 \section{Randomness}
 Generating a series of pseudo-random numbers can be achieved with a Maximum-Length LFSRs (Linear Feedback Shift Register) and a proper seed. The issue is what to use for the seed. We could use a timer keeper and use the first player inputs. But that would open our games to players gaming the system. A better seed source is to use uptime.
 
-\section{CCPS, the CPS-1 SDK}
-Framework CCPS is the CPS-1 SDK companion of this book. It is free and opensource. You can get it with the following command.
-
-\lstinputlisting[language=Bash]{src/code/clone_ccps.sh}

@@ -7,7 +7,7 @@
    viewBox="0 0 132.08 182.88"
    version="1.1"
    id="svg20255"
-   inkscape:version="1.1.2 (76b9e6a115, 2022-02-25)"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
    sodipodi:docname="build_graph_sfx.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -27,10 +27,10 @@
      inkscape:zoom="0.83511149"
      inkscape:cx="217.33625"
      inkscape:cy="489.75497"
-     inkscape:window-width="1280"
-     inkscape:window-height="763"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:window-width="1920"
+     inkscape:window-height="1010"
+     inkscape:window-x="-6"
+     inkscape:window-y="-6"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
      inkscape:snap-global="false"
@@ -294,6 +294,20 @@
          style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
          d="M 5.77,0 -2.88,5 V -5 Z"
          id="path1163-3-0-0" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleOutM-5-6-9"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutM"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path1163-3-0-5" />
     </marker>
   </defs>
   <g
@@ -671,11 +685,6 @@
        id="path1016-7"
        sodipodi:nodetypes="cc" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:0.765;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM-3-9)"
-       d="m 29.995503,130.77229 h 8.370375"
-       id="path1016-7-3"
-       sodipodi:nodetypes="cc" />
-    <path
        style="fill:none;stroke:#000000;stroke-width:0.765;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:;marker-start:url(#TriangleInM)"
        d="m 72.390428,132.0705 24.797246,0.0486 0,-14.27886"
        id="path1016-7-3-1"
@@ -706,6 +715,10 @@
        style="fill:none;stroke:#000000;stroke-width:0.765;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM-5-6)"
        d="m 45.14786,99.131316 c 0,3.398234 0,3.398234 0,3.398234"
        id="path1016-5-6" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.765;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM-5-6-9)"
+       d="m 17.108494,138.51774 c 0,3.39823 0,3.39823 0,3.39823"
+       id="path1016-5-6-87" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.765;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM-5-6-4)"
        d="m 111.45412,58.374 c 0,3.398234 0,3.398234 0,3.398234"
