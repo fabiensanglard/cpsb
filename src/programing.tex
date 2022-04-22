@@ -2,11 +2,6 @@
 
 A CPS-1 game production pipeline features, at the top, the programmers who write code and the artists who produce audio assets (\icode{.wav}, and \icode{.mvg}) and graphics assets (\icode{.png}). All these resources are injected into a build system resulting in four sets of ROMs. 
 
-%  \begin{figure}[H]
-% \sdraw{1.0}{cps1_arch}
-% \caption*{Three parts, two ROMS}
-% \end{figure}
-
  \begin{figure}[H]
 \sdraw{1.0}{game_pipeline}
 \caption*{Game ROMs dependency graph}
@@ -18,7 +13,7 @@ Other dependencies are more convoluted. The \icode{.wav} files for example need 
 
 Likewise, the \icode{.png} files are processed and formatted into the GFX ROM. But they also require to generate a \icode{.h} header file containing tile ID and a \icode{.c} file containing the tile palettes which are compiled into the 68k ROM. 
 
-An even more complicated graph emerge from the music \icode{.mvg} files. The music track contains YM2151 commands that must be transformed in a \icode{.c} compiled along with the Z-80 code. These end up in the Z-80 ROM. To be referred to, the header file containing music ID must also be compiled with the 68k ROM. Lastly, music are emblished with audio samples which must also be compressed to ADPCM and added to the OKI ROM.
+An even more complicated graph emerge from the music \icode{.mvg} files. The music track contains YM2151 commands that must be transformed in a \icode{.c} compiled along with the Z-80 code. These end up in the Z-80 ROM. To be referred to, the header file containing music ID must also be compiled with the 68k ROM. Lastly, music are embellished with audio samples which must also be compressed to ADPCM and added to the OKI ROM.
 
 To complicate things even further, each of the four ROM mentioned must use different word size and interleaving across chips containing it.
 
@@ -91,7 +86,7 @@ How can you make these two CPUs talk to each other reliably, making sure the str
 
 Both the Z-80 and the 68k have interrupt system. These are used to solve many problems and in particular the issue of communicating over the latches.
 
-Since the reader (z80) runs slower than the writer (68k) it possible is for a latch value to be overwritten (write twice) before it is read. 
+Since the reader (z80) runs slower than the writer (68k) it is possible for a latch value to be overwritten (write twice) before it is read. 
 
 Inverting the ratio is done precisely via interrupts. The 68k's IPL1 line is directly connected to the VSYNC line of the video system. Likewise, the Z-80 INT line is connected to the timer (CT1) line of the YM2151.
 
@@ -115,35 +110,55 @@ This introduces an ultimate problem. It is not possible for the 68k CPU to send 
 
 
 \subsection{How they did it in 1989}
+The system and conventions we just described allows to exchange data reliably but it does not give a semantic to the values in the latches. 
 
-\begin{trivia}
-In the protocol we described, only one latch is used. The second one is completely disregarded. This is exactly the way Street Fighter II board operates	.
-\end{trivia}
+A developer is free to give any meaning to the latches since it control both the writer and the reader. Maybe you can even take a second to think how you would design this interface if you had before we study how Capcom did it.
 
-Leveraging interrupt turns our single threaded CPU into dual threaded system (except one has to restart from the beginning every time) able to reliably exchange values. But we still have to decide of what meaning give ot the data. 
+In a game like Street Fighter II, developers took the approach of not giving values an "immediate" meaning. The meaning of a latch depends on the previous value. In this design, the latch are a vector for a stream of byte exchanged between the 68k and the z80.
 
 
-Many approach work. A quick and dirty implementation could use a single byte and divide its value space in two. A MSB set to one \icode{0x80} request a sound effect playback and a MSB set to zero \icode{0x00} indicates a music playback. This leaves 126 sound values and 126 music values. On the Z80 side, volume can be hard-coded, sample playback and use round-robin between two channels and the music track can use the two other channels to embellish YM2151 melodies. 
 
-On Street Fighter 2, developers used a circular buffers where value are staged	.
 
-The interrupt thread consumes the buffer and, depending on which side of the latches they are, either read or write one byte.
+Only once the stream of bytes is reconstituted on the receiver end, it can be analyzed. A value equals to \icode{FE} means that the next value is the ID of a music that should start playback. Otherwise the value is a sound ID to be played immediately on the OKI. This scheme allows for 256 music IDs and 255 samples IDs (\icode{0FXX} is no hop).
 
+ \begin{figure}[H]
 \nbdraw{latches_intercafe}
+\caption*{Street Fighter comm model. \icode{0xFF} no-op and ring buffers}
+\end{figure}
+
+Note that in this configuration, SF2 only ever uses a single latch while the other is left unused.
+
+Further differences exist, sometimes between two games made consecutively by the same team. In Final Fight, a sound ID received for playback is directly forwarded to the OKI whereas, in Street Fighter II, a translation table is used. The ID received is an index into an array where are found the actual OKI ID along with the channel and volume to use.
+
+The merits of a translation table versus "immediate" values may be explained by the sheer size of Capcom team working on an arcade game. With forty people working on a big game, an API could be decided and need for adjustment never necessary. Audio artist could organize their ROM however they pleased and always properly respond to the initial API agreement.
+
+
+\subsection{How we will do it}
+
+Since the goal of this book is to teach how to make things work, it does not use a streamed design. Instead the whole meaning of a latch value can be determined instantly without need to inspect the next values.
+
+A single byte value space is divided two. A MSB set to one \icode{0x80} request a sound effect playback and a MSB set to zero \icode{0x00} indicates a music playback. 
+
+This leaves 126 sound values and 127 music values. Volume is hard-coded and round-robin rotation is used to pick between two channels to serve a request. The music track uses the two other channels to embellish YM2151 melodies. 
+
+On the interrupt side, we will use lockestepped main and interrupt thread. The \icode{main} thread only moves forward when an interrupt has run.
 
 \nbdraw{latches_uml}
-
-On Final Fight, there is no translation table.
-
 \pagebreak
 
 
-\section{Timers}
-The interrupt system we just saw is instrumental to keep track of wall-time (the time perceived by players). 
 
-On the Control side it is useful to sample user input at an appropriate interval and make sure GFX animation are player at the right speed. As we saw before the VSYNC interrupt allows to keep track of things in roughly 16ms interval.
+\section{Tracking wall-time}
 
-Sound also needs to keep track of wall time in order to feed YM2151 music instructions at the right pace. Here we have more flexibility. Whereas VSYNC frequency is fixed,  the Z-80 reprogram the YM2151 timer after each trigger. For the example we will see there is no need to do that so our timer progresses in 4ms increments.
+Without timers, the CPUs are unable to keep track of wall-time. That would be an issue to play animation at the right speed but also for feeding the YM2151 at the appropriate page, respecting duration and silences. 
+
+Thankfully the interrupt system can be leveraged to solve this issue as well. By incrementing a counter on each interruption, the 68k can be track in increment of 16ms while the z80 can do the same in increment of 4ms.
+
+
+
+% On the Control side it is useful to sample user input at an appropriate interval and make sure GFX animation are player at the right speed. As we saw before the VSYNC interrupt allows to keep track of things in roughly 16ms interval.
+
+% Sound also needs to keep track of wall time in order to feed YM2151 music instructions at the right pace. Here we have more flexibility. Whereas VSYNC frequency is fixed,  the Z-80 reprogram the YM2151 timer after each trigger. For the example we will see there is no need to do that so our timer progresses in 4ms increments.
 
 \section{Randomness}
 Generating a series of pseudo-random numbers can be achieved with a Maximum-Length LFSRs (Linear Feedback Shift Register) and a proper seed. The issue is what to use for the seed. We could use a timer keeper and use the first player inputs. But that would open our games to players gaming the system. A better seed source is to use uptime.

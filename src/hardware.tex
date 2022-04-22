@@ -999,7 +999,7 @@ Other titles such as Forgotten World required all the sprites the machine could 
 \subsubsection{Starfields}
 Besides SCROLLs, the CPS-1 has two "STARfields" which are always behind the SCROLLs and always in order STAR1 then STAR2. 
 
-The star tiles are stored in GFXROM but a pseudo-random generator cycles the colors from the STAR1 and STAR2 set of 32 palettes. By using the palettes astutely, these two layers can simulate fields of stars. 
+For each of these layers, the GFXROM contains no tiles but instead bytecode dictating the position of points as long as palette cycling timing. By using the 32 palettes of each of these layers astutely, parallaxes starfield can be rendered. 
 
 These STARs layers were a great feature for the many space shoot'em up released when the CPS-1 was designed since it saved considerable GFXROM space and artists time. The very first title released on CPS-1, Forgotten Worlds prominently showcased this feature.
 
