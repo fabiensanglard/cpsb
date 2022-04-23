@@ -1,1 +1,59 @@
-\chapter{Making pixels}
+\chapter{Preparing pixels}
+Since the graphic pipeline of the CPS-1 is hard-coded in the silicon of the CPS-A and CPS-B, there is no code to write and nothing to compile. 
+
+\begin{figure}[H]
+\sdraw{1.0}{cps1_arch}
+\caption*{Three parts, two ROMS}
+\end{figure}
+
+As explained in the hardware chapter, all assets use the same pixel format where four bytes encode eight pen values. But that would be an oversimplicatation to conclude that generating the GFX ROM consist in processing each assets, slicing then into tiles and placing them somewhere in GFXROM.
+
+%  However there is more than processing the graphic assets, slicing and packing them into 
+% But even if only graphic assets need to be processed into a GFX ROM and a \icode{.c} file for the 68k to reference them, there are still subtle constraints to satisfy.
+The major constraint to consider is that GFXROM have "hard-coded regions" where OBJ, STAR1, STAR2, SCR1, SCR2, and SCR3 must reside. If a tile is not where it should, the draw command is simply ignored.
+
+On the board we took as example in the hardware chapter, Street Fighter II, the \icode{STF29} PAL slice the GFXROM in an unique set of four areas. A board running Final Fight uses a \icode{S224B} PAL which also uses four areas. An PAL programmed for Forgotten Worlds, the \icode{LW621} is even more complex since it divide the GFXROM in six areas to also include STAR1 and STAR2 bytecode. Each game is unique. 
+
+Keep all this in mind if you write your own ROM generator or use \icode{ccps} if you don't want to worry about it.
+
+\section{Tile format}
+All tiles are stored continuously in memory, using groups of four bytes encoding eight pens. The dimension of a tile varies depending on the layers. OBJ and SCR2 uses the same 16x16 tiles which mean their tiles are 16*16 / 2 = 128 bytes. For the fine tuned SCR1 which uses 8x8, each tile takes 32 bytes. Finally the larger SCR3 uses 512 bytes for each of its 32x32 tiles.
+
+\section{GFX Layout}
+Depending on the board targeted, the game may have up to 6MiB of GFX ROM available. The logical ROM is made of groups of four hardware chips sequencially arranged. On a board like Street Fighter, we find three groups of four. Inside each group, chips are interleaved every two bytes.
+
+\red{DRAWING: HOW DOES IT WORK? 4*16 = 64-bit bus or 2x32?}
+\pagebreak
+
+\section{Following the paper trails}
+If breaking free of the rectangular sprites was a blessing for the artists, it was a problem for Capcom project managers. In an era where ROM chips were very expensive, a game was allocated a ROM budget at its beginning which it could not exceed.
+
+Before the CPS-1, remaining within the budget was a simple matter of a division. The number of sprites allowed to the art team was ROM size / rectangular sprite size. But the free form factor introduced a tracking problem.
+
+\begin{q}{Akira Nishitani, SF2 Producer (Capcom)}
+In order to make the best use of the capacity we had, we wrote the ROM’s capacity on a board, and cut and paste the pixel characters on the board.
+
+If there was space left on the board, then there was open capacity in the ROM. So, from there we started filling in the spaces, like a puzzle.
+
+One thing that happened that's kinda interesting, we saved making the ending for last, and by the time we got there we were all out of capacity. We were wondering what to do, when we found a board that had gone missing under a desk.
+
+We called it the "Mirac-ulous Memory."
+\end{q}
+
+Only two of the sheets mentioned by Akira have ever been released\cite{fdasd}\cite{fs}. It may seem disspointing that Capcom never released more of them. But there is still a way to look at them thanks to the imprint left in the GFXROM. With knowledge of the tile format and the pixel format, they can all be reconstructed.
+
+\img{rom_sheet_dhalsim.jpg}
+
+Comparing the released material with what actually shipped is the source of many discoveries and hypothesise. 
+
+
+
+
+
+\nbdraw{0x3300}
+
+\img{rom_sheet_ryu.jpg}
+
+\nbdraw{0x4500}
+
+\section{Shapes and Sprites}
