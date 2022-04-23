@@ -7,9 +7,7 @@ Since the graphic pipeline of the CPS-1 is hard-coded in the silicon of the CPS-
 \end{figure}
 
 As explained in the hardware chapter, all assets use the same pixel format where four bytes encode eight pen values. But that would be an oversimplicatation to conclude that generating the GFX ROM consist in processing each assets, slicing then into tiles and placing them somewhere in GFXROM.
-
-%  However there is more than processing the graphic assets, slicing and packing them into 
-% But even if only graphic assets need to be processed into a GFX ROM and a \icode{.c} file for the 68k to reference them, there are still subtle constraints to satisfy.
+`
 The major constraint to consider is that GFXROM have "hard-coded regions" where OBJ, STAR1, STAR2, SCR1, SCR2, and SCR3 must reside. If a tile is not where it should, the draw command is simply ignored.
 
 On the board we took as example in the hardware chapter, Street Fighter II, the \icode{STF29} PAL slice the GFXROM in an unique set of four areas. A board running Final Fight uses a \icode{S224B} PAL which also uses four areas. An PAL programmed for Forgotten Worlds, the \icode{LW621} is even more complex since it divide the GFXROM in six areas to also include STAR1 and STAR2 bytecode. Each game is unique. 
@@ -25,7 +23,10 @@ Depending on the board targeted, the game may have up to 6MiB of GFX ROM availab
 \red{DRAWING: HOW DOES IT WORK? 4*16 = 64-bit bus or 2x32?}
 \pagebreak
 
-\section{Following the paper trails}
+\section{How they did it}
+Thanks to the testimony of artists, much of the artistic process is known.
+
+\subsection{Following the paper trails}
 If breaking free of the rectangular sprites was a blessing for the artists, it was a problem for Capcom project managers. In an era where ROM chips were very expensive, a game was allocated a ROM budget at its beginning which it could not exceed.
 
 Before the CPS-1, remaining within the budget was a simple matter of a division. The number of sprites allowed to the art team was ROM size / rectangular sprite size. But the free form factor introduced a tracking problem.
@@ -40,20 +41,94 @@ One thing that happened that's kinda interesting, we saved making the ending for
 We called it the "Mirac-ulous Memory."
 \end{q}
 
-Only two of the sheets mentioned by Akira have ever been released\cite{fdasd}\cite{fs}. It may seem disspointing that Capcom never released more of them. But there is still a way to look at them thanks to the imprint left in the GFXROM. With knowledge of the tile format and the pixel format, they can all be reconstructed.
 
+
+ \begin{figure}[H]
 \img{rom_sheet_dhalsim.jpg}
+\caption*{Dhalsim released paper sheet}
+\end{figure}
+
+For a game like Street Fighter II, a budget of 6MiB GFX was approved. With 4.6 MiB dedicated to sprites, 144 OBJ sheets were printer. That was a lot at the time and only warranted because the team had managed to score a huge hit with Final Fight on a tiny 2MiB budget. 
+
+To this day, only two of these sheets have ever been released\cite{fdasd}\cite{fs}. If it will without a doubt dissapoint the most stubborn of us to know that Capcom may never released more, those people can rejoice. There is a way to look at them thanks to the imprint left in the GFXROM. 
+
+With knowledge of the tile format and the pixel format, they can all be reconstructed.
+
+
+
+
+ \begin{figure}[H]
+\nbdraw{0x3300}
+\caption*{Dhalsim reconstructed sheet from GFXROM}
+\end{figure}
 
 Comparing the released material with what actually shipped is the source of many discoveries and hypothesise. 
 
 
+The Dhalsim sheet sits at offset \icode{0x3300} in the GFXROM. It is a near perfect match with the paper version except for the portion starting at \icode{0x60}. One of the pose was dropped in favor of Chun-li animation "Hundred Rending Legs" which would indicate it was a later addition. 
 
-
-
-\nbdraw{0x3300}
-
+ \begin{figure}[H]
 \img{rom_sheet_ryu.jpg}
+\caption*{Ryu released paper sheet}
+\end{figure}
 
+Further more, at \icode{0x4C} we can see crumble space was allocated to Blanka which shows how much the team was scrapping the bottom of the barrel at the end of development.
+
+If layout out 6MiB of tiles one by one with paper and scissors is not enough to command your respect, this is only the tip of the iceberg. The creation of the artwork has several aspect to testifying that in order to ship you must be practical.
+
+Talk about recrangle paper sheets.
+Talk about inspiration (3x screens).
+
+ \begin{figure}[H]
 \nbdraw{0x4500}
+\caption*{Ryu reconstructed sheet from GFXROM}
+\end{figure}
+
+\img{smc-70_ad.jpg}
+
+\subsection{Tools}
+
+
+
+\begin{q}{akiman\cite{ar20160404}}
+The character tool what TCE (Tiny Character Editor) running on Sony's SMC-70.
+
+  As everything was in hexadecimal we used the 0-F keys and the arrows to make the sprites. There was this one guy who made a complete racket mashing away on his keyboard. He used to do overtime and didn't even sleep, so we'd all have no choice but to stay awake and keep working as well.
+\end{q}
+
+
+\img{smc-70_capcom.png}
+
+\subsection{Team structure and Work ethic}
+
+\begin{q}{akiman\cite{<ref src="http://shmuplations.com/akirayasuda/">Akiman, 2003 Interview from Capcom Design Works</ref>}}At the top are the Planners. Junior artists work on backgrounds, while more senior get to work on sprites.
+\end{q}
+
+\begin{q}{Akiman, 2003 Interview from Capcom Design Works}
+  We had vacation days, but Okamoto would get mad if you took the day off. A lot of people got yelled at by him for that, “Hey, why weren’t you here on Sunday?!”
+
+  I don’t think anyone can beat my record for “percentage of time lived at Capcom.” During game developments, I always slept under my desk. I had a whole futon laid out and everything! When things were really busy, Yoshiki Okamoto (former Capcom development leader) would be setting new deadlines every 10 hours, so I couldn’t leave my computer… that’s how I acquired the habit of sleeping under my desk. By the way, even now that I’m freelance, I still sleep under my computer desk at home.
+  \end{q}
+
+\subsection{Inspiration}
+ \begin{figure}[H]
+\img{ken_stage_design.jpg}
+\caption*{Ken stage design. Drawing from Street Fighter II Complete File}
+\end{figure}
+
+\begin{figure}[H]
+\img{sf_art_research.jpg}
+\caption*{Original characters}
+\end{figure}
+
+\begin{q}{Akiman\cite{ffdevinterview}}
+I remember stitching together a few movies to make a presentation. “Streets of Fire” and Charles Bronson’s “Hard Times” were the ones I used back then. Basically movies about fighting. I really took the chairman’s words to heart – “Use movies!” he said, so I took that to mean we should just openly plagiarize them (laughs).
+\end{q}
+
+\begin{q}{Nishitani\cite{ffdevinterview}}
+We didn't have a whole lot of time, so we had a 3-monitor set-up where we could watch other movies at the same time, as the president told us to "watch them all and learn from them."
+\end{q}
+
+Coincidentally, the Japanese title of "Hard Times" was "The Street Fighter".
 
 \section{Shapes and Sprites}
