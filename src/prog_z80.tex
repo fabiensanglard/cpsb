@@ -1,22 +1,22 @@
-\chapter{Programming Sounds}
+\chapter{Making noise}
+Making ROMs for the sound system is a little big complicated than for the GFX system. Not only samples and music assets are processed, there is also a need for source code to bootstrap and then run the Z-80. 
 
-Making a CPS-1 generate sound involves programming the Z-80, producing samples and producing music tracks. Because these three parts are packaged into only two ROM sets, they are not straight forward to build. 
-
-
- \begin{figure}[H]
+\begin{figure}[H]
 \sdraw{1.0}{cps1_arch}
 \caption*{Three parts, two ROMS}
 \end{figure}
 
-Since both sound effects and music samples contribute to its content, the OKI ROM must be generated in two steps.
+The result must be packed into a Z-80 ROM and an OKI ROM. This asymmetry where three system result in two ROM is further complicated by the dependency graph that looks like a plate of spaghetti. 
 
-This is considerably facilitated by the structure of the target ROM which features a small database. Leveraging it allows to have a first pass where audio samples are ingested by the build system to generate an incomplete OKI ROM. In a later pass, the music tracks are processed. The new samples are simply added to the database.
+The crux is that both the sound effects and the music contribute to the OKI ROM content which must be populated in two steps.
+
+
 
 \nbdraw{build_graph_sfx}
 
-The build graph involves three phases driven by three tools, three resource types and a myriad of intermediate artifacts. 
+Luckily, the structure of the OKI ROM faciliated the task since it features an index at the beginning which references all payloads. Leveraging it allows to have a first pass where audio samples are ingested by the build system to generate an incomplete OKI ROM. In a second pass, the music tracks are processed so the new samples are added to the index ROM and the payload appended.
 
-At the very top, \icode{ccps\_sfx} expect artists to provide sound samples contained in \icode{.wav} files which are universally supported. This stage generates a partial OKI ROM and a \icode{.h} header file so the Z-80 code can reference samples with a simple ID.
+At the very top, \icode{ccps\_sfx} expect artists to provide sound samples contained in \icode{.wav} files which are universally supported. This stage generates a partial OKI ROM and a \icode{.h} header file to be injected in the control build graph so the m68k can request samples playback with a simple ID.
 
 The second stage involves \icode{ccps\_mus}, the music track processor. It expects \icode{.vgm} (Video Game Music) as input since it contains raw 2151 instructions which are easy to convert. It output a finalized OKI ROM containing the sample used by the soundtrack and also a \icode{.c} C file including a custom bytecode containing YM2151 register values, timing, and OKI sample timing.
 
@@ -28,31 +28,27 @@ These are a lot of step but if you use \icode{ccps} build system, it is all take
 \end{trivia}
 
 \subsection{Processing WAV files}
-Wav files are simple container with a header describing the content. Three pieces of information are needed to read the payload properly. Once the sampling frequency, bit per sample, and number of channel is known, the PCM can be accessed.
+A wav file is a simple container with a header describing the content followed by a payload. Once the sampling frequency, bit per sample, and number of channel is retrieved, the PCM can be accessed.
 
-A PCM values stream directly drive the physical location of the cone of a loud speaker over time. The higher the sampling rate, the more often the cone location is adjusted. The higher the sampling rate, the more accurate the cone placement is. And the more channel, the more cones can be driven separately.
+Artists should not produce stereo wavs since the CPS-1 is mono. Moreover, game developers should decide if they wish to use the OKI in high quality (7575Hz) or low quality (6060Hz) and all assets should use that sampling rate. Finally, since ADPCM compressed 12-bit sample to 4-bit samples, artists should provide 16-bit PCMs.
 
-The input can be of any any combination of these attributes. Artists can produce CD quality (44KHz, 16-bit, stereo) if they want but as a preprocessing step the build system must transform it into 8-bit, mono, 7575Hz because it is the format we need to transform to 4-bit ADPCM the OKI ROM needs.
 
-\begin{trivia}
-7575 Hz is often the figure mentioned but observant programmers will have noticed a High/Low \icode{0xF006} location in the Sound system. This allows to switch the OKI from 7575Hz to 6060Hz. Although it is possible it considerably complicate the logistic to combine sampling rates. 
-\end{trivia}
+\subsubsection{ADPCM Compression}
+% ADPCM is a simple way to compress PCM. In an era where every 1 KiB of ROM was precious, ADPCM was just a vessel allowing 50\% space saving. Upon usage, it is be decompressed by the OKI into PCM to drive a speaker cone.
+If decompression is transparently done in hardware by the OKI at runtime, the build system must perform the compression. 
 
-\subsubsection{ADPCM}
-ADPCM is a simple way to compress PCM. In an era where every 1 KiB of ROM was precious, ADPCM was just a vessel allowing 50\% space saving. Upon usage, it is be decompressed by the OKI into PCM to drive a speaker cone.
- 
- 
+The algorithm to compress PCM to "Dialogic ADPCM" simple and extensively documented by OKI\cite{adpcm_specs}. It is as simple as the decompression algorithm visited in the hardware section on page \pageref{adpcm_decompression_label}.
 
-If decompression is transparently done in hardware by the OKI at runtime, our build system must understand the format in order to perform the compression properly. 
+ADPCM encodes the difference between the previous sample and the sample to be generated. This is done via a 4-bit magnitude nibble. The core of the compression algorithm maintains simulation of what the decompressed value will be and adjust the stepping size.
 
-A first step towards understanding ADPCM is to study an intermediate called DPCM (Delta Modulation). Here, instead of encoding discrete values, the difference is recorded. It does not seem like much when expressed with a sequence of digits.
+\img{dpcm}
 
 \lstinputlisting{src/code/pcm-dpcm.c}
 
 However if difference between sample are small like in three occurences above, the bit stream can considerably lower bandwidth requirements thanks for variable length encoding. In best case scenario where values do not change, a single bit is necessary.
 
-\img{dpcm.png}
-/
+
+
 ADPCM is an improvement over DPCM. The idea is still to use knowledge of the signal in the past time to predict values in the future. This time, instead of always using a single paste value, the algorithm adapts depending on whether it sees small or large samples.
 
 
@@ -60,6 +56,13 @@ ADPCM is an improvement over DPCM. The idea is still to use knowledge of the sig
 Notice that encoding is involved whereas decoding is extremely simple. A cool document \url{https://people.cs.ksu.edu/~tim/vox/dialogic_adpcm.pdf} OKI PDF with diagrams. Also on wikipedia \url{https://en.wikipedia.org/wiki/Dialogic_ADPCM}. Talk about Dialogic ADPCM or VOX, history of OKI and how it is still active today. Dialogic ADPCM is a variation of IMA ADPCM which operates on 12-bit samples.
 
 \img{adpcm.png}
+
+
+
+\subsubsection{Structure of the OKI ROM}
+The structure of the OKI is very simple. It must feature 128 * 6 bytes table at the beginning. Each entry points to a payload in the ROM. The payload of each entry must be ADPCM stream.
+
+For some reason reason offset 0 in the table index is invalid.
 
 \subsection{Processing VGM files}
 The VGM (Video Game Music) is a community effort originating from \icode{smspower.org} to create an audio file format able to support many legacy systems (SEGA consoles, MSX, Neo Geo, and PC) as well as Arcade hardware.

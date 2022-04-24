@@ -3,7 +3,7 @@ Since the graphic pipeline of the CPS-1 is hard-coded in the silicon of the CPS-
 
 \begin{figure}[H]
 \sdraw{1.0}{cps1_arch}
-\caption*{Three parts, two ROMS}
+\caption*{Three parts, four ROMS}
 \end{figure}
 
 As explained in the hardware chapter, all assets use the same pixel format where four bytes encode eight pen values. But that would be an oversimplicatation to conclude that generating the GFX ROM consist in processing each assets, slicing then into tiles and placing them somewhere in GFXROM.
@@ -21,10 +21,13 @@ All tiles are stored continuously in memory, using groups of four bytes encoding
 Depending on the board targeted, the game may have up to 6MiB of GFX ROM available. The logical ROM is made of groups of four hardware chips sequencially arranged. On a board like Street Fighter, we find three groups of four. Inside each group, chips are interleaved every two bytes.
 
 \red{DRAWING: HOW DOES IT WORK? 4*16 = 64-bit bus or 2x32?}
-\pagebreak
+
+\nbdraw{build_graph_gfx}
+
+\img{smc-70_ad.jpg}
 
 \section{How they did it}
-Thanks to the testimony of artists, much of the artistic process is known.
+Thanks to artists interviews, many details of their process transpired.
 
 \subsection{Following the paper trails}
 If breaking free of the rectangular sprites was a blessing for the artists, it was a problem for Capcom project managers. In an era where ROM chips were very expensive, a game was allocated a ROM budget at its beginning which it could not exceed.
@@ -62,7 +65,7 @@ With knowledge of the tile format and the pixel format, they can all be reconstr
 \caption*{Dhalsim reconstructed sheet from GFXROM}
 \end{figure}
 
-Comparing the released material with what actually shipped is the source of many discoveries and hypothesise. 
+Comparing the released material with what actually shipped is the source of many discoveries and hypothesis. 
 
 
 The Dhalsim sheet sits at offset \icode{0x3300} in the GFXROM. It is a near perfect match with the paper version except for the portion starting at \icode{0x60}. One of the pose was dropped in favor of Chun-li animation "Hundred Rending Legs" which would indicate it was a later addition. 
@@ -72,34 +75,42 @@ The Dhalsim sheet sits at offset \icode{0x3300} in the GFXROM. It is a near perf
 \caption*{Ryu released paper sheet}
 \end{figure}
 
-Further more, at \icode{0x4C} we can see crumble space was allocated to Blanka which shows how much the team was scrapping the bottom of the barrel at the end of development.
+Ryu's sheet \icode{0x4500} allows to guess even more about the production process. Large coherent sprites show that at the beginning of the production process multiple sheet were allocated on a per-character basis. Tile were layout and kept together as much as possible to facilitate visual inspection.
 
-If layout out 6MiB of tiles one by one with paper and scissors is not enough to command your respect, this is only the tip of the iceberg. The creation of the artwork has several aspect to testifying that in order to ship you must be practical.
-
-Talk about recrangle paper sheets.
-Talk about inspiration (3x screens).
+However, as the project progressed, we can see that the team scrambled for tile. They scrapped the bottom of the barrel and started to allocate space on a per-tile basic, sometimes spreading a character pose across multiple sheets like in Dhalsim sheet where can be found portions of Blanka.
 
  \begin{figure}[H]
 \nbdraw{0x4500}
 \caption*{Ryu reconstructed sheet from GFXROM}
 \end{figure}
 
-\img{smc-70_ad.jpg}
 
-\subsection{Tools}
+And this was only the allocation step! After a shape was allocated, the artists has to draw it on non-rectangular grilled paper (in order to compensate for the CPS-1 non-square pixels). The last step for the artist was to convert its collection of tiles into graphic files. 
+
+As you may have guessed, there was no photoshop at the time.
 
 
+
+
+The tool used named TCE (Tiny Character Editor) running on Sony's SMC-70. Given Akiman's description, it was barely more than a glorified hex editor. They did not even have a mouse!
 
 \begin{q}{akiman\cite{ar20160404}}
-The character tool what TCE (Tiny Character Editor) running on Sony's SMC-70.
-
   As everything was in hexadecimal we used the 0-F keys and the arrows to make the sprites. There was this one guy who made a complete racket mashing away on his keyboard. He used to do overtime and didn't even sleep, so we'd all have no choice but to stay awake and keep working as well.
 \end{q}
 
-
+ \begin{figure}[H]
 \img{smc-70_capcom.png}
+\caption*{An actual SMC-70 "workstation" in Capcom studio}
+\end{figure}
 
 \subsection{Team structure and Work ethic}
+
+In its early years, Capcom organized its pipeline to produce multiple games in parallel. Three teams, named first, 2nd and 3rd Planning Rooms worked side by side. 
+
+As it grew and diversified, the gaming company restructured itself in 1988 to be made of two divisions. One dedicated to arcades and the other home consoles. 
+
+After its restructuration, Capcom kept the same modus operantis where each team were siloed from each others with an internal organization favoring a strong sense of hierarchy. 
+
 
 \begin{q}{akiman\cite{<ref src="http://shmuplations.com/akirayasuda/">Akiman, 2003 Interview from Capcom Design Works</ref>}}At the top are the Planners. Junior artists work on backgrounds, while more senior get to work on sprites.
 \end{q}
@@ -110,16 +121,23 @@ The character tool what TCE (Tiny Character Editor) running on Sony's SMC-70.
   I don’t think anyone can beat my record for “percentage of time lived at Capcom.” During game developments, I always slept under my desk. I had a whole futon laid out and everything! When things were really busy, Yoshiki Okamoto (former Capcom development leader) would be setting new deadlines every 10 hours, so I couldn’t leave my computer… that’s how I acquired the habit of sleeping under my desk. By the way, even now that I’m freelance, I still sleep under my computer desk at home.
   \end{q}
 
-\subsection{Inspiration}
- \begin{figure}[H]
-\img{ken_stage_design.jpg}
-\caption*{Ken stage design. Drawing from Street Fighter II Complete File}
-\end{figure}
 
-\begin{figure}[H]
-\img{sf_art_research.jpg}
-\caption*{Original characters}
-\end{figure}
+As layered as they where, operations where not set in stone and employees could climb the ladder quickly. 
+
+A key figure in the production of "Street Fighter 2", Akira - Akiman - Yasuda, was hired on "Dyn Side Arms" as a SCROLL artist. Two years later, He was a Planner on Forgotten Worlds.
+
+\begin{trivia}
+The role of each person is clearly established. Try to checkout credits on \url{mobygames.com}. You will find OBJects designers and SCRoll designers there.
+\end{trivia}
+
+
+\subsection{Inspiration}
+
+
+% \begin{figure}[H]
+% \img{sf_art_research.jpg}
+% \caption*{Original characters}
+% \end{figure}
 
 \begin{q}{Akiman\cite{ffdevinterview}}
 I remember stitching together a few movies to make a presentation. “Streets of Fire” and Charles Bronson’s “Hard Times” were the ones I used back then. Basically movies about fighting. I really took the chairman’s words to heart – “Use movies!” he said, so I took that to mean we should just openly plagiarize them (laughs).
@@ -131,4 +149,18 @@ We didn't have a whole lot of time, so we had a 3-monitor set-up where we could 
 
 Coincidentally, the Japanese title of "Hard Times" was "The Street Fighter".
 
+ \begin{figure}[H]
+\img{ken_stage_design.jpg}
+\caption*{Ken stage design. Drawing from Street Fighter II Complete File}
+\end{figure}
+
 \section{Shapes and Sprites}
+Since we are now accustomed to the concept of sheet, we can review the last GFX ROM requirements.  
+
+
+\simg{0.8}{honda.png}
+
+ \begin{figure}[H]
+\nbdraw{honda_sheet}
+\caption*{Honda sheet}
+\end{figure}
