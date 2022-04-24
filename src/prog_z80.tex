@@ -39,11 +39,21 @@ If decompression is transparently done in hardware by the OKI at runtime, the bu
 
 The algorithm to compress PCM to "Dialogic ADPCM" simple and extensively documented by OKI\cite{adpcm_specs}. It is as simple as the decompression algorithm visited in the hardware section on page \pageref{adpcm_decompression_label}.
 
-ADPCM encodes the difference between the previous sample and the sample to be generated. This is done via a 4-bit magnitude nibble. The core of the compression algorithm maintains simulation of what the decompressed value will be and adjust the stepping size.
+ADPCM encodes the difference between the previous sample and the sample to be generated. This is done via a 4-bit magnitude nibble. The meaning of the magnitude value depends on the state of the decoder which features a \icode{step size}.
 
-\img{dpcm}
+
+\lstinputlisting{src/code/adpcm_algo.c}
+
+Let's take the example of a stream of 16-bit PCM values received from a wav to be compressed to 4-bit ADPCM values.
 
 \lstinputlisting{src/code/pcm-dpcm.c}
+
+ADPCM starting step size index is \icode{0} which translate in the \icode{stepTable} as \icode{16}.
+
+\lstinputlisting[language=C]{src/code/adpcm_compression1.c} 
+
+The first value to compress is shifted from 16-bit to 12-bit. The 
+\lstinputlisting[language=C]{src/code/adpcm_compression2.c} 
 
 However if difference between sample are small like in three occurences above, the bit stream can considerably lower bandwidth requirements thanks for variable length encoding. In best case scenario where values do not change, a single bit is necessary.
 
@@ -54,8 +64,6 @@ ADPCM is an improvement over DPCM. The idea is still to use knowledge of the sig
 
 
 Notice that encoding is involved whereas decoding is extremely simple. A cool document \url{https://people.cs.ksu.edu/~tim/vox/dialogic_adpcm.pdf} OKI PDF with diagrams. Also on wikipedia \url{https://en.wikipedia.org/wiki/Dialogic_ADPCM}. Talk about Dialogic ADPCM or VOX, history of OKI and how it is still active today. Dialogic ADPCM is a variation of IMA ADPCM which operates on 12-bit samples.
-
-\img{adpcm.png}
 
 
 
