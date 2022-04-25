@@ -1,5 +1,8 @@
-__at(0xF000) char YM2151_REG_CMD;
-__at(0xF001) char YM2151_REG_DAT;
+// FUNCTION to WAIT FOR YM2151 to be ready.
+
+
+
+
 
 void interrupt() {
   // Copy latch values in circular buffer

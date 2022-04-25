@@ -1,5 +1,7 @@
 .module crt0
 .globl  _main
+.globl  _interrupt
+.globl  _schedInterrupt
 .area  _HEADER (ABS)
 
 ;------------------
@@ -7,6 +9,7 @@
 ;------------------
 .org 0
    jp init  
+
 
 ;--------------
 ; INTERRUPT
