@@ -32,13 +32,13 @@ These are a lot of step but if you use \icode{ccps} build system, it is all take
 
 
 
-\subsection{Processing Sound Samples}
+\section{Processing Sound Samples}
 A wav file is a simple container with a header describing the content followed by a payload. Once the sampling frequency, bit per sample, and number of channel is retrieved, the PCM can be accessed.
 
 Artists should not produce stereo wavs since the CPS-1 is mono. Moreover, game developers should decide if they wish to use the OKI in high quality (7575Hz) or low quality (6060Hz) and all assets should use that sampling rate. Finally, since ADPCM compressed 12-bit sample to 4-bit samples, artists should provide 16-bit PCMs.
 
 
-\subsubsection{ADPCM Compression}
+\subsection{ADPCM Compression}
 % ADPCM is a simple way to compress PCM. In an era where every 1 KiB of ROM was precious, ADPCM was just a vessel allowing 50\% space saving. Upon usage, it is be decompressed by the OKI into PCM to drive a speaker cone.
 Decompression is done in hardware by the OKI at runtime but the build system still have to compress assets appropriately. 
 
@@ -87,7 +87,7 @@ DRAWING
 \pagebreak
 
 
-\subsection{Structure of the OKI ROM}
+\section{Structure of the OKI ROM}
 The structure of the OKI is very simple. It must feature 128 * 6 bytes table at the beginning. Each entry points to a payload in the ROM. The payload of each entry must be ADPCM stream.
 
 For some reason reason offset 0 in the table index is invalid.
@@ -110,7 +110,7 @@ For some reason reason offset 0 in the table index is invalid.
 
 
 
-\subsection{Processing Musics}
+\section{Processing Musics}
 Making music with FM synthesis is an art which this book does not intend to butcher. The best way to go is to ask musician to work with whatever tool they wish (the amazing DefleMask is highly recommended) and export their symphonies using VGM file format.
 
 The VGM (Video Game Music) is a community effort originating from \icode{smspower.org} to create an audio file format able to support many legacy systems (SEGA consoles, MSX, Neo Geo, and PC) as well as Arcade hardware.
@@ -128,10 +128,8 @@ Transforming a VGM into something the Z-80 will be able to use.
 
 
 
-\subsection{Programming the Z-80}
-Programming Zilog's CPU into a sound driver involves doing two things right, bootstrapping and behaving according to the memory map.   
-
-Solving the memory map is the easier. To avoid page turning, the requirement is reproduced here.
+\section{Programming the Z-80}
+Programming Zilog's CPU into a sound driver involves doing two things right, bootstrapping and behaving according to the memory map. Solving the memory map is the easier. To avoid page turning, the requirement is reproduced here.
 
 \begin{figure}[H]
 {
@@ -168,7 +166,7 @@ With the registers covered, only remains placing the \icode{.text} and \icode{.d
 As expected, the \icode{\_DATA} is placed at \icode{0xd000}. The \icode{\_CODE} however is placed not at zero but \icode{0x0200} for reason that will follow soon.
 Trivia: Linker map is a powerful tool for debugging.
 
-\subsubsection{Bootstrapping}
+\subsection{Bootstrapping}
 A Z-80 starts fetching and executing instructions from \icode{0x0000} so the bootstrap code \icode{crt0.s} is placed there via \icode{.org 0}.
 
 The code immediatly jumps to \icode{0x100} in order to skip the interrupt handler. The Z-80 can work in interrupt modes 0, 1, and 2. Modes 0 and 2 are the most powerful and the most complex since they imply retrieving the id of the peripheral requesting the interrupt by reading a byte on the data bus. This mecanim allows for many devices to get the attention of the Z-80 but in the case of the CPS-1 it is overkill. Because the Z-80 is setup to run in Interrupt Mode 1, it always jump to \icode{0x38} when interrupted.
