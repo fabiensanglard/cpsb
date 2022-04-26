@@ -1,15 +1,16 @@
-// FUNCTION to WAIT FOR YM2151 to be ready.
-
-
-
-
+void waitYM2151() {
+  while (REG_YM2151_DAT == 0x80) {
+    // Wait until YM2151 is ready for write
+  }
+}
 
 void interrupt() {
-  // Copy latch values in circular buffer
+  // Read latches here
 }
 
 void schedInterrupt() {
   // Schedule an interrupt in 4ms
-  YM2151_REG_CMD = x;
-  YM2151_REG_DAT = x;
+  waitYM2151 ();
+  REG_YM2151_CMD = 0xC8;
+  REG_YM2151_DAT = 0x00;
 }

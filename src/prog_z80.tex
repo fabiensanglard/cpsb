@@ -108,8 +108,6 @@ For some reason reason offset 0 in the table index is invalid.
 
 
 
-
-
 \section{Processing Musics}
 Making music with FM synthesis is an art which this book does not intend to butcher. The best way to go is to ask musician to work with whatever tool they wish (the amazing DefleMask is highly recommended) and export their symphonies using VGM file format.
 
@@ -187,49 +185,50 @@ Notice how C functions are prefixed with \icode{\_}.
 
 
 \subsection{Z-80 interrupt}
-There are no timer in the Z-80 but two can be found in the YM2151. Timer A is a 10-bit counter while Timer B is a XX-bit counter.
+In order to interact with the latches properly but also to be able to keep track of wall-time, the Z-80 needs to be interrupted regularly. Zilog's CPU does features a timer RFSH but it is intended for DRAM refresh (which the sound system does not feature anyway).
 
-The YM2151 counter fires according to the following formula.
+There are however two timer in the YM2151. Timer A is a 10-bit counter while Timer B is an 8-bit counter. For a YM2151 running at 3,579Hz, the trigger formula is 64 * (1024 - value) / 3579.
 
-FORMULA
-
-When the YM2151 counter reaches zero, it asserts a line connected to the Z-80 INT line which makes the CPU jumps to address \icode{0x38}.
+Setting the Timer A to value 800 will result in an interrupt 64 * (1024 - value) / 3579 = 4ms later. When the YM2151 counter reaches zero, it asserts a line connected to the Z-80 INT line which makes the CPU jumps to address \icode{0x38}.
 
 \lstinputlisting[language=C]{src/code/z80/interrupts.c}
 
-In function \icode{schedInterrupt} we write to the YM2151 counter register a value \icode{XXXXX}. Since the music chip is running at 3.58 MHz this result in an interrupt generate 3,580,000 x XXX = 4ms later. Notice \icode{\_\_at} which allows to manually place variables according to the memory map.
+In function \icode{schedInterrupt} we write to the YM2151 counter register msb 8-bit \icode{0xC0} and the 2 remaining lsb \icode{0x00}. Notice how before writing to the YM2151 register we must make sure the chip is not busy via \icode{waitYM2151()}.
+
+
+
+
 
 \subsection{Initializing variables}
-Before we can jump to \icode{main} function, the bootstrap needs to initalize C variables. As we saw earlier, initialized writable variables use RAM address but intiial values are stored in ROM. These must be copied.
+To finish bootstrapping we make sure initalized C variables are indeed initialized. The linker placed all these values in a \icode{\_GSINIT} segment. By placing markers astutely at the source \icode{\_INITIALIZER} and at the destination \icode{\_INITIALIZED}, they can be copied.
 
 \lstinputlisting[language=z80]{src/code/z80/initVar.s}
+
+Copying is done with \icode{ldir} instruction using the linker macros, \icode{s\_} refers to the site of a segment and \icode{l\_} the length of that segment.
 
 \lstinputlisting[language=z80]{src/code/z80/copyvar.s}
  
 
-No initialization of BSS
-
-Also explain \icode{s\_} and \icode{l\_}
-
-\subsection{Linker script}
-
-Trick: Always check out the linker .map file to make sure things are were you wanted them.
+% No initialization of BSS
 
 
-\subsection{Threads lock-step}
-Interrupt is double function. Read latches and keep track of wall-time in the Z-80.
-\subsection{Latches Circular buffer}
+\subsection{Z-80 Sound Driver}
+There are many strategies for the driver. A complex scheme where a stream is reconstituted on the Z80 may yield more power but for the purpose of demonstration a simpler approach has more merit.
 
-Tell about variation in Z-80 driver. Final fight uses the same sound id whereas SF2 uses a translation layer.
+The code presented here uses a single latch and use it as "immediate value". If bit 0x80 is set, control is requesting a music ti be player, otherwise it is a sound effect. 
 
-\subsection{Buffer processing}
+Playing a song can also be as complicated as a developer wants. A translation table allows the music team to be flexible with regards to how it organize the OKI ROM. Here we simply forward the request.
 
-\subsection{Sound Effects with MSM6295}
-Trivia: Final Fight = No translation but SF2 uses one.
+The interrupt trigger allows the main loop to move forward thanks to a counter. It checks for pause, feed to the YM2151 or feed to the OKI.
 
-\subsection{Music with YM2151}
+\lstinputlisting{src/code/z80/music.c}
 
-\section{How they did it}
+
+\lstinputlisting{src/code/z80/driver.c}
+
+
+
+\section{Back then...}
 If nothing ever transpired about the work done on the Z-80, some of the member of Capcom Sound Team gave interviews to let us peek into how sounds were made.
 
 One of the most outspoken musician is Yoshihiro Sakaguchi who is the author of all Street Fighter II musics.

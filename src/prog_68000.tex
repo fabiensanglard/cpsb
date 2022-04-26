@@ -1,14 +1,42 @@
 \chapter{Control System}
-blak
+The control system is the simplest ROM to build since it involves only compiling code and the hardest to get right because of the complexity of its interaction. 
 
-\pagebreak
+\begin{figure}[H]
+\sdraw{1.0}{cps1_arch}
+\caption*{The one to rule them all}
+\end{figure}
+
+If the latch toward the Sound system are small registers, we will see that the GFXRAM, the interface to the GFX System is bigger both in breadth (it features 64 registers) and depth (the API is non-trivial).
+
+Luckily, the 68000 is supported by the  GNU Compiler Collection (GCC). It features a much more powerful linker script system than \icode{sdcc} which helps considerably to solve the memory mapping requirements.
+
 \nbdraw{build_graph_ctrl}
 
-\section{68000 crt0}
+
+Nothing particularly difficult in the build graph. GCC is responsible for the entire pipeline with \icode{gcc} compiling C files to obj, \icode{as} assembling S files to obj, and \icode{ld} linking it all together. 
+
+At the end of the process, the logical 68000 ROM is split and interleaved in chip sized ROMs according to what was described in the hardware chapter.
+
+ The build graph on the next figure shows that the issues of bootrapping is solved like on the Z-80 with a small assembler programmer \icode{crt0.s}.
+
+\section{Bootstrapping the 68000}
+A 68000 does not have a set booting address. Instead, it consults a 64 32-bit integer array called the "vector table". Located at \icode{0x000000}, this is where the CPU find the values to initialize its registers such as the stack pointer (offset \icode{0}) and instruction pointer (offset \icode{1}).
 
 \lstinputlisting[language={[Motorola68k]Assembler}]{src/code/68000/crt0.s}
 
-\section{gcc linker script}
+All other slots except one point to a no-nop routine.
+
+\section{Interrupt}
+
+\lstinputlisting[language={[Motorola68k]Assembler}]{src/code/68000/crt1.s}
+
+
+
+
+
+
+
+\section{Memory Map}
 No \icode{\_\_at} support so leveral powerful GCC linker script 
 
 \lstinputlisting[]{src/code/68000/cps1.lk}
@@ -18,7 +46,7 @@ Notice how the linker script allow to directly output raw binary without a conta
 
 \pagebreak
 
-
+\section{Ruling them all}
 \section{GFX assets for the gfx system}
 \section{Double buffering}
 \section{Color brightness}
@@ -30,7 +58,7 @@ Notice how the linker script allow to directly output raw binary without a conta
 \section{Drawing STAR1}
 \section{Drawing STAR2}
 
-\section{How they did it}
+\section{Back then...}
 Very little has transpired.
 \pagebreak
 
