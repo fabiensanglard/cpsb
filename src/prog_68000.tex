@@ -26,10 +26,21 @@ A 68000 does not have a set booting address. Instead, it consults a 64 32-bit in
 
 All other slots except one point to a no-nop routine.
 
+
+
+
 \section{Interrupt}
+Alike the Z-80, the 68000 has multiple interrupt modes. In its most complex form, IPL0, IPL1, and IPL2 encode a level of interrupt and the interrupt ID is retrieved via an external interrupt controller. This would be over-kill for the talks at hand.
+
+A simpler mode is called auto-vector. Here there are not interrupt level. The IPL lines encode an interrupt ID directly that is looked up in the "vector table" starting at offset 24.
+
+Since IPL1 is connected to the CPS-A INT lines, the VSYnc handler function is placed at offset \icode{26}.
 
 \lstinputlisting[language={[Motorola68k]Assembler}]{src/code/68000/crt1.s}
 
+The last piece of the interrupt puzzle is to write the \icode{\_boot} function, which setups auto-vector and jump to \icode{main}.
+
+\lstinputlisting[language={[Motorola68k]Assembler}]{src/code/68000/crt2.s}
 
 
 
