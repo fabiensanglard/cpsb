@@ -322,7 +322,7 @@ All chips are mapped at a static address in memory space. A table give a clear p
 % \begin{figure}[H]
 % {
 \begin{tabularx}{\textwidth}{rrrX}
-\toprule    
+% \toprule    
   \textbf{Start } & \textbf{End  } & \textbf{Size } & \textbf{Function } \\               
   \toprule    
   \texttt{0x000000} & \texttt{0x3FFFFF} & 3 MiB & ROM \\
@@ -335,12 +335,12 @@ All chips are mapped at a static address in memory space. A table give a clear p
   \texttt{0x800100} & \texttt{0x80013f} & 64 B & CPS-A registers\\
   \texttt{0x800140} & \texttt{0x80017f} & 64 B & CPS-B registers\\
 \toprule    
-  \texttt{0x800180} & \texttt{0x800187} & 1 B & Sound commands (latch 1)\\
-  \texttt{0x800188} & \texttt{0x80018F} & 1 B & Sound commands (latch 2)\\
+  \texttt{0x800180} & \texttt{0x800187} & 8 B & Sound commands (latch 1)\\
+  \texttt{0x800188} & \texttt{0x80018F} & 8 B & Sound commands (latch 2)\\
   \toprule    
   \texttt{0x900000} & \texttt{0x92FFFF} & 196 KiB & GFXRAM\\
   \texttt{0xFF0000} & \texttt{0xFFFFFF} & 64 KiB & RAM \\
-  \toprule    
+  % \toprule    
 \end{tabularx}%
 % }\caption*{Control system memory map.}
 % \end{figure}

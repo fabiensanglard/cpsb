@@ -29,7 +29,7 @@ All other slots except one point to a no-nop routine.
 
 
 
-\section{Interrupt}
+\section{Auto-Interrupt}
 Alike the Z-80, the 68000 has multiple interrupt modes. In its most complex form, IPL0, IPL1, and IPL2 encode a level of interrupt and the interrupt ID is retrieved via an external interrupt controller. This would be over-kill for the talks at hand.
 
 A simpler mode is called auto-vector. Here there are not interrupt level. The IPL lines encode an interrupt ID directly that is looked up in the "vector table" starting at offset 24.
@@ -48,14 +48,52 @@ The last piece of the interrupt puzzle is to write the \icode{\_boot} function, 
 
 
 \section{Memory Map}
-No \icode{\_\_at} support so leveral powerful GCC linker script 
+As a reminded, here is the desired memory mapping.
+
+\begin{tabularx}{\textwidth}{rrrX}
+\toprule    
+  \textbf{Start } & \textbf{End  } & \textbf{Size } & \textbf{Function } \\               
+  \toprule    
+  \texttt{0x000000} & \texttt{0x3FFFFF} & 3 MiB & ROM \\
+  \toprule    
+  \texttt{0x800000} & \texttt{0x800007} & 8 B & JAMMA players inputs \\
+  \texttt{0x800018} & \texttt{0x80001F} & 8 B & JAMMA Dip Switches \\
+  \texttt{0x800030} & \texttt{0x800037} & 8 B & JAMMA Coin sensors \\
+  \texttt{0x800176} & \texttt{0x800177} & 1 B & Kick harness \\
+\toprule    
+  \texttt{0x800100} & \texttt{0x80013f} & 64 B & CPS-A registers\\
+  \texttt{0x800140} & \texttt{0x80017f} & 64 B & CPS-B registers\\
+\toprule    
+  \texttt{0x800180} & \texttt{0x800187} & 8 B & Sound commands (latch 1)\\
+  \texttt{0x800188} & \texttt{0x80018F} & 8 B & Sound commands (latch 2)\\
+  \toprule    
+  \texttt{0x900000} & \texttt{0x92FFFF} & 196 KiB & GFXRAM\\
+  \texttt{0xFF0000} & \texttt{0xFFFFFF} & 64 KiB & RAM \\
+  \toprule    
+\end{tabularx}%
+
+ GCC's powerful linker script allows to define memory region.
 
 \lstinputlisting[]{src/code/68000/cps1.lk}
-Notice how the linker script allow to directly output raw binary without a container like \icode{elf}.
+
+\lstinputlisting[]{src/code/68000/cps1-2.lk}
+
+In the second part of the script, sections are signed to a memory region by name.
+
+\lstinputlisting[language=C]{src/code/68000/memory_map.c}
+
+\begin{trivia}
+Notice how powerful the linker script can be compred to \icode{sdcc}. A directive, \icode{OUTPUT\_FORMAT (" binary ")} allows to directly output raw binary without using container like \icode{elf}. This avoid the need for an extra conversion using \icode{objcopy}.
+\end{trivia}
 
 \section{Initializing variables}
+The linker script created markers and requeted section \icode{.data} to be written to \icode{rom} (VMA) but relocate symbols as if they were in \icode{.ram} (LMA).
 
-\pagebreak
+With these elements, zeroing the bss and populating .data with inital values is just a few lines of C.
+
+\lstinputlisting[language=C]{src/code/68000/init_vars.c}
+
+
 
 \section{Ruling them all}
 \section{GFX assets for the gfx system}
