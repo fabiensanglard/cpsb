@@ -96,6 +96,42 @@ With these elements, zeroing the bss and populating .data with inital values is 
 
 
 \section{Ruling them all}
+150 pages in, peeling layers one after one another and we have finally reached the heart of the game. Function \icode{main} is where developer trigger their game engine to convert inputs into visual ans audio ouputs.
+
+The architecture is much alike the Z-80 sound system where two "threads" run in lockstep. Function \icode{VSync} is awakened roughly every 16ms. Its job is to read inputs and save them locally, read latch buffer and write them to the latch, and more importantly, flip the GFXRAM descriptor. 
+
+\begin{trivia}
+The \icode{frameCounter} variable not only allow to pace the main thread so a new frame is only hosted every 16ms instead of rendering as fast as possible, it is also useful too keep track of wall-time to render animation and game logic properly.
+\end{trivia}
+
+Most importantly, flip the double GFXRAM buffer.
+
+\subsection{Commanding sound}
+By now it will be abondantly clear that requesting a sound or a music playback is only about writing to a latch and forget about it. Special care has to occur if the engine may request multiple sound during a same frame. If this were to happen the value in the latch could be overwritten before the Z-80 picked it up.
+
+The solution is to implement a system of queue where only one value is requested by frame.
+
+\pagebreak
+
+\lstinputlisting[language=C]{src/code/68000/main.c} 
+
+
+\subsection{Retrieving inputs}
+Besides joystick and buttons, the engine must recover inputs such as the dip settings, P1Start, P2Start, and most importantly detect coins being inserted.
+
+\begin{trivia}
+Arcades operator could configure the difficulty of a game via DIP switches. In a game like Street Fighter 2, eight configuration go from the easiest where 1 coin grants 6 credits to the hardest where four coins grant a single credit. Moreover, operator could disable "Continue coins"\cite{sf2_manual}.
+\end{trivia}
+
+The three DIP switches are called A, B, and C. As featured on page \pageref{fig:boarda} each DIP has 8 switches responsible for flipping a bit in a byte. Recovering the configuration is as simple as reading a byte from the memory map.
+
+\begin{trivia}
+In Street Fighter 2, DIP B is used to configure the difficulty level of the game. A.I is made with bytecode\cite{sf2_aiengine} and the difficulty impact which bytecode script a computer controlled opponent is allowed to use.
+\end{trivia}
+
+ 
+
+
 \section{GFX assets for the gfx system}
 \section{Double buffering}
 \section{Color brightness}
