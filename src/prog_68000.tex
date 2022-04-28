@@ -120,30 +120,146 @@ The solution is to implement a system of queue where only one value is requested
 Besides joystick and buttons, the engine must recover inputs such as the dip settings, P1Start, P2Start, and most importantly detect coins being inserted.
 
 \begin{trivia}
-Arcades operator could configure the difficulty of a game via DIP switches. In a game like Street Fighter 2, eight configuration go from the easiest where 1 coin grants 6 credits to the hardest where four coins grant a single credit. Moreover, operator could disable "Continue coins"\cite{sf2_manual}.
+Arcades operator could configure the difficulty of a game via DIP switches. In a game like Street Fighter 2, eight configuration go from the easiest where 1 coin grants 6 credits to the hardest where four coins grant a single credit. Moreover, operator could disable "Continue coins"\cite{sf2manual}.
 \end{trivia}
 
 The three DIP switches are called A, B, and C. As featured on page \pageref{fig:boarda} each DIP has 8 switches responsible for flipping a bit in a byte. Recovering the configuration is as simple as reading a byte from the memory map.
 
 \begin{trivia}
-In Street Fighter 2, DIP B is used to configure the difficulty level of the game. A.I is made with bytecode\cite{sf2_aiengine} and the difficulty impact which bytecode script a computer controlled opponent is allowed to use.
+In Street Fighter 2, DIP B is used to configure the difficulty level of the game ranging from 0 to 8 (4=default). Based on this value A.I selects bytecode\cite{sf2aiengine} script.
 \end{trivia}
 
+
+
+ % \href{https://github.com/originalgrego/FinalFightAE-Source/blob/master/docs/known_addresses.txt}
+ \begin{figure}[H]
+\begin{tabularx}{\textwidth}{Xllr}
+  \toprule    
+  \textbf{Label } & \textbf{ Map Zone }  & \textbf{Address } & \textbf{Mask } \\               
+  \toprule   
+  
+    \texttt{P1\_KEY\_3} & JAMMAp &    \texttt{0x800000} &  \texttt{0b01000000}    \\ 
+      \texttt{P1\_KEY\_2} & JAMMAp &  \texttt{0x800000} &  \texttt{0b00100000}    \\  	
+    \texttt{P1\_KEY\_1} & JAMMAp &    \texttt{0x800000} &  \texttt{0b00010000}    \\     
+  \texttt{P\_UP}    & JAMMAp &        \texttt{0x800000} &  \texttt{0b00001000}    \\     
+  \texttt{P1\_DOWN} & JAMMAp &  \texttt{0x800000} &  \texttt{0b00000100}    \\     
+  \texttt{P1\_LEFT} & JAMMAp &  \texttt{0x800000} &  \texttt{0b00000010}    \\     
+  \texttt{P1\_RIGHT} & JAMMAp &  \texttt{0x800000} &  \texttt{0b00000001}    \\     
  
+  \toprule   
+    \texttt{P2\_KEY\_3} & JAMMAp &  \texttt{0x800001}    &  \texttt{0b01000000}    \\     
+  \texttt{P2\_KEY\_2} & JAMMAp &  \texttt{0x800001}    &    \texttt{0b00100000}    \\     
+  \texttt{P2\_KEY\_1} & JAMMAp &  \texttt{0x800001}    &    \texttt{0b00010000}    \\    
+  \texttt{P2\_UP}    & JAMMAp &  \texttt{0x800001}    &     \texttt{0b00001000}    \\     
+  \texttt{P2\_DOWN} & JAMMAp &  \texttt{0x800001}    &      \texttt{0b00000100}    \\     
+  \texttt{P2\_LEFT} & JAMMAp &  \texttt{0x800001}    &      \texttt{0b00000010}    \\     
+  \texttt{P2\_RIGHT} & JAMMAp &  \texttt{0x800001}    &     \texttt{0b00000001}    \\     
+
+  \toprule   
+  \texttt{SERVICE} & JAMMAc &  \texttt{0x800018}       &     \texttt{0b01000000}    \\ 
+   \texttt{P2\_START} & JAMMAc &  \texttt{0x800018}   &      \texttt{0b00100000}    \\ 
+   \texttt{P1\_START} & JAMMAc &  \texttt{0x800018}   &      \texttt{0b00010000}    \\   
+     \texttt{COIN2\_P2} & JAMMAc &  \texttt{0x800018}    &   \texttt{0b00000010}    \\  
+   \texttt{COIN\_P1} & JAMMAc &  \texttt{0x800018}       &   \texttt{0b00000001}    \\      
+     
+
+    \toprule   
+    \texttt{DIP1} & JAMMAd &  \texttt{0x80001A}    &  \texttt{0bXXXXXXXX}    \\      
+    \texttt{DIP2} & JAMMAd &  \texttt{0x80001C}    &  \texttt{0bXXXXXXXX}    \\      
+    \texttt{DIP2} & JAMMAd &  \texttt{0x80001E}    &  \texttt{0bXXXXXXXX}    \\      
+  \toprule   
+\end{tabularx}
+\caption*{Input bit layouts}
+\end{figure}
+
+\subsection{Drawing on screen}
+Requesting tiles to be drawn consiste in first descring the layout in GFXRAM, then setting the palettes, and finally writing to the CPS-A and CPS-B registers to tell them at what offset the data is.
+
+\subsubsection{Double buffering}
+When an image is rendered, neither the data in the GFXRAM nor the registers values can be changed. Otherwise it would result in inconsistent images. Changes should only occur during the VBLANKing which is signaled to the 68000 in \icode{VSync} function.
+
+A proper way is to us a double buffer in the GFXRAM where the currenly used data is not touched while the next one is being prepared. On \icode{VSync} the CPS-A and CPS-B registers are written to point them to the next frame data.
+
+\subsubsection{CPS-A and CPS-B registers}
+The CPS-A registers are always at the same offset in the map and always use the same layout. 
+
+Depending on the board being targeted, registers of the CPS-B will move and their internal layout will change. A convenient way to deal with this is to use MACROs and have the build system define all these values.
+
+Note that all registers are 16-bit wide to accomodate the 68000 writing to them.
+
+ \begin{figure}[H]
+\begin{tabularx}{\textwidth}{llX}
+  \toprule    
+  \textbf{Name } & \textbf{ Offset }  & \textbf{Desc }  \\     
+  \toprule   
+  \texttt{OBJ RAM base}  &  \texttt{0x00} & Bla   \\   
+\texttt{SCR1 RAM base} &  \texttt{0x02}  & Bla   \\         
+\texttt{SCR2 RAM base} &  \texttt{0x04}  & Bla   \\     
+\texttt{SCR3 RAM base}&  \texttt{0x06}   & Bla  \\     
+\texttt{ROWSCROLL RAM base} &  \texttt{0x08}  & 256 rowscroll values   \\     
+\texttt{Palette base} &  \texttt{0x0A}  & Bla   \\   
+\texttt{Scroll 1 X} &  \texttt{0x0C}  & Bla   \\ 
+\texttt{Scroll 1 Y} &  \texttt{0x0E}  & Bla   \\   
+\texttt{Scroll 2 X} &  \texttt{0x10}  & Bla   \\ 
+\texttt{Scroll 2 Y} &  \texttt{0x12}  & Bla   \\   
+\texttt{Scroll 3 X} &  \texttt{0x14}  & Bla   \\ 
+\texttt{Scroll 3 Y} &  \texttt{0x16}  & Bla   \\     
+\texttt{Star1    X} &  \texttt{0x18}  & Bla   \\  
+\texttt{Star1    Y} &  \texttt{0x1A}  & Bla   \\  
+\texttt{Star2    X} &  \texttt{0x1C}  & Bla   \\  
+\texttt{Star2    Y} &  \texttt{0x1E}  & Bla   \\  
+\texttt{ROWSCROLL\_OFFSETS} &  \texttt{0x20}  & Offsets into ROWSCROLL base\\
+\texttt{Video Control} &  \texttt{0x22}  & flip screen, rowscroll enable\\
+  \toprule   
+\end{tabularx}
+\caption*{CPS-A registers}
+\end{figure}
+
+Because all registers are 16-bit but address for the base must be 24-bit, values written in base register are right-shifted \icode{<< 8}. 
+
+All scroll offset coordinates origin are in the upper left.
+
+rowscrool coordinate
+
+\paragraph{Video Control} layout features
+
+\pagebreak
+
+All CPS-B registers location change based on its version.
+
+ \begin{figure}[H]
+\begin{tabularx}{\textwidth}{llX}
+  \toprule    
+  \textbf{Name } & \textbf{ Offset }  & \textbf{Desc }\\  
+  \toprule   
+  \texttt{Layer control} & \texttt{ 0x26* } & Enable and Order layers\\      
+\texttt{Priority mask} & \texttt{ 0x28* } &  Bits meaning vary   \\  
+\texttt{Priority mask} & \texttt{ 0x2A* } &  Bits meaning vary   \\  
+\texttt{Priority mask} & \texttt{ 0x2C* } &  Bits meaning vary   \\  
+\texttt{Priority mask} & \texttt{ 0x2E* } &  Bits meaning vary   \\  
+\texttt{Palette control} & \texttt{ 0x30* } &  Request palette upload\\ 
+  \toprule   
+\end{tabularx}
+\caption*{CPS-B registers *for Street Fighter 2	}
+\end{figure}
+
+\paragraph{Palette control}This register is used to upload palettes pages. A page is a group of 32 palettes belonging to a same layer.
+
+\lstinputlisting[language=C]{src/code/68000/layercontrol.c} 
+
+Palette upload does not happen immediately. Instead the CPS-A wait until the next VBLANK. The graphic chip does not use a fixed base + offset to lookup a Palette page. e.g: If \icode{SCR1} palette is not marked for upload, \icode{SCR2} palette is found immediately after \icode{OBJ} palette.
+
+Priority mask
+
+\paragraph{Layer control} This register is used to enable/disable a layer but also to define the order in which layers should be drawn.
 
 
-\section{GFX assets for the gfx system}
-\section{Double buffering}
-\section{Color brightness}
-\section{Drawing shapes}
-\section{Drawing sprites}
-\section{Drawing SCR1}
-\section{Drawing SCR2}
-\section{Drawing SCR3}
-\section{Drawing STAR1}
-\section{Drawing STAR2}
+\subsubsection{Drawing Shapes and Sprites}
+\subsubsection{Drawing SCROLLs}
+\subsubsection{Drawing STARs}
 
-\section{Back then...}
+
+\subsubsection{Back then...}
 Very little has transpired.
 \pagebreak
 
