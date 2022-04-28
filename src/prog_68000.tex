@@ -219,13 +219,17 @@ Because all registers are 16-bit but address for the base must be 24-bit, values
 
 All scroll offset coordinates origin are in the upper left.
 
-rowscrool coordinate
+Rowscrolling of SRC1 layer is achieved by two registers. Rowscroll base points to an array of 16-bit values. Rowscroll offset is a list of index into that array indicating how much to X scroll.
 
-\paragraph{Video Control} layout features
+
+\paragraph{Video Control} This register enable/disable misc attributes.
+
+\lstinputlisting[language=C]{src/code/68000/videocontrol.c} 
+
 
 \pagebreak
 
-All CPS-B registers location change based on its version.
+All CPS-B registers location change based on the version.
 
  \begin{figure}[H]
 \begin{tabularx}{\textwidth}{llX}
@@ -245,33 +249,58 @@ All CPS-B registers location change based on its version.
 
 \paragraph{Palette control}This register is used to upload palettes pages. A page is a group of 32 palettes belonging to a same layer.
 
+\lstinputlisting[language=C]{src/code/68000/palettecontrol.c} 
+
+Palette upload does not happen immediately. Instead the CPS-A wait until the next VBLANK.
+
+The graphic chip does not use a fixed base + offset to lookup a Palette page. e.g: If \icode{SCR1} palette is not marked for upload, \icode{SCR2} palette is found immediately after \icode{OBJ} palette.
+
+
+
+\paragraph{Layer control} This register allows to enable or disable a layer indivually (with the exception of OBJ which uses another way). It is also used to define the priority of layers \icode{OBJ}, \icode{SCR1}, \icode{SCR2}, and \icode{SC3} individually.
+
+Note that STARs are always in the back and in order STAR1, STAR2.
+\pagebreak
+
 \lstinputlisting[language=C]{src/code/68000/layercontrol.c} 
 
-Palette upload does not happen immediately. Instead the CPS-A wait until the next VBLANK. The graphic chip does not use a fixed base + offset to lookup a Palette page. e.g: If \icode{SCR1} palette is not marked for upload, \icode{SCR2} palette is found immediately after \icode{OBJ} palette.
+\paragraph{Priority mask}
 
-Priority mask
+fsdfsS
 
-\paragraph{Layer control} This register is used to enable/disable a layer but also to define the order in which layers should be drawn.
-
+\lstinputlisting[language=C]{src/code/68000/maskcontrol.c} 
 
 \subsubsection{Drawing Shapes and Sprites}
+\lstinputlisting[language=C]{src/code/68000/sprites.c} 
 \subsubsection{Drawing SCROLLs}
 \subsubsection{Drawing STARs}
-
+\pagebreak
 
 \subsubsection{Back then...}
+
 Very little has transpired.
+
+At launch, the X68000 was initially sold at an expensive price of ¥369,000 (roughly \$3000 in 1987 dollars, equivalent to around \$6000 in 2012 dollars).
+
+In fact, former Capcom composer/sound programmer Hiroaki Kondo is credited as "X68K" in the games he worked on.
+
+Max VRAM can host 256 tiles. And draw 128. 32 per lines. Sprite doubler by Koichi Yoshida\cite{x68000spritedoubler}
+
+\nbimg{68000_series.png}
+
 \pagebreak
 
-dsa
+\nbimg{68000.png}
+\nbimg{68300.png}
 
 \simg{0.53}{x68000_XVI.png}
+
 \pagebreak
+
+\simg{0.53}{x68000_XVI.png}
 
 Talk about perfect ports.
 
-\img{SharpX68000ad.jpg}
+Talk about scanline interrupt
 
-\section{Easter eggs}
-720 block
-Red Fireball
+\img{SharpX68000ad.jpg}
