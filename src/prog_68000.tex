@@ -342,10 +342,10 @@ This mean that players who looked at these screens actually started a deep dark 
 
 \pagebreak
 
-\subsubsection{Back then...}
-Next to no information has ever transpired regarding how the CPS-1 control system was programmed. However a machine in particular has been widely rumored. A rumor seemingly confirmed by the nickname of Hiroaki Kondo, a Capcom composer/sound programmer often credited as "X68K". A rumor further renforced by what is the components found inside closely matching the CPS-1.
+\subsection{Back then...}
+Next to no information has ever transpired regarding how the CPS-1 control system was programmed. However one machine is widely rumored to have been used. A rumor seemingly confirmed by the nickname of Hiroaki Kondo, a Capcom composer/sound programmer often credited as "X68K". A rumor further renforced by the components found inside the machine, which closely match the CPS-1.
 
-The X68000 is a machine largely unknown outside of Japan. But in the peninsula it is known a the "god computer". 
+The X68000 is a machine largely unknown outside of Japan. But in that country it is known as the "god computer". 
 Released in 1987 by SHARP, the X68000 was as beautiful and powerful as it was expensive (¥369,000, roughly \$3000 in 1987 dollars, equivalent to around \$6000 in 2012 dollars).
 
 The hardware in these workstation were to put it midly, mind blowing at the time. A bet that was especially risky from SHARP considering the machine has next to no software at launch since it used its own OS.
@@ -354,7 +354,7 @@ The hardware in these workstation were to put it midly, mind blowing at the time
 
  \begin{figure}[H]
 \nbimg{68000.png}
-\caption*{The SHARP x68000 God Computer}
+\caption*{The SHARP, "God Computer", X68000 }
 \end{figure}
 
 \simg{0.53}{x68000_XVI.png}
@@ -370,17 +370,18 @@ Besides its gorgeous "Manhattan" case, the machine packed a surprising amount of
  \begin{figure}[H]
 \begin{tabularx}{\textwidth}{lX}
   \toprule    
-  \textbf{Type} & \textbf{ Content } \\  
+  \textbf{Type } & \textbf{ Content } \\  
   \toprule   
     
 CPU & Motorola 68000 XX MHz \\  
 RAM &  \\ 
-Video System & \\
-Graphic System & \\
-Sprite System & 128 tiles total. 32 tiles lines.\\
+Video  & \\
+Graphics & \\
+Sprite & 128 tiles total onscreen. 32 tiles per line.\\
 VRAM & Storing 256 16x16 tiles\\
 Sound chip & Motorola 68000  \\ 
 Music chip & Motorola 68000  \\ 
+Storage & Dual 5 1/4 floppy readers  \\ 
   \toprule   
 \end{tabularx}
 \caption*{X68000 components}
@@ -388,21 +389,30 @@ Music chip & Motorola 68000  \\
 
 The similarities with the CPS-1 are troubling. It is almost like writing a software emulation layer would make it a perfect CPS-1 development machine. However if we look into the details, things are different.
 
+For one thing, the sound chip is an OKI MSM6258. Although it works alike the MSM6296 with ADPCM, it features only one channel which severely impacted how rich the sound effects and music could be.
+
+Most importantly, the Sprite system has a weakness. The number of tile displayable was half the capacity of the CPS-1 (128 instead of 256) but that was an issue easily circuveined thanks to techinques such as Sprite doubler by Koichi Yoshida\cite{x68000spritedoubler} relying on raster effect.
+
+The real issue with the sprite system was the small amount of VRAM allowing to store only 256 tiles. A pity compared to the CPS-1 GFXROM allowing thousands. In these conditions, the limitation was how to manage loading time from the floppy discs which access was quite slow and made a game unplayable is used during gameplay.
+
 \pagebreak
 
-\nbimg{68000_series.png}
-
-In fact, former  in the games he worked on.
-
-Max VRAM can host 256 tiles. And draw 128. 32 per lines. Sprite doubler by Koichi Yoshida\cite{x68000spritedoubler}
-
+These limitation did not seem to have deterred Capcom from releasing five games for the platform (Ghouls 'n Ghosts, , Final Fight, SF2CE, Super Street Fighter II, and Strider). 
 
 Talk about perfect ports (SF2) and non-perfect port like Final Fight, the issue likely not being the number of sprite displayble but rather the VRAM that allowed only 256 different tiles.
 
-Talk about scanline interrupt
+Over its livespan, the X68000 series was immenseily succesful in Japan with 823  games released from 1988 to 1999 and even 2004.
+
+Many peripherals avaialble.
+
+Slick ads.
+
+\nbimg{68000_series.png}
+
 
 Fascination around this marchine is such that functioning model sell for \$2000 nowadays.
 
+Further analysis of the GFX sheet show that an allocator was used -> Workstation?
 
 \img{SharpX68000ad.jpg}
 
