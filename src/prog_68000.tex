@@ -348,7 +348,7 @@ Next to no information has ever transpired regarding how the CPS-1 control syste
 The X68000 is a machine largely unknown outside of Japan. But in that country it is known as the "god computer". 
 Released in 1987 by SHARP, the X68000 was as beautiful and powerful as it was expensive (¥369,000, roughly \$3000 in 1987 dollars, equivalent to around \$6000 in 2012 dollars).
 
-The hardware in these workstation were to put it midly, mind blowing at the time. A bet that was especially risky from SHARP considering the machine has next to no software at launch since it used its own OS.
+The hardware in these workstations was mind-blowing at the time. A bet that was especially risky considering the machine has next to no software at launch since it used its DOS-like OS named Human68k.
 
 \vfill
 
@@ -373,14 +373,15 @@ Besides its gorgeous "Manhattan" case, the machine packed a surprising amount of
   \textbf{Type } & \textbf{ Content } \\  
   \toprule   
     
-CPU & Motorola 68000 XX MHz \\  
-RAM &  \\ 
-Video  & \\
-Graphics & \\
-Sprite & 128 tiles total onscreen. 32 tiles per line.\\
-VRAM & Storing 256 16x16 tiles\\
-Sound chip & Motorola 68000  \\ 
-Music chip & Motorola 68000  \\ 
+CPU & Motorola 68000 10 MHz \\  
+RAM & 1MiB \\ 
+Video  & Up to 65,536 colors, up to 1024×1024 resolution \\
+Graphics & 1 sprite plane, 2 bg planes, 4 bitmap planes\\
+Sprite engine & 128 tiles total. 32 tiles per line\\
+Background engine & 2 in 256x256 \\
+VRAM & 1056 KiB - Sprite storage: 256 tiles\\
+Sound chip & Oki MSM6258 (1 channel)  \\ 
+Music chip & Yamaha YM2151 (8 channels)  \\ 
 Storage & Dual 5 1/4 floppy readers  \\ 
   \toprule   
 \end{tabularx}
@@ -391,31 +392,26 @@ The similarities with the CPS-1 are troubling. It is almost like writing a softw
 
 For one thing, the sound chip is an OKI MSM6258. Although it works alike the MSM6296 with ADPCM, it features only one channel which severely impacted how rich the sound effects and music could be.
 
-Most importantly, the Sprite system has a weakness. The number of tile displayable was half the capacity of the CPS-1 (128 instead of 256) but that was an issue easily circuveined thanks to techinques such as Sprite doubler by Koichi Yoshida\cite{x68000spritedoubler} relying on raster effect.
+Most importantly, the Sprite system has a weakness. The number of tile displayable was half the capacity of the CPS-1 (128 instead of 256) but that was an issue easily circumvented thanks to techniques such as Sprite doubler by Koichi Yoshida\cite{x68000spritedoubler} relying on raster effect.
 
 The real issue with the sprite system was the small amount of VRAM allowing to store only 256 tiles. A pity compared to the CPS-1 GFXROM allowing thousands. In these conditions, the limitation was how to manage loading time from the floppy discs which access was quite slow and made a game unplayable is used during gameplay.
 
 \pagebreak
 
-These limitation did not seem to have deterred Capcom from releasing five games for the platform (Ghouls 'n Ghosts, , Final Fight, SF2CE, Super Street Fighter II, and Strider). 
+These limitation did deter Capcom from releasing five games for the platform (Ghouls 'n Ghosts, Final Fight, SF2CE, Super Street Fighter II, and Strider). 
 
-Talk about perfect ports (SF2) and non-perfect port like Final Fight, the issue likely not being the number of sprite displayble but rather the VRAM that allowed only 256 different tiles.
+The hardware is so powerful that developers were able, for some games, to do "perfect port" which were visually identical to the arcade version. Capcom's Ghouls 'n Ghosts and Street Fighter 2 are considered perfect whereas Final Fight had to lower the number of enemies on screen.
 
-Over its livespan, the X68000 series was immenseily succesful in Japan with 823  games released from 1988 to 1999 and even 2004.
+ SHARP keps on improving the series, adding more RAM (up to 4MiB), HDD (up to 80 MiB). Peripheral manufacturers embraced the computer with extensions cards covering absolutely anything one can thing off. 
 
-Many peripherals avaialble.
-
-Slick ads.
+ SHARP bet was a success. People did write software for their platform. The X68000 series was immensely successful, even if accounting only for games which saw 823 releases between 1988 and 1999.
 
 \nbimg{68000_series.png}
 
-
-Fascination around this marchine is such that functioning model sell for \$2000 nowadays.
-
-Further analysis of the GFX sheet show that an allocator was used -> Workstation?
+These machine left such an impression on users that, as of 2022, more than thirty years after the last X68000 came out of the factory, functioning one easily fetch \$2,600 on the secondary market.
 
 \img{SharpX68000ad.jpg}
 
-\begin{trivia}
-In France, SHARP was a brand known for selling excellent things that noone would ever be able to afford. It became a national sensation when Eric Cantona made the commercial "Précis, pointu, affuté !"
-\end{trivia}
+On the left, the commitment to aesthetic expressed itself down to the pages of SHARP catalog. 
+
+SHARP's design and commitment to excellent with its X68000 line of product belongs in the workstation hall of fame next to Steve Jobs' NeXT.
