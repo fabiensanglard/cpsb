@@ -192,22 +192,22 @@ Note that all registers are 16-bit wide to accomodate the 68000 writing to them.
   \toprule    
   \textbf{Name } & \textbf{ Offset }  & \textbf{Desc }  \\     
   \toprule   
-  \texttt{OBJ RAM base}  &  \texttt{0x00} & Bla   \\   
-\texttt{SCR1 RAM base} &  \texttt{0x02}  & Bla   \\         
-\texttt{SCR2 RAM base} &  \texttt{0x04}  & Bla   \\     
-\texttt{SCR3 RAM base}&  \texttt{0x06}   & Bla  \\     
-\texttt{ROWSCROLL RAM base} &  \texttt{0x08}  & 256 rowscroll values   \\     
-\texttt{Palette base} &  \texttt{0x0A}  & Bla   \\   
-\texttt{Scroll 1 X} &  \texttt{0x0C}  & Bla   \\ 
-\texttt{Scroll 1 Y} &  \texttt{0x0E}  & Bla   \\   
-\texttt{Scroll 2 X} &  \texttt{0x10}  & Bla   \\ 
-\texttt{Scroll 2 Y} &  \texttt{0x12}  & Bla   \\   
-\texttt{Scroll 3 X} &  \texttt{0x14}  & Bla   \\ 
-\texttt{Scroll 3 Y} &  \texttt{0x16}  & Bla   \\     
-\texttt{Star1    X} &  \texttt{0x18}  & Bla   \\  
-\texttt{Star1    Y} &  \texttt{0x1A}  & Bla   \\  
-\texttt{Star2    X} &  \texttt{0x1C}  & Bla   \\  
-\texttt{Star2    Y} &  \texttt{0x1E}  & Bla   \\  
+  \texttt{OBJ base}  &  \texttt{0x00} & Sprite and Shape descriptors   \\   
+\texttt{SCR1 base} &  \texttt{0x02}  & SCROLL1 descriptors   \\         
+\texttt{SCR2 base} &  \texttt{0x04}  & SCROLL2 descriptors   \\     
+\texttt{SCR3 base}&  \texttt{0x06}   & SCROLL3 descriptors  \\     
+\texttt{ROWSCROLL base} &  \texttt{0x08}  & 256 rowscroll values   \\     
+\texttt{Palette base} &  \texttt{0x0A}  & Palettes location   \\   
+\texttt{Scroll 1 X} &  \texttt{0x0C}  & SCROLL1 Offset X  \\ 
+\texttt{Scroll 1 Y} &  \texttt{0x0E}  & SCROLL1 Offset Y    \\   
+\texttt{Scroll 2 X} &  \texttt{0x10}  & SCROLL2 Offset X    \\ 
+\texttt{Scroll 2 Y} &  \texttt{0x12}  & SCROLL2 Offset Y    \\   
+\texttt{Scroll 3 X} &  \texttt{0x14}  & SCROLL3 Offset X    \\ 
+\texttt{Scroll 3 Y} &  \texttt{0x16}  & SCROLL3 Offset Y    \\     
+\texttt{Star1    X} &  \texttt{0x18}  & STAR1   Offset X    \\  
+\texttt{Star1    Y} &  \texttt{0x1A}  & STAR1   Offset Y    \\  
+\texttt{Star2    X} &  \texttt{0x1C}  & STAR2   Offset X    \\  
+\texttt{Star2    Y} &  \texttt{0x1E}  & STAR2   Offset Y    \\  
 \texttt{ROWSCROLL\_OFFSETS} &  \texttt{0x20}  & Offsets into ROWSCROLL base\\
 \texttt{Video Control} &  \texttt{0x22}  & flip screen, rowscroll enable\\
   \toprule   
@@ -215,9 +215,9 @@ Note that all registers are 16-bit wide to accomodate the 68000 writing to them.
 \caption*{CPS-A registers}
 \end{figure}
 
-Because all registers are 16-bit but address for the base must be 24-bit, values written in base register are right-shifted \icode{<< 8}. 
+The bases tell the CPS-A where it should expected data in GFXRAM. Registers are 16-bit but address must be 24-bit so values are \icode{>> 8}. 
 
-All scroll offset coordinates origin are in the upper left.
+Scroll offsets are exactly that with coordinates origin in the upper left.
 
 Rowscrolling of SRC1 layer is achieved by two registers. Rowscroll base points to an array of 16-bit values. Rowscroll offset is a list of index into that array indicating how much to X scroll.
 
@@ -237,14 +237,14 @@ All CPS-B registers location change based on the version.
   \textbf{Name } & \textbf{ Offset }  & \textbf{Desc }\\  
   \toprule   
   \texttt{Layer control} & \texttt{ 0x26* } & Enable and Order layers\\      
-\texttt{Priority mask} & \texttt{ 0x28* } &  Bits meaning vary   \\  
-\texttt{Priority mask} & \texttt{ 0x2A* } &  Bits meaning vary   \\  
-\texttt{Priority mask} & \texttt{ 0x2C* } &  Bits meaning vary   \\  
-\texttt{Priority mask} & \texttt{ 0x2E* } &  Bits meaning vary   \\  
+\texttt{Priority mask} & \texttt{ 0x28* } &  4 pen values to draw above OBJ   \\  
+\texttt{Priority mask} & \texttt{ 0x2A* } &  4 pen values to draw above OBJ   \\  
+\texttt{Priority mask} & \texttt{ 0x2C* } &  4 pen values to draw above OBJ   \\  
+\texttt{Priority mask} & \texttt{ 0x2E* } &  4 pen values to draw above OBJ  \\  
 \texttt{Palette control} & \texttt{ 0x30* } &  Request palette upload\\ 
   \toprule   
 \end{tabularx}
-\caption*{CPS-B registers *for Street Fighter 2	}
+\caption*{CPS-B registers *for Street Fighter 2	(CPS-B 11)}
 \end{figure}
 
 \paragraph{Palette control}This register is used to upload palettes pages. A page is a group of 32 palettes belonging to a same layer.
@@ -253,7 +253,7 @@ All CPS-B registers location change based on the version.
 
 Palette upload does not happen immediately. Instead the CPS-A wait until the next VBLANK.
 
-The graphic chip does not use a fixed base + offset to lookup a Palette page. e.g: If \icode{SCR1} palette is not marked for upload, \icode{SCR2} palette is found immediately after \icode{OBJ} palette.
+The graphic chip does not use a fixed base + offset to lookup a Palette page. e.g: If \icode{SCR1} palette is not marked for upload, \icode{SCR2} palette is expected immediately after \icode{OBJ} palette.
 
 
 
@@ -264,43 +264,148 @@ Note that STARs are always in the back and in order STAR1, STAR2.
 
 \lstinputlisting[language=C]{src/code/68000/layercontrol.c} 
 
-\paragraph{Priority mask}
+The board studied in this book used CPS-B 11 which does not support STAR1 and STAR2. That feature was not used much besides in Forgotten Words (\icode{CPS-B 01}) and Strider (also \icode{CPS-B 01}).
 
-fsdfsS
+\begin{trivia}
+Starfields were used so little that the bytecode mapper was removed altogether from the CPS-2 systems.
+\end{trivia}
+
+Layer control register is also used to define the order in which OBJ, SCR1, SCR2, and SCR3 should be drawn.
+
+\lstinputlisting[language=C]{src/code/68000/layercontrol2.c} 
+
+This bit layout never changes accross CPS-B.
+
+\paragraph{Priority mask}
+The layer located first behind the OBJ layer has the super power of being able to be draw on top of OBJ. The tilemap must be marked as such (descibed in "Rendering SCROLLs" section) and the pen values to be treated specially are to be written in the priority mask registers. Four values can be entered in four registers.
+
+
 
 \lstinputlisting[language=C]{src/code/68000/maskcontrol.c} 
 
+
+
+
+
+
 \subsubsection{Drawing Shapes and Sprites}
+To drawing sprites and shapes, descriptors must be written to the GFX RAM. Each entry takes 8 bytes
+
 \lstinputlisting[language=C]{src/code/68000/sprites.c} 
+
+The attribute two bytes have a special layout.
+
+\lstinputlisting[language=C]{src/code/68000/sprites2.c} 
+
+To mark the end of the tile list an empty descriptor is used with attribute value set to \icode{0xFF00}. 
+
+If the attribute bytes indicate set block sizes to zero, a descriptor commands a simple tile to be drawn. The immense majority of draw calls in a Capcom games are single tile commands.
+
+A shape is made of several single tile draw command resulting in arbitrary forms but a sprite must be rectangular. It is a single draw resulting in multiple tiles rendered but but it does not allow to draw more than the maximum limit of tiles.
+
+The CSP-A will read up to 256 entries there and ignore the rest. This is a hardware limitation. There is no enough time in a raster scan to draw all tiles.
+
+
 \subsubsection{Drawing SCROLLs}
-\subsubsection{Drawing STARs}
+
+Rendering tilemap is much alike rendering OBJs. Descriptors must be written to the GFX RAM. Each entry is two bytes wide.
+
+\lstinputlisting[language=C]{src/code/68000/scrolls.c} 
+
+The attribute byte is a bit field where we find in particular the palette ID, the group ID which references the priority mask, and the usual flippers.
+
+\lstinputlisting[language=C]{src/code/68000/scrolls2.c} 
+
+All SCROLLs have different size and tile size. But they all features 64x64 (4,096) entries. The CPS-A expects no more and no less. 
+
+% These values make the SCROLL1 (8x8 tiles) 512x512 large, SCROLL2 (16x16 tiles) 1024x1024 large, and SCROLL2 (16x16 tiles) 2018x2048 large.
+
+ \begin{figure}[H]
+\begin{tabularx}{\textwidth}{Xrrr}
+  \toprule    
+  \textbf{Scroll name } & \textbf{ Tiles Dimensions } & \textbf{ Tile size }  & \textbf{Dimension }\\  
+  \toprule   
+    
+\texttt{SCROLL1} & \texttt{64x64} & \texttt{8x 8 } &  \texttt{512x 512 }  \\  
+\texttt{SCROLL2} & \texttt{64x64} & \texttt{16x16 } &  \texttt{1024x1024 }   \\  
+\texttt{SCROLL3} & \texttt{64x64} & \texttt{32x32 } &  \texttt{2018x2048 }   \\  
+  \toprule   
+\end{tabularx}
+\caption*{SCROLLS tile size and dimensions}
+\end{figure}
+
+\begin{trivia}
+When the CPS-B they were working with supported the trick, Capcom developer rendered a full back screen without using a single scroll or OBJs. They simply enabled the STAR1 layer without requesting any stars. 
+
+This mean that players who looked at these screens actually started a deep dark night sky.
+\end{trivia}
+
 \pagebreak
 
 \subsubsection{Back then...}
+Next to no information has ever transpired regarding how the CPS-1 control system was programmed. However a machine in particular has been widely rumored. A rumor seemingly confirmed by the nickname of Hiroaki Kondo, a Capcom composer/sound programmer often credited as "X68K". A rumor further renforced by what is the components found inside closely matching the CPS-1.
 
-Very little has transpired.
+The X68000 is a machine largely unknown outside of Japan. But in the peninsula it is known a the "god computer". 
+Released in 1987 by SHARP, the X68000 was as beautiful and powerful as it was expensive (¥369,000, roughly \$3000 in 1987 dollars, equivalent to around \$6000 in 2012 dollars).
 
-At launch, the X68000 was initially sold at an expensive price of ¥369,000 (roughly \$3000 in 1987 dollars, equivalent to around \$6000 in 2012 dollars).
+The hardware in these workstation were to put it midly, mind blowing at the time. A bet that was especially risky from SHARP considering the machine has next to no software at launch since it used its own OS.
 
-In fact, former Capcom composer/sound programmer Hiroaki Kondo is credited as "X68K" in the games he worked on.
+\vfill
 
-Max VRAM can host 256 tiles. And draw 128. 32 per lines. Sprite doubler by Koichi Yoshida\cite{x68000spritedoubler}
+ \begin{figure}[H]
+\nbimg{68000.png}
+\caption*{The SHARP x68000 God Computer}
+\end{figure}
+
+\simg{0.53}{x68000_XVI.png}
+
+\pagebreak
+
+\simg{0.53}{x68000_XVI.png}
+
+
+
+Besides its gorgeous "Manhattan" case, the machine packed a surprising amount of "fun" horse power since it features a graphic system supporting 128 hardware 16x16 tiles.
+
+ \begin{figure}[H]
+\begin{tabularx}{\textwidth}{lX}
+  \toprule    
+  \textbf{Type} & \textbf{ Content } \\  
+  \toprule   
+    
+CPU & Motorola 68000 XX MHz \\  
+RAM &  \\ 
+Video System & \\
+Graphic System & \\
+Sprite System & 128 tiles total. 32 tiles lines.\\
+VRAM & Storing 256 16x16 tiles\\
+Sound chip & Motorola 68000  \\ 
+Music chip & Motorola 68000  \\ 
+  \toprule   
+\end{tabularx}
+\caption*{X68000 components}
+\end{figure}
+
+The similarities with the CPS-1 are troubling. It is almost like writing a software emulation layer would make it a perfect CPS-1 development machine. However if we look into the details, things are different.
+
+\pagebreak
 
 \nbimg{68000_series.png}
 
-\pagebreak
+In fact, former  in the games he worked on.
 
-\nbimg{68000.png}
-\nbimg{68300.png}
+Max VRAM can host 256 tiles. And draw 128. 32 per lines. Sprite doubler by Koichi Yoshida\cite{x68000spritedoubler}
 
-\simg{0.53}{x68000_XVI.png}
 
-\pagebreak
-
-\simg{0.53}{x68000_XVI.png}
-
-Talk about perfect ports.
+Talk about perfect ports (SF2) and non-perfect port like Final Fight, the issue likely not being the number of sprite displayble but rather the VRAM that allowed only 256 different tiles.
 
 Talk about scanline interrupt
 
+Fascination around this marchine is such that functioning model sell for \$2000 nowadays.
+
+
 \img{SharpX68000ad.jpg}
+
+\begin{trivia}
+In France, SHARP was a brand known for selling excellent things that noone would ever be able to afford. It became a national sensation when Eric Cantona made the commercial "Précis, pointu, affuté !"
+\end{trivia}
