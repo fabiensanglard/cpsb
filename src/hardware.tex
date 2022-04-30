@@ -981,8 +981,7 @@ SCROLL3 uses tiles of dimensions 32x32 resulting in a total dimensions of 2018x2
 
 Each tilemaps has a maximum capacity of 32 palettes.
 
-
-Game designers are free to use layers however they please. For Street Fighter 2, they used layers in a clever way to implement parallax. The sprites in black (which are discussed later in this chapter) are used not only for the characters but also for the "GUI" elements but this was not mandatory.
+For Street Fighter 2, the developers used layers with different horizontal scroll speed to implement parallax. The sprites in black (drawn on a fourth layer called "OBJ" which is discussed later) are used not only for the characters but also for the "GUI" elements.
 
 Other titles such as Forgotten World required all the sprites the machine could provide. To not waste any, the design team chose to implement the GUI with SCROLL1. It is a good trade-off because the only restrictions is that elements are aligned on a 8 pixels grid which is not really a problem for a GUI.
 
@@ -1018,7 +1017,7 @@ The CPS-1 layer system does not use a painter algorithm where pixels are written
 
 The STARs layers also proved useful when designers need a full black background. Instead of using a SCROLL and repeating a tile full of black color codes, they only have to use a STAR and request no stars. Think about it you see such a screen. In a way you are looking at the night sky.
 
-\fcolorbox{black}{red}{\vphantom{W}\hphantom{H}} SCROLL1, \fcolorbox{black}{green}{\vphantom{W}\hphantom{H}} SCROLL2, \fcolorbox{black}{blue}{\vphantom{W}\hphantom{H}} SCROLL3, \fcolorbox{black}{mycyan}{\vphantom{W}\hphantom{H}} STAR1, \fcolorbox{black}{mypink}{\vphantom{W}\hphantom{H}} STAR2, \fcolorbox{black}{black}{\vphantom{W}\hphantom{H}} OBJ.
+\fcolorbox{black}{red}{\vphantom{W}\hphantom{H}} SCROLL1, \fcolorbox{black}{green}{\vphantom{W}\hphantom{H}} SCROLL2, \fcolorbox{black}{blue}{\vphantom{W}\hphantom{H}} SCROLL3, \fcolorbox{black}{mycyan}{\vphantom{W}\hphantom{H}} STAR1, \fcolorbox{black}{myyellow}{\vphantom{W}\hphantom{H}} STAR2, \fcolorbox{black}{black}{\vphantom{W}\hphantom{H}} OBJ.
 
 \vfill
 \begin{figure}[!b]
@@ -1053,13 +1052,13 @@ We can see, in "back to front" order,  \fcolorbox{black}{blue}{\vphantom{W}\hpha
 \pagebreak
 
 
-This makes sense except for one element. If we look closely at Haggar, he appears to be both in front and behind SCROLL2.
+This makes sense except for one detail. If we look closely at Haggar, he appears to be both in front and behind SCROLL2.
 
-The CPS-B allows to fine tune the layers priorities by assigning new priority on a color-code basis. Four priority mask assigned on a per-tile basis allow to define color codes to be drawn on top of the sprites. 
+The CPS-B allows the SCROLL layer behind the OBJs layer to have a special power. If a SCROLL tile is marked property, it can request the renderer to display some of its pixels on top of OBJ instead of behind.
 
-This feature allows to create complex effect where sprites are sandwitched by a SCROLL. Here, the four colors used by the wooden ramp are also added to priority mask 0. All tiles making the "front" portion of the ramp are set to use mask 0. Notice how that part of the ramp is perfectly aligned with the SCROLL 16 tiles grid so only these tiles special color codes appear on top of the sprites.
+This feature allows to create complex effect where sprites are sandwitched by a SCROLL. Here, the tiles making the "near" portion of the ramp are added to the priority mask. Then four pens (resulting in colors \fcolorbox{black}{mask1}{\vphantom{W}\hphantom{H}} , \fcolorbox{black}{mask2}{\vphantom{W}\hphantom{H}} , \fcolorbox{black}{mask3}{\vphantom{W}\hphantom{H}} , and \fcolorbox{black}{mask4}{\vphantom{W}\hphantom{H}}) are set for the priority mask.
 
-\fcolorbox{black}{red}{\vphantom{W}\hphantom{H}} SCROLL1, \fcolorbox{black}{green}{\vphantom{W}\hphantom{H}} SCROLL2, \fcolorbox{black}{blue}{\vphantom{W}\hphantom{H}} SCROLL3, \fcolorbox{black}{black}{\vphantom{W}\hphantom{H}} OBJ.
+Tiles making the "far" part of the ramp are not added to the priority mask so they appear behind OBJs.
 
 \vfill
 \begin{figure}[!b]
@@ -1220,9 +1219,10 @@ With its architecture based on a double sprite framebuffer, Capcom reached its t
 
 Up to that point, the frustration spur from sprite dimensions (all sprites had to had the same sizes), shapes (mandatory rectangular) and colors (one sprite could use at most one palette). 
 
-The CPS-1 lifted these three limitations by abandoning the concept of sprites. The CPS-1 does have a "sprite" layer but it is made of tile of dimensions 16x16 pixels. Called OBJ (for OBJects) these can be arranged however an artist requires to build sprites of arbitrary shapes and sizes. The only limit is the maximum number of OBJs set to 256 elements. 
+The CPS-1 lifted these three limitations by abandoning the concept of sprites. The CPS-1 does have a "sprite" layer but it is made of tile of dimensions 16x16 pixels. Called OBJ (for OBJects) its TILEs can be arranged however an artist requires to build sprites of arbitrary shapes and sizes. 
 
-This system also allows to us more colors since each OBJ can use any of the 32 palettes available on the OBJ layer. This greatly increase the total usable colors to a total of 32*16 - 32 = 480 sprites colors. 
+OBJ has 32 palettes which any tile can freely use for a total of 480 colors.
+% This system also allows to us more colors since each OBJ can use any of the 32 palettes available on the OBJ layer. This greatly increase the total usable colors to a total of 32*16 - 32 = 480 sprites colors. 
 
 
 
@@ -1254,14 +1254,30 @@ Guile crouching pause is 18 OBJs (2,304 bytes). Sagat's low kick pause is 21 OBJ
 
 \sdraw{1.0}{kingpin}
 
-\begin{trivia}
- The kingpin boss in "The Punisher" is an homogeneous sprite occupying nearly half the screen. It is made of 69 OBJs and the CPS-1 does not mind it the slightest.
-\end{trivia}
+The kingpin boss in "The Punisher" is made of 69 tiles and take half the screen.
 
-To increase flexibility even further, OBJs can have attributes such as flip-bits to indicate if they should be flipped horizontally and vertically. 
 
-Note however that there is not support for any kind of rotation or scaling.
+To increase flexibility even further, OBJs can have attributes such as flip-bits to indicate if they should be flipped horizontally and vertically. There is not support for any kind of rotation or scaling. When Final Fight mini-boss, Damned, does its back-flip, all frames are pre-rendered.
+
  % The system has an advertised capacity of 256 sprite tile per frame \red{(Source?)}.
+
+\pagebreak
+
+
+The lack of scaling and rotation was a problem for developers of Street Fighter 2 where the attact mode called for exactly these two operations. The logo appears first small on the screen and after two revolutions on itself appeared zoomed in. How was this achieved?
+\pagebreak
+
+
+Yes it does
+\pagebreak
+
+
+Sprites were precious resources. This was also a problem on Street Fighter 2 (yes that is a lot of problems to solve on this game, it really pushed the machine to its limits).
+\pagebreak
+
+
+The only limit is the maximum number of OBJs set to 256 elements. 
+\pagebreak
 
 
 
@@ -1271,19 +1287,19 @@ Note however that there is not support for any kind of rotation or scaling.
 
 We now have enough knowledge to fully understand how the CPS-A and CPS-B cooperate to render graphics.
 
-The two graphics chips closely work together by sharing custody of the GFX ROM and VRAM. In a special arrangement, the CPS-A decides where things go (it owns the address lines of the bus) while the CPS-B compose as fast as possible (it owns the data lines of the bus). 
+The two graphics chips closely work together by sharing custody of the GFX ROM and VRAM. The CPS-A decides where things go (it owns the address lines of the bus) while the CPS-B compose as fast as possible (it owns the data lines of the bus). 
 
 \begin{figure}[H]
 \nbdraw{shared_custody}
 \caption*{CPS-A (address) and CPS-B (data) GFX ROM/VRAM lines.}
 \end{figure}
 
-The CPS-A is truly the brain since besides deciding source and destination of data, it also generates LI: (Line increment) and FI: (Frame increment) towards the CPS-B where they are turned into HSYNC and VSYNC for the CRT.
+Besides deciding source and destination of data, the CPS-A also generates LI: (Line increment) and FI: (Frame increment) towards the CPS-B where they are turned into HSYNC and VSYNC for the CRT.
 
-The 23-bit address line to the GFX ROM is special. It is not a raw address but a descriptor containing the layerID and a tileID within this layer. Since all layers have known tile dimensions, the PAL \icode{STF29} can decode addresses into a raw offset.
+The 23-bit address line to the GFX ROM is special. It is not a raw address but a layerID + tileID within that layer. The PAL \icode{STF29} converts IDs into addresses.
 
 
-Because it is the muscle of the tandem, the CPS-B is put under heavy contribution. At all time, it must not only compose all inputs toward the video system by reading the last-rendered sprite framebuffer and the five other layers but it must also write the sprite framebuffer for the next frame.
+The CPS-B is put under heavy contribution. It must simulatneously write the next sprite framebuffer but also render the current by reading the previous sprite framebuffer and sampling all five other layers.
 
 \nbdraw{vram_rw}
 
