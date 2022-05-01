@@ -135,8 +135,8 @@ The z80 read the latch in the interrupt, append it into a circular buffer. Inter
 Otherwise the value is a sound ID to be played immediately on the OKI. This scheme allows for 256 music IDs and 254 samples IDs.
 
  \begin{figure}[H]
-\nbdraw{latches_intercafe}
-\caption*{Street Fighter comm model. \icode{0xFF} no-op and ring buffers}
+\nbdraw{latches_interface}
+\caption*{Street Fighter comm model. Stream encoding via \icode{0xFF}}
 \end{figure}
 
 Notice how the encoder injects \icode{0xFF} no-op bytes after each write to the latch and how the decoded ignore them.
