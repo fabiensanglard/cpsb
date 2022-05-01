@@ -1,4 +1,3 @@
-
 char varA;
 char varB = 0;
 const char varC = 26;

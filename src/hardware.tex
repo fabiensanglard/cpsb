@@ -1015,7 +1015,7 @@ Alike the tilemaps, each starfield has a dedicated 32 palettes.
 The CPS-1 layer system does not use a painter algorithm where pixels are written over and over in a framebuffer. The CPS-B receives a stream of all layers and based on the priority and the potential transparent color code (\icode{0xF}) select the one to send to the video system.
 \end{trivia}
 
-The STARs layers also proved useful when designers need a full black background. Instead of using a SCROLL and repeating a tile full of black color codes, they only have to use a STAR and request no stars. Think about it you see such a screen. In a way you are looking at the night sky.
+The STARs layers also proved useful when designers need a full black background. Instead of using a SCROLL and repeating a tile full of black color codes, they only have to use a STAR and request no stars. So many player starred at a dark night sky and they never knew about it.
 
 \fcolorbox{black}{red}{\vphantom{W}\hphantom{H}} SCROLL1, \fcolorbox{black}{green}{\vphantom{W}\hphantom{H}} SCROLL2, \fcolorbox{black}{blue}{\vphantom{W}\hphantom{H}} SCROLL3, \fcolorbox{black}{mycyan}{\vphantom{W}\hphantom{H}} STAR1, \fcolorbox{black}{myyellow}{\vphantom{W}\hphantom{H}} STAR2, \fcolorbox{black}{black}{\vphantom{W}\hphantom{H}} OBJ.
 
@@ -1188,7 +1188,7 @@ This choice, made by SNK for its Neo-Geo allowed gorgeous titles such as "Metal 
 
 
 
-\subsubsection{CPS1 Sprites}
+\subsubsection{CPS1 Sprite FrameBuffer}
 Capcom hardware designers wanted something even more powerful than a double line buffer. To allow more time than a scanline to the PPU, the CPS-1 was built around a double sprite framebuffer. To host these framebuffers, the machine uses dedicated memory called VRAM.
 
 With a double sprite framebuffer, the PPU does not just draw a line in advance but a whole screen. This technique gives even more time for the graphic chip to do its work since drawing time increases from (64$\mu$s) to 16.7ms (260x more time!). 
@@ -1254,29 +1254,193 @@ Guile crouching pause is 18 OBJs (2,304 bytes). Sagat's low kick pause is 21 OBJ
 
 \sdraw{1.0}{kingpin}
 
-The kingpin boss in "The Punisher" is made of 69 tiles and take half the screen.
+Kingpin in "The Punisher" is made of 69 tiles and take half the screen.
 
 
-To increase flexibility even further, OBJs can have attributes such as flip-bits to indicate if they should be flipped horizontally and vertically. There is not support for any kind of rotation or scaling. When Final Fight mini-boss, Damned, does its back-flip, all frames are pre-rendered.
+Tiles in the OBJ layer can have attributes to be rendered horizontally and/or vertically flipped but there is not support for rotation or scaling.
+
+\begin{minipage}[t]{0.535\linewidth}
+  \nbdraw{damnd}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.445\linewidth}
+  \nbdraw{damnd2}
+\end{minipage}
+
+ When Final Fight boss, Damned, does its back-flip, the CPS-1 does not rotate anything. Two sets of tiles are used and X flip/Y flip generate two extra mirrored sets. The effect works thanks to fast movement and players's brain interpolation.
 
  % The system has an advertised capacity of 256 sprite tile per frame \red{(Source?)}.
 
 \pagebreak
 
+The sprite system has a hard limit of 256 tiles. This is a simple constraint decided by how many tile is is able to read from the GFXROM and write to the VRAM during a raster scan (16.7ms).
 
-The lack of scaling and rotation was a problem for developers of Street Fighter 2 where the attact mode called for exactly these two operations. The logo appears first small on the screen and after two revolutions on itself appeared zoomed in. How was this achieved?
+Because OBJ tiles are the most vercatile (they can be placed independently and anywhere on the screen), it was tempting to use them offset.
+
+Street Fighter II designers pushed the machine on the edge of its limits by using OBJ tiles for the opponents, arena decoration, GUI, and to improve the background parallax further.
+
+When Ken faces Ryu in Japan, nearly 200 tiles are used. But when Street Fighter 2 Champion Edition allowed same character matches on any location, problems started to arise.
+\vfill
+\img{lack_sprites_color.png}
+\pagebreak
+
+\begin{q}{- Akira Nishitani, SF2 Producer}
+We carefully planned SF2 so that the biggest character and the second biggest character could just barely fit on screen at the same time. 
+
+But when mirror matches became possible in Champion Edition, that meant that we had to be able to display two copies of the biggest character on screen. We ended up having to remove back- ground elements and such.
+\end{q}
+To remain within the OBJ budget, the "wind, forest, fire, mountain" ("\begin{CJK}{UTF8}{min}風林火山\end{CJK}") sign is cut from Street Fighter 2 Champion Edition.
+\vfill
+\img{lack_sprites_rgb.png}
+\pagebreak
+
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001209}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001210}
+\end{minipage}
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001211}
+\end{minipage}
+
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001212}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001213}
+\end{minipage}
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001214}
+\end{minipage}
+
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001215}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001216}
+\end{minipage}
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001217}
+\end{minipage}
+
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001218}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001219}
+\end{minipage}
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001220}
+\end{minipage}
+
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001221}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001222}
+\end{minipage}
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001223}
+\end{minipage}
+
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001224}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001225}
+\end{minipage}
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001226}
+\end{minipage}
+
+
 \pagebreak
 
 
-Yes it does
-\pagebreak
 
 
-Sprites were precious resources. This was also a problem on Street Fighter 2 (yes that is a lot of problems to solve on this game, it really pushed the machine to its limits).
-\pagebreak
 
 
-The only limit is the maximum number of OBJs set to 256 elements. 
+
+
+
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001227}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001228}
+\end{minipage}
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001229}
+\end{minipage}
+
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001230}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001231}
+\end{minipage}
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001232}
+\end{minipage}
+
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001233}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001234}
+\end{minipage}
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001235}
+\end{minipage}
+
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001236}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001237}
+\end{minipage}
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001238}
+\end{minipage}
+
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001239}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001240}
+\end{minipage}
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001241}
+\end{minipage}
+
+The lack of scaling and rotation was a problem for developers of Street Fighter 2 where the intro called for exactly these operations. 
+
+They faked it with two logos, a small and a large one. Tiles move on a circular pattern. The small to large subitituton happens in one-go at the mid-animation timestamp.
+
 \pagebreak
 
 
@@ -1287,7 +1451,7 @@ The only limit is the maximum number of OBJs set to 256 elements.
 
 We now have enough knowledge to fully understand how the CPS-A and CPS-B cooperate to render graphics.
 
-The two graphics chips closely work together by sharing custody of the GFX ROM and VRAM. The CPS-A decides where things go (it owns the address lines of the bus) while the CPS-B compose as fast as possible (it owns the data lines of the bus). 
+The two graphics chips closely work together by sharing custody of the GFX ROM and VRAM. The CPS-A generates four interleaved stream of pens (OBJ, SCR1, SR2, and SRC3) by driving the address bus. The CPS-B receives the data and decides for each "pixel" which stream is visible. 
 
 \begin{figure}[H]
 \nbdraw{shared_custody}

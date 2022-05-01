@@ -1,28 +1,32 @@
-\chapter{CP-S Programming}
+\chapter{CP-S: Making a Game}
 
-A CPS-1 game production pipeline features, at the top, the programmers who write code and the artists who produce audio assets (\icode{.wav}, and \icode{.mvg}) and graphics assets (\icode{.png}). All these resources are injected into a build system resulting in four sets of ROMs. 
+The next three chapters describe a full CPS-1 game production pipeline. 
+
+The goal is to deepen the understanding of Capcom's platform by not only writing code and generating assets but also learning how to process them in order to generate ROMs.
+
+The pipeline inputs consist in the code (\icode{.s}/\icode{.c}) written by programmers and samples (\icode{.wav}), musics (\icode{.mvg}), and graphics assets (\icode{.png}) produced by the artists. The outputs are four sets of ROMs ready to be burned on EPROMs. 
 
  \begin{figure}[H]
 \sdraw{1.0}{game_pipeline}
 \caption*{Game ROMs dependency graph}
 \end{figure}
 
-Some dependencies in the graph make a lot of sense. The Z-80 source code (\icode{.c} and \icode{.s}) impacts the Z-80 ROM only. Likewise, the 68k code (also \icode{.c} and \icode{.s}) ends up in the 68k ROM.
+Some dependencies in the graph make a lot of sense. The Z-80 source code (\icode{.c} and \icode{.s}) impacts the Z-80 ROM only. Likewise, the 68000 code (also \icode{.c} and \icode{.s}) ends up in the 68000 ROM.
 
-Other dependencies are more convoluted. The \icode{.wav} files for example need to be compressed to ADPCM for the OKI ROM but they must also generate a \icode{.h} header file containing sound ID so the 68k can refer to them when requesting playback to the Z-80.
+Other dependencies are more convoluted. The \icode{.wav} sample files for example need to be compressed to ADPCM before being added to the OKI ROM. But they must also be referenced in a \icode{.h} header file. A sound identifier integer per sample is used so the 68000 can refer to them when requesting playback.
 
-Likewise, the \icode{.png} files are processed and formatted into the GFX ROM. But they also require to generate a \icode{.h} header file containing tile ID and a \icode{.c} file containing the tile palettes which are compiled into the 68k ROM. 
+Likewise, the \icode{.png} files are transformed before making their way to the GFX ROM. They also require to generate a \icode{.h} header file, this time containing tileID. Additionally, a \icode{.c} file containing each tile palette is generated in order to be compiled into the 68000 ROM. 
 
-An even more complicated graph emerge from the music \icode{.mvg} files. The music track contains YM2151 commands that must be transformed in a \icode{.c} compiled along with the Z-80 code. These end up in the Z-80 ROM. To be referred to, the header file containing music ID must also be compiled with the 68k ROM. Lastly, music are embellished with audio samples which must also be compressed to ADPCM and added to the OKI ROM.
+An even more complicated graph emerge from the music \icode{.mvg} files. The music track contains YM2151 commands that must be transformed in bytecode, stored in a \icode{.c}, and compiled along with the Z-80 code. To be referencable, a header file containing music ID must also be generated and compiled with the 68000 ROM. Lastly, music are embellished with audio samples which must also be compressed to ADPCM and added to the OKI ROM.
 
 To complicate things even further, each of the four ROM mentioned must use different word size and interleaving across chips containing it.
 
-\subsection{ccps: The CPS-1 SDK}
-The next chapters are dedicated to studying the whole pipeline where each assets is processed to produce the four ROMs making a game. 
+\subsection{CCPS: The CPS-1 Build System}
+As this chapter was being written, several tools were authored in particular to establish the correct way to drive the Z-80 and the 68000 compiler. 
 
-The technique presented have been tested via tools authored during the redaction of this book. These tools were combined together into a SDK called \icode{ccps}. 
+Ultimately these tools were combined into a single build system called \icode{ccps}. The rest of this book occasionally refers to \icode{ccps} but try to keep the abstraction level high so reader can build their own build system. 
 
-It is both free and open source. You can get it with the following commands.
+Even if only to check what obscure compiler flags should be used, it is freely available, open source, and a few command lines away.
 
 \lstinputlisting[language=Bash]{src/code/clone_ccps.sh}
 
@@ -31,22 +35,20 @@ It is both free and open source. You can get it with the following commands.
 
 
 \section{Programming Language}
-For all their CPS-1 titles, Capcom developers used z80/m68k assembly. They did not have much choice anyway since compilers were expensive in the late 80s and not that good at producing compact code. As we will see, ROM space was precious and controlling the volume of instructions with accuracy was paramount.
+For all their CPS-1 titles, Capcom developers used z80/m68k assembly. They did not have much choice anyway since high-level languages did not allow variable placement and humans were better at hand crafting instructions. Additionally, ROM space was precious and controlling the volume of instructions with accuracy was paramount.
 
-Since the goal of this chapter is to explains how things works, it uses C for its greater readability and wider knowledge base among programmer. A little bit of assembly is used but only to bootstrap the CPUs.
+Even with the improvements of compilers capabilities, output compactness and optimization performances, a developer willing to take a CPS-1 to the next level will undoubtedly use assembly.
 
-If you ever decide to take your CPS-1 program to the next level, you will without a doubt have to go the assembly way.
+Since the goal of this book is to explains how things works, it uses C for its greater readability and wider knowledge base among programmer. A little bit of assembly is used but only to bootstrap the CPUs.
 	
 \section{CPUs bootstrapping}
-In a programming world were developers are more and more removed from the hardware, programming the Z-80 or the M68000 is a joy.
+Without libraries, frameworks, dynamic linker, syscalls, virtual memory, a loader, and even an operatin system, development happens down to the metal. 
 
-Without libraries, frameworks, dynamic linker, syscalls, virtual memory, and loader, development happens down to the metal.
-
-Even an innocent three-line C program is enough to get a glimpse of what bootstrapping involves.
+Bootstrapping involves simple things like setting the stack pointer and the instruction pointer. But it can involves much more like setting up interrupts and more importantly preparing the program to run before calling its  \icode{main} function. A innocent five liner C program is enough to get a glimpse of what is involved.
 
 \lstinputlisting[language=C]{src/code/variablesDeclaration.c}
 
-After compilation and linking, this program will result into a \icode{program.rom} which will be burned into EPROMs which are mapped somewhere in the CPU address space.
+After compilation and linking, this program will result into a binary of raw instructions (no container like ELF or PE) \icode{prog.rom}. Burned on a ROM, is is mapped somewhere in the CPU address space.
 
 \nbdraw{prog_rom_mapping}
 
@@ -56,7 +58,7 @@ Variable  \icode{varC} is initialized, readable, but NOT writable. The linker wi
 
 Finally we come to variable \icode{varE}. Since it is writable, the linker will have used the next available address in RAM and used \icode{B+2}. But how can the linker initialize that location since it can only write to file \icode{program.rom} which is not mapped there? 
 
-The answer is that it cannot. The "copy-down" must be done when the CPU starts, before executing the \icode{main} function of our program is called. 
+The answer is that it cannot. The "copy-down" must be done when the CPU starts, before executing the \icode{main} function of our program is called. Also talk about zeroing the BSS.
 
 This bootstrap, called \icode{crt0}, and other subtle mechanisms are detailed in the CPU sections.
 
