@@ -1,7 +1,6 @@
-char varA;
-char varB = 0;
-const char varC = 26;
-const char varD = 38;
-char varE = 5; 
-
-
+char va;
+char vb = 0;
+const int vc = 1;
+const char vd = "bar";
+char ve = 5; 
+int f(){...}

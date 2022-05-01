@@ -41,26 +41,33 @@ Even with the improvements of compilers capabilities, output compactness and opt
 
 Since the goal of this book is to explains how things works, it uses C for its greater readability and wider knowledge base among programmer. A little bit of assembly is used but only to bootstrap the CPUs.
 	
-\section{CPUs bootstrapping}
-Without libraries, frameworks, dynamic linker, syscalls, virtual memory, a loader, and even an operatin system, development happens down to the metal. 
+\section{CPUs Bootstrapping}
+Without libraries, frameworks, dynamic linker, syscalls, virtual memory, a loader, or even an operating system, development happens down to the metal. 
 
-Bootstrapping involves simple things like setting the stack pointer and the instruction pointer. But it can involves much more like setting up interrupts and more importantly preparing the program to run before calling its  \icode{main} function. A innocent five liner C program is enough to get a glimpse of what is involved.
+Bootstrapping involves simple things like setting the stack pointer and the instruction pointer. But it also involves harder tasks like setting up interrupts and more importantly preparing the program to run before calling its \icode{main} function. A innocent six lines C program offers a glimpse into what is involved.
 
 \lstinputlisting[language=C]{src/code/variablesDeclaration.c}
 
 After compilation and linking, this program will result into a binary of raw instructions (no container like ELF or PE) \icode{prog.rom}. Burned on a ROM, is is mapped somewhere in the CPU address space.
 
+\begin{figure}[H]
 \nbdraw{prog_rom_mapping}
+\caption*{CPU Memory address space, ROM and RAM}
+\end{figure}
 
-Variable \icode{varA} which is uninitialized, readable, and writable. The linker will have assigned the first location in RAM \icode{B}. Any code that reads or write \icode{varA} in our C program will result in instructions addressing \icode{B}. Likewise, reference to \icode{varB} will result in instructions manipulating \icode{B+1}.
+During the linking stage, all the variables and functions were given an address in either ROM or RAM. The easier symbol to deal with was function \icode{f} which goes in ROM and points to its own instructions.
 
-Variable  \icode{varC} is initialized, readable, but NOT writable. The linker will have assigned offset \icode{0x0} in \icode{program.rom} and set it to the desired value (\icode{6}. Knowing that ROM mapping start at \icode{A}, any code referring to \icode{varC} result in instructions manipulating \icode{A}. Likewise, variable \icode{varD} is placed in \icode{program.rom} at offset 1, where value \icode{38} is stored. Instructions manipulates address \icode{A+1}.
+Another easy symbols are the const \icode{vc} and \icode{vd}. Since they are read only, their values are written to ROM as well. These are grouped in another section \icode{.rodata} apart from functions but nothing fishy there.
 
-Finally we come to variable \icode{varE}. Since it is writable, the linker will have used the next available address in RAM and used \icode{B+2}. But how can the linker initialize that location since it can only write to file \icode{program.rom} which is not mapped there? 
+Symbol \icode{va} is interesting because it is readable but also writable. The linker will have assigned a RAM address. Since it is unitialized, it point to whatever is there in the RAM when it started.
 
-The answer is that it cannot. The "copy-down" must be done when the CPU starts, before executing the \icode{main} function of our program is called. Also talk about zeroing the BSS.
+Symbol \icode{va} is even more interesting. Like \icode{va} is is readable and writable but its initial value should be \icode{0}. The linker can make \icode{va} point to RAM and even group zero-initialized variable together but setting the value to zero cannot be done. This is something the bootstrap will have to somehow take care off.
 
-This bootstrap, called \icode{crt0}, and other subtle mechanisms are detailed in the CPU sections.
+Finally we come to variable \icode{ve}. Since it is writable, the linker will have used the next available address in RAM after \icode{va}. But how can the linker initialize that location to value \icode{5} since it can only write to file \icode{pro.rom} which is not mapped there? 
+
+The answer is that it cannot. That  task, also called ""copy-down" " is another think the bootstrap will have to take care of.
+
+Since C cannot be used, both bootstraps (one for Z80 and one for M68k) will be written using assembly and bundled in a file named \icode{crt0}.
 
 
 
@@ -70,27 +77,30 @@ This bootstrap, called \icode{crt0}, and other subtle mechanisms are detailed in
 
 There are many chip in the machine that need to talk to each others. In the hierarchy we studied in the first chapter, each line is an interface. 
 
-\nbdraw{arch_hierarchy}
+\nbdraw{apis}
 
-Most of these interfaces are registers where values are written and read. To arbitrate these access, the CPU buses are leveraged.
+That is eight communication lines, but the dotted one on the drawing are not programable which lower the task to five APIs.
+% Most of these interfaces are registers where values are written and read. To arbitrate these access, the CPU buses are leveraged.
 
-The GFX system reads draw commands and the 68000 writes draw commands via the GFX RAM with the 68000 bus arbitrates.
+\subsection{M68000-CPSA, M68000-CPSB} Communication occurs over the CPS-A registers. Additionally draw commands are written by the 68000 to GFXRAM where they are read by the CPS-A. All accesses are arbitrated by the 68000 bus protocol.
 
-The Z-80 writes commands to the YM2151 and the OKI via registers. Again, these access is arbitrated by the Z-80 bus.
+\subsection{z80-YM2151} Communication occurs over the YM2151 registers which are written by the CPU. these accesses are arbitrated by the Z-80 bus protocol.
 
-This leave the interface between the Control system and Audio system undefined. Try to think of a design yourself with the following constraints.
+\subsection{z80-MSM6295} Communication  occurs over the MSM6295 registers which are written by the CPU. these accesses are arbitrated by the Z-80 bus protocol. 
 
-There are two 1 byte latches. On one side is a 68000 running at 10MHz which can write in them but not read. On the other end is a Z-80, working at 3.579 MHz which can read the latches but not write them. 
+\subsection{M68000-z80} Communication between these two CPUs is not trivial. They both have their own bus protocol, run at different speed, have different address space, and data width.
+
+Try to think of a design yourself with the following constraints. There are two 1 byte latches. On one side is a m68k running at 10MHz which can write in them but not read. On the other end is a z80, working at 3.579 MHz which can read the latches but not write them. 
 
 How can you make these two CPUs talk to each other reliably, making sure the stream of commands features no duplicates and no drops?
 
 \subsection{Interrupts}
 
-Both the Z-80 and the 68k have interrupt system. These are used to solve many problems and in particular the issue of communicating over the latches.
+Both the z80 and the m68k have interrupt systems. These are used to solve many problems and in particular the issue of communicating over the latches.
 
-Since the reader (z80) runs slower than the writer (68k) it is possible for a latch value to be overwritten (write twice) before it is read. 
+Since the reader (z80) runs slower than the writer (m68k) it is possible for a latch value to be overwritten (write twice) before it is read. 
 
-Inverting the ratio is done precisely via interrupts. The 68k's IPL1 line is directly connected to the VSYNC line of the video system. Likewise, the Z-80 INT line is connected to the timer (CT1) line of the YM2151.
+Inverting the ratio is done precisely via interrupts. The m68k's IPL1 line is directly connected to the VSYNC line of the video system. Likewise, the z80 INT line is connected to the timer (CT1) line of the YM2151.
 
 \begin{figure}[H]
 \nbdraw{interrupt_snd}
@@ -99,69 +109,81 @@ Inverting the ratio is done precisely via interrupts. The 68k's IPL1 line is dir
 
 This configuration lets the writer ticks every 16ms while the reader ticks every 4ms. This ensures no latch value can be dropped but introduces the problem of duplicates reads.
 
-To avoid these, the Z-80 commits to disregards a latch content if its content did not change since the last time it was checked.
+To avoid these, the z80 commits to disregards a latch content if its content did not change since the last time it was checked.
 
 \begin{figure}[H]
 \nbdraw{interrupt_ctrl}
 \caption*{68k interrupt system}
 \end{figure}
 
-This introduces an ultimate problem. It is not possible for the 68k CPU to send the same byte twice in a row. To work around this, the writer commits on never writing the same byte twice which is done via a no-op byte (0xFF) written after every byte.
+This introduces an ultimate problem. It is not possible for the m68k CPU to send the same byte twice in a row. To work around this, the writer commits on never writing the same byte twice which is done via a no-op byte (0xFF) written after every byte.
 
 
 
 
-\subsection{How they did it}
+\subsection{Back then...}
 The system and conventions we just described allows to exchange data reliably but it does not give a semantic to the values in the latches. 
 
 A developer is free to give any meaning to the latches since it control both the writer and the reader. Maybe you can even take a second to think how you would design this interface if you had before we study how Capcom did it.
 
-In a game like Street Fighter II, developers took the approach of not giving values an "immediate" meaning. The meaning of a latch depends on the previous value. In this design, the latch are a vector for a stream of byte exchanged between the 68k and the z80.
+In a game like Street Fighter II, developers took the approach of not giving values an "immediate" meaning. Communication is a stream of bytes which must be reconstructed on the receiving end before being interpreted.
 
 
 
+The z80 read the latch in the interrupt, append it into a circular buffer. Interpretation happen in its \icode{main} thread where a byte value \icode{FE} means that the next byte is the ID of a music that should start playback. 
 
-Only once the stream of bytes is reconstituted on the receiver end, it can be analyzed. A value equals to \icode{FE} means that the next value is the ID of a music that should start playback. Otherwise the value is a sound ID to be played immediately on the OKI. This scheme allows for 256 music IDs and 255 samples IDs (\icode{0FXX} is no hop).
+Otherwise the value is a sound ID to be played immediately on the OKI. This scheme allows for 256 music IDs and 254 samples IDs.
 
  \begin{figure}[H]
 \nbdraw{latches_intercafe}
 \caption*{Street Fighter comm model. \icode{0xFF} no-op and ring buffers}
 \end{figure}
 
+Notice how the encoder injects \icode{0xFF} no-op bytes after each write to the latch and how the decoded ignore them.
+
 Note that in this configuration, SF2 only ever uses a single latch while the other is left unused.
 
-Further differences exist, sometimes between two games made consecutively by the same team. In Final Fight, a sound ID received for playback is directly forwarded to the OKI whereas, in Street Fighter II, a translation table is used. The ID received is an index into an array where are found the actual OKI ID along with the channel and volume to use.
+\subsubsection{One Sound driver to rule them all}
 
-The merits of a translation table versus "immediate" values may be explained by the sheer size of Capcom team working on an arcade game. With forty people working on a big game, an API could be decided and need for adjustment never necessary. Audio artist could organize their ROM however they pleased and always properly respond to the initial API agreement.
+Given the genericity of the communication system described it would be a fair conclusion to assume all Capcom game used it.
+
+In fact, the "sound driver" kept on evolving, sometimes changing drastically even between two games made consecutively by the same team. 
+
+In Final Fight, a sound ID received for playback is directly forwarded to the OKI whereas, in Street Fighter II, a translation table is used. The ID received is an index into an array where are found the actual OKI ID along with the channel and volume to use.
+
+The merits of a translation table may be explained by the size of Capcom team and the inability to do a "full build" easily at the time.
+
+If the sound team had to change the OKI layout, all IDS used by the m68k would be invalid. With a translation table, the sound team was able to make any change they wanted and keep their ID backward compatible.
 
 
-\subsection{How we will do it}
+\subsection{Another Sound Driver}
 
-Since the goal of this book is to teach how to make things work, it does not use a streamed design. Instead the whole meaning of a latch value can be determined instantly without need to inspect the next values.
-
-A single byte value space is divided two. A MSB set to one \icode{0x80} request a sound effect playback and a MSB set to zero \icode{0x00} indicates a music playback. 
-
-This leaves 126 sound values and 127 music values. Volume is hard-coded and round-robin rotation is used to pick between two channels to serve a request. The music track uses the two other channels to embellish YM2151 melodies. 
-
-On the interrupt side, we will use lockestepped main and interrupt thread. The \icode{main} thread only moves forward when an interrupt has run.
+The sound driver described in the next pages does rely on interrupts on both side. Besides being used for the latch communication, the interrupts also maintain a counter to pace the main threads.
 
 \nbdraw{latches_uml}
-\pagebreak
 
+The communication protocol however is not streamed. Whereas it is more powerful, it is also much more complicated. For simplicity, a byte is immediately interpreted without need to rebuild a stream.
+
+The byte space is divided in two. If the MSB is set to one \icode{0x80} this is a request for sound effect playback and if the MSB is set to zero \icode{0x00} it indicates a music playback. 
+
+This leaves "only" 126 sound values and 127 music values but it more than enough for the intended purpose. Volume is hard-coded and round-robin rotation is used to pick between channels 1 or 2 to serve a request. 
+
+To play well with channel selection, musicians are requested to use only channels 3 and 4 to embellish their YM2151 melodies. 
 
 
 \section{Tracking wall-time}
+Keeping track of wall-time, the real-time experienced by players, is paramount to both CPUs. 
 
-Without timers, the CPUs are unable to keep track of wall-time. That would be an issue to play animation at the right speed but also for feeding the YM2151 at the appropriate page, respecting duration and silences. 
+The m68k must do so in order to sample inputs and run the game engine at the intended speed. The z80 is under the same constrain for the music where it must keep track of pause and notes durations. 
 
-Thankfully the interrupt system can be leveraged to solve this issue as well. By incrementing a counter on each interruption, the 68k can be track in increment of 16ms while the z80 can do the same in increment of 4ms.
+For this purpose the counter maintained by the main thread as used. Only they have different granularity.
 
+The 68k track time in units of 16ms while the z80 can do the same in increment of 4ms.
 
-
-% On the Control side it is useful to sample user input at an appropriate interval and make sure GFX animation are player at the right speed. As we saw before the VSYNC interrupt allows to keep track of things in roughly 16ms interval.
-
-% Sound also needs to keep track of wall time in order to feed YM2151 music instructions at the right pace. Here we have more flexibility. Whereas VSYNC frequency is fixed,  the Z-80 reprogram the YM2151 timer after each trigger. For the example we will see there is no need to do that so our timer progresses in 4ms increments.
 
 \section{Randomness}
-Generating a series of pseudo-random numbers can be achieved with a Maximum-Length LFSRs (Linear Feedback Shift Register) and a proper seed. The issue is what to use for the seed. We could use a timer keeper and use the first player inputs. But that would open our games to players gaming the system. A better seed source is to use uptime.
+Pseudo-random series of number can be achieved using Maximum-Length LFSRs (Linear Feedback Shift Register) which, on the m68k, give 4,194,304 different values before repeating itself.
 
+The only issue is to pick a seed to initialize the counter. Street Fighter 2 uses the frame counter while other title read the content of the CPU register during bootstrap.
+
+The latter method does not work well when working with emulators and should be avoided.
