@@ -929,7 +929,7 @@ The grid alignment works well with streaming because of the predictable screen l
 
 Notice how the GFXROM data is retrieved four bytes at a time via lines groups APD, BPD, CPD, and DPD. 
 
-Keep in mind that at any time, the CPS-B not only receives data from the GFXROM but also stream palette indexes to the video system. 
+Keep in mind that at any time, the CPS-B not only receives data from the GFXROM but also stream pen values to the video system. 
 
 % \begin{trivia}
 % All home-consoles of the late-80 and early 90s, and even the powerful 16-bit systems such as Nintendo's SNES and Sega's Genesis relied on tilemap systems.
@@ -1058,7 +1058,7 @@ The CPS-B allows the SCROLL layer behind the OBJs layer to have a special power.
 
 This feature allows to create complex effect where sprites are sandwitched by a SCROLL. Here, the tiles making the "near" portion of the ramp are added to the priority mask. Then four pens (resulting in colors \fcolorbox{black}{mask1}{\vphantom{W}\hphantom{H}} , \fcolorbox{black}{mask2}{\vphantom{W}\hphantom{H}} , \fcolorbox{black}{mask3}{\vphantom{W}\hphantom{H}} , and \fcolorbox{black}{mask4}{\vphantom{W}\hphantom{H}}) are set for the priority mask.
 
-Tiles making the "far" part of the ramp are not added to the priority mask so they appear behind OBJs.
+Tiles making the "far" part of the ramp are not added to the priority mask so all its color appear behind OBJs.
 
 \vfill
 \begin{figure}[!b]

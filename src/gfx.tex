@@ -6,21 +6,24 @@ Since the graphic pipeline of the CPS-1 is hard-coded in the silicon of the CPS-
 \caption*{The GFX System components}
 \end{figure}
 
-As explained in the hardware chapter, all assets use the same pixel format where four bytes encode eight pen values. But that would be an oversimplification to think that slicing PNG into tiles and placing them anywhere in the GFX ROM is enough.
+This leaves the GFXROM to assemble. Conveniently, all assets use the same pixel format where four bytes encode eight pen values. However it would be an oversimplification to think that slicing PNG into tiles and placing them anywhere in the ROM is enough.
 
 The major constraint to consider is that GFXROM have "hard-coded regions" where OBJ, STAR1, STAR2, SCR1, SCR2, and SCR3 must reside. If a tile is not where it should, the draw command is simply ignored.
 
-On the board we took as example in the hardware chapter, Street Fighter II, the \icode{STF29} PAL slice the GFXROM in an unique set of four areas. A board running Final Fight uses a \icode{S224B} PAL which also uses four areas. An PAL programmed for Forgotten Worlds, the \icode{LW621} is even more complex since it divide the GFXROM in six areas to also include STAR1 and STAR2 bytecode. Each game is unique. 
+On the Street Fighter II board we have studied so far, the \icode{STF29} PAL slice the 6MiB GFXROM in four areas. 
 
-Keep all this in mind if you write your own ROM generator or use \icode{ccps} if you don't want to worry about it.
+A board running Final Fight has a \icode{S224B} PAL which also uses four areas but with different offset and proportions over 2MiB. 
+
+A PAL programmed for Forgotten Worlds board, the \icode{LW621}, is more complex since it divide the GFXROM in six areas to also include STAR1 and STAR2 bytecode.
+
 
 \section{Tile format}
 All tiles are stored continuously in memory, using groups of four bytes encoding eight pens. The dimension of a tile varies depending on the layers. OBJ and SCR2 uses the same 16x16 tiles which mean their tiles are 16*16 / 2 = 128 bytes. For the fine tuned SCR1 which uses 8x8, each tile takes 32 bytes. Finally the larger SCR3 uses 512 bytes for each of its 32x32 tiles.
 
 \section{GFX Layout}
-Depending on the board targeted, the game may have up to 6MiB of GFX ROM available. The logical ROM is made of groups of four hardware chips sequencially arranged. On a board like Street Fighter, we find three groups of four. Inside each group, chips are interleaved every two bytes.
+The EPROMs are organized in groups of four chips and serialized. On a board like Street Fighter, we find three groups of four. Inside each group, chips are interleaved every two bytes.
 
-\red{DRAWING: HOW DOES IT WORK? 4*16 = 64-bit bus or 2x32?}
+\nbdraw{gfx_interleave}
 
 \nbdraw{build_graph_gfx}
 
@@ -53,7 +56,7 @@ We called it the "Mirac-ulous Memory."
 
 For a game like Street Fighter II, a budget of 6MiB GFX was approved. With 4.6 MiB dedicated to sprites, 144 OBJ sheets were printer. That was a lot at the time and only warranted because the team had managed to score a huge hit with Final Fight on a tiny 2MiB budget. 
 
-To this day, only two of these sheets have ever been released\cite{fdasd}\cite{fs}. If it will without a doubt dissapoint the most stubborn of us to know that Capcom may never released more, those people can rejoice. There is a way to look at them thanks to the imprint left in the GFXROM. 
+To this day, only two of these sheets have ever been released\cite{ffdevinterview}\cite{htmcc}. If it will without a doubt dissapoint the most stubborn of us to know that Capcom may never released more, those people can rejoice. There is a way to look at them thanks to the imprint left in the GFXROM. 
 
 With knowledge of the tile format and the pixel format, they can all be reconstructed.
 
@@ -75,7 +78,9 @@ The Dhalsim sheet sits at offset \icode{0x3300} in the GFXROM. It is a near perf
 \caption*{Ryu released paper sheet}
 \end{figure}
 
-Ryu's sheet \icode{0x4500} allows to guess even more about the production process. Large coherent sprites show that at the beginning of the production process multiple sheet were allocated on a per-character basis. Tile were layout and kept together as much as possible to facilitate visual inspection.
+Ryu's sheet \icode{0x4500} allows to guess even more about the production process. 
+
+Large coherent sprites show that at the beginning of the production process multiple sheet were allocated on a per-character basis. Tile were layout and kept together as much as possible to facilitate visual inspection.
 
 However, as the project progressed, we can see that the team scrambled for tile. They scrapped the bottom of the barrel and started to allocate space on a per-tile basic, sometimes spreading a character pose across multiple sheets like in Dhalsim sheet where can be found portions of Blanka.
 
@@ -85,7 +90,7 @@ However, as the project progressed, we can see that the team scrambled for tile.
 \end{figure}
 
 
-And this was only the allocation step! After a shape was allocated, the artists has to draw it on non-rectangular grilled paper (in order to compensate for the CPS-1 non-square pixels). The last step for the artist was to convert its collection of tiles into graphic files. 
+After a shape was allocated tiles, the artists has to draw it again, this time more detailed and using non-rectangular grilled paper (in order to compensate for the CPS-1 non-square pixels). The last step for the artist was to convert its collection of tiles into graphic files. 
 
 With no scanners available, digitalization was done manually by looking at the paper grid and decide what color would be the most fitting.
 
@@ -103,64 +108,139 @@ The tool used, TCE (Tiny Character Editor), ran on a SMC-70. Sony's machine runn
 \caption*{An actual SMC-70 "workstation" in Capcom studio}
 \end{figure}
 
-\subsection{Team structure and Work ethic}
-
-In its early years, Capcom organized its pipeline to produce multiple games in parallel. Three teams, named first, 2nd and 3rd Planning Rooms worked side by side. 
-
-As it grew and diversified, the gaming company restructured itself in 1988 to be made of two divisions. One dedicated to arcades and the other home consoles. 
-
-After its restructuration, Capcom kept the same modus operantis where each team were siloed from each others with an internal organization favoring a strong sense of hierarchy. 
 
 
-\begin{q}{akiman\cite{<ref src="http://shmuplations.com/akirayasuda/">Akiman, 2003 Interview from Capcom Design Works</ref>}}At the top are the Planners. Junior artists work on backgrounds, while more senior get to work on sprites.
+
+
+
+
+
+
+
+
+\subsection{Team structure and Culture}
+
+There was a hierarchy in the artists working on graphic assets. 
+
+\begin{q}{akiman\cite{akiman2003}}Planners at the top. Junior artists work on backgrounds, while more senior get to work on sprites.
 \end{q}
 
-\begin{q}{Akiman, 2003 Interview from Capcom Design Works}
-  We had vacation days, but Okamoto would get mad if you took the day off. A lot of people got yelled at by him for that, “Hey, why weren’t you here on Sunday?!”
+As layered as they where, operations where not set in stone and employees could climb the ladder quickly. Akiman was hired on "Dyn Side Arms" as a SCROLL artist. Two years later, he was a Planner on Forgotten Worlds and went on to work on Final Fight and Street Fighter 2.
 
-  I don’t think anyone can beat my record for “percentage of time lived at Capcom.” During game developments, I always slept under my desk. I had a whole futon laid out and everything! When things were really busy, Yoshiki Okamoto (former Capcom development leader) would be setting new deadlines every 10 hours, so I couldn’t leave my computer… that’s how I acquired the habit of sleeping under my desk. By the way, even now that I’m freelance, I still sleep under my computer desk at home.
-  \end{q}
-
-
-As layered as they where, operations where not set in stone and employees could climb the ladder quickly. 
-
-A key figure in the production of "Street Fighter 2", Akira - Akiman - Yasuda, was hired on "Dyn Side Arms" as a SCROLL artist. Two years later, He was a Planner on Forgotten Worlds.
+ % \begin{figure}[H]
+\img{sf2-credit.png}
+% \caption*{Capcom protecte}
+% \end{figure}
 
 \begin{trivia}
 The role of each person is clearly established. Try to checkout credits on \url{mobygames.com}. You will find OBJects designers and SCRoll designers there.
 \end{trivia}
 
 
-\subsection{Inspiration}
+\subsubsection{Poaching and Work Ethic}
+Retaining talent was a priority. As seen on credit screen of Street Fighter (previous figure), artists were only credited by their nicknames.
 
+Despite its precaution, Capcom lost numerous employees to SNK over the years. Among them was Takashi Nishiyama who made Street Fighter 1 and then went on to direct Fatal Fury' The King Of Fighters\cite{YoshikiOkamotoTakashiNishiyama}.
+ 
+
+% In its early years, Capcom organized its pipeline to produce multiple games in parallel. Three teams, named first, 2nd and 3rd Planning Rooms worked side by side. 
+
+% As it grew and diversified, the gaming company restructured itself in 1988 to be made of two divisions. One dedicated to arcades and the other home consoles. 
+
+% After its restructuration, Capcom kept the same modus operantis where each team were siloed from each others with an internal organization favoring a strong sense of hierarchy. 
+
+Preventing attrition did not mean let employee work at their leisure. A strong working culture was established from the very top.
+
+\begin{q}{Akiman\cite{akiman2003}}
+  We had vacation days, but Okamoto (Capcom development leader) would get mad if you took the day off. A lot of people got yelled at by him for that, “Hey, why weren’t you here on Sunday?!”
+
+  I don’t think anyone can beat my record for “percentage of time lived at Capcom.” During game developments, I always slept under my desk. I had a whole futon laid out and everything! When things were really busy, Yoshiki Okamoto  would be setting new deadlines every 10 hours, so I couldn’t leave my computer… that’s how I acquired the habit of sleeping under my desk. 
+
+  By the way, even now that I’m freelance, I still sleep under my computer desk at home.
+  \end{q}
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Inspiration}
+Artists found their inspiration in several outlets.
+
+Dictator found its origin in Yasunori Katō manga. 
+
+Boxer, Ryu, Ken, Sagat, and Zangiev were inspired by real life athletes, respectively Mike Tyson, Mas Oyama, Joe Lewis, Sagat Petchyindee, and Victor Zangiev Zhanghief. 
 
 % \begin{figure}[H]
 % \img{sf_art_research.jpg}
 % \caption*{Original characters}
 % \end{figure}
 
+As for the backgrounds, Hollywood came to the rescue.
+
 \begin{q}{Akiman\cite{ffdevinterview}}
 I remember stitching together a few movies to make a presentation. “Streets of Fire” and Charles Bronson’s “Hard Times” were the ones I used back then. Basically movies about fighting. I really took the chairman’s words to heart – “Use movies!” he said, so I took that to mean we should just openly plagiarize them (laughs).
 \end{q}
+
+Although employee did not get paid to watch movies. They were paid to watch three movies at the same time.!
 
 \begin{q}{Nishitani\cite{ffdevinterview}}
 We didn't have a whole lot of time, so we had a 3-monitor set-up where we could watch other movies at the same time, as the president told us to "watch them all and learn from them."
 \end{q}
 
+\begin{trivia}
 Coincidentally, the Japanese title of "Hard Times" was "The Street Fighter".
+\end{trivia}
 
  \begin{figure}[H]
 \img{ken_stage_design.jpg}
-\caption*{Ken stage design. Drawing from Street Fighter II Complete File}
+\caption*{Ken stage design\cite{sf2completefiles}.}
 \end{figure}
 
 \section{Shapes and Sprites}
-Since we are now accustomed to the concept of sheet, we can review the last GFX ROM requirements.  
+This historical detour was important in order to understand the sheet system. With this knowledge we can review the last GFX ROM requirements involving OBJs.  
 
+On this layer, tiles can be used differently which mandate distinct tiles grouping strategies.
 
-\simg{0.8}{honda.png}
+\subsection{Sprite}
+A sprite is a collection of tiles with rectangular boundaries. As we will see in the m68k programming section it can be rendered by issuing a single draw call mentioning the offset in the sheet, the width in tiles and the height in tiles.
 
  \begin{figure}[H]
-\nbdraw{honda_sheet}
-\caption*{Honda sheet}
+\nbdraw{honda_alloc1}
+\caption*{If Honda was a 10x6 tiles sprite, it would waste many tiles}
 \end{figure}
+
+It is inefficient for a set of tiles where many of them are transparent. Not only these take storage space in the GFXROM, they also count against the CPS-A/CPS-B limit of 256 tiles.
+
+\subsection{Shape}
+
+A much more efficient way is to use a Shape where tiles location is arbitrary. It takes several draw calls to draw (tiles have to be specified one by one) but they can be located anywhere in a sheet.
+
+ \begin{figure}[H]
+\nbdraw{honda_alloc2}
+\caption*{Honda as a shape.}
+\end{figure}
+
+Shapes have the double advantage to save storage space and narrow down tile count during rendition to the minimum. The example of Honda shows that only 41 tiles are required. It would have taken 60 tiles if a Sprite had been used.
+
+To allow sprite draw calls, the build system must allocate images depending on the intended usage. All tiles in a sprite must be placed as they appeared in the original image.
+ 
+\begin{figure}[H]
+\nbdraw{honda_sheet}
+\caption*{A sheet with two version of Honda, Shape and Sprite}
+\end{figure}
+
+% On the contrary, a shape does not have to follow any constraint.
+
+\begin{trivia}
+Capcom games use almost exclusively shapes but the paper sheet system mandated to maintain some visual coherency so humans could keep tracks. Modern tools don't have this problem. 
+
+The Honda shape on the sheet looks like mashed potatoes but using automatic allocation much more powerful system.
+\end{trivia}
+
+

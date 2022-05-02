@@ -297,7 +297,7 @@ The attribute two bytes have a special layout.
 
 \lstinputlisting[language=C]{src/code/68000/sprites2.c} 
 
-To mark the end of the tile list an empty descriptor is used with attribute value set to \icode{0xFF00}. 
+The end of the list is marked with an entry using attribute value \icode{0xFF00}. 
 
 If the attribute bytes indicate set block sizes to zero, a descriptor commands a simple tile to be drawn. The immense majority of draw calls in a Capcom games are single tile commands.
 
@@ -305,6 +305,7 @@ A shape is made of several single tile draw command resulting in arbitrary forms
 
 The CSP-A will read up to 256 entries there and ignore the rest. This is a hardware limitation. There is no enough time in a raster scan to draw all tiles.
 
+Developers do not have to worry about the \icode{STF29} or GFX partitioning. The tileID is relative to group it belongs to.
 
 \subsubsection{Drawing SCROLLs}
 
