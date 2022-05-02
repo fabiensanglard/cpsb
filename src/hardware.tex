@@ -450,7 +450,7 @@ Other parameters can be applied to the output sound such as Attack/Decay/Sustain
 
 Looking at the chip, we see previously discussed pins such as \icode{+5V}, \icode{GND}, and \icode{CS}. The \icode{CLK} is connected to the same oscillator as the Z-80 for a frequency of 3.58MHz. The \icode{D0-D7} address/data pins (multiplexed via \icode{A0}) fit exactly the Z80's 8-bit data bus with read (\icode{RD}) and write (\icode{WR}) control.
 
-The important pin is the \icode{INT} which allows the YM2151 to generate interrupt based on two internal counters. These will be crucial in the programming chapter.
+The important pin is the \icode{IRQ} which allows the YM2151 to generate interrupt based on two internal counters. These will be crucial in the programming chapter.
 
 \sdraw{0.5}{YM2151}
 
@@ -460,7 +460,7 @@ The only drawback of this chip is that is features no DAC (Digital to Analog Con
 The YM3012 input is directly connected to the YM2151 output. It is the tailor made DAC which, as it name indicates, converts the digital stream from the YM2151 to an analog signal that later mixed with the analog signal of the OKI6295.
 
 \subsection{MSM6295}
-For audio sample playback, Capcom spared no expenses and selected a chip capable of 12-bit hardware ADPCM audio decompression over four channels, the MSM6295 (a.k.a OKI6295). 
+For audio sample playback, Capcom spared no expenses and selected a chip capable of 4-bit ADPCM audio decompression over four channels, the MSM6295 (a.k.a OKI). 
 % capable chips by the past with the MSM5205 by OKI Semiconductor. For the CPS-1  they went with a steroids version,
 
 Despite running at only 1MHz the MSM6295 is a god sent to a game board designer. It does not need instructions since its function is fully hard-coded. Its address (\icode{A0-A15}) and data lines (\icode{D0-D7}) are directly connected to its own 256 KiB ROM, on a local bus where assets are stored. These make it a fully enclosed digitized sound system only communicated via its input lines (\icode{I0-I7}), perfect for the Z-80 data bus.
@@ -1191,7 +1191,7 @@ This choice, made by SNK for its Neo-Geo allowed gorgeous titles such as "Metal 
 \subsubsection{CPS1 Sprite FrameBuffer}
 Capcom hardware designers wanted something even more powerful than a double line buffer. To allow more time than a scanline to the PPU, the CPS-1 was built around a double sprite framebuffer. To host these framebuffers, the machine uses dedicated memory called VRAM.
 
-With a double sprite framebuffer, the PPU does not just draw a line in advance but a whole screen. This technique gives even more time for the graphic chip to do its work since drawing time increases from (64$\mu$s) to 16.7ms (260x more time!). 
+With a double sprite framebuffer, the PPU does not just draw a line in advance but a whole screen. This technique averages 16\% more time per line for the graphic chip to do its work but more importantly it allows any number of tiles per line (even the powerful Neo-Geo has a limit of 96 tiles per line).
 
 The gain is massive but it comes with three drawbacks. 
 
@@ -1202,7 +1202,7 @@ The second impact is on the bus because a massive amount of data is now written 
 
 Lastly, there is the problem of tilemap and sprites rendering desynchronized. When the 68000 writes the desired layout in the GFXRAM, the graphic system picks it up but channels background tiles and sprites tiles to different locations.
 
-The tilemap rasterize outputs directly to the video system but the sprite layer is rendered to the VRAM framebuffer where it will be picked up on the next frame.
+The tilemap is rasterized directly towards the video system while the sprite layer is rendered to the VRAM framebuffer where it will be picked up on the next frame.
  
 
 
@@ -1211,7 +1211,7 @@ The issue is visible on the next drawing. On frame 1, the scrolls of frame 1 are
 \nbdraw{latency}
 
 \begin{trivia}
-The sync issue is particularly noticeable in Final Fight level 2. The subway wagon moves up and down to simulate rails but inside the handles on the ceiling and characters appears to lag behind.
+The sync issue is particularly noticeable in Final Fight level 2. The subway wagon moves up and down to simulate rails but inside the handles on the ceiling and the characters appears to lag behind.
 \end{trivia}
 
 \subsubsection{CPS1 Sprites Tile}
@@ -1227,34 +1227,34 @@ OBJ has 32 palettes which any tile can freely use for a total of 480 colors.
 
 
 
-\begin{minipage}[t]{0.49\linewidth}
-  \sdraw{1.0}{ryu}
+\begin{minipage}[t]{0.453\linewidth}
+  \sdraw{1.0}{chunLi}
 \end{minipage}%
 \hfill%
-\begin{minipage}[t]{0.49\linewidth}
+\begin{minipage}[t]{0.53\linewidth}
   \sdraw{1.0}{zanghief}
 \end{minipage}
 
 
 % made of 4-bit color index where 0 is always considered transparent. Sprite tile arrangement is described along with SCROLL tiles in the GFXRAM. 
 
-Ruy's hurrican kick pause is 27 OBJs (3,456 bytes). Zanghief standing pause is 35 OBJs (4,480 bytes). 
+Chunli guard, 25 tiles (3,200 bytes). Zanghief standing, 34 tiles (4,352 bytes). 
 
-\begin{minipage}[t]{0.4\linewidth}
-  \sdraw{1.0}{guile}
+\begin{minipage}[t]{0.3\linewidth}
+  \sdraw{1.0}{ryu}
 \end{minipage}%
 \hfill%
-\begin{minipage}[t]{0.56\linewidth}
+\begin{minipage}[t]{0.53\linewidth}
   \sdraw{1.0}{sagat}
 \end{minipage}
 
-Guile crouching pause is 18 OBJs (2,304 bytes). Sagat's low kick pause is 21 OBJs (2,688 bytes). 
+Ruy victory, 29 tiles (3,712 bytes). Sagat TigerP, 30 tiles (3,840 bytes). 
 
 
 
 \sdraw{1.0}{kingpin}
 
-Kingpin in "The Punisher" is made of 69 tiles and take half the screen.
+Kingpin in "The Punisher" is made of 69 tiles and takes half the screen.
 
 
 Tiles in the OBJ layer can have attributes to be rendered horizontally and/or vertically flipped but there is not support for rotation or scaling.
@@ -1678,7 +1678,7 @@ Up to 1991, all CPS-B variations were burned at the factory. They were set in si
 
 To solve this issue, Capcom resolved to stop making different silicon in favor of using a standard configurable CPS1-B.
 
-"Street Fighter 2: The World Warriors" did not get the treatment but starting with "Three Wonders" the CPS-1 vB-21 featured a small internal 18 bytes RAM. This was enough for the chip to retain a configuration dictating its behavior\cite{petitSecurity}.
+"Street Fighter 2: The World Warriors" did not get the treatment but starting with "Three Wonders" the CPS-B v21 featured a small internal 18 bytes RAM. This was enough for the chip to retain a configuration dictating its behavior\cite{petitSecurity}.
 
 The configuration RAM was designed to survive when the cabinet was turned off thanks to a battery located  on the soldering side and connected to the CPS-B. The chip was even designed to survive having no battery for a few minutes to allow battery replacement.
 
