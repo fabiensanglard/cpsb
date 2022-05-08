@@ -93,10 +93,44 @@ With these elements, zeroing the bss and populating .data with inital values is 
 
 \lstinputlisting[language=C]{src/code/68000/init_vars.c}
 
+\section{Verifying hardware health}
+Capcom games bootstrap process go beyond bootstraping the CPUs. They also verify the health of some components at startup. These are screens rarely, if ever, seen by player since it happens only once when the machine is turned on. During normal operations, that would be once a day.
 
+All CPS-1 games display a slightly different set of text. However all of them end up checking the m68k RAM and the GFXRAM. 
+
+These tests were an important since they allowed the cabinet operator to diagnose some of the issues and avoided a costly return to factory of the whole unit.
+
+
+
+\vfill
+\begin{figure}[H]
+\nbimg{boot_sf2.png}
+\caption*{Street Fighter 2 boot screen}
+\end{figure}
+
+
+\pagebreak
+
+
+The technique used is simple but has its limitation. For all byte in each areas of the RAM and GFXRAM, try to write a value, then try to read it back. If they differ, the GFXRAM is faulty and an error message is displayed. No way to checksum the GFXROM or anything on the Sound System side. The latch system is one way and there would be no way for the Z-80 to surface problems anyway.
+
+
+The set of tests seem to vary, even in two titles made by a same team consecutively. The GFXRAM part of the RAM hosting the Palettes is not tested in Street Fighter 2 despite having been released after Final Fight.
+
+TODO: More research.
+
+\vfill
+\begin{figure}[H]
+\nbimg{boot_ffight.png}
+\caption*{Final Fight boot screen}
+\end{figure}
+
+
+\pagebreak
 
 \section{Ruling them all}
-150 pages in, peeling layers one after one another and we have finally reached the heart of the game. Function \icode{main} is where developer trigger their game engine to convert inputs into visual ans audio ouputs.
+\label{this}
+\pageref{this} pages in, peeling layers one after one another and we have finally reached the heart of the game. Function \icode{main} is where developer trigger their game engine to convert inputs into visual ans audio ouputs.
 
 The architecture is much alike the Z-80 sound system where two "threads" run in lockstep. Function \icode{VSync} is awakened roughly every 16ms. Its job is to read inputs and save them locally, read latch buffer and write them to the latch, and more importantly, flip the GFXRAM descriptor. 
 
@@ -341,6 +375,15 @@ When the CPS-B they were working with supported the trick, Capcom developer rend
 This mean that players who looked at these screens actually started a deep dark night sky.
 \end{trivia}
 
+\pagebreak
+\subsection{Scrow Roll}
+We brieflt bla black
+\pagebreak
+
+\begin{figure}[H]
+\img{color-00016530.png}
+ \caption*{Street Fighter 2}%
+ \end{figure}%
 \pagebreak
 
 \subsection{Back then...}
