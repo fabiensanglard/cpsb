@@ -157,10 +157,29 @@ Final Fight is even more impressive. Made on a 2MiB GFXROM budget, it featured a
 \simg{1.0}{enemy_wongwho.png}
 \end{minipage}
 
-
+ \begin{figure}[H]
 \nbdraw{0x0100}  
+\caption*{Ryu/Ken sheet}
+\end{figure}
+
+Ryu and Ken use the same seven first colors of their palette to faciliate the patching process. 
+
+\nbdraw{palette_ryu}
+
+
+\nbdraw{palette_ken}
+
+
+
 
 \nbdraw{0x4e00}
+
+There are no small savings in Street Fighter II. Besides Inter-character patching, the game also uses intra-character patching.  
+
+Sagat laughing animation is double optimized. The sequence is made of two poses where only the bust is replaced while the legs remain the same.
+
+Moreover, Sagat's left leg is missing. It is reconstructed at runtime using an horizontal mirror of the right leg found at \icode{0xB9}.
+
 
 \pagebreak
 

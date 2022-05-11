@@ -376,8 +376,19 @@ This mean that players who looked at these screens actually started a deep dark 
 \end{trivia}
 
 \pagebreak
-\subsection{Scrow Roll}
-We brieflt bla black
+\subsection{Row Scroll}
+Row scrolling allows to dictage a per-line offset. Since it works on the SCROLL2 layer, it is made of 1024 16-bit offset. The hardware does not need to read them all, only what is visible is used (plus one tile height above and below) 224 + 16 + 16 = 256.
+
+Since caculating perspective can be costy, there is a mecanism to allow to generate rowscroll values and use an offset.
+
+DRAWING BASE + offset inside.
+
+This is particularly useful in Street Fighter 2. When a character jumps, the srcrolly does as well and the rowscroll values don't have to be changed, only the offset is modified. 
+
+RowScroll[16] = first visible line.
+RowScroll[240] = last visible line. 
+
+Offset are unsigned decal toward left. 
 \pagebreak
 
 \begin{figure}[H]
