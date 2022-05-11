@@ -93,7 +93,7 @@ With these elements, zeroing the bss and populating .data with inital values is 
 
 \lstinputlisting[language=C]{src/code/68000/init_vars.c}
 
-\section{Verifying hardware health}
+\section{Verifying "Work RAM" and GFXRAM}
 Capcom games bootstrap process go beyond bootstraping the CPUs. They also verify the health of some components at startup. These are screens rarely, if ever, seen by player since it happens only once when the machine is turned on. During normal operations, that would be once a day.
 
 All CPS-1 games display a slightly different set of text. However all of them end up checking the m68k RAM and the GFXRAM. 
@@ -112,7 +112,9 @@ These tests were an important since they allowed the cabinet operator to diagnos
 \pagebreak
 
 
-The technique used is simple but has its limitation. For all byte in each areas of the RAM and GFXRAM, try to write a value, then try to read it back. If they differ, the GFXRAM is faulty and an error message is displayed. No way to checksum the GFXROM or anything on the Sound System side. The latch system is one way and there would be no way for the Z-80 to surface problems anyway.
+The technique used is simple but has its limitation. For all byte in each areas of the RAM and GFXRAM, try to write a value, then try to read it back. If they differ, the GFXRAM is faulty and an error message is displayed. 
+
+No way to checksum the GFXROM or anything on the Sound System side. The latch system is one way and there would be no way for the Z-80 to surface problems anyway.
 
 
 The set of tests seem to vary, even in two titles made by a same team consecutively. The GFXRAM part of the RAM hosting the Palettes is not tested in Street Fighter 2 despite having been released after Final Fight.
@@ -253,7 +255,7 @@ The bases tell the CPS-A where it should expected data in GFXRAM. Registers are 
 
 Scroll offsets are exactly that with coordinates origin in the upper left.
 
-Rowscrolling of SRC1 layer is achieved by two registers. Rowscroll base points to an array of 16-bit values. Rowscroll offset is a list of index into that array indicating how much to X scroll.
+Rowscrolling of SRC1 layer is achieved by two registers. Rowscroll base points to an array of 16-bit values. Rowscroll offset is an offset inside the base. This is elaborated on in a later section.
 
 
 \paragraph{Video Control} This register enable/disable misc attributes.
@@ -376,24 +378,31 @@ This mean that players who looked at these screens actually started a deep dark 
 \end{trivia}
 
 \pagebreak
-\subsection{Row Scroll}
-Row scrolling allows to dictage a per-line offset. Since it works on the SCROLL2 layer, it is made of 1024 16-bit offset. The hardware does not need to read them all, only what is visible is used (plus one tile height above and below) 224 + 16 + 16 = 256.
 
-Since caculating perspective can be costy, there is a mecanism to allow to generate rowscroll values and use an offset.
 
-DRAWING BASE + offset inside.
+\subsubsection{Row Scroll}
+Rowscrolling allows to offset each visible row via a discret X amounts. To do so, the CPS-A reads 256 values. That is 224 (each visible lines) + 16 (one tile height above) + 16 (one tile heigh below) = 256 values to render a frame.
 
-This is particularly useful in Street Fighter 2. When a character jumps, the srcrolly does as well and the rowscroll values don't have to be changed, only the offset is modified. 
+Each unsigned 16-bit offset value is expected in an array located in GFXRAM and pointed to via the CPS-A register \icode{ROWSCROLL\_BASE}.
 
-RowScroll[16] = first visible line.
-RowScroll[240] = last visible line. 
-
-Offset are unsigned decal toward left. 
-\pagebreak
+The \icode{ROWSCROLL\_OFFSET} instructs the CPS-A to use values not starting at \icode{ROWSCROLL\_BASE} but at \icode{ROWSCROLL\_BASE} + \icode{ROWSCROLL\_OFFSET}. 
 
 \begin{figure}[H]
-\img{color-00016530.png}
- \caption*{Street Fighter 2}%
+\nbdraw{rowscroll}
+ \caption*{CPS-A rowscroll data access}%
+ \end{figure}%
+
+A convenient trick is to allocate a rowscroll array of size 1024 (one entry for the full height of SCROLL2), generate all the rowscrollo offset and only manipulate \icode{ROWSCROLL\_OFFSET} if SCROLL2 is moved vertically. When a contestant in Street Figther II jumps, SCROLL2 moves vertically but no rowscroll offset are re-calculated, only \icode{ROWSCROLL\_OFFSET}  is moved. This allows to amortize the generation of perspective correct rowscroll offset.
+
+\lstinputlisting[language=C]{src/code/68000/rowscroll.c} 
+
+Note that rowscroll offsets are unsigned and always indicate a decal toward the left size of the screen. 
+
+Upper left, (\begin{CJK}{UTF8}{min}左上\end{CJK}), Upper middle (\begin{CJK}{UTF8}{min}中上\end{CJK}), and  Upper right (\begin{CJK}{UTF8}{min}右上\end{CJK}).
+
+\begin{figure}[H]
+\img{honda_bg.png}
+ \caption*{Honda SCROLL2 tiles}%
  \end{figure}%
 \pagebreak
 
