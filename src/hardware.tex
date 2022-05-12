@@ -1451,51 +1451,82 @@ They faked it with two logos, a small and a large one. Tiles move on a circular 
 \pagebreak
 
 \subsubsection{The World Warrier}
-The OBJ system was used in a creative way by akiman to solve a showstopper bug in a title intended to USA market.
+The OBJ system was used in a creative way by Akiman, a lead designer at Capcom working on Street Fighter 2 at the time, to solve a show-stopper bug.
 
 \begin{q}{Akiman, Lead graphic design on SF2}
 Just three days before the deadline, I discovered something horrible. I had made a mistake with the subtitle “World Warrior”, mis-spelling it “World Warrier.”
 \end{q}
 
-The 16 tiles making the "World Warrier" title as they are drawn by the CPS-A and CPS-B.
+The subtitle is drawn with the OBJ layer, using 16 draw calls pointing to tileID \icode{0x0}, \icode{0x1}, \icode{0x2}, \icode{0x3}, \icode{0x4}, \icode{0x5}, \icode{0x6}, \icode{0x7}, \icode{0x8}, \icode{0x9}, \icode{0xA}, \icode{0xB}, \icode{0xC}, \icode{0xD}, \icode{0xE}, \icode{0xE}. Indeed, looking inside the GFXROM, one can find the 16 tiles making the "World Warrier". 
 
+\begin{figure}[H]
 \nbdraw{worldwarrier_tile}
+ \caption*{The 16 OBJ tiles making the title. With a typo.}%
+ \end{figure}%
 
 \begin{q}{Akiman, Lead graphic design on SF2}
-Now I can safely tell this story too, but we actually didn’t discover it until several months after all the sprite work had been done. Since the logo had already been created, I couldn’t just go in and change the letter at this point.
-
-"Maybe I can just force it to look like an ‘o’," I thought. I tried layering various other sprites over it until finally, it looked like an ‘o’. Phew!
+It was several months after all the sprite work had been done. Since the logo had already been created, I couldn’t just go in and change the letter at this point.
 \end{q}
 
-Akiman first noticed that replacing the three last tile with tiles \icode{6} and \icode{7}. It reduced the problem by spelling "The World Warrlor". 
-
-\nbdraw{world_warrWor}
+What Akiman describe is that the GFXROM and all the tiles had been finalized. However they could still make modification to the 68000 instructions and most importantly, the palettes that were stored along with it.
 
 \begin{figure}[H]
 \img{sf2_title_warrier.png}
- \caption*{A recreation of the fear inducing typo. Ouch!}%
+ \caption*{A recreation of problem. Ouch!}%
  \end{figure}%
 
-Now all Akiman had to do was to somehow find a way to turn this 'l' character into an 'i'! That would have been simple if the CPU could have written in the VRAM but it could not.
+\begin{q}{Akiman, Lead graphic design on SF2}
+"Maybe I can just force it to look like an ‘o’," I thought. I tried layering various other sprites over it until finally, it looked like an ‘o’. Phew!
+\end{q}
 
-There is a way to fake pixel plotting. It is very expensive. The idea is to find a tile almost fully transparent but with only a single pen value in it. Akiman found that Guile's calve met these criteria.
+How in the wORld, do you make an 'i' looks like an 'o'? It turns out that Akiman was lucky in the mistake he had made since the letters he needed, 'o' and 'r', can be found in the word "World".
 
-Guile's calve is drawn three times across the 'l' to split it into an 'i'.
+Akiman leveraged what was available and changed the 68000 draw calls to drop the three last tiles and instead draw again tiles \icode{0x6} and \icode{0x7} at the end.
 
-\nbdraw{world_warrior_title}
+It only partially solved the problem since now the title spelled "The World Warrlor". 
 
-% \pagebreak
+\begin{figure}[H]
+\nbdraw{world_warrWor}
+ \caption*{"The World Warrlor". A little bit better}%
+ \end{figure}%
+
+
+The problem was displaced from turning an 'i' into an 'o', to turning an 'l' into and 'i'. That would have been simple if the CPU could have written in the VRAM but are we have seen these chips are not mapped in the m68k address space.
+
+There is an expensive way to fake pixel plotting. The idea is to find a tile almost fully transparent (\icode{0xF}) but with only a single pen value in it. 
+
+Akiman found that in one of Guile's pose, his calve met these criteria with a simple pen value in its lower left.
+
+
+\nbdraw{guileCalve}
+
+\pagebreak
+
+Using Guile's calve as a pencil, but with the title's palette, three tiles are drawn over the 'l' to split it into an 'i'.
+
+\begin{figure}[H]
+\nbdraw{palette_guile}
+ \caption*{Guile palette.}%
+ \end{figure}%
+
+ \begin{figure}[H]
+\nbdraw{palette_title}
+ \caption*{Title palette.}%
+ \end{figure}%
+
+ % In an extraordinary coindicence, it was a match.
 
 % \begin{figure}[H]
-%  \img{sf2_title.png}
-%  \caption*{The tile screen as it appears!}%
-%  \end{figure}%
+\nbdraw{world_warrior_title}
+ % \caption*{"18 draws calls. Two more than necessary but with proper grammar.}%
+ % \end{figure}%
 
-% \pagebreak
+\begin{figure}[H]
+\img{sf2_title.png}
+ \caption*{Once you see it, you can't unsee it.}%
+ \end{figure}%
 
-
-% Seriously here
-% \pagebreak
+% Sometimes, in order to ship, you need to be pragmatic.
 
 
 \subsection{Putting it all together}
