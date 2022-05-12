@@ -93,8 +93,8 @@ With these elements, zeroing the bss and populating .data with inital values is 
 
 \lstinputlisting[language=C]{src/code/68000/init_vars.c}
 
-\section{Verifying "Work RAM" and GFXRAM}
-Capcom games bootstrap process go beyond bootstraping the CPUs. They also verify the health of some components at startup. These are screens rarely, if ever, seen by player since it happens only once when the machine is turned on. During normal operations, that would be once a day.
+\section{Verifying RAM}
+Capcom games bootstrap process go beyond bringing up the CPUs. They also verify the health of hardware components. These screens are rarely, if ever, seen by players since they are visible only once when the cabinet is turned on. During normal operations, that would be once a day.
 
 All CPS-1 games display a slightly different set of text. However all of them end up checking the m68k RAM and the GFXRAM. 
 
@@ -114,8 +114,9 @@ These tests were an important since they allowed the cabinet operator to diagnos
 
 The technique used is simple but has its limitation. For all byte in each areas of the RAM and GFXRAM, try to write a value, then try to read it back. If they differ, the GFXRAM is faulty and an error message is displayed. 
 
+\begin{trivia}
 No way to checksum the GFXROM or anything on the Sound System side. The latch system is one way and there would be no way for the Z-80 to surface problems anyway.
-
+\end{trivia}
 
 The set of tests seem to vary, even in two titles made by a same team consecutively. The GFXRAM part of the RAM hosting the Palettes is not tested in Street Fighter 2 despite having been released after Final Fight.
 
@@ -381,7 +382,24 @@ This mean that players who looked at these screens actually started a deep dark 
 
 
 \subsubsection{Row Scroll}
-Rowscrolling allows to offset each visible row via a discret X amounts. To do so, the CPS-A reads 256 values. That is 224 (each visible lines) + 16 (one tile height above) + 16 (one tile heigh below) = 256 values to render a frame.
+Rowscrolling allows to offset each visible row via a discret X amounts. In Street Fighter II, Honda's dohyō ( the space in which a sumo wrestling bout occurs) perspective is achieved via linear offset differences. The more perspective needed, the more accentuated is the offset slope. 
+
+\begin{figure}[H]
+\nbimg{ring_skew_none.png}
+\caption*{Fighters at the center of the dohyō.}
+ \end{figure}%
+
+\begin{figure}[H]
+\nbimg{ring_skew_left.png}
+\caption*{Fighters move to the left of the dohyō.}
+ \end{figure}%
+
+\begin{figure}[H]
+\nbimg{ring_skew_right.png}
+\caption*{Fighters move to the right of the dohyō.}
+ \end{figure}%
+
+To sroll each row, the CPS-A reads 256 values. That is 224 (each visible lines) + 16 (one tile height above) + 16 (one tile heigh below) = 256 values to render a frame.
 
 Each unsigned 16-bit offset value is expected in an array located in GFXRAM and pointed to via the CPS-A register \icode{ROWSCROLL\_BASE}.
 
@@ -396,17 +414,19 @@ A convenient trick is to allocate a rowscroll array of size 1024 (one entry for 
 
 \lstinputlisting[language=C]{src/code/68000/rowscroll.c} 
 
-Note that rowscroll offsets are unsigned and always indicate a decal toward the left size of the screen. 
 
-Upper left, (\begin{CJK}{UTF8}{min}左上\end{CJK}), Upper middle (\begin{CJK}{UTF8}{min}中上\end{CJK}), and  Upper right (\begin{CJK}{UTF8}{min}右上\end{CJK}).
+Note that rowscroll offsets are unsigned and always indicate an amount to move toward the left side of the screen. To offset toward the right, a developer can take advantage of the wrap around nature of the SCROLL layers and use \icode{decalValue = 1024 - desiredRightOffsetValue}.
 
-\nbimg{ring_skew_none.png}
-\nbimg{ring_skew_left.png}
-\nbimg{ring_skew_right.png}
+\begin{trivia}
+Honda's SCROLL2 features hidden message. It looks like designer left contruction block writings as Upper left, (\begin{CJK}{UTF8}{min}左上\end{CJK}), Upper middle (\begin{CJK}{UTF8}{min}中上\end{CJK}), and Upper right (\begin{CJK}{UTF8}{min}右上\end{CJK}) kanji can be spotted.
+\end{trivia}
+
+
+
 
 \begin{figure}[H]
 \img{honda_bg.png}
- \caption*{Honda SCROLL2 tiles}%
+ \caption*{Honda SCROLL2 layer}%
  \end{figure}%
 \pagebreak
 
@@ -425,7 +445,7 @@ Upper left, (\begin{CJK}{UTF8}{min}左上\end{CJK}), Upper middle (\begin{CJK}{U
 
 
 \subsection{Back then...}
-Next to no information has ever transpired regarding how the CPS-1 control system was programmed. However one machine is widely rumored to have been used. A rumor seemingly confirmed by the nickname of Hiroaki Kondo, a Capcom composer/sound programmer often credited as "X68K". A rumor further reinforced by the components found inside the machine, which closely match the CPS-1.
+First hand account of how the CPS-1 control system was programmed has ever transpired . However one machine is widely rumored to have been used. A rumor seemingly confirmed by the nickname of Hiroaki Kondo, a Capcom composer/sound programmer often credited as "X68K". A rumor further reinforced by the components found inside the machine, which closely match the CPS-1.
 
 The X68000 is a machine largely unknown outside of Japan. But in that country it is known as the "god computer". 
 Released in 1987 by SHARP, the X68000 was as beautiful and powerful as it was expensive (¥369,000, roughly \$3000 in 1987 dollars, equivalent to around \$6000 in 2012 dollars).

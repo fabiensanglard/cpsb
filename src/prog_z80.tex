@@ -78,11 +78,7 @@ The last 16-bit sample has a value of \icode{160} which becomes \icode{10} in 12
 
 The decompressor will output 56 (its last value) - 42 = 14. The step size index is updated via the transitionTable to 6 (previous value) + 6 = 12, which equals 50.
 
-Ouput vs INput.
-
-If we graph.
-
-DRAWING
+\red{ TODO GRAPH PCM vs ADPCM DRAWING}
 
 \pagebreak
 
@@ -91,6 +87,8 @@ DRAWING
 The structure of the OKI is very simple. It must feature 128 * 6 bytes table at the beginning. Each entry points to a payload in the ROM. The payload of each entry must be ADPCM stream.
 
 For some reason reason offset 0 in the table index is invalid.
+
+\red{ TODO DRAWING ADPCM ROM Structure}
 
 \pagebreak
 

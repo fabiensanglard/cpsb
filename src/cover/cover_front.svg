@@ -7,7 +7,7 @@
    viewBox="0 0 190.5 234.95001"
    version="1.1"
    id="svg5"
-   inkscape:version="1.1.2 (08b2f3d93c, 2022-04-05)"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
    sodipodi:docname="cover_front.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -27,12 +27,12 @@
      units="in"
      width="7.5in"
      inkscape:zoom="0.32244488"
-     inkscape:cx="565.9882"
-     inkscape:cy="814.09262"
-     inkscape:window-width="1280"
-     inkscape:window-height="736"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:cx="493.10754"
+     inkscape:cy="812.54198"
+     inkscape:window-width="1920"
+     inkscape:window-height="1010"
+     inkscape:window-x="-6"
+     inkscape:window-y="-6"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
      fit-margin-top="0"
@@ -126,14 +126,14 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:63.5px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="9.0488529"
+       x="19.562117"
        y="187.20241"
        id="text2328-2"><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:63.5px;font-family:'FONTSPRING DEMO - Zaius Regular';-inkscape-font-specification:'FONTSPRING DEMO - Zaius Regular, ';fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
-         x="9.0488529"
+         x="19.562117"
          y="187.20241"
-         id="tspan2330-5">CP S</tspan></text>
+         id="tspan2330-5">CPS</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:16.9333px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583"
@@ -156,13 +156,6 @@
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:50.8px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';fill:url(#meshgradient17665);fill-opacity:1;stroke-width:0.264583"
          x="27.177856"
          y="157.13741" /></text>
-    <rect
-       style="fill:#ffffff;stroke-width:1.26129"
-       id="rect978"
-       width="13.287161"
-       height="7.748733"
-       x="120.52226"
-       y="159.35355" />
     <rect
        style="fill:#ffffff;stroke-width:0.846667"
        id="rect23733"

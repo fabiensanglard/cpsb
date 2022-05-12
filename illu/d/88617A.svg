@@ -29,7 +29,7 @@
      inkscape:snap-global="false"
      inkscape:zoom="0.4881583"
      inkscape:cx="314.44718"
-     inkscape:cy="1098.0045"
+     inkscape:cy="934.12321"
      inkscape:window-width="1790"
      inkscape:window-height="912"
      inkscape:window-x="0"
@@ -875,7 +875,7 @@
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444px;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';text-align:center;text-anchor:middle;stroke-width:0.264583"
          x="342.17154"
          y="-19.449804"
-         id="tspan38105-3">GFX RAM (192 KiB)</tspan></text>
+         id="tspan38105-3">GFX SRAM (192 KiB)</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:9.525px;line-height:1.25;font-family:sans-serif;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
@@ -889,15 +889,15 @@
          y="204.79613">2KiB </tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:9.525px;line-height:1.25;font-family:sans-serif;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="353.99826"
-       y="149.50867"
+       style="font-style:normal;font-weight:normal;font-size:8.46667px;line-height:1.25;font-family:sans-serif;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="352.91425"
+       y="147.88266"
        id="text6492-6-5-4-9"><tspan
          sodipodi:role="line"
          id="tspan6490-8-6-8-1"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:9.525px;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';stroke-width:0.264583"
-         x="353.99826"
-         y="149.50867">RAM</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:8.46667px;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';stroke-width:0.264583"
+         x="352.91425"
+         y="147.88266">SRAM</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:8.46667px;line-height:1.25;font-family:sans-serif;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"

@@ -28,7 +28,7 @@
      fit-margin-right="0"
      fit-margin-bottom="0"
      inkscape:zoom="1.171764"
-     inkscape:cx="-26.882546"
+     inkscape:cx="-46.937779"
      inkscape:cy="145.08041"
      inkscape:window-width="1920"
      inkscape:window-height="1010"
@@ -983,20 +983,20 @@
        cy="114.47753"
        r="4.7276697" />
     <g
-       id="g253323"
-       transform="translate(123.37102,0.39426652)">
+       id="g1040"
+       transform="translate(-1.354795)">
       <circle
-         style="fill:#000000;fill-opacity:1;stroke-width:0.264999;stroke-miterlimit:4;stroke-dasharray:none"
+         style="fill:#000000;fill-opacity:1;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none"
          id="path253008-9"
-         cx="95.322968"
-         cy="163.81729"
+         cx="218.69398"
+         cy="164.21156"
          r="4.7276697" />
       <circle
-         style="fill:#313131;fill-opacity:1;stroke-width:0.146763;stroke-miterlimit:4;stroke-dasharray:none"
+         style="fill:#313131;fill-opacity:1;stroke-width:0.737157;stroke-miterlimit:4;stroke-dasharray:none"
          id="path253008-9-5"
-         cx="95.322968"
-         cy="163.81729"
-         r="2.6182997" />
+         cx="218.69398"
+         cy="164.21156"
+         r="3.8601952" />
     </g>
   </g>
 </svg>
