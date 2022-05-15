@@ -8,7 +8,7 @@
    version="1.1"
    id="svg1252"
    sodipodi:docname="vram.svg"
-   inkscape:version="1.1.2 (b8e25be833, 2022-02-05)"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -24,12 +24,12 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="0.43295455"
-     inkscape:cx="396.11549"
-     inkscape:cy="557.79528"
-     inkscape:window-width="1280"
-     inkscape:window-height="736"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:cx="396.11548"
+     inkscape:cy="556.64041"
+     inkscape:window-width="1920"
+     inkscape:window-height="1010"
+     inkscape:window-x="-6"
+     inkscape:window-y="-6"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
      fit-margin-top="0"
@@ -50,5 +50,16 @@
        height="103.56796"
        x="0.44105613"
        y="0.96732754" />
+    <text
+       xml:space="preserve"
+       style="font-size:8.46667px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
+       x="63.79311"
+       y="56.986046"
+       id="text2100"><tspan
+         sodipodi:role="line"
+         id="tspan2098"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+         x="63.79311"
+         y="56.986046">VRAM DRAWING TO DO</tspan></text>
   </g>
 </svg>

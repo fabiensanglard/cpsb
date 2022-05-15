@@ -28,9 +28,9 @@
      fit-margin-right="0"
      fit-margin-bottom="0"
      inkscape:snap-global="false"
-     inkscape:zoom="7.2066934"
-     inkscape:cx="184.48128"
-     inkscape:cy="172.33979"
+     inkscape:zoom="1.8016734"
+     inkscape:cx="120.16607"
+     inkscape:cy="159.29636"
      inkscape:window-width="1920"
      inkscape:window-height="1010"
      inkscape:window-x="-6"
@@ -704,5 +704,17 @@
        d="m 105.74327,92.930373 c -1.33962,3.35732 -0.66644,5.660314 0,7.966837"
        id="path28449"
        sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-size:8.46667px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
+       x="24.659081"
+       y="112.06209"
+       id="text1516"
+       transform="rotate(-12.144037)"><tspan
+         sodipodi:role="line"
+         id="tspan1514"
+         style="fill:#ff0000;fill-opacity:1;stroke-width:0.264583"
+         x="24.659081"
+         y="112.06209">TEMPORARY</tspan></text>
   </g>
 </svg>
