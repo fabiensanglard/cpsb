@@ -78,20 +78,18 @@ The last 16-bit sample has a value of \icode{160} which becomes \icode{10} in 12
 
 The decompressor will output 56 (its last value) - 42 = 14. The step size index is updated via the transitionTable to 6 (previous value) + 6 = 12, which equals 50.
 
-\red{ TODO GRAPH PCM vs ADPCM DRAWING}
-
-\pagebreak
+\nbdraw{adpcm_graphed}
 
 
 \section{Structure of the OKI ROM}
-The structure of the OKI is very simple. It must feature 128 * 6 bytes table at the beginning. Each entry points to a payload in the ROM. The payload of each entry must be ADPCM stream.
+The structure of the OKI is very simple. It must feature 127 * 6 bytes table at the beginning. Each entry points to a payload in the ROM. The payload of each entry must be ADPCM stream.
 
-For some reason reason offset 0 in the table index is invalid.
+For some reason reason offset 0 in the table index should not be used.
 
-\red{ TODO DRAWING ADPCM ROM Structure}
+\lstinputlisting{src/code/okistruct.c}
 
-\pagebreak
 
+\nbdraw{oki_rom}
 
 
 
@@ -227,23 +225,33 @@ The interrupt trigger allows the main loop to move forward thanks to a counter. 
 
 
 \section{Back then...}
-If nothing ever transpired about the work done on the Z-80, some of the member of Capcom Sound Team gave interviews to let us peek into how sounds were made.
+% If nothing ever transpired about the work done on the Z-80, some of the member of "Capcom Sound Team" gave interviews. Their testimony give us a glimpse into how sounds was made.
+In the mid-80s, Capcom recognized the crucial importance of sound for a video-game and set to hire only the very best musician they could find.
 
-One of the most outspoken musician is Yoshihiro Sakaguchi who is the author of all Street Fighter II musics.
+They would actively recruit by taking advantage of 'careers days' to get graduates to come work for them. Many musicians came from music schools located in Kansai region (Kyoto, Osaka, Kobe). Several alumni of Osaka College of Music ended up working for Capcom where they were able to compose music for a living while having the security of working for a large Japanese company. 
+
+By 1989, Capcom had assembled a pool of talent who called themselves the "Capcom Sound Team".
 
 \img{capcom_sound_team.png}
 
 The Capcom Sound team. L-R: Yoko Shimomura, Yoshihiro Sakaguchi, Manami Matsumae, Masaki Izumiya, Yasuaki Fujita, Mari Yamaguchi, Minae Fujii, Toshio Kajino, Isao Abe.
 
-\begin{q}{Yoshihiro Sakaguchi\cite{yoko_shimomura_interview}  }
 
-Generally speaking, we do the music and sound effects for Capcom’s games. We’ve got a centralized recording system setup on a PC-98, so that even if we’re writing music for different hardware, we can compose without needing to be able to program.
-\end{q}
+
 
 \begin{q}{Yoko Shimomura, Street Fighter 2 music Composer\cite{beep199010}}
 
-I also studied piano in college, but I loved the Famicom, and would often stay up all night playing it. Then the next day my shoulders would be all stiff, and my piano teacher would scold me, and my Mom even said “I don’t remember raising a daughter like this.” (laughs) I decided that when I graduated, I would go work at a place where I could play both music and Famicom all day without complaints!
+I studied piano in college, but I loved the Famicom, and would often stay up all night playing it. 
+
+Then the next day my shoulders would be all stiff, and my piano teacher would scold me, and my Mom even said “I don’t remember raising a daughter like this.”
+
+I decided that when I graduated, I would go work at a place where I could play both music and Famicom all day without complaints!
 \end{q}
+
+
+One of the most outspoken musician is Yoshihiro Sakaguchi who is the author of all Street Fighter II musics.
+
+The account of here hiring interview confirm that Capcom was more interested in hiring talented musician than tech savvy people.
 
 \begin{q}{Yoko Shimomura, Street Fighter 2 music Composer\cite{beep199010}}
   
@@ -255,6 +263,48 @@ I was asked to talk about what I knew about FM generation at the entrance exam. 
 \end{q}
 
 
-\begin{trivia}
-Talk about music playing faster here.
-\end{trivia}
+
+Composer worked alone on a game and could pick their next project (based on availabilities\cite{sf2musics}) as soon as they were done .
+
+\begin{q}{Yoko Shimomura, Street Fighter 2 music Composer\cite{sf2_oral_history}}
+Mr. Nishitani would come up to me and show me designs of the characters and explain the personalities of the characters and ask me to make theme songs for each character.
+
+I would look at the backgrounds and the character descriptions and all that, and I noticed that each character had a unique background. And because of that, I suggested making each theme song based on their background country and culture.
+\end{q}
+
+
+Yoshihiro Sakaguchi, author of MegaMan musics, explain what computer they connected their Yamaha keyboard to.
+
+\begin{q}{Yoshihiro Sakaguchi\cite{yoko_shimomura_interview}  }
+We worked on both the music and sound effects for Capcom’s games. We’ve got a centralized recording system setup on a PC-98, so that even if we’re writing music for different hardware, we can compose without needing to be able to program.
+\end{q}
+
+Despite their name, the computers of the 9800 series had nothing to do with the IBM PC. Due to the language barrier, Big Blue's machines never managed to break into the Japanese market.
+
+The PC-98s supported kanjis and had their own C-Bus, BIOS, I/O port addressing, memory management, and graphics system. 
+
+Although having specs far inferior to the Fujitsu FM Towns and Sharp X68000, NEC enjoyed trementdous success, selling 18 millions units from 1982 to 1999.
+
+\begin{figure}[H]
+\img{PC9800.jpg}
+\caption*{PC-9800 series}
+\end{figure}
+
+
+
+
+
+When it came to record voices, the whole Street Fighter II development team was encouraged to contribute.
+
+\begin{q}{VGDensetsu\cite{sf2samples}  }
+Chun-Li Spinning Bird Kick line was spoken by Eri Nakamura, the graphic designer in charge of Honda, while a background designer did her victory cry ("Kyahahaha! Yattaaa") and a third person recorded another line.
+
+For Ryu and Ken, who share the same voice, the graphic designer in charge of Guile lent his voice for the Hadoken and Shoryuken while the one in charge of Boxer did the Tatsumaki Senpukyaku.  
+\end{q}
+
+
+
+
+% \begin{trivia}
+% Talk about music playing faster here.
+% \end{trivia}

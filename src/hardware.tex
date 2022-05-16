@@ -1619,25 +1619,22 @@ Bootlegs don't only hurt us; they're also a nuisance for our customers who think
 \end{q}
 
 
-There were good reasons to be optimistic since Capcom engineers had crammed their platform with protections.
-
-\subsection{Hard piracy}
-
-Hardware pirates produced bootlegs by physically copying Capcom PCBs. All counterfeiters had to do was dump the ROMs content from a legitimate board, buy the same off-the-shelf CPUs and TTLs components (Transistor–transistor Logic), assemble, burn new ROMs, and sell at a discounted rate.
-
-The CPS-1 answer was to use chips which were not readily available to the public. Capcom had Ricoh exclusively fabricate the two custom ASICs, the CPS-A and CPS-B. To protect against reverse-engineered by decapping followed by microscope analysis, metal grids were layered on top of the chip\cite{arcadeHackerCPS1Rev} lines. 
+There were good reasons to be optimistic. Capcom engineers had crammed their platform with protections so pirates would have to solve hardware and software safeguards.
 
 
-\subsection{Soft piracy}
-Software piracy is different from hardware piracy in the sense that it involves operators purchasing an authentic CPS-1 game from Capcom but then getting as many more games as they want without paying for them.
+Hardware pirates produced bootlegs by physically copying Capcom PCBs. By dumping the ROMs content from a legitimate board, buying the same off-the-shelf CPUs and TTLs components (Transistor–transistor Logic) they would sell the same game at a discounted rate.
 
-Upon their first (and only) purchase on a CPS-1 based game, the buyer would received a bundle of Board A, Board B, and Board C. If the only thing different between games were the ROM content, they could be dumped, burned on new ROMs and inserted onto Board B. 
+The CPS-1 answer was to use custom ASICs that would prevent pirate from physically replicating a PCB. Capcom had Ricoh exclusively fabricate the two custom ASICs, the CPS-A and CPS-B. To protect against decapping, metal grids were layered on top of the ASICs\cite{arcadeHackerCPS1Rev}. 
 
-By exchanging or selling ROMs, software pirates once again would undercut Capcom.
+
+Software piracy involved operators purchasing an authentic game from Capcom to get the PCBs but then copying ROMs and get newer games for free. 
 
 To prevent software piracy Capcom elected to build as set of tools at the hardware level that could be used by the software to check the authenticity of the board it was running on at runtime.
 
-
+\begin{figure}[H]
+\nbimg{copy_protection.png}
+\caption*{Capcom's disclaimer when a CPS-1 boots.}
+\end{figure}
 
 \subsection{The ever changing CPS-B}
 The heart of the protection system is the CPS-B. The idea is to make it behaves differently depending on the game it is supposed to run.
