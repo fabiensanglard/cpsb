@@ -1,12 +1,12 @@
 \chapter{Sound System}
-Making ROMs for the sound system is a little big complicated than for the GFX system. Not only samples and music assets are processed, there is also a need for source code to bootstrap and then run the Z-80. 
+Making ROMs for the sound system is a little big complicated than for the GFX system. Not only samples and music assets are processed, there is also a need to compile code to bootstrap and then run the Z-80. 
 
 \begin{figure}[H]
 \sdraw{1.0}{sound_arch}
 \caption*{The Sound System components}
 \end{figure}
 
-The result must be packed into a Z-80 ROM and an OKI ROM. This asymmetry where three system result in two ROM is further complicated by the dependency graph that looks like a plate of spaghetti. 
+The result must be packed into two ROMS, one called "Z-80 ROM" and another called "OKI ROM". This asymmetry where three system result in two ROM is further complicated by the dependency graph that looks like a plate of spaghetti. 
 
 The crux is that both the sound effects and the music contribute to the OKI ROM content which must be populated in two steps.
 

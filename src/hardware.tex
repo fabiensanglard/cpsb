@@ -989,7 +989,7 @@ Each tilemaps has a maximum capacity of 32 palettes which each tile can use free
 
 For Street Fighter 2, the developers used layers with different horizontal scroll speed to implement parallax. The sprites in black (drawn on a fourth layer called "OBJ" which is discussed later) are used not only for the characters but also for the "GUI" elements.
 
-Other titles such as Forgotten World required all the sprites the machine could provide. To avoid wasting any of them, the design team chose to implement the GUI with SCROLL1. It is a good trade-off because the only restrictions is that elements are aligned on a 8 pixels grid which is not really a problem for a GUI.
+Other titles such as Forgotten World required all the sprites the machine could provide for the gameplay. To avoid wasting any of them to the GUI, the design team chose to implement it with SCROLL1 instead of OBJ. It is a good trade-off because the only restrictions is that elements are aligned on a 8 pixels grid which is not really a problem for a GUI.
 
 \fcolorbox{black}{red}{\vphantom{W}\hphantom{H}} SCROLL1, \fcolorbox{black}{green}{\vphantom{W}\hphantom{H}} SCROLL2, \fcolorbox{black}{blue}{\vphantom{W}\hphantom{H}} SCROLL3, \fcolorbox{black}{black}{\vphantom{W}\hphantom{H}} OBJ.
 
@@ -1004,7 +1004,7 @@ Other titles such as Forgotten World required all the sprites the machine could 
 \subsubsection{Starfields}
 Besides SCROLLs, the CPS-1 has two "STARfields" which are always behind the SCROLLs and always in order STAR1 then STAR2. 
 
-For each of these layers, the GFXROM contains no tiles but instead bytecode dictating the position of points as long as palette cycling timing. By using the 32 palettes of each of these layers astutely, parallaxed starfield can be rendered. 
+For each of these layers, the GFXROM contains no tiles but instead bytecode dictating the position of points as well as palette cycling timing. By using the 32 palettes of each of these layers astutely, parallaxed starfield can be rendered. 
 
 These STARs layers were a great feature for the many space shoot'em up released when the CPS-1 was designed since it saved considerable GFXROM space and artists time. The first title released on CPS-1, Forgotten Worlds, prominently showcased this feature.
 
@@ -1021,7 +1021,7 @@ Alike the tilemaps, each starfield has a dedicated 32 palettes.
 The CPS-1 layer system does not use a painter algorithm where pixels are written over and over in a framebuffer. The CPS-B receives a stream of all layers and based on the priority and the potential transparent pen value (\icode{0xF}) select the one to send to the video system.
 \end{trivia}
 
-The STARs layers also proved useful when designers need a full black background. Instead of using a SCROLL and repeating a tile full of black tiles, they only have to use a STAR and request no stars on it. So many player starred at a dark night sky and they never knew about it.
+The STARs layers also proved useful when designers needed a full black background. Instead of using a SCROLL and repeating a tile full of black tiles, they only have to use a STAR and request no stars for it. Many player starred at a dark night sky and they never knew about it.
 
 \fcolorbox{black}{red}{\vphantom{W}\hphantom{H}} SCROLL1, \fcolorbox{black}{green}{\vphantom{W}\hphantom{H}} SCROLL2, \fcolorbox{black}{blue}{\vphantom{W}\hphantom{H}} SCROLL3, \fcolorbox{black}{mycyan}{\vphantom{W}\hphantom{H}} STAR1, \fcolorbox{black}{myyellow}{\vphantom{W}\hphantom{H}} STAR2, \fcolorbox{black}{black}{\vphantom{W}\hphantom{H}} OBJ.
 
