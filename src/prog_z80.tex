@@ -88,8 +88,13 @@ For some reason reason offset 0 in the table index should not be used.
 
 \lstinputlisting{src/code/okistruct.c}
 
+Notice there is no metadata to indicate the bitrate. The "database" entry is a plain offset directly pointing to ADPCM nibbles. It is up to the build system to carry out this info to the z80. In practice Capcom games never mixed bitrate, and always used 7575Hz.
 
+\begin{figure}[H]
 \nbdraw{oki_rom}
+\caption*{OKI ROM layout. Source \red{TODO}}
+\end{figure}
+
 
 
 
