@@ -78,6 +78,9 @@ The last 16-bit sample has a value of \icode{160} which becomes \icode{10} in 12
 
 The decompressor will output 56 (its last value) - 42 = 14. The step size index is updated via the transitionTable to 6 (previous value) + 6 = 12, which equals 50.
 
+% The result is stored in four nibble which fit in an array of two bytes. 
+Graphing PCM vs ADPCM shows that the decompressed stream "lags" behind upon abrupt changes but catches up aggressively. ADPCM first value is always near zero (+/-28) but it is not audible to players since most samples are faded in anyway. 
+
 \nbdraw{adpcm_graphed}
 
 

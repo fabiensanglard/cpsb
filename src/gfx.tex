@@ -235,24 +235,28 @@ Preventing attrition did not mean let employee work at their leisure. A strong w
 
 
 \subsection{Inspiration}
-Artists found their inspiration in several outlets.
+For Street Fighter II, artists inspiration came from various outlets. 
 
-Dictator found its origin in Yasunori Katō manga. 
+Manga such as "Yasunori Katō" helped to give birth to Dictator while Tao from "Harmagedon: Genma Wars" was part of the genesis of Chun-Li. 
 
-Boxer, Ryu, Ken, Sagat, and Zangiev were inspired by real life athletes, respectively Mike Tyson, Mas Oyama, Joe Lewis, Sagat Petchyindee, and Victor Zangiev Zhanghief. 
+Boxer. Ryu, Ken, Sagat, and Zangiev were inspired by real life athletes, respectively Mike Tyson, Mas Oyama, Joe Lewis, Sagat Petchyindee, and Victor Zangiev Zhanghief.  find its origin in , an  animation
+
+\begin{trivia}
+Originally called M. Tyson, the boxer was renamed to "Balrog" for the US release, out of lawsuit concerns. 
+\end{trivia}
 
 % \begin{figure}[H]
 % \img{sf_art_research.jpg}
 % \caption*{Original characters}
 % \end{figure}
 
-As for the backgrounds, Hollywood came to the rescue.
+For the backgrounds, Hollywood came to the rescue.
 
 \begin{q}{Akiman\cite{ffdevinterview}}
 I remember stitching together a few movies to make a presentation. “Streets of Fire” and Charles Bronson’s “Hard Times” were the ones I used back then. Basically movies about fighting. I really took the chairman’s words to heart – “Use movies!” he said, so I took that to mean we should just openly plagiarize them!
 \end{q}
 
-Although employee did not get paid to watch movies. They were paid to watch three movies at the same time.!
+Employees did not get paid to a watch movie. They got paid to watch three movies at the same time!
 
 \begin{q}{Nishitani\cite{ffdevinterview}}
 We didn't have a whole lot of time, so we had a 3-monitor set-up where we could watch other movies at the same time, as the president told us to "watch them all and learn from them."
@@ -263,14 +267,14 @@ Coincidentally, the Japanese title of "Hard Times" was "The Street Fighter".
 \end{trivia}
 
  \begin{figure}[H]
-\img{ken_stage_design.jpg}
-\caption*{Ken stage design\cite{sf2completefiles}.}
+\img{ken_stage_design.png}
+\caption*{Ken stage design phase. Inspiration, sketch, pixel art.\cite{sf2completefiles}.}
 \end{figure}
 
 \section{Shapes and Sprites}
 This historical detour was important in order to understand the sheet system. With this knowledge we can review the last GFX ROM requirements involving OBJs.  
 
-On this layer, tiles can be used differently which mandate distinct tiles grouping strategies.
+On this layer, tiles can be used either directely or in groups which mandate distinct layout strategies.
 
 \subsection{Sprite}
 A sprite is a collection of tiles with rectangular boundaries. As we will see in the m68k programming section it can be rendered by issuing a single draw call mentioning the offset in the sheet, the width in tiles and the height in tiles.
