@@ -209,8 +209,8 @@ func main() {
 	base = "out/" + mode
 	os.MkdirAll(base, os.ModePerm)
     
-    makeCover("src/cover/cover_front.svg", base + "/illu/cover_front.pdf")
-    makeCover("src/cover/cover_back.svg", base + "/illu/cover_back.pdf")
+    makeCover("src/cover/cover_front.svg", base + "/illu/cover_frontw.pdf")
+    makeCover("src/cover/cover_back.svg", base + "/illu/cover_backw.pdf")
 
 	prepare("illu/img/", prepareImg)
 	prepare("illu/d/", prepareDrawing)
