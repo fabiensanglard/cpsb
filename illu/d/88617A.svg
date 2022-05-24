@@ -28,8 +28,8 @@
      showgrid="false"
      inkscape:snap-global="false"
      inkscape:zoom="0.4881583"
-     inkscape:cx="787.65433"
-     inkscape:cy="474.23141"
+     inkscape:cx="472.1829"
+     inkscape:cy="584.85127"
      inkscape:window-width="1280"
      inkscape:window-height="736"
      inkscape:window-x="0"
@@ -477,7 +477,7 @@
        transform="rotate(-90)" />
     <path
        style="display:inline;fill:none;stroke:#000000;stroke-width:0.765;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="M 193.26071,122.80639 152.4935,142.8372"
+       d="M 195.81617,123.20442 152.4935,142.8372"
        id="path5693"
        sodipodi:nodetypes="cc" />
     <path
@@ -840,19 +840,19 @@
        transform="rotate(-90)" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:8.46666667px;line-height:1.25;font-family:sans-serif;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       style="font-style:normal;font-weight:normal;font-size:9.87778px;line-height:1.25;font-family:sans-serif;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
        x="191.5159"
        y="-8.4548635"
        id="text6492-6-5-3"><tspan
          sodipodi:role="line"
          id="tspan6490-8-6-0"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';text-align:center;text-anchor:middle;stroke-width:0.264583;font-size:8.46666667px"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:9.87778px;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';text-align:center;text-anchor:middle;stroke-width:0.264583"
          x="191.5159"
          y="-8.4548635">384 KiB VRAM</tspan><tspan
          sodipodi:role="line"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';text-align:center;text-anchor:middle;stroke-width:0.264583;font-size:8.46666667px"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:9.87778px;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';text-align:center;text-anchor:middle;stroke-width:0.264583"
          x="191.5159"
-         y="4.715241"
+         y="4.2356606"
          id="tspan43017">(DRAM)</tspan></text>
     <text
        xml:space="preserve"
@@ -1165,8 +1165,8 @@
        y="342.71109"
        ry="3.0988271" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:0.765;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 198.25171,123.85271 0.271,131.48755"
+       style="fill:none;stroke:#000000;stroke-width:0.765;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.765, 0.765;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 196.13503,123.85271 0.271,131.48755"
        id="path2407"
        sodipodi:nodetypes="cc" />
     <rect
@@ -1180,13 +1180,13 @@
        transform="rotate(-90)" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:8.46666667px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="194.50749"
+       style="font-style:normal;font-weight:normal;font-size:8.46667px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="192.39085"
        y="221.52626"
        id="text3730"><tspan
          sodipodi:role="line"
-         style="stroke-width:0.264583;font-size:8.46666667px"
-         x="194.50749"
+         style="font-size:8.46667px;stroke-width:0.264583"
+         x="192.39085"
          y="221.52626"
          id="tspan3732">/2</tspan></text>
     <path
@@ -1206,8 +1206,8 @@
          y="325.31558"
          id="tspan4561-4">SOUND AMPLIFIER</tspan></text>
     <path
-       style="fill:none;stroke:#000000;stroke-width:0.765;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 200.95002,123.70252 0.14372,55.08759 h 77.35068 l 0.271,110.27101 82.10075,0 V 233.9256"
+       style="fill:none;stroke:#000000;stroke-width:0.765;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.765, 0.765;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 199.36251,123.70252 0.14372,55.08759 h 77.35068 l 0.271,110.27101 h 82.10075 V 233.9256"
        id="path2541"
        sodipodi:nodetypes="cccccc" />
     <rect

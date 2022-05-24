@@ -1,28 +1,28 @@
 \chapter{CP-S: Making a Game}
 
-The next three chapters describe a full CPS-1 game production pipeline. 
+The best way to validate knowledge of a computer hardware is to program it. 
 
-The goal is to deepen the understanding of Capcom's platform by not only writing code and generating assets but also learning how to process them in order to generate ROMs.
+The rest of this book describes a full game production pipeline. The goal is to deepen the understanding of Capcom's platform by not only writing code and generating assets but also learning how to process them in order to generate ROMs.
 
-The pipeline inputs consist in the code (\icode{.s}/\icode{.c}) written by programmers and samples (\icode{.wav}), musics (\icode{.mvg}), and graphics assets (\icode{.png}) produced by the artists. The outputs are four sets of ROMs ready to be burned on EPROMs. 
+The pipeline ingests the code (\icode{.s}/\icode{.c}) written by programmers, the samples (\icode{.wav}) and musics (\icode{.mvg}) from the musicians, and the graphics assets (\icode{.png}) produced by the artists. The outputs are four sets of ROMs ready to be burned on EPROMs. 
 
  \begin{figure}[H]
 \sdraw{1.0}{game_pipeline}
 \caption*{Game ROMs dependency graph}
 \end{figure}
 
-Some dependencies in the graph make a lot of sense. The Z-80 source code (\icode{.c} and \icode{.s}) impacts the Z-80 ROM only. Likewise, the 68000 code (also \icode{.c} and \icode{.s}) ends up in the 68000 ROM.
+Some dependencies in the graph make a lot of sense. The Z-80 source code (\icode{.c} and \icode{.s}) only impacts the Z-80 ROM. Likewise, the 68000 code (also \icode{.c} and \icode{.s}) ends up in the 68000 ROM.
 
-Other dependencies are more convoluted. The \icode{.wav} sample files for example need to be compressed to ADPCM before being added to the OKI ROM. But they must also be referenced in a \icode{.h} header file. A sound identifier integer per sample is used so the 68000 can refer to them when requesting playback.
+Other dependencies are more convoluted. The \icode{.wav} sample files for example need to be compressed to ADPCM before being added to the OKI ROM. To be referencable at runtime, each sample is given an integer ID. These IDs must be collected into a \icode{.h} header file. That file must be compiled along with the rest of the 68000 code.
 
 Likewise, the \icode{.png} files are transformed before making their way to the GFX ROM. They also require to generate a \icode{.h} header file, this time containing tileID. Additionally, a \icode{.c} file containing each tile palette is generated in order to be compiled into the 68000 ROM. 
 
-An even more complicated graph emerge from the music \icode{.mvg} files. The music track contains YM2151 commands that must be transformed in bytecode, stored in a \icode{.c}, and compiled along with the Z-80 code. To be referencable, a header file containing music ID must also be generated and compiled with the 68000 ROM. Lastly, music are embellished with audio samples which must also be compressed to ADPCM and added to the OKI ROM.
+An even more complicated graph emerge from the music \icode{.vmg} files. The music track contains YM2151 commands that must be transformed in bytecode, stored in a \icode{.c} file, and compiled along with the Z-80 code. To be referencable, a header file containing music ID must also be generated and compiled with the 68000 ROM. Lastly, music are embellished with audio samples which must also be compressed to ADPCM and added to the OKI ROM.
 
 To complicate things even further, each of the four ROM mentioned must use different word size and interleaving across chips containing it.
 
 \subsection{CCPS: The CPS-1 Build System}
-As this chapter was being written, several tools were authored in particular to establish the correct way to drive the Z-80 and the 68000 compiler. 
+As this chapter was being written, several tools were authored to validate understanding of the hardware. A peculiar set of tools is the correct way to drive the Z-80 and the 68000 compiler. 
 
 Ultimately these tools were combined into a single build system called \icode{ccps}. The rest of this book occasionally refers to \icode{ccps} but try to keep the abstraction level high so reader can build their own build system. 
 

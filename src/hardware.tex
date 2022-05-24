@@ -2,7 +2,7 @@
 
 The project that would later be dubbed by the press "superchip"\cite{tgm198906} started between 1985 and 1986. It was a massive investment that would require two years and five millions dollars. The result of this endeavor would be to dictate the life or death of Capcom.
 
-\begin{q}{Yoshiki Okamoto, Producer (Capcom)\cite{gamest38}}
+\begin{q}{Yoshiki Okamoto, Producer\cite{gamest38}}
 The CP System is an extremely important business strategy to Capcom: we’ve gambled everything on it.
 \end{q}
 
@@ -179,7 +179,7 @@ The black chips are PALs (Programmable Array Logic) which are crucial to the cre
 
 \sdraw{0.45}{PAL16L8A}
 
- Often located near the memory chips group they affect, they are renamed between revision. e.g: Street Fighter II's \icode{STF29} which organizes GFX ROM is named \icode{S224B} in Final Fight or \icode{DM620} in Ghouls'n Ghosts.
+ Often located near the memory chips group they affect, they are renamed between revision. e.g: Street Fighter II's \icode{STF29} which organizes GFX ROM is named \icode{S224B} in Final Fight, or \icode{DM620} in Ghouls'n Ghosts.
 
 
 
@@ -234,7 +234,7 @@ The bus is made of (\icode{D0-D15}) for data, (\icode{A1-A23]}) for addresses, a
 
 Arbitration to allow peripherals to master the bus is done with Bus Request (\icode{BR}),  Bug Grant (\icode{BG}) and Bus Grant ACK (\icode{GBA-K}).
 
-The interrupt system is made of \icode{IPL0}, \icode{IPL1}, \icode{IPL2}, and \icode{VPA} while System control is done via Error (\icode{BERR}), Reset (\icode{RST}), and Halt (\icode{HALT}).
+The interrupt system (which will be instrumental in the software chapter) is made of \icode{IPL0}, \icode{IPL1}, \icode{IPL2}, and \icode{VPA} while System control is done via Error (\icode{BERR}), Reset (\icode{RST}), and Halt (\icode{HALT}).
 
 Processor status is given by \icode{FC0}, \icode{FC1}, \icode{FC2} and Peripheral control is done via sync (\icode{E}) and valid sig (\icode{VMA}).
 
@@ -317,7 +317,7 @@ These \icode{CE} / \icode{CS} lines are absolutely crucial to build a memory map
 
 \subsection{68000 Memory Map}
 
-All chips are mapped at a static address in memory space. A table give a clear picture of how Control masterminds everything.
+All chips are mapped at a static address in memory space.
 
 % \begin{figure}[H]
 % {
@@ -346,11 +346,11 @@ All chips are mapped at a static address in memory space. A table give a clear p
 % \end{figure}
 
 \subsection{Operations}
+With its memory map in mind, the m68k operation is as follows.
+
 The m68k bootstraps and retrieves instructions from ROM. Variables and stack live in "Work RAM". Game configuration is retrieved from DIP switches. The game starts and polls inputs to generate video and audio. 
 
-For the video, the m68k describes an image to be displayed via the GFXRAM then instructs the graphic ASICS of where to find that data. 
-
-For the audio, the m68k issues simple commands to the Z-80 via two 1 byte latches using a protocol detailed later.
+For the video, the m68k describes an image to be displayed via the GFXRAM then instructs the graphic ASICs of where to find that data via their registers. For the audio, the m68k issues simple commands to the Z-80 via two 1 byte latches using a protocol detailed later.
   
 
 
@@ -372,9 +372,9 @@ Its internal architecture looks like a repeat of the control system where severa
 \subsection{Z-80}
 Released in July 1976 by Zilog, the Z-80 was, alike the m68k, an immensely successful CPU. 
 
-It was one of the most widely used processors in home computers, notably featured in the Sinclair ZX Spectrum and the Amstrad CPC. It was seen almost everywhere until the mid-80s, finding its way in military applications, musical equipment (Roland Jupiter-8), and coin operated arcade games including Pac-Man. 
+It was one of the most widely used processors in home computers, notably featured in the Sinclair ZX Spectrum and the Amstrad CPC. It also found its way in military applications, musical equipment (Roland Jupiter-8), and multiple coin operated arcade games including Pac-Man. 
 
-As an 8-bit era processor, the Z-80 features 8-bit data registers, 8-bit data bus, 16-bit address registers, and 16-bit address bus. In terms of processing power, it had become a particularly weak CPU by late 80s standards with 0.45 MIPS making it three times slower than the MC68000 in the control system. 
+As an 8-bit era processor, the Z-80 features 8-bit data registers, 8-bit data bus, 16-bit address registers, and 16-bit address bus. In terms of processing power, it had become a particularly weak CPU by the late 80s standards with 0.45 MIPS making it three times slower than the MC68000 in the control system. 
 
 The reason it was selected by Capcom (and by SNK for its Neo Geo) was not for its processing capacity but because it was an inexpensive CPU, well-known by programmers which would also integrate well with other 8-bit chips such as the ROM chips, RAM chips, and most importantly, the audio chips such as the MSM6295 and the YM2151.
 
@@ -384,29 +384,29 @@ The reason it was selected by Capcom (and by SNK for its Neo Geo) was not for it
 
 
 
-The chip comes to life thanks to its clock (\icode{/CLK}), power \icode{/+V5}, and ground \icode{/GND} pins.
+The chip comes to life thanks to its clock (\icode{CLK}), power \icode{+V5}, and ground \icode{GND} pins.
 
-The bus lines are dedicated \icode{/D0-/D15} for addresses and \icode{/A0-/A7} for data. For control, \icode{/RD} indicates read while \icode{/WR} indicates a write operation. \icode{/WAIT} is used to add waitstates. 
+The bus lines are dedicated \icode{D0-D15} for addresses and \icode{A0-A7} for data. For control, \icode{RD} indicates read while \icode{WR} indicates a write operation. \icode{WAIT} is used to add waitstates. 
 
-Although it is capable of relinquishing control of the bus via \icode{/BUSRQ} Request bus mastering,\icode{/BUSAK}, Acknowledge, \icode{/MREQ} Request to use bus, and IO bus \icode{IORQ}, the Z-80 completely own its bus and never shares it. 
+Although it is capable of relinquishing control of the bus via \icode{BUSRQ} Request bus mastering,\icode{BUSAK}, Acknowledge, \icode{MREQ} Request to use bus, and IO bus \icode{IORQ}, the Z-80 completely own its bus and never shares it. 
 
 In fact, the \icode{BUSRQ} and \icode{BUSAK} pins are not even connected.  Because it is isolated via latches, the Z-80's bus never suffers contention.
 
 
-Other pins are \icode{/INT} Interrupt line, \icode{/NMI} Non Maskable Interrupt, \icode{/RESET} Restart CPU, \icode{/HALT} Waiting for interrupt, \icode{/M1} Fetching next instruction.
+Other pins are \icode{INT} Interrupt line, \icode{NMI} Non Maskable Interrupt, \icode{RESET} Restart CPU, \icode{HALT} Waiting for interrupt, \icode{M1} Fetching next instruction.
 
 \begin{trivia}
- The Z-80 has a built-in timer to easily include DRAM on a motherboard. The \icode{/RFSH} pin (ReFreSH signal) tics at regular intervals for the memory refresh.
+ The Z-80 has a built-in timer to easily include DRAM on a motherboard. The \icode{RFSH} pin (ReFreSH signal) tics at regular intervals for the memory refresh.
 \end{trivia}
 
 \subsection{Z-80 "Work RAM" and ROM}
-Little RAM is needed by the Z-80 since it forwards request from the latches to the OKY6295 and feeds the YM2151 music notes. The RAM is a single 2Ki x 8-bit \icode{CXK5816SP-15L}. The ROM is a single 64Ki x 8-bit \icode{27C512}. It is large because it stores musics along the z80 instructions. 
+Little RAM is needed by the Z-80 since it forwards request from the latches to the OKY6295 and feeds the YM2151 music notes. A  single 2Ki x 8-bit \icode{CXK5816SP-15L} chip is used. The ROM is made of a 64Ki x 8-bit \icode{27C512} cip. It is large to store FM musics along the z80 instructions. 
 
 % Sound commands are forwarded as ID/channel/volume to the OKI6295. 
 
 % Music commands are a bit more involved since when a music ID is received the Z-80 needs to constantly retrieve notes from its ROM and feed them to the YM2151.
 
-These chips work alike those we have already studies with pins such as power, ground, addresses, data, control, and of course the crucial \icode{CE}. What is peculiar is that the Z-80 uses 16-bit address registers which grants 65,536 addresses. There is not enough address space for all registers, ROM, and RAM totaling 67 KiB.
+These chips work alike those the one already studies with pins such as power, ground, addresses, data, control, and of course the crucial \icode{CE}. What is peculiar is that the Z-80 uses 16-bit address registers which grants 65,536 addresses. There is not enough address space for all registers, ROM, and RAM totaling 67 KiB.
 
 The solution Capcom engineers used was to map only the portion of the ROM that contain instructions (32KiB) statically and to use a banking system to provide a 16 KiB "view" into the remaining 32KiB of the ROM where the music assets are stored. This is accomplished with a PAL (\icode{SOU1}) and we will see in the programming section how much of a pain it was for to developers.
 
@@ -445,46 +445,48 @@ Hopefully this awful bank switch control byte a programmer must juggle with to a
 \subsection{YM2151}
 Selecting the music chip was not a matter of shopping vendors but rather to pick one from Yamaha. Thanks to the licensing of Frequency Modulation (FM) patents from Stanford in 1975, the Japanese founder ruled the world of electronic music.
 
-Three architectures stood out in the early 90s. Among the OPL2 (YM3812) and the OPN2 (YM2612), the OPM (OPerator type M) YM2151 was selected for its versatility. 
+Three architectures stood out in the early 90s. Among the OPL2 3812 and the OPN2 2612, the OPM (OPerator type M) 2151 was selected for its versatility. 
 
 The YM2151 is able to play 8 channels (a.k.a voices) of audio without requiring any additional ROM or RAM. Each channel consists of four operators (a.k.a slots) which can be setup to produce either percussion or instruments sounds. The principle is to use simple wave forms to module each other in a Modulator/Carrier pair resulting in complex waveforms\cite{fmProgramming}.
 
 \img{waveforms.png}
 
-Other parameters can be applied to the output sound such as Attack/Decay/Sustain/Release rate. The huge advantage is the small amount of data required to store a melody since only notes of each instruments are needed. 
+Other parameters can be applied to the output such as Attack, Decay , Sustain, or Release Rate. The huge advantage of FM synthesis is the small amount of data required to store a melody since only the notes of each instruments and their tempo to be recorded. 
 
-FM synthesis is so efficient that the whole Sagat stage music (2mn6s, 10KiB) use fewer bytes than one "Tiger Uppercut"'s ADPCM sample (777ms, 12KiB).
+Yamaha's technology is so efficient that the whole Sagat stage music (2mn6s, 10KiB) use fewer bytes than one "Tiger Uppercut"'s ADPCM sample (777ms, 12KiB).
 
-Looking at the chip, we see previously discussed pins such as \icode{+5V}, \icode{GND}, and \icode{CS}. The \icode{CLK} is connected to the same oscillator as the Z-80 for a frequency of 3.58MHz. The \icode{D0-D7} address/data pins (multiplexed via \icode{A0}) fit exactly the Z80's 8-bit data bus with read (\icode{RD}) and write (\icode{WR}) control.
+Looking at the 2151, we see previously discussed pins such as \icode{+5V}, \icode{GND}, and \icode{CS}. The \icode{CLK} is connected to the same oscillator as the Z-80 for a frequency of 3.58MHz. The \icode{D0-D7} address/data pins (multiplexed via \icode{A0}) fit exactly the Z80's 8-bit data bus with read (\icode{RD}) and write (\icode{WR}) control.
 
-A remarkable pin is the \icode{IRQ} which allows the YM2151 to generate interrupt based on two internal counters. These will be crucial in the programming chapter.
+A pin in particular, the \icode{IRQ} which allows the YM2151 to generate interrupt based on internal counters, will be crucial in the latter chapters.
 
 \sdraw{0.5}{YM2151}
 
-The only drawback of this chip is that is features no DAC (Digital to Analog Converter). It generates a signal on the Serial Output (\icode{SO}). That is a problem since JAMMA expect an analog signal.
+The only drawback of this chip is that is features no DAC (Digital to Analog Converter). It generates a signal on the Serial Output (\icode{SO}). 
 
 \subsection{YM3012}
-The YM3012 input is directly connected to the YM2151 output. It is the tailor made DAC which, as it name indicates, converts the digital stream from the YM2151 to an analog signal that later mixed with the analog signal of the OKI6295.
+Because the JAMMA port expect an analog signal, Capcom connected a YM3012 input is connected to the YM2151 output. 
+
+The 3012 is the tailor made DAC which converts the digital stream from the YM2151 to an analog signal that is later mixed with the analog signal of the OKI6295.
 
 \subsection{MSM6295}
 For audio sample playback, Capcom spared no expenses and selected a chip capable of 4-bit ADPCM audio decompression over four channels, the MSM6295 (a.k.a OKI). 
 % capable chips by the past with the MSM5205 by OKI Semiconductor. For the CPS-1  they went with a steroids version,
 
-Despite running at only 1MHz the MSM6295 is a god sent to a game board designer. It does not need instructions since its function is fully hard-coded. Its address (\icode{A0-A15}) and data lines (\icode{D0-D7}) are directly connected to its own 256 KiB ROM, on a local bus where assets are stored. These make it a fully enclosed digitized sound system only communicated via its input lines (\icode{I0-I7}).A perfect match for the z80 data bus.
+Despite running at only 1MHz the MSM6295 is a god sent to a game board designer. It does not need instructions since its function is fully hard-coded. Its address (\icode{A0-A15}) and data (\icode{D0-D7}) lines are directly connected to its own 256 KiB ROM, on a local bus where assets are stored. These make it a fully enclosed digitized sound system only communicated via its input lines (\icode{I0-I7}), a perfect match for the z80 data bus, from which it receives commands.
 
-To work, the OKI only needs a sample ID [1-127], a channel [1-4], and a volume. Via a lookup table in ROM the sample offset is retrieved and playback starts with an analog signal generated on \icode{DA0}. 
+To get to work, the OKI only needs to receive a sample ID [1-127], a channel [1-4], and a volume. Via a lookup table in ROM the sample offset is retrieved and playback starts with an analog signal generated on \icode{DA0}. 
 
 \sdraw{0.75}{MSM6295}
 
-Up to four channels can be active simultaneously. Games don't need that many sound effects so two channels are reserved for sample while two are dedicated to embellish musics.
+Up to four channels can be active simultaneously. Since games don't need that many sound effects simultaneously, two channels are reserved for sample while two are dedicated to embellishing musics.
 
- ADPCM lossy compression is able to divides space consumption by three by converting 12-bit PCM samples into 4-bit nibbles. 
+ADPCM lossy compression is able to divides space consumption by three by converting 12-bit PCM samples into 4-bit nibbles. 
 
 
 \subsubsection{Making choices}
 If the choice of the Yamaha music chips left little ambiguity to the hardware designer, the MSM6295 was a different story.
 
-First off all, the sampling rate expected in ROM is directly correlated to the clock provided to the MSM6295. Second of all, the OKI can operate in two modes, a high quality (H) where the divisor is 132, and a low quality (L) where the divisor is 165.
+First off all, the sampling rate expected in ROM is directly correlated to the clock rate of the MSM6295. Second of all, the OKI can operate in two modes, a high quality (H) where the divisor is 132, and a low quality (L) where the divisor is 165.
 
 Clockable between [1MHz-5MHz] with two modes, the goals was to maximize quality while minimizing required storage. The table shows that the best quality (37kHz) only allowed to store 13 seconds of samples while the worse (6060Hz) gave 86 seconds.
 \begin{figure}[H]
@@ -520,12 +522,12 @@ Whether it is recorded or played, PCM (Pulse-code modulation) is a stream of val
 
 \nbdraw{speaker}
 
-The higher the sampling rate, the more often the diaphragm position can be adjusted. The higher the bit depth, the more accurately the current can position the diaphragm. With two PCM streams of values, stereo is achieved.
+The higher the sampling rate, the more often the diaphragm position can be adjusted. The higher the bit depth, the more accurately the diaphragm position can be set. Stereo is achieved by interleaving two PCM streams.
 
 Sound quality increases linearly with the data rate. Land-line phones typically use 8000Hz sampling rate with 8-bit depth mono consuming 8,000 bytes per second while a CD uses 16-bit samples at 44100Hz in stereo taking its data usage to 176,400 bytes per second.
 \pagebreak
 
-ADPCM is able to take 12-bit PCM sample and store then as 4-bit samples by encoding only the difference between PCM samples. Decompressing an ADPCM stream consist in adding a delta value to the last decompressed  sample, over and over again.
+ADPCM is able to take 12-bit PCM sample and compress then as 4-bit samples by encoding only the difference between PCM samples. Decompressing an ADPCM stream consist in adding a delta value to the last decompressed  sample, over and over again.
 
 The delta is encoded with a system of weighted offset called "step" which is accurate for small variation but coarser when deltas increase. 
 
@@ -564,7 +566,7 @@ Because the timing of operations is propagated deep into the GFX system, it is i
 At its core, a Cathode-Ray Tube (CRT) is a line drawing machine. It draws horizontal lines one after an other, from left to right and top to bottom. While is scans a line, three analog signals (one for each RGB colors) indicates the quantity of electrons to shot from three guns. The higher the signal, the more electrons are shot and the more vivid the color.
 
 
-On the way toward the panel, electrons are filtered through a shadow mask to make sure they hit the proper type of colored phosphor receptacles which are grouped by three in RGB "slots". The electron beam-slot is not a one to one relationship, as we will see the beam can be larger or smaller than a slot.
+On the way toward the panel, electrons are filtered through a shadow mask to make sure they hit the proper type of colored phosphor receptacles which are grouped by three in RGB "slots". The electron beam-slot is not a one to one relationship. As we will see the beam can be larger or smaller than a slot.
 
 % \begin{trivia}
 % Triads in CRT, Slots in TV.
@@ -631,7 +633,7 @@ It is barely noticeable but scanlines are not drawn straight. There is a slight 
 
 As long as VSYNC is issued at the same time as a HSYNC, the CRT lines are always on the same location on the screen.
 
-Let's look at what happen if VSYNC happens in the middle of the last line being draw.
+Let's look at what happen if VSYNC \circled{3} happens in the middle of the last line being draw (between HSYNC \circled{2} and \circled{4}).
 
 \nbdraw{i_scan}
 
@@ -645,7 +647,7 @@ Since this space is not used for another field, the resulting effect is black ho
 
 \img{sf2_4_3_interlaced.png}
 
-HSYNC, VSYNC, and color does not seem like a lot but they allow hardware designers a great deal of freedom. 
+HSYNC, VSYNC, and color signals don't seem like a lot but they allow hardware designers a great deal of freedom. 
 
 Besides interlacing wich had to be avoided, there are also decisions to make about how many lines to draw, how much horizontal resolution to use, and at what frequency should the screen be refreshed.
 
@@ -696,7 +698,7 @@ Going for 384x224 was an interesting decision from an aspect-ratio standing poin
 
 The result was that the CPS-1 did not have square pixels which was a huge problem for artists.  
 
-\begin{q}{Akiman\cite{akiman}}
+\begin{q}{Akiman, Street Fighter 2, Lead Artist\cite{akiman}}
 When I was working on Forgotten Worlds, I noticed the problem of aspect ratio. "The pixels are not square!" I told my boss.
 
 "Impossible, I ordered them to be square!" he replied and called hardware on the spot.
@@ -718,7 +720,7 @@ They chose the VSYNC to pulse at 55Hz. This gave them extra time between frames 
 \subsection{Colors}
 With a resolution and a refresh rate, the last characteristic of the video system to decide on was the color depth. 
 
-The CPS-1 uses 16 bits to encode colors with 4 bits per RGB components for a total of 12 bits allow 4,096 colors. 
+The CPS-1 uses 16 bits to encode colors with 4 bits per RGB components for a total of 12 bits allowing 4,096 colors. 
 
 
 \begin{figure}[H]
@@ -771,7 +773,7 @@ To generate the color signals, the CPS-1 uses a palette system storing colors vi
 
 \sdraw{0.45}{CXK5814P-35L} 
 
-Individually these are simple memory elements with pinouts explained earlier. Power \icode{+5V}, Ground \icode{GND}, Addresses \icode{A0-A10}, Data \icode{D0-D7}, Write (\icode{WE}), Read (\icode{OW}), and Chip Enabled (\icode{CE}).
+Individually these are simple memory elements with pinouts explained earlier, Power \icode{+5V}, Ground \icode{GND}, Addresses \icode{A0-A10}, Data \icode{D0-D7}, Write (\icode{WE}), Read (\icode{OW}), and Chip Enabled (\icode{CE}).
 
 What is uncanny is that the component connected to the address lines is not the one connected to the data lines.
  % Instead data is routed towards a DAC.
@@ -861,7 +863,7 @@ The graphic system is the most complicated to understand in the whole machine. I
 
 On one side, there is Control which requests an elaborated composition of backgrounds and sprites to appear on the screen. The description is much more verbose than a simple integer received by the Sound system to play a sample or a music. Communication happens by not only exposing the graphic registers, but also sharing access to a huge portion of "GFX RAM". Control's 68000 writes "draw commands" which the GFX system reads and executes.
 
-On the other side is the 8 MHz Video system which mercilessly demand a pixel color every 125ns. A color must be issued on the dot, no matter what. 
+On the other side is the 8 MHz Video system which mercilessly demand a pixel color every 125ns. The CRT cannons never wait and a color must be issued on the dot, no matter what. 
 
 In the middle is the GFXROM, a huge repository of up to 12MiB graphic assets. It has a finite latency and throughput which cannot satisfy the Video systems if it were to work on a per-pixel request/response.
 
@@ -911,7 +913,7 @@ A background is described in terms of "tiles" which arrangement is described in 
 
 A naive design would work at the same speed as the video system (8MHz). For each pixel (125ns) the GFXRAM would be read to know what tile to display. Then a palette index would be retrieved from the GFXROM. Finally that index would be sent to the palette system where the color would be converted by the video DAC. That would not work.
 
-Even thought the machine uses the fastest type of SRAM, the response time of these component does not permit that many roundtrip. The overhead is too important to complete the operation in just 125ns.
+Even thought the machine uses the fastest type of SRAM, the response time of these component does not permit that many roundtrip. The overhead is too big to complete the operation within just 125ns.
 
 The solution is to reduce the number of memory accesses by reading more than necessary and caching the result. To this effect, the CPS-A features 256 bytes to cache information retrieved from the GFXRAM during HBLANK.
 
@@ -933,7 +935,7 @@ The grid alignment works well with streaming because of the predictable screen l
  \caption*{In Street Fighter 2, a PAL \icode{STF29} decode tile ids into memory offsets.}%
  \end{figure}%
 
-Notice how the GFXROM data is retrieved four bytes at a time thanks to a 32-bit data bus. 
+Notice how the GFXROM data is retrieved four bytes at a time thanks to a 32-bit data bus. This conveniently accounts for eight pen values.f
 
 The CPS-A does not use GFXROM addresses to stream data to the CPS-B. Instead it uses identifier code to stream lines of pen values. 
 % Keep in mind that at any time, the CPS-B not only receives data from the GFXROM but also stream pen values to the video system. 
@@ -1025,7 +1027,7 @@ Alike the tilemaps, each starfield has a dedicated 32 palettes.
 The CPS-1 layer system does not use a painter algorithm where pixels are written over and over in a framebuffer. The CPS-B receives a stream of all layers and based on the priority and the potential transparent pen value (\icode{0xF}) select the one to send to the video system.
 \end{trivia}
 
-The STARs layers also proved useful when designers needed a full black background. Instead of using a SCROLL and repeating rows of full-black tiles, they only had to use a STAR and request no stars for it. Ironically, players starred at a beautiful dark night sky and even knew about it.
+The STARs layers also proved useful when designers needed a full black background. Instead of using a SCROLL and repeating rows of black tiles, they only had to use a STAR and request no stars for it. Ironically, players starred at a beautiful dark night sky and never knew about it.
 
 \fcolorbox{black}{red}{\vphantom{W}\hphantom{H}} SCROLL1, \fcolorbox{black}{green}{\vphantom{W}\hphantom{H}} SCROLL2, \fcolorbox{black}{blue}{\vphantom{W}\hphantom{H}} SCROLL3, \fcolorbox{black}{mycyan}{\vphantom{W}\hphantom{H}} STAR1, \fcolorbox{black}{myyellow}{\vphantom{W}\hphantom{H}} STAR2, \fcolorbox{black}{black}{\vphantom{W}\hphantom{H}} OBJ.
 
@@ -1085,7 +1087,7 @@ This capability is commonly known as "rowscroll" and is implemented via a table 
 This feature does not stresses the cache system in the CPS-A because rows are scrolled predictably.
 
 
-The starfield and rowscroll features are good example of how difficult it is to design hardware. Doing it well consist in accurately predicting what will be/ useful and what won't. 
+The starfield and rowscroll features are good example of how difficult it is to design hardware. Doing it well consist in accurately predicting what will be useful and what won't. 
 
 \vfill
 \begin{figure}[!b]
@@ -1097,9 +1099,9 @@ The starfield and rowscroll features are good example of how difficult it is to 
 \subsubsection{Choosing features}
 
 
-If starfields were heavily used in inauguration title, "Forgotten Worlds", and prominently featured in the second one , "Strider", rowscrowl on the other side saw no usage for nearly two years. 
+If starfields were heavily used in the inauguration title, "Forgotten Worlds", and prominently featured in the second one , "Strider", rowscrowl on the other side saw no usage for nearly two years. 
 
-Relegated to implementing flames effects in "Magic Sword" and hazy background in "Carrier Air Wing", rowscrolling was rarely used in the five titles\cite{mame_cps1_video} it was featured in.
+Relegated to implementing flames effects in "Magic Sword" and hazy background in "Carrier Air Wing", rowscrolling was barely used in the five titles\cite{mame_cps1_video} it was featured in.
 
 Ultimately, the balance of these two features found itself reversed when rowscroll was used to implement a beautiful per-line floor parallax in Street Fighter 2, massively contributing to the graphic appeal of the game.
 
@@ -1215,7 +1217,7 @@ Lastly, there is the problem of tilemap and sprites rendering desynchronized. Wh
  
 
 
-The issue is visible on the next drawing. On frame 1, the scrolls of frame 1 are displayed. On frame 2, the scrolls of frame 2 are displayed but along with the sprite from frame 1. On frame3, the scrolls of frame 3 are displayed but along with the sprite from frame 2. 
+The issue is visible on the next drawing. On frame 1, the scrolls of frame 1 are displayed. On frame 2, the scrolls of frame 2 are displayed but along with the spritebuffer from frame 1. On frame3, the scrolls of frame 3 are displayed but along with the spritebuffer from frame 2. 
 
 \nbdraw{latency}
 
@@ -1286,7 +1288,7 @@ The sprite system has a hard limit of 256 tiles. This is a simple constraint dic
 
 Because OBJ tiles are the most versatile (they can be placed independently and anywhere on the screen), it was tempting to use them often.
 
-Street Fighter II designers pushed the machine on the edge of its limits by using OBJ tiles for the opponents, arena decoration, GUI, and to improve the background parallax further.
+Street Fighter II designers pushed the machine on the edge of its limits by using OBJ tiles for the opponents, arena decoration, GUI, and to embellish the background parallax effect.
 
 When Ken faces Ryu in Japan, nearly 200 tiles are used. This high number became an issue in the sequel "Street Fighter 2 Champion Edition" which allowed mirror opponnets to face each other on any location.
 \vfill
@@ -1623,21 +1625,21 @@ Bootlegs don't only hurt us; they're also a nuisance for our customers who think
 \end{q}
 
 
-There were good reasons to be optimistic. Capcom engineers had crammed their platform with protections so pirates would have to circumvent both hardware and software safeguards.
+There were good reasons to be optimistic. Capcom engineers had crammed their platform with hardware and software protections to prevent two types of piracy.
 
 
-Hardware pirates produced bootlegs by physically copying Capcom PCBs. By dumping the ROMs content from a legitimate board, buying the same off-the-shelf CPUs and TTLs components (Transistor–transistor Logic) they would sell the same game at a discounted rate.
+Hardware piracy meant producing bootlegs by physically copying Capcom PCBs. By dumping the ROMs content from a legitimate board, buying the same off-the-shelf CPUs and TTLs components (Transistor–transistor Logic) pirates would sell the same game  for cheaper.
 
-The CPS-1 answer was to use custom ASICs that would prevent pirate from physically replicating a PCB. Capcom had Ricoh exclusively fabricate the two custom ASICs, the CPS-A and CPS-B. To protect against decapping, metal grids were layered on top of the ASICs\cite{arcadeHackerCPS1Rev}. 
+The CPS-1 answer was to use custom components that would not be readily available for purchase, thus preventing counterfeiters from replicating a PCB. Capcom had Ricoh exclusively fabricate the two custom ASICs, the CPS-A and CPS-B. To protect against decapping, metal grids were layered on top of the ASICs\cite{arcadeHackerCPS1Rev}. 
 
 
-Software piracy involved operators purchasing an authentic game from Capcom to get the PCBs but then copying ROMs and get newer games for free. 
+Software piracy involved operators purchasing an authentic game to get the PCBs but then copying ROMs and get newer games for free. 
 
-To prevent software piracy Capcom elected to build as set of tools at the hardware level that could be used by the software to check the authenticity of the board it was running on at runtime.
+To prevent software piracy Capcom designed a hardware system that could be actively used by the game runtime to verify its legitimacy but also added "passive" mechanisms that allowed the hardware to check the software was also legitimate.
 
 \begin{figure}[H]
 \nbimg{copy_protection.png}
-\caption*{Capcom's disclaimer when a CPS-1 boots.}
+\caption*{Capcom's disclaimer when a CPS-1 game boots.}
 \end{figure}
 
 \subsection{The ever changing CPS-B}
@@ -1651,39 +1653,39 @@ To this effect, twenty-five versions the CPS-B exist\cite{mame_cps1_video} somet
 \begin{tabularx}{\textwidth}{Xrrr} 
   \textbf{Game Name} & \textbf{Revision} & \textbf{ CPS-B }  & \textbf{ Year } \\               
   \toprule    
-\href{}{Forgotten Worlds} & & CPS-B-01 & 1988 \\ 
-\href{}{Lost Worlds} & & CPS-B-01 & 1988 \\ 
-\href{}{Ghouls'n Ghosts} & & CPS-B-01 & 1988 \\ 
+\href{}{Forgotten Worlds} & & \texttt{CPS-B-01} & 1988 \\ 
+\href{}{Lost Worlds} & & \texttt{CPS-B-01} & 1988 \\ 
+\href{}{Ghouls'n Ghosts} & & \texttt{CPS-B-01} & 1988 \\ 
   \toprule    
-\href{}{Strider} & & CPS-B-01 & 1989 \\ 
-\href{}{Dynasty Wars} & & CPS-B-02 & 1989 \\ 
-\href{}{Willow} & & CPS-B-03 & 1989 \\ 
-\href{}{U.N Squadron} & & CPS-B-11   & 1989 \\ 
+\href{}{Strider} & & \texttt{CPS-B-01} & 1989 \\ 
+\href{}{Dynasty Wars} & & \texttt{CPS-B-02} & 1989 \\ 
+\href{}{Willow} & & \texttt{CPS-B-03} & 1989 \\ 
+\href{}{U.N Squadron} & & \texttt{CPS-B-11}   & 1989 \\ 
 
-\href{}{Final Fight } & Original& CPS-B-04 & 1989 \\ %ffight
-\href{}{Final Fight } & 900112& CPS-B-01 & 1989 \\ %ffightua
-\href{}{Final Fight } & 900424& CPS-B-03 & 1989 \\ %ffightub
-\href{}{Final Fight } & 900613& CPS-B-05 & 1989 \\ %ffightuc
+\href{}{Final Fight } & \texttt{Original} & \texttt{CPS-B-04} & 1989 \\ %ffight
+\href{}{Final Fight } & \texttt{900112}& \texttt{CPS-B-01} & 1989 \\ %ffightua
+\href{}{Final Fight } & \texttt{900424}& \texttt{CPS-B-03} & 1989 \\ %ffightub
+\href{}{Final Fight } & \texttt{900613}& \texttt{CPS-B-05} & 1989 \\ %ffightuc
 
   \toprule    
-\href{}{1941: Counter Attack} & & CPS-B-05 &  1990 \\ 
-\href{}{Mercs} & &  CPS-B-12 & 1990 \\ 
-\href{}{Mega Twins} & & CPS-B-14 & 1990 \\ 
-\href{}{Magic Sword} & & CPS-B-13 & 1990 \\ 
-\href{}{Carrier Air Wing} & & CPS-B-16  & 1990 \\ 
-\href{}{Nemo} & & CPS-B-15 &  1990 \\ 
+\href{}{1941: Counter Attack} & & \texttt{CPS-B-05} &  1990 \\ 
+\href{}{Mercs} & &  \texttt{CPS-B-12} & 1990 \\ 
+\href{}{Mega Twins} & & \texttt{CPS-B-14} & 1990 \\ 
+\href{}{Magic Sword} & & \texttt{CPS-B-13} & 1990 \\ 
+\href{}{Carrier Air Wing} & & \texttt{CPS-B-16}  & 1990 \\ 
+\href{}{Nemo} & & \texttt{CPS-B-15} &  1990 \\ 
   \toprule    
-\href{}{Street Fighter II: The World Warrior }&  Original& CPS-B-11 & 1991 \\  %sf2
-\href{}{Street Fighter II: The World Warrior } & 910204& CPS-B-17 & 1991 \\  %sf2ea
-\href{}{Street Fighter II: The World Warrior } & 910318& CPS-B-05 & 1991 \\  %sf2ed
-\href{}{Street Fighter II: The World Warrior } & 910228& CPS-B-18 & 1991 \\  %sf2ee
-\href{}{Street Fighter II: The World Warrior } & 910411& CPS-B-15 & 1991 \\  %sf2ef
+\href{}{Street Fighter II: The World Warrior }&  \texttt{Original}& \texttt{CPS-B-1}1 & 1991 \\  %sf2
+\href{}{Street Fighter II: The World Warrior } & \texttt{910204}& \texttt{CPS-B-17} & 1991 \\  %sf2ea
+\href{}{Street Fighter II: The World Warrior } & \texttt{910318}& \texttt{CPS-B-05} & 1991 \\  %sf2ed
+\href{}{Street Fighter II: The World Warrior } & \texttt{910228}& \texttt{CPS-B-18} & 1991 \\  %sf2ee
+\href{}{Street Fighter II: The World Warrior } & \texttt{910411}& \texttt{CPS-B-15} & 1991 \\  %sf2ef
 \toprule    
 \end{tabularx}%
 }\caption*{A selection of the many Capcom CPS-1 games revisions.}
 \end{figure}
 
-Originally, the CPS-B chips changed frequently. The table above only contains a few of the many PCB revisions, the full list give a good idea of how successful a game was. Street Fighter 2 was revised 34 times, while Final Fight received 13 "refreshes".
+Originally, the CPS-B chips changed frequently. The table above only contains a few of the many PCB revisions. The full list give a good idea of how successful a game was. Street Fighter 2 was revised 34 times, while Final Fight received 13 "refreshes".
 
 With the released of "Three Wonders", Capcom singled out their chips via configuration micro-code so all CPS-B ASICs onward were CPS-B v21.
 
@@ -1692,23 +1694,23 @@ With the released of "Three Wonders", Capcom singled out their chips via configu
 \begin{tabularx}{\textwidth}{Xrr} 
   \textbf{Game Name} & \textbf{ CPS-B }  & \textbf{ Year } \\               
   \toprule    
-\href{}{Three Wonders} &  CPS-B-21 & 1991 \\ 
-\href{}{The King of Dragons} & CPS-B-21 & 1991 \\ 
-\href{}{Captain Commando} &  CPS-B-21 & 1991 \\ 
-\href{}{Knights of the Round} & CPS-B-21 & 1991 \\ 
+\href{}{Three Wonders} &  \texttt{CPS-B-21} & 1991 \\ 
+\href{}{The King of Dragons} &  \texttt{CPS-B-21} &1991 \\ 
+\href{}{Captain Commando} &  \texttt{CPS-B-21} & 1991 \\ 
+\href{}{Knights of the Round} &  \texttt{CPS-B-21} &1991 \\ 
   \toprule    
-\href{}{Street Fighter II: Champion Edition} & CPS-B-21 & 1992 \\ 
-\href{}{Adventure Quiz: Capcom World 2} & CPS-B-21 & 1992 \\ 
-\href{}{Varth: Operation Thunderstorm} & CPS-B-21 & 1992 \\ 
-\href{}{Quiz \& Dragons: Capcom Quiz Game} & CPS-B-21 & 1992 \\ 
-\href{}{Street Fighter II' Turbo: Hyper Fighting} &  CPS-B-21 & 1992 \\ 
+\href{}{Street Fighter II: Champion Edition} &  \texttt{CPS-B-21} &1992 \\ 
+\href{}{Adventure Quiz: Capcom World 2} &  \texttt{CPS-B-21} &1992 \\ 
+\href{}{Varth: Operation Thunderstorm} &  \texttt{CPS-B-21} &1992 \\ 
+\href{}{Quiz \& Dragons: Capcom Quiz Game} &  \texttt{CPS-B-21} &1992 \\ 
+\href{}{Street Fighter II' Turbo: Hyper Fighting} &  \texttt{CPS-B-21} & 1992 \\ 
   \toprule    
-\href{}{Ken Sei Mogura: Street Fighter II} & CPS-B-21 & 1993 \\ 
-\href{}{Pnickies} & CPS-B-21 & 1993 \\ 
+\href{}{Ken Sei Mogura: Street Fighter II} &  \texttt{CPS-B-21} &1993 \\ 
+\href{}{Pnickies} &  \texttt{CPS-B-21} &1993 \\ 
   \toprule    
-\href{}{Quiz Tonosama no Yabo 2} &  CPS-B-21 & 1995 \\ 
-\href{}{Pang! 3} & CPS-B-21  & 1995 \\ 
-Mega Man the Power Battle & CPS-B-21  & 1995 \\
+\href{}{Quiz Tonosama no Yabo 2} &  \texttt{CPS-B-21} & 1995 \\ 
+\href{}{Pang! 3} & \texttt{CPS-B-21}  & 1995 \\ 
+Mega Man the Power Battle & \texttt{CPS-B-21}  & 1995 \\
 
 \toprule    
 \end{tabularx}%
@@ -1717,7 +1719,7 @@ Mega Man the Power Battle & CPS-B-21  & 1995 \\
 
 
 \subsection{CPS-ID check}
-The simplest copy protection available is the chip ID check. By polling a register, the m68k prompts the CPS-B to eturn its version number. A simple version matches let the code know if its belongs on the right PCB. 
+The simplest copy protection available is the chip ID check. By polling a register, the m68k prompts the CPS-B to return its version number. A simple version matches let the code know if its belongs to the right PCB. 
 
 To make instructions patching of the 68000 ROMs more difficult, calls to verify the chip id are placed in several location in the code. That did not prevent people from trying anyway\cite{strider_conversion}!
 
@@ -1730,7 +1732,7 @@ Additionally, the meaning of each bit inside a register can changes.
 
 
 \subsection{Unexpected behavior detection}
-Protection described so far involved an active software and a passive hardware. There is yet another level of protection where the hardware is active by expecting the software to behave properly. If the CPS-B sees the wrong value written to the wrong register, it sets and lock all palettes to black. 
+Protection described so far involved an active software and a passive hardware. There is yet another level of protection where the hardware is active by expecting the software to behave properly. If the CPS-B sees that incoherent values are written to the wrong register, it sets and lock all palettes to black. 
 
 The game still runs in the background and the audio is also behaving properly but the screen doesn't display anything. The only way to recover is to reboot the machine\cite{petitSecurity}.
 
@@ -1750,7 +1752,7 @@ If a tile is out of range, it is replaced by transparent pixels.
 \end{q}
 
 \begin{trivia}
-This is why transparent is encoded \icode{0xf}. Pull-up resistors are placed on the board data line. If not data signal is detected, \icode{0xf} is automatically "inserted".
+Pull-up resistors on the board along the GFX ROM data lines detect if a pen value matches a tileID. If not data is detected, \icode{0xF} is automatically "inserted", resulting in a transparent value.
 \end{trivia}
 
 \subsection{Multiplication check}
@@ -1763,20 +1765,20 @@ To solve this issue, Capcom resolved to stop making different silicon in favor o
 
 "Street Fighter 2: The World Warriors" did not get the treatment but starting with "Three Wonders" the CPS-B v21 featured a small internal 18 bytes RAM. This was enough for the chip to retain a configuration dictating its behavior\cite{petitSecurity}.
 
-The configuration RAM was designed to survive when the cabinet was turned off thanks to a battery located  on the soldering side and connected to the CPS-B. The chip was even designed to survive having no battery for a few minutes to allow battery replacement.
+The configuration RAM was designed to survive when the cabinet was turned off thanks to a battery located  on the soldering side of Board C and connected to the CPS-B. The chip was even designed to survive having no battery for a few minutes to allow battery replacement.
 
 \begin{trivia}
-These battery worked remarkably well since thirty years later you can still find some of these board in working condition.
+These battery worked remarkably well since thirty years later you can still find some of these boards in working condition.
 \end{trivia}
 
 \subsection{Suicide batteries}
 The infamous "suicide" nickname came from the effect of losing power. A CPS-B v21 without power lose its configuration and resets all its registers to "default" values that none of the games use. Capcom offered a battery replacement to resurrect boards "C" which had committed sepuku but eventually discontinued the service. 
 
-As the reader will have guessed, passionate fan found a way to bring these games back to life.
+As the reader will have guessed, passionate fans found a way to bring these games back to life.
 
-The first method is called "phoenix". It is a tedious process which consist in dumping a game ROM and patch the CPS-B register access to use the "default value"\cite{csp1_phoenix}. The insane people doing this are so good at it that they even change the splash screen of the game to feature a "Phoenix Edition" icon.
+The first method is called "phoenix". It is a tedious process which consist in dumping a game ROM and patch the m68k instructions to replace CPS-B registers accesses to use the "default values"\cite{csp1_phoenix}. The people phoenixing CPS-1 board are so good at it that they even change the splash screen of the game to feature a "Phoenix Edition" icon.
 
-The second method is even more impressive since it involved circuit surgery by re-uploading the configuration into the CPB-B, essentially de-suiciding them\cite{arcadeHackerCPS1Desuicide}.
+The second method is even more impressive since it involves circuit surgery by re-uploading the configuration into the CPB-B, essentially de-suiciding them\cite{arcadeHackerCPS1Desuicide}.
 
 \nbimg{phoenix_screen.png}
 
@@ -1787,18 +1789,31 @@ The second method is even more impressive since it involved circuit surgery by r
 \section{Epilogue}
 From 1988 to 1995, Capcom used the CPS-1 to release thirty+ titles. These seven years saw the birth of three of Capcom most loved franchise, Ghouls’n Ghosts, Final Fight, and Street Fighter 2.
 
-To Capcom, the CPS-1 was a gamble that paid off hundredfold, allowing them to become a video-game household. To players, the games were a series of beautifully crafted titles which provided not only entertainment but also unforgettable memories with a quality so high that some of these titles are still played today. To engineers, it is simply a beautiful machine.
+To Capcom, the CPS-1 was a gamble that paid off hundredfold, allowing them to become a video-game household. 
 
-Everybody won. Even those who where not supposed to. The one aspect upon which the CPS-1 could be criticized is its ability to impair piracy. But it would be unfair to fault Capcom engineers on this point.
+To players, the games were a series of beautifully crafted titles which provided entertainment and empty pockets. The unforgettable experience was such that passionate people wrote emulators and even in some extreme cases, books to keep these memories alive. 
 
- The CPS-1 not only featured a high level of security, it kept on adding more. But a copy-protection system only exists to deter reasonably motivated attackers. Capcom's games were so loved and so successful that they became the object of an unprecedented level of scrutiny over an extended period of time.
+To counterfeiters, the CP System was a problem. Capcom games were popular and generated a substantial amount of money. The demand for boards skyrocketed with the advent of Street Fighter II. 
 
-Of all the security measures, it would have been fair to assume the ASICs would be a rock. Astonishingly, CPS-A and CPS-B replicas were manufactured under the name "COMCO"\cite{arcadeHackerCPS1}. It is unknown if an insider leaked the schematics or if someone made it their life mission to reverse-engineer these chips but it did happen.
+Capcom engineers had designed security measures able to discourage attackers with a reasonable amount of determination. Perhaps the one flaw the CPS-1 can be faulted with is that it did not provision for the high level of success it enjoyed.
 
-As crack appeared in its shield, Capcom did not give up on protecting its tiles. As it had proved itself able to evolve and compete in the arcades, it embraced the challenge to always remain one step ahead of bootlegers.
+The money in the balance armed the counterfeiters with an unreasonable amount of determination. As players lined up to spend time and beat Street Fighter 2, so did the pirates to defeat the copy-protection systems. Eventually they were able to figure out. 
+
+
+Of all the security measures, it would have been fair to assume the custom ASICs would be an impenetrable fortress. Astonishingly, CPS-A and CPS-B replicas were manufactured under the name "COMCO"\cite{arcadeHackerCPS1}. It is unknown if an insider leaked the schematics or if someone made it their life mission to reverse-engineer these chips but it did happen.
+
+As cracks appeared in its shield, Capcom did not give up on protecting its tiles. As it had proved itself able to evolve and compete in the arcades, it embraced the challenge to always remain one step ahead of bootlegers.
 
 \subsection{CPS-1.5 Kabuki}
 In 1992, Capcom released the CP System Dash (a.k.a CPS-1.5). Fully encased in a gray plastic box, it introduced a fourth satellite "Qboard" PCB to handle playback of positional three-dimensional Qsound audio. In total, five games would be produced until late 1993.
+
+
+
+The CPS 1.5 is noteworthy for its improved copy-protection where the audio instructions are stored in encrypted ROM. The audio CPU is a special Z-80 dubbed Kabuki\cite{arcadeHackerKabuki} able to decrypt instructions on the fly.
+
+The encryption scheme is symmetric with the private key being stored in the Z-80. It is not burned in the silicon but, alike the CPS-1 configuration, stored via RAM. To keep that key alive, pin 28 is re-purposed from "DRAM refresh" (the sound system uses SRAM anyway) to providing power via a second "suicide battery". 
+
+
 
 \begin{figure}[H]
 { \setlength{\tabcolsep}{3.0pt}
@@ -1816,10 +1831,6 @@ In 1992, Capcom released the CP System Dash (a.k.a CPS-1.5). Fully encased in a 
 }\caption*{Capcom CPS-1.5 based arcades games.}
 \end{figure}
 
-The CPS 1.5 is noteworthy for its improved copy-protection where the audio instructions are stored in encrypted ROM. The audio CPU is a special Z-80 dubbed Kabuki\cite{arcadeHackerKabuki} able to decrypt instructions on the fly.
-
-The encryption scheme is symmetric with the private key being stored in the Z-80. It is not burned in the silicon but, alike the CPS-1 configuration, stored via RAM. To keep that key alive, pin 28 is re-purposed from "DRAM refresh" (the sound system uses SRAM) to provide power via a second "suicide battery". 
-
 \begin{trivia}
 The protection provided by CPS-1.5 held remarkably well over the years. It was only broken in the early 2000s\cite{ame_kabuki}.
 \end{trivia}
@@ -1832,7 +1843,7 @@ From 1993 to 2003, forty-two games would be published, the last one being "Hyper
 
 In terms of copy-protection, Capcom once again cranked up security. Not only the platform features the Kabuki audio instruction encryption, it also features encrypted game logic. 
 
-Thanks to a custom CPU, ABI compatible with the 68000, instructions retrieved from the ROM can be decrypted on the fly. Alike other systems, the private key is stored in a yet another battery-powered RAM.
+Thanks to a custom CPU, ABI compatible with the 68000, instructions retrieved from the ROM can be decrypted on the fly. Alike other systems, the private key is stored in yet another battery-powered RAM.
 
 The only part of the machine that remain non-encrypted is the OKI ROM containing audio samples,. The GFXROM data was not encrypted but the content was shuffled.
 
