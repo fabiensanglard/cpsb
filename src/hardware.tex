@@ -444,7 +444,7 @@ Three architectures stood out in the early 90s. Among the OPL2 3812 and the OPN2
 
 The YM2151 is able to play 8 channels (a.k.a voices) of audio without requiring any additional ROM or RAM. Each channel consists of four operators (a.k.a slots) which can be setup to produce either percussion or instruments sounds. The principle is to use simple wave forms to module each other in a Modulator/Carrier pair resulting in complex waveforms\cite{fmProgramming}.
 
-\img{waveforms.png}
+\nbdraw{waveforms}
 
 Other parameters can be applied to the output such as Attack, Decay , Sustain, or Release Rate. The huge advantage of FM synthesis is the small amount of data required to store a melody since only the notes of each instruments and their tempo to be recorded. 
 
@@ -534,7 +534,7 @@ In its initial state, the step size is equal to 16 which means bit three is +/-1
 
 The decompressor constantly monitor how much of the step size was used. The step size is adjusted after each sample via a  predetermined transition table indexed via the magnitude value. 
 
-\lstinputlisting[language=C]{src/code/adpcm_transition.c}
+\lstinputlisting[style=CStyle]{src/code/adpcm_transition.c}
 
 
 ADPCM is aggressive in increasing its step size (\icode{2, 4, 6, 8}) when high magnitude are used) and conservative in decreasing it (\icode{-1, -1, -1, -1}).
@@ -572,7 +572,7 @@ On the way toward the panel, electrons are filtered through a shadow mask to mak
 
 
 \begin{figure}[H]
-\img{shadow_mask.png}
+\draw{shadow_mask}
 \caption*{Electon gun, mask, and slots}
 \end{figure}
 
