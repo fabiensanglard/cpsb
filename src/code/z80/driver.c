@@ -1,5 +1,5 @@
 int8_t intCounter = 0;
-int8_t  latch;
+int8_t latch;
 
 
 void interrupt () {

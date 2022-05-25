@@ -301,12 +301,7 @@ To place one pair after another in memory space, the \icode{CE} (Chip Enabled, s
 
 Here, the first four out PAL pins must be programmed as follows.
 
-\begin{code}
-0 = !(A16  | A17 | A18 | A19 | A20 | A21 | A22 | A23)  
-1 = !(A16  | A17 | A18 | A19 | A20 | A21 | A22 | A23)  
-2 = A16 & ! (A17 | A18 | A19 | A20 | A21 | A22 | A23)  
-3 = A16 & ! (A17 | A18 | A19 | A20 | A21 | A22 | A23)  
-\end{code}
+\lstinputlisting[style=CStyle]{src/code/pal.c}
 
 The first pair of chips is mapped to addresses \icode{0x000000} while the second pair is mapped to \icode{0x40000}. With the same logic, two more pairs of \icode{27C010} are mapped at \icode{0x80000} and \icode{0xc0000} for a total of 1 MiB ROM.
 

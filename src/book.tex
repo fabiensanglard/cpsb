@@ -142,10 +142,10 @@
 % To enable figures at the bottom of page
 \usepackage{dblfloatfix}
 
-\definecolor{code_bg_color}{HTML}{CCCCCC}
+\definecolor{bg_color}{HTML}{EEEEEE}
 \usepackage{listings}
 \lstset{ 
-  backgroundcolor=\color{code_bg_color},
+  backgroundcolor=\color{bg_color},
   breaklines=false,
    frame=single,
    basicstyle=\small\ttfamily,
@@ -154,18 +154,65 @@
    showstringspaces=false,
    aboveskip=12pt,
    belowskip=0pt,
-   moredelim=**[is][\color{red}]{@r}{@r},
-   moredelim=**[is][\color{green}]{@g}{@g},
-   moredelim=**[is][\color{blue}]{@b}{@b},
-   moredelim=**[is][\textbf]{@h}{@h},
 }
 
-\lstdefinelanguage{z80}{
-    morekeywords={call, ld, or, jr,ldr, str,ldir},
-    sensitive=false, % keywords are not case-sensitive
-    morecomment=[l]{;}, % l is for line comment
- %   morestring=[b]" % defines that strings are enclosed in double quotes
-}%
+\definecolor{mGreen}{rgb}{0,0.6,0}
+\definecolor{mGray}{rgb}{0.5,0.5,0.5}
+\definecolor{keyword_color}{rgb}{0.00,0,0.82}
+
+\lstdefinestyle{CStyle}{
+    backgroundcolor=\color{bg_color},   
+    commentstyle=\color{mGreen},
+    keywordstyle=\color{keyword_color},
+    numberstyle=\tiny\color{mGray},
+    stringstyle=\color{mGreen},
+    breakatwhitespace=false,         
+    breaklines=false,                 
+    captionpos=b,                    
+    keepspaces=true,                                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=1,
+    language=C,
+    morekeywords={int8_t, int16_t, int32_t, uint8_t, __at}
+}
+
+\lstdefinestyle{BashStyle}{
+    backgroundcolor=\color{bg_color},   
+    commentstyle=\color{mGreen},
+    keywordstyle=\color{keyword_color},
+    numberstyle=\tiny\color{mGray},
+    stringstyle=\color{mGreen},
+    breakatwhitespace=false,         
+    breaklines=false,                 
+    captionpos=b,                    
+    keepspaces=true,                                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=1,
+    language=C,
+    morekeywords={cd, git, ccps}
+}
+
+\lstdefinestyle{Z80Style}{
+    backgroundcolor=\color{bg_color},   
+    commentstyle=\color{mGreen},
+    keywordstyle=\color{keyword_color},
+    numberstyle=\tiny\color{mGray},
+    stringstyle=\color{mGreen},
+    breakatwhitespace=false,         
+    breaklines=false,                 
+    captionpos=b,                    
+    keepspaces=true,                                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=1,
+    language=C,
+    morekeywords={call, ld, or, jr,ldr, str,ldir}
+}
 
 % KANJIS!
 \usepackage{CJKutf8}
@@ -173,7 +220,6 @@
 % Inline code
 \usepackage{xcolor}
 \definecolor{code_bg_color}{HTML}{CCCCCC}
-% \newcommand*{\icode}[1]{\setlength{\fboxsep}{1.0pt}\setlength{\fboxrule}{0.0pt}\fcolorbox{black}{code_bg_color}{\textcolor{black}{\vphantom{g}\vphantom{h}\texttt{#1}}}}
 
 \usepackage{tcolorbox}
 \newtcbox{\entoure}[1][code_bg_color]{on line,

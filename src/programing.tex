@@ -28,7 +28,7 @@ Ultimately these tools were combined into a single build system called \icode{cc
 
 Even if only to check what obscure compiler flags must be used, it is freely available, open source, and a few command lines away.
 
-\lstinputlisting[language=Bash]{src/code/clone_ccps.sh}
+\lstinputlisting[style=BashStyle]{src/code/clone_ccps.sh}
 
 
 % Along the way must be decided of communication protocols for each interfaces used by each system to communicate. Namely the GFX RAM where the control system talks with the gfx system and the two 1-byte latches where control send commands to the audio system.
@@ -46,7 +46,7 @@ Without libraries, frameworks, dynamic linker, syscalls, virtual memory, a loade
 
 Bootstrapping involves simple things like setting the stack pointer and the instruction pointer of a CPU. But it also involves harder tasks like setting up interrupts and more importantly preparing the program to run before calling its \icode{main} function. A innocent six lines C program offers a glimpse into what is involved.
 
-\lstinputlisting[language=C]{src/code/variablesDeclaration.c}
+\lstinputlisting[style=CStyle]{src/code/variablesDeclaration.c}
 
 After compilation and linking, this program will result into a binary of raw instructions (no container like ELF or PE) \icode{prog.rom}. Burned on a ROM, is is mapped somewhere in the CPU address space.
 
