@@ -6,7 +6,7 @@ Since the graphic pipeline of the CPS-1 is hard-coded in the silicon of the CPS-
 \caption*{The GFX System components}
 \end{figure}
 
-This leaves the GFXROM to assemble. Conveniently, all assets use the same pixel format where four bytes encode eight pen values. However it would be an oversimplification to think that slicing PNG into tiles and placing them anywhere in the ROM is enough.
+The only task is to convert graphic assets into GFXROM format. Conveniently, all assets use the same pixel format where four bytes encode eight pen values. However it would be an oversimplification to think that slicing PNG into tiles and placing them anywhere in the ROM is enough.
 
 The major constraint to consider is that GFXROM have "hard-coded regions" where OBJ, STAR1, STAR2, SCR1, SCR2, and SCR3 must reside. If a tile is not where it should, the draw command is simply ignored.
 
@@ -21,7 +21,7 @@ A PAL programmed for Forgotten Worlds board, the \icode{LW621}, is more complex 
 All tiles are stored continuously in memory, using groups of four bytes encoding eight pens. The dimension of a tile varies depending on the layers. OBJ and SCR2 uses the same 16x16 tiles which mean their tiles are 16*16 / 2 = 128 bytes. For the fine tuned SCR1 which uses 8x8, each tile takes 32 bytes. Finally the larger SCR3 uses 512 bytes for each of its 32x32 tiles.
 
 \section{GFX Layout}
-The EPROMs are organized in groups of four chips and serialized. On a board like Street Fighter, we find three groups of four. Inside each group, chips are interleaved every two bytes.
+The EPROMs are organized in groups of four chips and serialized. On a board like Street Fighter II, we find three groups of four. Inside each group, chips are interleaved every two bytes.
 
 \nbdraw{gfx_interleave}
 
@@ -80,7 +80,7 @@ The Dhalsim sheet sits at offset \icode{0x3300} in the GFXROM. It is a near perf
 
 Ryu's sheet \icode{0x4500} allows to guess even more about the production process. 
 
-Large coherent sprites show that at the beginning of the production process multiple sheet were allocated on a per-character basis. Tile were layout and kept together as much as possible to facilitate visual inspection.
+Large coherent sprites show that at the beginning of the production process multiple sheet were allocated on a per-character basis. Tile were layed out and kept together as much as possible to facilitate visual inspection.
 
 However, as the project progressed, we can see that the team scrambled for tile. They scrapped the bottom of the barrel and started to allocate space on a per-tile basic, sometimes spreading a character pose across multiple sheets like in Dhalsim sheet where can be found portions of Blanka.
 
@@ -97,9 +97,9 @@ With no scanners available, digitalization was done manually by looking at the p
 
 
 
-The tool used, TCE (Tiny Character Editor), ran on a SMC-70. Sony's machine running on a 4.028 MHz Z-80 with 65KiB had high resolution of 320x200 in 16 colors and no mouse.
+The tool used, TCE (Tiny Character Editor), ran on a SMC-70. Sony's machine featuring a z80 running at 4MHz with 64KiB RAM had high resolution of 320x200 in 16 colors and...no mouse!
 
-\begin{q}{akiman\cite{ar20160404}}
+\begin{q}{Akiman\cite{ar20160404}}
   As everything was in hexadecimal we used the 0-F keys and the arrows to make the sprites. There was this one guy who made a complete racket mashing away on his keyboard. He used to do overtime and didn't even sleep, so we'd all have no choice but to stay awake and keep working as well.
 \end{q}
 
@@ -119,7 +119,7 @@ The tool used, TCE (Tiny Character Editor), ran on a SMC-70. Sony's machine runn
 \subsection{Saving tiles}
 Artists used all the trick in the book and even invented new one to save tiles in the sheets. 
 
-In Street Fighter 2, there was only enough GFXROM for eleven challengers. Ken is a patchwork and a palette swap on top of Ryu tiles base. It cost only 98, 304 bytes to add. 
+In Street Fighter 2, there was only enough GFXROM for eleven challengers. Ken is a patchwork and a palette swap on top of Ryu tiles base. It "weights" only 98,304 bytes. 
 
 A remarkable achivement compared to characters such as Zanghief (622,592 bytes), Honda (491,520 bytes) or Ryu (442, 368 bytes). 
 
@@ -187,7 +187,7 @@ Moreover, Sagat's left leg is missing. It is reconstructed at runtime using an h
 
 There was a hierarchy in the artists working on graphic assets. 
 
-\begin{q}{akiman\cite{akiman2003}}Planners at the top. Junior artists work on backgrounds, while more senior get to work on sprites.
+\begin{q}{Akiman\cite{akiman2003}}Planners at the top. Junior artists work on backgrounds, while more senior get to work on sprites.
 \end{q}
 
 As layered as they where, operations where not set in stone and employees could climb the ladder quickly. Akiman was hired on "Dyn Side Arms" as a SCROLL artist. Two years later, he was a Planner on Forgotten Worlds and went on to work on Final Fight and Street Fighter 2.
@@ -198,12 +198,17 @@ As layered as they where, operations where not set in stone and employees could 
 % \end{figure}
 
 \begin{trivia}
-The role of each person is clearly established. Try to checkout credits on \url{mobygames.com}. You will find OBJects designers and SCRoll designers there.
+Checking \url{mobygames.com} "game credits" section confirms that specialties via titles such as \textbf{OBJ}ects designers and \textbf{SCR}oll designers.
 \end{trivia}
+
+% \begin{trivia}
+Out of the team of 40 working on Street Fighter II, 20 were artists working on character designs, faces and backgrounds reporting to Akiman\cite{sf2_oral_history}.
+% \end{trivia}
+
 
 
 \subsubsection{Poaching and Work Ethic}
-Retaining talent was a priority. As seen on credit screen of Street Fighter (previous figure), artists were only credited by their nicknames.
+Retaining talent was a priority. As seen on credit screen of Street Fighter II (see previous figure). Artists were only credited by their nicknames.
 
 Despite its precaution, Capcom lost numerous employees to SNK over the years. Among them was Takashi Nishiyama who made Street Fighter 1 and then went on to direct Fatal Fury' The King Of Fighters\cite{YoshikiOkamotoTakashiNishiyama}.
  
@@ -237,9 +242,9 @@ Preventing attrition did not mean let employee work at their leisure. A strong w
 \subsection{Inspiration}
 For Street Fighter II, artists inspiration came from various outlets. 
 
-Manga such as "Yasunori Katō" helped to give birth to Dictator while Tao from "Harmagedon: Genma Wars" was part of the genesis of Chun-Li. 
+Mangas such as "Yasunori Katō" helped to give birth to Dictator while Tao from "Harmagedon: Genma Wars" was part of the genesis of Chun-Li. 
 
-Boxer. Ryu, Ken, Sagat, and Zangiev were inspired by real life athletes, respectively Mike Tyson, Mas Oyama, Joe Lewis, Sagat Petchyindee, and Victor Zangiev Zhanghief.  find its origin in , an  animation
+Boxer. Ryu, Ken, Sagat, and Zangiev were inspired by real life athletes, respectively Mike Tyson, Mas Oyama, Joe Lewis, Sagat Petchyindee, and Victor Zangiev Zhanghief.
 
 \begin{trivia}
 Originally called M. Tyson, the boxer was renamed to "Balrog" for the US release, out of lawsuit concerns. 
@@ -306,10 +311,12 @@ To allow sprite draw calls, the build system must allocate images depending on t
 
 % On the contrary, a shape does not have to follow any constraint.
 
-\begin{trivia}
+% \begin{trivia}
 Capcom games use almost exclusively shapes but the paper sheet system mandated to maintain some visual coherency so humans could keep tracks. Modern tools don't have this problem. 
 
 The Honda shape on the sheet looks like mashed potatoes but using automatic allocation much more powerful system.
-\end{trivia}
+
+By looking at the sheet from later titles, it was inferred that Capcom abandonned the sheet system with the advent of the CPS-2. Likely using a fully computerized toochain devoid of paper and scissors, sheets have no spacial coherency, and they look like mashed potatoes.
+% \end{trivia}
 
 

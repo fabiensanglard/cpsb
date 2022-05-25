@@ -6,35 +6,35 @@ The control system is the simplest ROM to build since it involves only compiling
 \caption*{The control system components}
 \end{figure}
 
-If the latch toward the Sound system are small registers, we will see that the GFXRAM, the interface to the GFX System is bigger both in breadth (it features 64 registers) and depth (the API is non-trivial).
+While the latch toward the Sound system is a small API surface, the GFX API is huge. The interface to the Grapic System is bigger both in breadth (it features 64 registers) and depth (the expected GFXRAM data layout is non-trivial).
 
 Luckily, the 68000 is supported by the  GNU Compiler Collection (GCC). It features a much more powerful linker script system than \icode{sdcc} which helps considerably to solve the memory mapping requirements.
 
 \nbdraw{build_graph_ctrl}
 
 
-Nothing particularly difficult in the build graph. GCC is responsible for the entire pipeline with \icode{gcc} compiling C files to obj, \icode{as} assembling S files to obj, and \icode{ld} linking it all together. 
+Nothing is particularly difficult to understand in this build graph. GCC suite is responsible for the entire pipeline with \icode{gcc} compiling C files to obj, \icode{as} assembling S files to obj, and \icode{ld} linking it all together. 
 
 At the end of the process, the logical 68000 ROM is split and interleaved in chip sized ROMs according to what was described in the hardware chapter.
 
- The build graph on the next figure shows that the issues of bootrapping is solved like on the Z-80 with a small assembler programmer \icode{crt0.s}.
+ Alike for the z80, bootrapping is solved with a small assembler programm named \icode{crt0.s}.
 
 \section{Bootstrapping the 68000}
 A 68000 does not have a set booting address. Instead, it consults a 64 32-bit integer array called the "vector table". Located at \icode{0x000000}, this is where the CPU find the values to initialize its registers such as the stack pointer (offset \icode{0}) and instruction pointer (offset \icode{1}).
 
 \lstinputlisting[language={[Motorola68k]Assembler}]{src/code/68000/crt0.s}
 
-All other slots except one point to a no-nop routine.
+All other slots except for one (offset \icode{26}) point to a no-nop routine.
 
 
 
 
 \section{Auto-Interrupt}
-Alike the Z-80, the 68000 has multiple interrupt modes. In its most complex form, IPL0, IPL1, and IPL2 encode a level of interrupt and the interrupt ID is retrieved via an external interrupt controller. This would be over-kill for the talks at hand.
+The 68000 has multiple interrupt modes. In its most complex form, IPL0, IPL1, and IPL2 encode a level of interrupt and the interrupt ID is retrieved via an external interrupt controller. This would be over-kill for the talks at hand.
 
-A simpler mode is called auto-vector. Here there are not interrupt level. The IPL lines encode an interrupt ID directly that is looked up in the "vector table" starting at offset 24.
+A simpler mode, auto-vector, makes the CPU jump directely based on the three IPL lines state. Three lines gives a value [0,7] which is used to looked up the "vector table" starting at offset 24.
 
-Since IPL1 is connected to the CPS-A INT lines, the VSYnc handler function is placed at offset \icode{26}.
+Since IPL1 is connected to the CPS-A INT lines, the VSYnc handler function is placed at offset \icode{24 + 2 = 26}.
 
 \lstinputlisting[language={[Motorola68k]Assembler}]{src/code/68000/crt1.s}
 
@@ -78,27 +78,27 @@ As a reminded, here is the desired memory mapping.
 
 \lstinputlisting[]{src/code/68000/cps1-2.lk}
 
-In the second part of the script, sections are signed to a memory region by name.
+In the second part of the script, sections are assigned to a memory region by name.
 
 \lstinputlisting[language=C]{src/code/68000/memory_map.c}
 
 \begin{trivia}
-Notice how powerful the linker script can be compred to \icode{sdcc}. A directive, \icode{OUTPUT\_FORMAT (" binary ")} allows to directly output raw binary without using container like \icode{elf}. This avoid the need for an extra conversion using \icode{objcopy}.
+Notice how powerful the linker script is compared to \icode{sdcc}. A directive, \icode{OUTPUT\_FORMAT (" binary ")} allows to directly output raw binary without using container like \icode{elf}. This avoid the extra conversion step from elf to binary using \icode{objcopy}.
 \end{trivia}
 
 \section{Initializing variables}
-The linker script created markers and requeted section \icode{.data} to be written to \icode{rom} (VMA) but relocate symbols as if they were in \icode{.ram} (LMA).
+The linker script created markers and requested section \icode{.data} to be written to \icode{rom} (VMA) but relocate symbols as if they were in \icode{.ram} (LMA).
 
-With these elements, zeroing the bss and populating .data with inital values is just a few lines of C.
+With these elements, zeroing the bss and populating .data with initial values is just a few lines of C.
 
 \lstinputlisting[language=C]{src/code/68000/init_vars.c}
 
 \section{Verifying RAM}
-Capcom games bootstrap process go beyond bringing up the CPUs. They also verify the health of hardware components. These screens are rarely, if ever, seen by players since they are visible only once when the cabinet is turned on. During normal operations, that would be once a day.
+Capcom games bootstrap does more than bringing up the CPUs. They also verify the health of hardware components. These screens are rarely, if ever, seen by players since they are visible only once when the cabinet is turned on. During normal operations, that would be once a day.
 
 All CPS-1 games display a slightly different set of text. However all of them end up checking the m68k RAM and the GFXRAM. 
 
-These tests were an important since they allowed the cabinet operator to diagnose some of the issues and avoided a costly return to factory of the whole unit.
+Faulty RAM could create issues further down the pipeline. A cabinet would then expose faults that could be misattributed to other components. By allowing to quickly rules out a whole class of errors, the startup tests sped up debugging and repairing boards.
 
 
 
@@ -115,12 +115,11 @@ These tests were an important since they allowed the cabinet operator to diagnos
 The technique used is simple but has its limitation. For all byte in each areas of the RAM and GFXRAM, try to write a value, then try to read it back. If they differ, the GFXRAM is faulty and an error message is displayed. 
 
 \begin{trivia}
-No way to checksum the GFXROM or anything on the Sound System side. The latch system is one way and there would be no way for the Z-80 to surface problems anyway.
+No way to checksum the GFXROM or the Sound System. The GFXROM is not mapped and the latch system is one way, making it impossible for the Z-80 to surface problems.
 \end{trivia}
 
-The set of tests seem to vary, even in two titles made by a same team consecutively. The GFXRAM part of the RAM hosting the Palettes is not tested in Street Fighter 2 despite having been released after Final Fight.
+These tests look that something that would be standard and common to every games. Surprisingly they are all different and even differ between two titles made by a same team consecutively. The GFXRAM part of the RAM hosting the Palettes is not tested in Street Fighter 2 despite having been released after Final Fight.
 
-TODO: More research.
 
 \vfill
 \begin{figure}[H]
@@ -129,26 +128,31 @@ TODO: More research.
 \end{figure}
 
 
-\pagebreak
+
+
+
 
 \section{Ruling them all}
 \label{this}
-\pageref{this} pages in, peeling layers one after one another and we have finally reached the heart of the game. Function \icode{main} is where developer trigger their game engine to convert inputs into visual ans audio ouputs.
+This is now \pageref{this} page in the "Book of CP-System". With each chapter peeling away a layer of complexity, we have finally reached the heart of the game. 
 
-The architecture is much alike the Z-80 sound system where two "threads" run in lockstep. Function \icode{VSync} is awakened roughly every 16ms. Its job is to read inputs and save them locally, read latch buffer and write them to the latch, and more importantly, flip the GFXRAM descriptor. 
+The function \icode{main} is where developers will have their game engine convert player inputs into visual and audio outputs.
+
+The architecture is much alike the Z-80 sound system where two "threads" run in lockstep. Function \icode{VSync} is awakened roughly every 16ms. Its job is to read inputs and save them locally, read latch buffer and write them to the latch, and more importantly, flip the GFXRAM doube buffered descriptors. 
 
 \begin{trivia}
 The \icode{frameCounter} variable not only allow to pace the main thread so a new frame is only hosted every 16ms instead of rendering as fast as possible, it is also useful too keep track of wall-time to render animation and game logic properly.
 \end{trivia}
 
-Most importantly, flip the double GFXRAM buffer.
 
 \subsection{Commanding sound}
-By now it will be abondantly clear that requesting a sound or a music playback is only about writing to a latch and forget about it. Special care has to occur if the engine may request multiple sound during a same frame. If this were to happen the value in the latch could be overwritten before the Z-80 picked it up.
+By now it will be abundantly clear that requesting a sound or a music playback is only about writing to a latch and forget about it. 
+
+Special care has to occur if the engine may request multiple sound during a same frame. If this were to happen the value in the latch could be overwritten before the Z-80 picked it up.
 
 The solution is to implement a system of queue where only one value is requested by frame.
 
-\pagebreak
+However for the simplication and brievty requirement of this book, no queue is used in the following code.
 
 \lstinputlisting[language=C]{src/code/68000/main.c} 
 
@@ -157,19 +161,19 @@ The solution is to implement a system of queue where only one value is requested
 Besides joystick and buttons, the engine must recover inputs such as the dip settings, P1Start, P2Start, and most importantly detect coins being inserted.
 
 \begin{trivia}
-Arcades operator could configure the difficulty of a game via DIP switches. In a game like Street Fighter 2, eight configuration go from the easiest where 1 coin grants 6 credits to the hardest where four coins grant a single credit. Moreover, operator could disable "Continue coins"\cite{sf2manual}.
+Arcades operator could configure the difficulty of a game via DIP switches. In a game like Street Fighter 2, eight configuration go from the easiest where 1 coin grants 6 credits to the hardest where four coins grant a single credit. There is even a "Free Play" mode which no amount of begging could convince operators to enable\cite{sf2manual}.
 \end{trivia}
 
 The three DIP switches are called A, B, and C. As featured on page \pageref{fig:boarda} each DIP has 8 switches responsible for flipping a bit in a byte. Recovering the configuration is as simple as reading a byte from the memory map.
 
 \begin{trivia}
-In Street Fighter 2, DIP B is used to configure the difficulty level of the game ranging from 0 to 8 (4=default). Based on this value A.I selects bytecode\cite{sf2aiengine} script.
+In Street Fighter 2, DIP B is used to configure the difficulty level of the game ranging from 0 to 8 (4=default). Based on this value A.I selects "better" bytecode\cite{sf2aiengine} script. The A.I still cheat in all of them by skipping "charging"\cite{sf2aiengine}.
 \end{trivia}
 
 
 
  % \href{https://github.com/originalgrego/FinalFightAE-Source/blob/master/docs/known_addresses.txt}
- \begin{figure}[H]
+ % \begin{figure}[H]
 \begin{tabularx}{\textwidth}{Xllr}
   \toprule    
   \textbf{Label } & \textbf{ Map Zone }  & \textbf{Address } & \textbf{Mask } \\               
@@ -206,23 +210,25 @@ In Street Fighter 2, DIP B is used to configure the difficulty level of the game
     \texttt{DIP2} & JAMMAd &  \texttt{0x80001E}    &  \texttt{0bXXXXXXXX}    \\      
   \toprule   
 \end{tabularx}
-\caption*{Input bit layouts}
-\end{figure}
+% \caption*{Input bit layouts}
+% \end{figure}  
 
 \subsection{Drawing on screen}
-Requesting tiles to be drawn consiste in first descring the layout in GFXRAM, then setting the palettes, and finally writing to the CPS-A and CPS-B registers to tell them at what offset the data is.
+Requesting tiles to be drawn consist in first describing the layout in GFXRAM, then setting the palettes, and finally writing to the CPS-A and CPS-B registers to tell them at what offset the data is.
 
 \subsubsection{Double buffering}
-When an image is rendered, neither the data in the GFXRAM nor the registers values can be changed. Otherwise it would result in inconsistent images. Changes should only occur during the VBLANKing which is signaled to the 68000 in \icode{VSync} function.
+When a frame is rasterized, neither the data in the GFXRAM nor the registers values can be changed. Otherwise it would result in inconsistent images. Changes should only occur during the VBLANKing which is signaled to the 68000 via the \icode{VSync} function.
 
-A proper way is to us a double buffer in the GFXRAM where the currenly used data is not touched while the next one is being prepared. On \icode{VSync} the CPS-A and CPS-B registers are written to point them to the next frame data.
+The proper way to avoid visual artifacts is to us a double buffer in the GFXRAM where the currently used data is not written until the next VSYNC. Meanwhile the next frame is being prepared in the other buffer. 
+
+On \icode{VSync} the CPS-A and CPS-B registers are written to point them to the next frame data.
 
 \subsubsection{CPS-A and CPS-B registers}
 The CPS-A registers are always at the same offset in the map and always use the same layout. 
 
 Depending on the board being targeted, registers of the CPS-B will move and their internal layout will change. A convenient way to deal with this is to use MACROs and have the build system define all these values.
 
-Note that all registers are 16-bit wide to accomodate the 68000 writing to them.
+Note that all registers are 16-bit wide to accommodate the 68000 writing to them. As shown in the summary table, a register offset is always located on an even address.
 
  \begin{figure}[H]
 \begin{tabularx}{\textwidth}{llX}
@@ -252,11 +258,11 @@ Note that all registers are 16-bit wide to accomodate the 68000 writing to them.
 \caption*{CPS-A registers}
 \end{figure}
 
-The bases tell the CPS-A where it should expected data in GFXRAM. Registers are 16-bit but address must be 24-bit so values are \icode{>> 8}. 
+The bases tell the CPS-A where it should expected data in GFXRAM. Registers are 16-bit but address must be 24-bit so values are \icode{<< 8}. 
 
 Scroll offsets are exactly that with coordinates origin in the upper left.
 
-Rowscrolling of SRC1 layer is achieved by two registers. Rowscroll base points to an array of 16-bit values. Rowscroll offset is an offset inside the base. This is elaborated on in a later section.
+Rowscrolling of SRC1 layer is achieved by two registers. Rowscroll base points to an array of 16-bit values. Rowscroll offset is an offset inside the base. This is elaborated on in the rowscroll section.
 
 
 \paragraph{Video Control} This register enable/disable misc attributes.
@@ -304,7 +310,7 @@ Note that STARs are always in the back and in order STAR1, STAR2.
 The board studied in this book used CPS-B 11 which does not support STAR1 and STAR2. That feature was not used much besides in Forgotten Words (\icode{CPS-B 01}) and Strider (also \icode{CPS-B 01}).
 
 \begin{trivia}
-Starfields were used so little that the bytecode mapper was removed altogether from the CPS-2 systems.
+Starfields were used so little that the bytecode mapper was removed altogether from the CPS-2 while the ASICs retains the circuits.
 \end{trivia}
 
 Layer control register is also used to define the order in which OBJ, SCR1, SCR2, and SCR3 should be drawn.
@@ -372,11 +378,11 @@ All SCROLLs have different size and tile size. But they all features 64x64 (4,09
 \caption*{SCROLLS tile size and dimensions}
 \end{figure}
 
-\begin{trivia}
-When the CPS-B they were working with supported the trick, Capcom developer rendered a full back screen without using a single scroll or OBJs. They simply enabled the STAR1 layer without requesting any stars. 
+% \begin{trivia}
+As alluded in the hardware chapter,a  full back screen can be rendered without using a single scroll or OBJs.
 
-This mean that players who looked at these screens actually started a deep dark night sky.
-\end{trivia}
+Enabling the STAR1 layer without requesting any stars via the bytecode does the trick. It only works if the CPS-B on the board support STARfield (few do). Street Fighter II Champion Edition, a game using no STARfield, features a STARfield capable CPS-B vXX which is used in the popup logo scene.
+% \end{trivia}
 
 \pagebreak
 
@@ -418,7 +424,7 @@ A convenient trick is to allocate a rowscroll array of size 1024 (one entry for 
 Note that rowscroll offsets are unsigned and always indicate an amount to move toward the left side of the screen. To offset toward the right, a developer can take advantage of the wrap around nature of the SCROLL layers and use \icode{decalValue = 1024 - desiredRightOffsetValue}.
 
 \begin{trivia}
-Honda's SCROLL2 features hidden message. It looks like designer left contruction block writings as Upper left, (\begin{CJK}{UTF8}{min}左上\end{CJK}), Upper middle (\begin{CJK}{UTF8}{min}中上\end{CJK}), and Upper right (\begin{CJK}{UTF8}{min}右上\end{CJK}) kanji can be spotted.
+Honda's SCROLL2 features hidden message. It looks like the designers left construction block writings as Upper left, (\begin{CJK}{UTF8}{min}左上\end{CJK}), Upper middle (\begin{CJK}{UTF8}{min}中上\end{CJK}), and Upper right (\begin{CJK}{UTF8}{min}右上\end{CJK}) kanji can be spotted.
 \end{trivia}
 
 
@@ -445,12 +451,12 @@ Honda's SCROLL2 features hidden message. It looks like designer left contruction
 
 
 \subsection{Back then...}
-First hand account of how the CPS-1 control system was programmed has ever transpired . However one machine is widely rumored to have been used. A rumor seemingly confirmed by the nickname of Hiroaki Kondo, a Capcom composer/sound programmer often credited as "X68K". A rumor further reinforced by the components found inside the machine, which closely match the CPS-1.
+For many years, the machine used to program the CPS-1 was unknown. Only the nickname of Hiroaki Kondo, a Capcom composer/sound programmer often credited as "X68K" rumored a computer manufactured by Sharp. In 2018 however,  Akiman confirmed\cite{x68000usage1}\cite{x68000usage2} that the CPS-1 SDK, named CAT-1, was launched during the making of Street Fighter II and ran on a SHARP X68000.
 
-The X68000 is a machine largely unknown outside of Japan. But in that country it is known as the "god computer". 
+The series is largely unknown outside of Japan. But in that country it is known as the "god computer". 
 Released in 1987 by SHARP, the X68000 was as beautiful and powerful as it was expensive (¥369,000, roughly \$3000 in 1987 dollars, equivalent to around \$6000 in 2012 dollars).
 
-The hardware in these workstations was mind-blowing at the time. A bet that was especially risky considering the machine has next to no software at launch since it used its DOS-like OS named Human68k.
+Despite mind-blowing hardware specifications, SHARP machine was a risky bet considering it had no software at launch because it used its own text-based OS named Human68k.
 
 \vfill
 
@@ -467,7 +473,7 @@ The hardware in these workstations was mind-blowing at the time. A bet that was 
 
 
 
-Besides its gorgeous "Manhattan" case, the machine packed a surprising amount of "fun" horse power since it features a graphic system supporting 128 hardware 16x16 tiles.
+Besides its gorgeous "Manhattan" case, the machine packed a surprising amount of horse power. Its graphic system supporting 128 hardware 16x16 tiles was so impressive that it surpassed dedicated arcade hardware capabilities at the time.
 
  \begin{figure}[H]
 \begin{tabularx}{\textwidth}{lX}
@@ -480,7 +486,7 @@ RAM & 1MiB \\
 Video  & Up to 65,536 colors, up to 1024×1024 resolution \\
 Graphics & 1 sprite plane, 2 bg planes, 4 bitmap planes\\
 Sprite engine & 128 tiles total. 32 tiles per line\\
-Background engine & 2 in 256x256 \\
+% Background engine & 2 in 256x256 \\
 VRAM & 1056 KiB - Sprite storage: 256 tiles\\
 Sound chip & Oki MSM6258 (1 channel)  \\ 
 Music chip & Yamaha YM2151 (8 channels)  \\ 
@@ -490,30 +496,30 @@ Storage & Dual 5 1/4 floppy readers  \\
 \caption*{X68000 components}
 \end{figure}
 
-The similarities with the CPS-1 are troubling. It is almost like writing a software emulation layer would make it a perfect CPS-1 development machine. However if we look into the details, things are different.
+The similarities with the CPS-1 are troubling. It seems like a software emulation layer would make it a perfect CPS-1 development machine. However if we look into the details, things are different.
 
 For one thing, the sound chip is an OKI MSM6258. Although it works alike the MSM6296 with ADPCM, it features only one channel which severely impacted how rich the sound effects and music could be.
 
 Most importantly, the Sprite system has a weakness. The number of tile displayable was half the capacity of the CPS-1 (128 instead of 256) but that was an issue easily circumvented thanks to techniques such as Sprite doubler by Koichi Yoshida\cite{x68000spritedoubler} relying on raster effect.
 
-The real issue with the sprite system was the small amount of VRAM allowing to store only 256 tiles. A pity compared to the CPS-1 GFXROM allowing thousands. In these conditions, the limitation was how to manage loading time from the floppy discs which access was quite slow and made a game unplayable is used during gameplay.
+The real issue with the sprite system was the small amount of VRAM allowing to store only 256 tiles. A pity compared to the CPS-1 GFXROM allowing thousands. In these conditions, the limitation was how to manage loading time from the floppy discs which access was quite slow and made a game unplayable if used during gameplay.
 
 \pagebreak
 
 These limitation did not deter Capcom from releasing five games for the platform (Ghouls 'n Ghosts, Final Fight, SF2CE, Super Street Fighter II, and Strider). 
 
-The hardware is so powerful that developers were able, for some games, to do "perfect port" which were visually identical to the arcade version. Capcom's Ghouls 'n Ghosts and Street Fighter 2 are considered perfect whereas Final Fight had to lower the number of enemies on screen.
+The hardware is so powerful that developers were able, for some games, to release "perfect port" which were visually identical to the arcade version. Capcom's Ghouls 'n Ghosts and Street Fighter 2 are considered perfect whereas Final Fight had to lower the number of enemies on screen.
 
- SHARP keps on improving the series, adding more RAM (up to 4MiB), HDD (up to 80 MiB). Peripheral manufacturers embraced the computer with extensions cards covering absolutely anything one can thing off. 
+ SHARP kept on improving the series, adding more RAM (up to 4MiB) and HDD (up to 80 MiB). Peripheral manufacturers embraced the computer with extensions cards covering absolutely anything one can thing off. 
 
- SHARP bet was a success. People did write software for their platform. The X68000 series was immensely successful, even if accounting only for games which saw 823 releases between 1988 and 1999.
+ In the end, SHARP bet was a phenomenal success. Users loved the platform dearly and publishers released, accounting for games only, no less than 823 titles between 1988 and 1999.
 
 \nbimg{68000_series.png}
 
-These machine left such an impression on users that, as of 2022, more than thirty years after the last X68000 came out of the factory, functioning one easily fetch \$2,600 on the secondary market.
+These machine left such an impression on users that, as of 2022, more than thirty years after the last X68000 came out of the factory, functioning models easily fetch \$2,600 on the secondary market.
 
 \img{SharpX68000ad.jpg}
 
-On the left, the commitment to aesthetic expressed itself down to the pages of SHARP catalog. 
+The commitment to an aesthetic rooted in minimalism and simplicity expressed itself down to the pages of SHARP catalogs. 
 
-SHARP's design and commitment to excellent with its X68000 line of product belongs in the workstation hall of fame next to Steve Jobs' NeXT.
+The beauty of the X68000 line of products is second to none, perhaps even surpassing 1989 NeXT Computers.

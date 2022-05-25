@@ -22,11 +22,11 @@ An even more complicated graph emerge from the music \icode{.vmg} files. The mus
 To complicate things even further, each of the four ROM mentioned must use different word size and interleaving across chips containing it.
 
 \subsection{CCPS: The CPS-1 Build System}
-As this chapter was being written, several tools were authored to validate understanding of the hardware. A peculiar set of tools is the correct way to drive the Z-80 and the 68000 compiler. 
+As this book was being written, several tools were authored to validate the understanding of the hardware.
 
-Ultimately these tools were combined into a single build system called \icode{ccps}. The rest of this book occasionally refers to \icode{ccps} but try to keep the abstraction level high so reader can build their own build system. 
+Ultimately these tools were combined into a single build system called \icode{ccps}. The rest of this book occasionally refers to \icode{ccps} but tries to keep the abstraction level high so reader can build their own build system if they desire so. 
 
-Even if only to check what obscure compiler flags should be used, it is freely available, open source, and a few command lines away.
+Even if only to check what obscure compiler flags must be used, it is freely available, open source, and a few command lines away.
 
 \lstinputlisting[language=Bash]{src/code/clone_ccps.sh}
 
@@ -39,12 +39,12 @@ For all their CPS-1 titles, Capcom developers used z80/m68k assembly. They did n
 
 Even with the improvements of compilers capabilities, output compactness and optimization performances, a developer willing to take a CPS-1 to the next level will undoubtedly use assembly.
 
-Since the goal of this book is to explains how things works, it uses C for its greater readability and wider knowledge base among programmer. A little bit of assembly is used but only to bootstrap the CPUs.
+Since the goal of this book is to explains how things works, it uses C for its greater readability and wider knowledge base among programmers. A little bit of assembly is used but only to bootstrap the CPUs.
 	
 \section{CPUs Bootstrapping}
 Without libraries, frameworks, dynamic linker, syscalls, virtual memory, a loader, or even an operating system, development happens down to the metal. 
 
-Bootstrapping involves simple things like setting the stack pointer and the instruction pointer. But it also involves harder tasks like setting up interrupts and more importantly preparing the program to run before calling its \icode{main} function. A innocent six lines C program offers a glimpse into what is involved.
+Bootstrapping involves simple things like setting the stack pointer and the instruction pointer of a CPU. But it also involves harder tasks like setting up interrupts and more importantly preparing the program to run before calling its \icode{main} function. A innocent six lines C program offers a glimpse into what is involved.
 
 \lstinputlisting[language=C]{src/code/variablesDeclaration.c}
 
@@ -61,13 +61,13 @@ Another easy symbols are the const \icode{vc} and \icode{vd}. Since they are rea
 
 Symbol \icode{va} is interesting because it is readable but also writable. The linker will have assigned a RAM address. Since it is unitialized, it point to whatever is there in the RAM when it started.
 
-Symbol \icode{va} is even more interesting. Like \icode{va} is is readable and writable but its initial value should be \icode{0}. The linker can make \icode{va} point to RAM and even group zero-initialized variable together but setting the value to zero cannot be done. This is something the bootstrap will have to somehow take care off.
+Symbol \icode{vb} is even more interesting. Like \icode{va} is is readable and writable but unlike \icode{va} it is initialized  to value \icode{0}. The linker can make \icode{va} point to RAM and even group zero-initialized variable together but setting the value to zero cannot be done. This is something the bootstrap will have to somehow take care off.
 
 Finally we come to variable \icode{ve}. Since it is writable, the linker will have used the next available address in RAM after \icode{va}. But how can the linker initialize that location to value \icode{5} since it can only write to file \icode{pro.rom} which is not mapped there? 
 
 The answer is that it cannot. That  task, also called ""copy-down" " is another think the bootstrap will have to take care of.
 
-Since C cannot be used, both bootstraps (one for Z80 and one for M68k) will be written using assembly and bundled in a file named \icode{crt0}.
+Since it involves very low operations, both bootstraps (one for z80 and one for m68k) are written using assembly and bundled in a file named \icode{crt0.s}.
 
 
 
@@ -82,11 +82,11 @@ There are many chip in the machine that need to talk to each others. In the hier
 That is eight communication lines, but the dotted one on the drawing are not programable which lower the task to five APIs.
 % Most of these interfaces are registers where values are written and read. To arbitrate these access, the CPU buses are leveraged.
 
-\subsection{M68000-CPSA, M68000-CPSB} Communication occurs over the CPS-A registers. Additionally draw commands are written by the 68000 to GFXRAM where they are read by the CPS-A. All accesses are arbitrated by the 68000 bus protocol.
+\subsection{M68000-CPSA, M68000-CPSB} Communication occurs over the CPS-A and CPS-B registers. Additionally draw commands are written by the 68000 to the GFXRAM where they are read by the CPS-A. All accesses to GFXRAM are arbitrated by the 68000 bus protocol.
 
-\subsection{z80-YM2151} Communication occurs over the YM2151 registers which are written by the CPU. these accesses are arbitrated by the Z-80 bus protocol.
+\subsection{z80-YM2151} Communication occurs over the YM2151 registers which are mapped on the z80 bus. These accesses are arbitrated by the Z-80 bus protocol.
 
-\subsection{z80-MSM6295} Communication  occurs over the MSM6295 registers which are written by the CPU. these accesses are arbitrated by the Z-80 bus protocol. 
+\subsection{z80-MSM6295} Communication  occurs over the MSM6295 registers which are mapped on the z80 bus. These accesses are arbitrated by the Z-80 bus protocol. 
 
 \subsection{M68000-z80} Communication between these two CPUs is not trivial. They both have their own bus protocol, run at different speed, have different address space, and data width.
 
@@ -113,7 +113,7 @@ To avoid these, the z80 commits to disregards a latch content if its content did
 
 \begin{figure}[H]
 \nbdraw{interrupt_ctrl}
-\caption*{68k interrupt system}
+\caption*{m68k interrupt system}
 \end{figure}
 
 This introduces an ultimate problem. It is not possible for the m68k CPU to send the same byte twice in a row. To work around this, the writer commits on never writing the same byte twice which is done via a no-op byte (0xFF) written after every byte.
@@ -124,13 +124,13 @@ This introduces an ultimate problem. It is not possible for the m68k CPU to send
 \subsection{Back then...}
 The system and conventions we just described allows to exchange data reliably but it does not give a semantic to the values in the latches. 
 
-A developer is free to give any meaning to the latches since it control both the writer and the reader. Maybe you can even take a second to think how you would design this interface if you had before we study how Capcom did it.
+A developer is free to give any meaning to the latches since it control both the writer and the reader. Maybe you can even take a second to think how you would design this interface if you had to before we study how Capcom did it.
 
 In a game like Street Fighter II, developers took the approach of not giving values an "immediate" meaning. Communication is a stream of bytes which must be reconstructed on the receiving end before being interpreted.
 
 
 
-The z80 read the latch in the interrupt, append it into a circular buffer. Interpretation happen in its \icode{main} thread where a byte value \icode{FE} means that the next byte is the ID of a music that should start playback. 
+When interrupted, the z80 read the byte in latch 1 and append it into a circular buffer. Interpretation happen in the non-interrupted thread. A byte value \icode{FE} means that the next byte is the ID of a music that should start playback. 
 
 Otherwise the value is a sound ID to be played immediately on the OKI. This scheme allows for 256 music IDs and 254 samples IDs.
 
@@ -139,7 +139,7 @@ Otherwise the value is a sound ID to be played immediately on the OKI. This sche
 \caption*{Street Fighter comm model. Stream encoding via \icode{0xFF}}
 \end{figure}
 
-Notice how the encoder injects \icode{0xFF} no-op bytes after each write to the latch and how the decoded ignore them.
+Notice how the encoder, on the m68k side, injects \icode{0xFF} no-op bytes after each write to the latch and how the decoded ignore them.
 
 Note that in this configuration, SF2 only ever uses a single latch while the other is left unused.
 
@@ -158,7 +158,7 @@ If the sound team had to change the OKI layout, all IDS used by the m68k would b
 
 \subsection{Another Sound Driver}
 
-The sound driver described in the next pages does rely on interrupts on both side. Besides being used for the latch communication, the interrupts also maintain a counter to pace the main threads.
+The sound driver described in the next pages uses the same architecture as Capcom. It does rely on interrupts on both side. Besides being used for the latch communication, the interrupts also maintain a counter to pace the main threads.
 
 \nbdraw{latches_uml}
 
@@ -178,7 +178,7 @@ The m68k must do so in order to sample inputs and run the game engine at the int
 
 For this purpose the counter maintained by the main thread as used. Only they have different granularity.
 
-The 68k track time in units of 16ms while the z80 can do the same in increment of 4ms.
+The m68k tracks time in units of 16ms while the z80 can do the same in increment of 4ms.
 
 
 \section{Randomness}

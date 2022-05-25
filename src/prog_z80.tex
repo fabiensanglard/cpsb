@@ -1,5 +1,5 @@
 \chapter{Sound System}
-Making ROMs for the sound system is a little big complicated than for the GFX system. Not only samples and music assets are processed, there is also a need to compile code to bootstrap and then run the Z-80. 
+Making ROMs for the sound system is a little bit more complicated than for the GFX system. Not only samples and music assets are processed, there is also a need to compile code to bootstrap and then run the Z-80. 
 
 \begin{figure}[H]
 \sdraw{1.0}{sound_arch}
@@ -16,11 +16,11 @@ The crux is that both the sound effects and the music contribute to the OKI ROM 
 
 Luckily, the structure of the OKI ROM faciliated the task since it features an index at the beginning which references all payloads. Leveraging it allows to have a first pass where audio samples are ingested by the build system to generate an incomplete OKI ROM. In a second pass, the music tracks are processed so the new samples are added to the index ROM and the payload appended.
 
-At the very top, \icode{ccps\_sfx} expect artists to provide sound samples contained in \icode{.wav} files which are universally supported. This stage generates a partial OKI ROM and a \icode{.h} header file to be injected in the control build graph so the m68k can request samples playback with a simple ID.
+At the very top, \icode{ccps\_sfx} expect artists to provide sound samples contained in \icode{.wav} files, a format which is universally supported by audio tools. This stage generates a partial OKI ROM and a \icode{.h} header file to be injected in the control build graph so the m68k can request samples playback with a simple ID.
 
-The second stage involves \icode{ccps\_mus}, the music track processor. It expects \icode{.vgm} (Video Game Music) as input since it contains raw 2151 instructions which are easy to convert. It output a finalized OKI ROM containing the sample used by the soundtrack and also a \icode{.c} C file including a custom bytecode containing YM2151 register values, timing, and OKI sample timing.
+The second stage involves \icode{ccps\_mus}, the music processor. It expects \icode{.vgm} (Video Game Music) as input. these contain raw 2151 instructions which are easy to convert. It outputs the final OKI ROM containing the sample used by the soundtrack and also a \icode{.c} file including bytecode containing YM2151 register values, timing, and OKI sample timing.
 
-Finally, the last stage relies on the Small Device C Compiler (SDCC) toolchain. All artifacts generated in the two previous stages are used as input on top of the programmer \icode{.c} files and the bootstrap \icode{crt0.s} assembled by \icode{sdasz80} assembler. All resulting relocatable object files \icode{.rel} are linked together via ssdc's linker \icode{sdldz80}. 
+The last stage relies on the Small Device C Compiler (SDCC) toolchain. All artifacts generated in the two previous stages are used as input on top of the programmer \icode{.c} files and the bootstrap \icode{crt0.s} assembled by \icode{sdasz80} assembler. All resulting relocatable object files \icode{.rel} are linked together via ssdc's linker \icode{sdldz80}. 
 
 
 \begin{trivia}
@@ -54,7 +54,7 @@ The starting step index is \icode{0} which translate in the \icode{stepTable} as
 
 \lstinputlisting[language=C]{src/code/adpcm_compression1.c} 
 
-After each sample compression, the step transition table with the 3-bit value magnitude to see how to update the stepIndex.
+After each sample compression, the step transition table is looked up with the 3-bit value magnitude to see how to update the stepIndex.
 
 \lstinputlisting[language=C]{src/code/adpcm_compression2.c} 
 
@@ -79,7 +79,7 @@ The last 16-bit sample has a value of \icode{160} which becomes \icode{10} in 12
 The decompressor will output 56 (its last value) - 42 = 14. The step size index is updated via the transitionTable to 6 (previous value) + 6 = 12, which equals 50.
 
 % The result is stored in four nibble which fit in an array of two bytes. 
-Graphing PCM vs ADPCM shows that the decompressed stream "lags" behind upon abrupt changes but catches up aggressively. ADPCM first value is always near zero (+/-28) but it is not audible to players since most samples are faded in anyway. 
+Graphing PCM vs ADPCM shows that the decompressed stream "lags" behind upon abrupt changes but catches up aggressively. ADPCM first value is always near zero (+/-28) but it is not audible to players since most samples start with a faded-in anyway. 
 
 \nbdraw{adpcm_graphed}
 
@@ -113,7 +113,7 @@ Notice there is no metadata to indicate the bitrate. The "database" entry is a p
 
 
 \section{Processing Musics}
-Making music with FM synthesis is an art which this book does not intend to butcher. The best way to go is to ask musician to work with whatever tool they wish (the amazing DefleMask is highly recommended) and export their symphonies using VGM file format.
+Making music with FM synthesis is an art which this book does not intend to butcher. The best way to go is to ask the musicians in te team to work with whatever tool they wish (the amazing DefleMask is highly recommended) and export their symphonies using VGM file format.
 
 The VGM (Video Game Music) is a community effort originating from \icode{smspower.org} to create an audio file format able to support many legacy systems (SEGA consoles, MSX, Neo Geo, and PC) as well as Arcade hardware.
 
@@ -123,15 +123,13 @@ If the YM2151 is obviously a perfect fit that will need no processing, the SegaP
 
 The build system can take care of compressing the PCM via ADPCM and resample from 32KHz to 8080Hz but it is imperative for the musician to use only two channels to play nicely with the CPS-1 where two channels will be used to play sound effects.
 
-Transforming a VGM into something the Z-80 will be able to use.
-\pagebreak
 
-
+\lstinputlisting[language=C]{src/code/z80/vgm.c}
 
 
 
 \section{Programming the Z-80}
-Programming Zilog's CPU into a sound driver involves doing two things right, bootstrapping and behaving according to the memory map. Solving the memory map is the easier. To avoid page turning, the requirement is reproduced here.
+Programming Zilog's CPU into a sound driver involves doing two things right, bootstrapping and behaving according to the memory map. Solving the memory map is the easier. To avoid page turning, the requirements are reproduced here.
 
 \begin{figure}[H]
 {
@@ -157,7 +155,7 @@ Programming Zilog's CPU into a sound driver involves doing two things right, boo
 \end{figure}
 
 
-Using \icode{sdcc} is helping a lot here since that compiler offers a keyword no other compiler have named \icode{\_\_at}.
+Using \icode{sdcc} is helping a lot here since it features an exclusive "placement" keyword have named \icode{\_\_at}.
 
 \lstinputlisting[language=C]{src/code/z80/memory_map.c}
 
@@ -166,18 +164,21 @@ With the registers covered, only remains placing the \icode{.text} and \icode{.d
 \lstinputlisting[]{src/code/z80/main.lk}
 
 As expected, the \icode{\_DATA} is placed at \icode{0xd000}. The \icode{\_CODE} however is placed not at zero but \icode{0x0200} for reason that will follow soon.
-Trivia: Linker map is a powerful tool for debugging.
+
+\begin{trivia}
+Trivia: Reading a linker \icode{.map} is a powerful tool for debugging.
+\end{trivia}
 
 \subsection{Bootstrapping}
 A Z-80 starts fetching and executing instructions from \icode{0x0000} so the bootstrap code \icode{crt0.s} is placed there via \icode{.org 0}.
 
-The code immediatly jumps to \icode{0x100} in order to skip the interrupt handler. The Z-80 can work in interrupt modes 0, 1, and 2. Modes 0 and 2 are the most powerful and the most complex since they imply retrieving the id of the peripheral requesting the interrupt by reading a byte on the data bus. This mecanim allows for many devices to get the attention of the Z-80 but in the case of the CPS-1 it is overkill. Because the Z-80 is setup to run in Interrupt Mode 1, it always jump to \icode{0x38} when interrupted.
+The code immediatly jumps to \icode{0x100} in order to skip the interrupt handler. The Z-80 can work in interrupt modes 0, 1, or 2. Modes 0 and 2 are the most powerful and complex. They imply retrieving the id of the interrupting peripheral by reading a byte on the data bus. This mecanim allows support of multi-devices interruption. However in this case, it is overkill. The z80 uses Mode 1 and jumps to \icode{0x38} when interrupted.
 
 At \icode{0x100}, the stack pointer \icode{sp} is set to point at the end of \icode{RAM} (the Z-80 stack grows downward), the first interrupt is requested and a mystery \icode{gsinit} function is called.
 
 All the code in \icode{crt0.s} account for a few bytes, that is why the linker script placed \icode{\_CODE} at \icode{0x200}.
 
-Notice how C functions are prefixed with \icode{\_}.
+In \icode{crt0.s} below, notice how C functions are prefixed with \icode{\_}.
 
 \lstinputlisting[language=z80]{src/code/z80/crt0.s}
 
@@ -197,14 +198,14 @@ Setting the Timer A to value 800 will result in an interrupt 64 * (1024 - value)
 
 \lstinputlisting[language=C]{src/code/z80/interrupts.c}
 
-In function \icode{schedInterrupt} we write to the YM2151 counter register msb 8-bit \icode{0xC0} and the 2 remaining lsb \icode{0x00}. Notice how before writing to the YM2151 register we must make sure the chip is not busy via \icode{waitYM2151()}.
+In function \icode{schedInterrupt} we write to the YM2151 counter register msb 8-bit \icode{0xC0} and the 2 remaining lsb \icode{0x00}. Notice how before writing to the YM2151 register the z80 makes sure the 2151 is not busy via \icode{waitYM2151()}.
 
 
 
 
 
 \subsection{Initializing variables}
-To finish bootstrapping we make sure initalized C variables are indeed initialized. The linker placed all these values in a \icode{\_GSINIT} segment. By placing markers astutely at the source \icode{\_INITIALIZER} and at the destination \icode{\_INITIALIZED}, they can be copied.
+To finish bootstrapping, \icode{crt0} makes sure initialized C variables are initialized. The linker placed all values requiring initialization in a \icode{\_GSINIT} segment. By placing markers astutely at the source \icode{\_INITIALIZER} and at the destination \icode{\_INITIALIZED}, they can be copied.
 
 \lstinputlisting[language=z80]{src/code/z80/initVar.s}
 
@@ -217,11 +218,11 @@ Copying is done with \icode{ldir} instruction using the linker macros, \icode{s\
 
 
 \subsection{Z-80 Sound Driver}
-There are many strategies for the driver. A complex scheme where a stream is reconstituted on the Z80 may yield more power but for the purpose of demonstration a simpler approach has more merit.
+As described earlier, there are many strategies possible for the sound driver. A complex scheme using a stream may yield more power but for the purpose of demonstration a simpler approach has more merit.
 
 The code presented here uses a single latch and use it as "immediate value". If bit 0x80 is set, control is requesting a music ti be player, otherwise it is a sound effect. 
 
-Playing a song can also be as complicated as a developer wants. A translation table allows the music team to be flexible with regards to how it organize the OKI ROM. Here we simply forward the request.
+Playing a song can also be as complicated as a developer wants. A translation table allows the music team to be flexible with regards to how it organize the OKI ROM. Here request for directly to the OKI.
 
 The interrupt trigger allows the main loop to move forward thanks to a counter. It checks for pause, feed to the YM2151 or feed to the OKI.
 
@@ -234,7 +235,7 @@ The interrupt trigger allows the main loop to move forward thanks to a counter. 
 
 \section{Back then...}
 % If nothing ever transpired about the work done on the Z-80, some of the member of "Capcom Sound Team" gave interviews. Their testimony give us a glimpse into how sounds was made.
-In the mid-80s, Capcom recognized the crucial importance of sound for a video-game and set to hire only the very best musician they could find.
+In the mid-80s, Capcom recognized the crucial importance of sound for a video-game and set to hire the very best musician they could find.
 
 They would actively recruit by taking advantage of 'careers days' to get graduates to come work for them. Many musicians came from music schools located in Kansai region (Kyoto, Osaka, Kobe). Several alumni of Osaka College of Music ended up working for Capcom where they were able to compose music for a living while having the security of working for a large Japanese company. 
 
