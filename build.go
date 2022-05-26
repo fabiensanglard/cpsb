@@ -201,9 +201,15 @@ func main() {
 		force = true
 	}
 
-	if mode != "debug" && mode != "release" {
-		fmt.Println("Mode must be either 'debug' or 'release'.")
+	if mode != "debug" && mode != "release" && mode != "print" {
+		fmt.Println("Mode must be either 'debug' or 'release' or 'print'.")
 		return
+	}
+
+    compileOptions := ""
+	if mode == "print" {
+       compileOptions = `\def\forprint{}`
+       mode = "release"
 	}
 
 	base = "out/" + mode
@@ -218,7 +224,7 @@ func main() {
 	bin := "pdflatex"
 	arg0 := "-output-directory"
 	arg1 := "out"
-	arg2 := `\def\base{` + base + `} \input{src/book.tex}`
+	arg2 := `\def\base{` + base + `} ` + compileOptions + ` \input{src/book.tex}`
 
 	out, err := exec.Command(bin, arg0, arg1, arg2).CombinedOutput()
 
