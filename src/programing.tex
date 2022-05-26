@@ -18,7 +18,7 @@ Other dependencies are more convoluted. The \icode{.wav} sample files for exampl
 
 Likewise, the \icode{.png} files are transformed before making their way to the GFX ROM. They also require to generate a \icode{.h} header file, this time containing tileID. Additionally, a \icode{.c} file containing each tile palette is generated in order to be compiled into the 68000 ROM. 
 
-An even more complicated graph emerge from the music \icode{.vmg} files. The music track contains YM2151 commands that must be transformed in bytecode, stored in a \icode{.c} file, and compiled along with the Z-80 code. To be referencable, a header file containing music ID must also be generated and compiled with the 68000 ROM. Lastly, music are embellished with audio samples which must also be compressed to ADPCM and added to the OKI ROM.
+An even more complicated graph emerge from the music \icode{.vmg} files. The music track contains YM2151 commands that must be transformed in bytecode, stored in a \icode{.c} file, and compiled along with the Z-80 code. To be referenced, a header file containing music ID must also be generated and compiled with the 68000 ROM. Lastly, music are embellished with audio samples which must also be compressed to ADPCM and added to the OKI ROM.
 
 To complicate things even further, each of the four ROM mentioned must use different word size and interleaving across chips containing it.
 
@@ -60,7 +60,7 @@ During the linking stage, all the variables and functions were given an address 
 
 Another easy symbols are the const \icode{vc} and \icode{vd}. Since they are read only, their values are written to ROM as well. These are grouped in another section \icode{.rodata} apart from functions but nothing fishy there.
 
-Symbol \icode{va} is interesting because it is readable but also writable. The linker will have assigned a RAM address. Since it is unitialized, it point to whatever is there in the RAM when it started.
+Symbol \icode{va} is interesting because it is readable but also writable. The linker will have assigned a RAM address. Since it is uninitialized, it point to whatever is there in the RAM when it started.
 
 Symbol \icode{vb} is even more interesting. Like \icode{va} is is readable and writable but unlike \icode{va} it is initialized  to value \icode{0}. The linker can make \icode{va} point to RAM and even group zero-initialized variable together but setting the value to zero cannot be done. This is something the bootstrap will have to somehow take care off.
 
@@ -80,7 +80,7 @@ There are many chip in the machine that need to talk to each others. In the hier
 
 \nbdraw{apis}
 
-That is eight communication lines, but the dotted one on the drawing are not programable which lower the task to five APIs.
+That is eight communication lines, but the dotted one on the drawing are not programmable which lower the task to five APIs.
 % Most of these interfaces are registers where values are written and read. To arbitrate these access, the CPU buses are leveraged.
 
 \subsection{M68000-CPSA, M68000-CPSB} Communication occurs over the CPS-A and CPS-B registers. Additionally draw commands are written by the 68000 to the GFXRAM where they are read by the CPS-A. All accesses to GFXRAM are arbitrated by the 68000 bus protocol.

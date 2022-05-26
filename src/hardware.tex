@@ -395,7 +395,7 @@ Other pins are \icode{INT} Interrupt line, \icode{NMI} Non Maskable Interrupt, \
 \end{trivia}
 
 \subsection{Z-80 "Work RAM" and ROM}
-Little RAM is needed by the Z-80 since it forwards request from the latches to the OKY6295 and feeds the YM2151 music notes. A  single 2Ki x 8-bit \icode{CXK5816SP-15L} chip is used. The ROM is made of a 64Ki x 8-bit \icode{27C512} cip. It is large to store FM musics along the z80 instructions. 
+Little RAM is needed by the Z-80 since it forwards request from the latches to the OKY6295 and feeds the YM2151 music notes. A  single 2Ki x 8-bit \icode{CXK5816SP} chip is used. The ROM is made of a 64Ki x 8-bit \icode{27C512} chips. It is large to store FM musics along the z80 instructions. 
 
 % Sound commands are forwarded as ID/channel/volume to the OKI6295. 
 
@@ -493,7 +493,7 @@ Clockable between [1MHz-5MHz] with two modes, the goals was to maximize quality 
   & \multicolumn{2}{c}{H} &  \multicolumn{2}{c}{L} \\
   \cmidrule(lr){2-3}
   \cmidrule(lr){4-5}
-  \textbf{MHz } & \textbf{Samping Rate (Hz)} & \textbf{Time (s)} & \textbf{Samping Rate (Hz)} & \textbf{Time (s)}\\               
+  \textbf{MHz } & \textbf{Sampling Rate (Hz)} & \textbf{Time (s)} & \textbf{Sampling Rate (Hz)} & \textbf{Time (s)}\\               
   \toprule    
   \texttt{1} & 7575 & 69 & 6060 & 86\\
   \texttt{2} & 15151 & 34 & 12121 & 43\\  
@@ -644,7 +644,7 @@ Since this space is not used for another field, the resulting effect is black ho
 
 HSYNC, VSYNC, and color signals don't seem like a lot but they allow hardware designers a great deal of freedom. 
 
-Besides interlacing wich had to be avoided, there are also decisions to make about how many lines to draw, how much horizontal resolution to use, and at what frequency should the screen be refreshed.
+Besides interlacing which had to be avoided, there are also decisions to make about how many lines to draw, how much horizontal resolution to use, and at what frequency should the screen be refreshed.
 
 
 
@@ -1285,7 +1285,7 @@ Because OBJ tiles are the most versatile (they can be placed independently and a
 
 Street Fighter II designers pushed the machine on the edge of its limits by using OBJ tiles for the opponents, arena decoration, GUI, and to embellish the background parallax effect.
 
-When Ken faces Ryu in Japan, nearly 200 tiles are used. This high number became an issue in the sequel "Street Fighter 2 Champion Edition" which allowed mirror opponnets to face each other on any location.
+When Ken faces Ryu in Japan, nearly 200 tiles are used. This high number became an issue in the sequel "Street Fighter 2 Champion Edition" which allowed mirror opponents to face each other on any location.
 \vfill
 \img{lack_sprites_color.png}
 \pagebreak

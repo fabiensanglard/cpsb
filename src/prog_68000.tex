@@ -6,7 +6,7 @@ The control system is the simplest ROM to build since it involves only compiling
 \caption*{The control system components}
 \end{figure}
 
-While the latch toward the Sound system is a small API surface, the GFX API is huge. The interface to the Grapic System is bigger both in breadth (it features 64 registers) and depth (the expected GFXRAM data layout is non-trivial).
+While the latch toward the Sound system is a small API surface, the GFX API is huge. The interface to the Graphic System is bigger both in breadth (it features 64 registers) and depth (the expected GFXRAM data layout is non-trivial).
 
 Luckily, the 68000 is supported by the  GNU Compiler Collection (GCC). It features a much more powerful linker script system than \icode{sdcc} which helps considerably to solve the memory mapping requirements.
 
@@ -17,7 +17,7 @@ Nothing is particularly difficult to understand in this build graph. GCC suite i
 
 At the end of the process, the logical 68000 ROM is split and interleaved in chip sized ROMs according to what was described in the hardware chapter.
 
- Alike for the z80, bootrapping is solved with a small assembler programm named \icode{crt0.s}.
+ Alike for the z80, bootrapping is solved with a small assembler program named \icode{crt0.s}.
 
 \section{Bootstrapping the 68000}
 A 68000 does not have a set booting address. Instead, it consults a 64 32-bit integer array called the "vector table". Located at \icode{0x000000}, this is where the CPU find the values to initialize its registers such as the stack pointer (offset \icode{0}) and instruction pointer (offset \icode{1}).
@@ -32,7 +32,7 @@ All other slots except for one (offset \icode{26}) point to a no-nop routine.
 \section{Auto-Interrupt}
 The 68000 has multiple interrupt modes. In its most complex form, IPL0, IPL1, and IPL2 encode a level of interrupt and the interrupt ID is retrieved via an external interrupt controller. This would be over-kill for the talks at hand.
 
-A simpler mode, auto-vector, makes the CPU jump directely based on the three IPL lines state. Three lines gives a value [0,7] which is used to looked up the "vector table" starting at offset 24.
+A simpler mode, auto-vector, makes the CPU jump directly based on the three IPL lines state. Three lines gives a value [0,7] which is used to looked up the "vector table" starting at offset 24.
 
 Since IPL1 is connected to the CPS-A INT lines, the VSYnc handler function is placed at offset \icode{24 + 2 = 26}.
 
@@ -98,7 +98,7 @@ Capcom games bootstrap does more than bringing up the CPUs. They also verify the
 
 All CPS-1 games display a slightly different set of text. However all of them end up checking the m68k RAM and the GFXRAM. 
 
-Faulty RAM could create issues further down the pipeline. A cabinet would then expose faults that could be misattributed to other components. By allowing to quickly rules out a whole class of errors, the startup tests sped up debugging and repairing boards.
+Faulty RAM could create issues further down the pipeline. A cabinet would then expose faults that could be mis-attributed to other components. By allowing to quickly rules out a whole class of errors, the startup tests sped up debugging and repairing boards.
 
 
 
@@ -138,7 +138,7 @@ This is now \pageref{this} page in the "Book of CP-System". With each chapter pe
 
 The function \icode{main} is where developers will have their game engine convert player inputs into visual and audio outputs.
 
-The architecture is much alike the Z-80 sound system where two "threads" run in lockstep. Function \icode{VSync} is awakened roughly every 16ms. Its job is to read inputs and save them locally, read latch buffer and write them to the latch, and more importantly, flip the GFXRAM doube buffered descriptors. 
+The architecture is much alike the Z-80 sound system where two "threads" run in lockstep. Function \icode{VSync} is awakened roughly every 16ms. Its job is to read inputs and save them locally, read latch buffer and write them to the latch, and more importantly, flip the GFXRAM double buffered descriptors. 
 
 \begin{trivia}
 The \icode{frameCounter} variable not only allow to pace the main thread so a new frame is only hosted every 16ms instead of rendering as fast as possible, it is also useful too keep track of wall-time to render animation and game logic properly.
@@ -152,7 +152,7 @@ Special care has to occur if the engine may request multiple sound during a same
 
 The solution is to implement a system of queue where only one value is requested by frame.
 
-However for the simplication and brievty requirement of this book, no queue is used in the following code.
+However for the simplification and brevity requirement of this book, no queue is used in the following code.
 
 \lstinputlisting[style=CStyle]{src/code/68000/main.c} 
 
@@ -300,7 +300,7 @@ The graphic chip does not use a fixed base + offset to lookup a Palette page. e.
 
 
 
-\paragraph{Layer control} This register allows to enable or disable a layer indivually (with the exception of OBJ which uses another way). It is also used to define the priority of layers \icode{OBJ}, \icode{SCR1}, \icode{SCR2}, and \icode{SC3} individually.
+\paragraph{Layer control} This register allows to enable or disable a layer individually (with the exception of OBJ which uses another way). It is also used to define the priority of layers \icode{OBJ}, \icode{SCR1}, \icode{SCR2}, and \icode{SC3} individually.
 
 Note that STARs are always in the back and in order STAR1, STAR2.
 \pagebreak
@@ -320,7 +320,7 @@ Layer control register is also used to define the order in which OBJ, SCR1, SCR2
 This bit layout never changes accross CPS-B.
 
 \paragraph{Priority mask}
-The layer located first behind the OBJ layer has the super power of being able to be draw on top of OBJ. The tilemap must be marked as such (descibed in "Rendering SCROLLs" section) and the pen values to be treated specially are to be written in the priority mask registers. Four values can be entered in four registers.
+The layer located first behind the OBJ layer has the super power of being able to be draw on top of OBJ. The tilemap must be marked as such (described in "Rendering SCROLLs" section) and the pen values to be treated specially are to be written in the priority mask registers. Four values can be entered in four registers.
 
 
 
@@ -388,7 +388,7 @@ Enabling the STAR1 layer without requesting any stars via the bytecode does the 
 
 
 \subsubsection{Row Scroll}
-Rowscrolling allows to offset each visible row via a discret X amounts. In Street Fighter II, Honda's dohyō ( the space in which a sumo wrestling bout occurs) perspective is achieved via linear offset differences. The more perspective needed, the more accentuated is the offset slope. 
+Rowscrolling allows to offset each visible row via a discrete X amounts. In Street Fighter II, Honda's dohyō ( the space in which a sumo wrestling bout occurs) perspective is achieved via linear offset differences. The more perspective needed, the more accentuated is the offset slope. 
 
 \begin{figure}[H]
 \nbimg{ring_skew_none.png}

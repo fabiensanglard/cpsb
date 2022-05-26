@@ -14,7 +14,7 @@ The crux is that both the sound effects and the music contribute to the OKI ROM 
 
 \nbdraw{build_graph_sfx}
 
-Luckily, the structure of the OKI ROM faciliated the task since it features an index at the beginning which references all payloads. Leveraging it allows to have a first pass where audio samples are ingested by the build system to generate an incomplete OKI ROM. In a second pass, the music tracks are processed so the new samples are added to the index ROM and the payload appended.
+Luckily, the structure of the OKI ROM facilitated the task since it features an index at the beginning which references all payloads. Leveraging it allows to have a first pass where audio samples are ingested by the build system to generate an incomplete OKI ROM. In a second pass, the music tracks are processed so the new samples are added to the index ROM and the payload appended.
 
 At the very top, \icode{ccps\_sfx} expect artists to provide sound samples contained in \icode{.wav} files, a format which is universally supported by audio tools. This stage generates a partial OKI ROM and a \icode{.h} header file to be injected in the control build graph so the m68k can request samples playback with a simple ID.
 
@@ -172,7 +172,7 @@ Trivia: Reading a linker \icode{.map} is a powerful tool for debugging.
 \subsection{Bootstrapping}
 A Z-80 starts fetching and executing instructions from \icode{0x0000} so the bootstrap code \icode{crt0.s} is placed there via \icode{.org 0}.
 
-The code immediatly jumps to \icode{0x100} in order to skip the interrupt handler. The Z-80 can work in interrupt modes 0, 1, or 2. Modes 0 and 2 are the most powerful and complex. They imply retrieving the id of the interrupting peripheral by reading a byte on the data bus. This mecanim allows support of multi-devices interruption. However in this case, it is overkill. The z80 uses Mode 1 and jumps to \icode{0x38} when interrupted.
+The code immediately jumps to \icode{0x100} in order to skip the interrupt handler. The Z-80 can work in interrupt modes 0, 1, or 2. Modes 0 and 2 are the most powerful and complex. They imply retrieving the id of the interrupting peripheral by reading a byte on the data bus. This mechanism allows support of multi-devices interruption. However in this case, it is overkill. The z80 uses Mode 1 and jumps to \icode{0x38} when interrupted.
 
 At \icode{0x100}, the stack pointer \icode{sp} is set to point at the end of \icode{RAM} (the Z-80 stack grows downward), the first interrupt is requested and a mystery \icode{gsinit} function is called.
 
@@ -292,7 +292,7 @@ Despite their name, the computers of the 9800 series had nothing to do with the 
 
 The PC-98s supported kanjis and had their own C-Bus, BIOS, I/O port addressing, memory management, and graphics system. 
 
-Although having specs far inferior to the Fujitsu FM Towns and Sharp X68000, NEC enjoyed trementdous success, selling 18 millions units from 1982 to 1999.
+Although having specs far inferior to the Fujitsu FM Towns and Sharp X68000, NEC enjoyed tremendous success, selling 18 millions units from 1982 to 1999.
 
 \begin{figure}[H]
 \img{PC9800.jpg}
