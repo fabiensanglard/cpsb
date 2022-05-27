@@ -1,5 +1,6 @@
 package main
 
+import "bytes"
 import "fmt"
 import "os"
 import "os/exec"
@@ -161,23 +162,36 @@ func findInkscape() {
    	}
 }
 
+func toString(fs []string) string {
+	var b bytes.Buffer
+	for _, s := range fs {
+		fmt.Fprintf(&b, "%s ", s)
+	}
+	return b.String()
+}
+
 func makeCover(src string, dst string) {
 	if isOlder(dst, src) {
 		return
 	}
 	bin := inkscapeBin
-	arg0 := "--export-filename=" + dst
-	var arg1 = "--export-dpi=300"
+	args := make([]string, 0)
+	args = append(args, "--export-filename=" + dst)
+	
 	if mode == "debug" {
-		arg1 = "--export-dpi=100"
+		args = append(args,"--export-dpi=100")
+	} else {
+		args = append(args,"--export-dpi=300")
 	}
-	arg2 := "--export-type=pdf"
-	arg3 := "--export-text-to-path"
-	arg4 := src
+	args = append(args,"--export-type=pdf")
+	// arg3 := "--verb"
+	// arg4 := "ObjectToPath"
+	// arg3 := ""
+	args = append(args,src)
 
-	fmt.Println(inkscapeBin, arg0, arg1, arg2, arg3, arg4)
+	fmt.Printf("%s %s\n", inkscapeBin, toString(args))
 
-	out, err := exec.Command(bin, arg0, arg1, arg2, arg3, arg4).CombinedOutput()
+	out, err := exec.Command(bin, args...).CombinedOutput()
 	if err != nil {
 		fmt.Println("%s %s", string(out), err)
 		return
