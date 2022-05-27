@@ -219,7 +219,7 @@ Requesting tiles to be drawn consist in first describing the layout in GFXRAM, t
 \subsubsection{Double buffering}
 When a frame is rasterized, neither the data in the GFXRAM nor the registers values can be changed. Otherwise it would result in inconsistent images. Changes should only occur during the VBLANKing which is signaled to the 68000 via the \icode{VSync} function.
 
-The proper way to avoid visual artifacts is to us a double buffer in the GFXRAM where the currently used data is not written until the next VSYNC. Meanwhile the next frame is being prepared in the other buffer. 
+The proper way to avoid visual artifacts is to use a double buffer in the GFXRAM where the currently used data is not written until the next VSYNC. Meanwhile the next frame is being prepared in the other buffer. 
 
 On \icode{VSync} the CPS-A and CPS-B registers are written to point them to the next frame data.
 
