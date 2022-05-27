@@ -184,6 +184,7 @@ func makeCover(src string, dst string) {
 		args = append(args,"--export-dpi=300")
 	}
 	args = append(args,"--export-type=pdf")
+	args = append(args,"--export-text-to-path")
 	// arg3 := "--verb"
 	// arg4 := "ObjectToPath"
 	// arg3 := ""
