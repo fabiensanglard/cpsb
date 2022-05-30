@@ -454,7 +454,7 @@ Honda's SCROLL2 features hidden message. It looks like the designers left constr
 For many years, the machine used to program the CPS-1 was unknown. Only the nickname of Hiroaki Kondo, a Capcom composer/sound programmer often credited as "X68K" rumored a computer manufactured by Sharp. In 2018 however,  Akiman confirmed\cite{x68000usage1}\cite{x68000usage2} that the CPS-1 SDK, named CAT-1, was launched during the making of Street Fighter II and ran on a SHARP X68000.
 
 The series is largely unknown outside of Japan. But in that country it is known as the "god computer". 
-Released in 1987 by SHARP, the X68000 was as beautiful and powerful as it was expensive (¥369,000, roughly \$3000 in 1987 dollars, equivalent to around \$6000 in 2012 dollars).
+Released in 1987, the first X68000 was as beautiful and powerful as it was expensive (¥369,000, roughly \$3000 in 1987, equivalent to around \$7,600 in 2022).
 
 Despite mind-blowing hardware specifications, SHARP machine was a risky bet considering it had no software at launch because it used its own text-based OS named Human68k.
 
@@ -465,15 +465,38 @@ Despite mind-blowing hardware specifications, SHARP machine was a risky bet cons
 \caption*{The SHARP, "God Computer", X68000 }
 \end{figure}
 
-\simg{0.9}{x68k_front.png}
+
+\begin{wrapfigure}[31]{l}{0.6\textwidth}\simg{0.6}{x68k_front.png}\end{wrapfigure}
+
+Notice the vertical bar between the two towers. Pushing it down release it so it extends past the top of the machine to become a carrying handle.
+
+
+The most convenient ports for the keyboard, mouse, and joystick are conveniently user facing. An audio jack and a volume control are also present.
+
+The two 5.25 floppy have elegant motorized "soft" ejection systems.
+
+The three leds in the upper right indicates the state of the machine. If \icode{POWER} is self-explanatory, \icode{HIGH RESO} indicates whether the video output is using 15KHz, 24KHz, or 31kHz whereas \icode{TIMER} indicates if a self-powering is scheduled. 
+
+In later revisons, \icode{HIGH RESO} was replaced with \icode{HD BUSY} to indicate HDD state.
+
+
+Oh my God. It even has an orange power button.
+
+\pagebreak%
+\begin{wrapfigure}[6]{l}{0.6\textwidth}\simg{0.6}{x68k_back.png}\end{wrapfigure}
+
+The rich back of the X68000, packed with ports and extension points, illustrates the power of the workstation.
+
+
+TODO
+
 
 \pagebreak
 
-\simg{0.9}{x68k_back.png}
 
 
 
-Besides its gorgeous "Manhattan" case, the machine packed a surprising amount of horse power. Its graphic system supporting 128 hardware 16x16 tiles was so impressive that it surpassed dedicated arcade hardware capabilities at the time.
+Besides its gorgeous "Manhattan" case, the machine packed a surprising amount of horse power. Its graphic system supporting 128 hardware 16x16 tiles surpassed both dedicated arcade hardware and home-console capabilities at the time it was released.
 
  \begin{figure}[H]
 \begin{tabularx}{\textwidth}{lX}
@@ -490,25 +513,25 @@ Sprite engine & 128 tiles total. 32 tiles per line\\
 VRAM & 1056 KiB - Sprite storage: 256 tiles\\
 Sound chip & Oki MSM6258 (1 channel)  \\ 
 Music chip & Yamaha YM2151 (8 channels)  \\ 
-Storage & Dual 5 1/4 floppy readers  \\ 
+Storage & Dual 5.25 floppy readers  \\ 
   \toprule   
 \end{tabularx}
 \caption*{X68000 components}
 \end{figure}
 
-The similarities with the CPS-1 are troubling. It seems like a software emulation layer would make it a perfect CPS-1 development machine. However if we look into the details, things are different.
+The similarities with the CPS-1 are many. Almost as if a software emulation layer would be enough to run a CPS-1 game. However a few details make the concept not as friction-less as it appears.
 
-For one thing, the sound chip is an OKI MSM6258. Although it works alike the MSM6296 with ADPCM, it features only one channel which severely impacted how rich the sound effects and music could be.
+The sound chip is an OKI but it is "only" a MSM6258. Although it works alike the MSM6296 with ADPCM, it features only one channel which severely impact how rich the sound effects and music systems can be.
 
-Most importantly, the Sprite system has a weakness. The number of tile displayable was half the capacity of the CPS-1 (128 instead of 256) but that was an issue easily circumvented thanks to techniques such as Sprite doubler by Koichi Yoshida\cite{x68000spritedoubler} relying on raster effect.
+Most importantly, the Sprite system has a weakness. The number of tile displayable is half the capacity of the CPS-1 (128 instead of 256) but that is an issue easily circumvented thanks to techniques such as Sprite doubler by Koichi Yoshida\cite{x68000spritedoubler} relying on raster effect.
 
-The real issue with the sprite system was the small amount of VRAM allowing to store only 256 tiles. A pity compared to the CPS-1 GFXROM allowing thousands. In these conditions, the limitation was how to manage loading time from the floppy discs which access was quite slow and made a game unplayable if used during gameplay.
+The real issue with the sprite system is the small amount of VRAM allowing to store only 256 tiles. A pity compared to the CPS-1 GFXROM allowing thousands. In these conditions, the limitation is to manage loading time from the floppy discs which access is quite slow and make a game unplayable if used during gameplay.
 
 \pagebreak
 
-These limitation did not deter Capcom from releasing five games for the platform (Ghouls 'n Ghosts, Final Fight, SF2CE, Super Street Fighter II, and Strider). 
+These limitation did not deter Capcom from releasing five games for the platform, Ghouls 'n Ghosts, Final Fight, SF2CE, Super Street Fighter II, and Strider. 
 
-The hardware is so powerful that developers were able, for some games, to release "perfect port" which were visually identical to the arcade version. Capcom's Ghouls 'n Ghosts and Street Fighter 2 are considered perfect whereas Final Fight had to lower the number of enemies on screen.
+ For some games developers were able to release "perfect port" which were visually identical to the arcade version. Capcom's Ghouls 'n Ghosts and Street Fighter 2 are considered perfect whereas in Final Fight the number of enemies on screen had to be lowerd to handle loading time.
 
  SHARP kept on improving the series with better CPU (68030), more RAM (up to 12MiB) and even HDD (up to 80 MiB). Peripheral manufacturers embraced the computer with extensions cards covering anything one can thing off. 
 

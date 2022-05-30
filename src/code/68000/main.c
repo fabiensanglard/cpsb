@@ -11,7 +11,7 @@ int frameCounter == 0;
 
 void hostFrame() {
   frameCounter++;
-  // Game engine render one visual frame.
+  ... // Game engine render one visual frame.
 }
 
 void main() {
