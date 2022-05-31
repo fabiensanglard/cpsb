@@ -30,7 +30,7 @@ void main () {
       // 0x10 = Channel 1, 0x00 = Max volume.
       REG_OKI = 0x10 | 0x00; 
      } else {
-       if (latch == 0) continue;
+
        setupMusicPlayback(latch & 0x70);
      }
   }

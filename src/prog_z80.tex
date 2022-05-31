@@ -218,11 +218,10 @@ Copying is done with \icode{ldir} instruction using the linker macros, \icode{s\
 
 
 \subsection{Z-80 Sound Driver}
-As described earlier, there are many strategies possible for the sound driver. A complex scheme using a stream may yield more power but for the purpose of demonstration a simpler approach has more merit.
+A complex scheme using a stream may yield more power to the sound driver but for the purpose of demonstration a simpler approach has more merit.
 
-The code presented here uses a single latch and use it as "immediate value". If bit 0x80 is set, control is requesting a music ti be player, otherwise it is a sound effect. 
+The code presented here uses a single latch as "immediate value". If bit 0x80 is set, control is requesting a sound effect to be played, otherwise it is a music. 
 
-Playing a song can also be as complicated as a developer wants. A translation table allows the music team to be flexible with regards to how it organize the OKI ROM. Here request for directly to the OKI.
 
 The interrupt trigger allows the main loop to move forward thanks to a counter. It checks for pause, feed to the YM2151 or feed to the OKI.
 

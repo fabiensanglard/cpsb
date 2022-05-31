@@ -8,13 +8,17 @@ void updateMusic() {
 
   int8_t bc = next();
   switch (bc) {
-    case XX : noopCounter = bc; break;
-    case YY : 
+    case DELAY : 
+       noopCounter = bc; break;
+    case MUSIC_NOTE : 
        REG_YM2151_CMD = next(); 
        REG_YM2151_DAT = next(); 
        break;
-    case ZZ : 
+    case MUSIC_SOUND : 
        REG_OKI = 0x8 | next();
        REG_OKI = next();
+       break;
+    case 0: // End of Song
+       break;   
   }
 }
