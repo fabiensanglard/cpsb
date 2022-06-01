@@ -1,12 +1,15 @@
 \chapter{Hardware: CPS-1}
 
-The project that would later be dubbed by the press "superchip"\cite{tgm198906} started between 1985 and 1986. It was a massive investment that would require two years and five millions dollars. The result of this endeavor would be to dictate the life or death of Capcom.
+The project that would later be dubbed by the press "superchip"\cite{tgm198906} started between 1985 and 1986. It was a massive investment that would require two years and five millions dollars, the equivalent of \$12 millions dollars in 2022.
 
-\begin{q}{Yoshiki Okamoto, Producer\cite{gamest38}}
+The significant time and funds investment left not ambiguities in the mind of Capcom executives. Success would be to dictate the life or death of the company.
+
+\begin{q}{Yoshiki Okamoto, Capcom Producer\cite{gamest38}}
 The CP System is an extremely important business strategy to Capcom: we’ve gambled everything on it.
 \end{q}
 
-The CPS-1 was expected to reduce production cost, lower selling price, streamline development, increase capabilities, and stop piracy. 
+\section{Goals}
+The CPS-1 was expected to solve most of Capcom arcade division problems. Namely reduce production cost, lower selling price, streamline development, increase capabilities, and stop piracy. 
 
 Cost reduction would be achieved by mimicking home consoles and standardizing the platform. Instead of re-designing hardware boards for each games, the hardware would be a constant with the cabinet differentiated only by the software running on it.
 
@@ -14,15 +17,35 @@ Price lowering would allow arcades operators to renew their games more often. Th
 
 To improve the development toolchain, the CPS-1 was designed to work hand-in-hand with Sharp series of X68000 workstations which featured the same CPUs and programming models.
 
-More importantly, games would had to catch customer eyes and not pale in comparison to competition. The goal was to design a machine with graphic capabilities an order of magnitude above others and generate visuals like players had never seen before.
+More importantly, games would had to catch customer eyes and not pale in comparison to competition. The goal was to design a machine with graphic capabilities an order of magnitude above others and generate visuals that would hold they own wehen compared to titles from powerhouse such as Sega or Namco.
 
 Most importantly was the problem of piracy. In a country like Mexico it was estimated that 200,000 bootlegs were in circulation\cite{sf2_oral_history} despite Capcom recording zero sales in that territory. Multiple concurrent copy-protection mechanisms were to be implemented.
 
 
+
 \section{JAMMA}
-Both a blessing and a curse, arcade operators owned  standardized cabinets. They would welcome any motherboard as long as Capcom made it compatible with the ubiquitous Japan Amusement Machine and Marketing Association (JAMMA) connector. 
+
+
+
+\begin{wrapfigure}[19]{r}{0.3\textwidth}
+\vspace{-\baselineskip}
+\centering
+  \simg{0.3}{cabinet.png}
+\end{wrapfigure}
+
+
+% \begingroup
+Managing a cabinet involved frequently updating the game it ran to keep on bringing novely to players and quarters to the owner. Thanks to the Japan Amusement Machine and Marketing Association, the process of replacing a game was simple. 
+
+Usually hiding an abomination of tangled wires the belly of the machines concentrated toward a JAMMA harness where the motherboard would be inserted as a slot-in. All an operator had to do was to replace the motherboard.
 
 A JAMMA port has everything a game needs to operate. Its 28 pins on each sides provide inputs (four-direction joystick and three buttons per player, two coin sensors, start button, and service button), outputs (mono speakers lines and CRT screen controls), and even power supply.
+
+The problem with such a standard is that if it improves interoperability, it also hinders innovation. 
+
+A few pins on the port are not reserved for a specific usage but they could not be used for extra features since once the harness was wired, operators did not want to touch it.
+
+
 
  \begin{figure}[H]
 \draw{jamma_t}
@@ -34,9 +57,11 @@ A JAMMA port has everything a game needs to operate. Its 28 pins on each sides p
 \caption*{JAMMA bottom side pins}
 \end{figure}
 
-The problem with a standard is that if it improves interoperability, it also hinders innovation. A few pins on the port are not reserved for a specific usage but they could not be used for extra features. Usually a JAMMA port was plugged to a harness which was a tangled mess of wires that operators did not touch after initial cabinet setup.
 
-When Capcom had to retrofit Street Fighter 1 pneumatic buttons, they chose to do it with six buttons per player which was three more than are available in JAMMA. To circumvent the limitation, they designed a parallel input system. Since the three JAMMA buttons were used for punches, the extension was labeled the "kick harness".
+
+When Capcom had to retrofit Street Fighter 1 pneumatic buttons, they chose to do it with six buttons per player which was three more than are available in JAMMA. To circumvent the limitation, they designed a parallel input system. 
+
+Since the three JAMMA buttons were used for punches, the extension was labeled the "kick harness".
 
 \begin{figure}[H]
 
@@ -76,9 +101,8 @@ When Capcom had to retrofit Street Fighter 1 pneumatic buttons, they chose to do
 
 
 \section{Physical Architecture}
- The CPS-1 is made of three Printed circuit boards named "A", "B", and "C" and stacked on top of each others. The boards A and B are connected via four 2x32-pins connectors while the boards B and C are connected with four 2x20-pin connectors.
+ The CPS-1 is made of three printed circuit boards named Board "A", Board "B", and Board "C" which are arranged stacked on top of each others.
 
-The system was revised over the years. In this book are discussed "Street Fighter 2"'s, A (88617A-7B), B (90629B), and C (90628-C).
 
 \begin{figure}[H]
 \centering
@@ -87,7 +111,12 @@ The system was revised over the years. In this book are discussed "Street Fighte
 \end{figure}
 
 \pagebreak
-\subsection{Board A} 
+The connection points are prominent white connectors. Boards A and B are connected via four 2x32-pins connectors while the boards B and C are connected with four 2x20-pin connectors.  Once plugged into each others, the boards are manipulated as a whole with no floating parts.
+
+
+The system was revised over the years. Approximatively 229 variations are known to exist, including bootlegs. The board which will be studied in this book is the one used to run the original "Street Fighter 2", which uses board A (88617A-7B), board B (90629B), and board C (90628-C).
+
+\subsection{Board A}\index{Board A}
 The board "A" is the platform that never changes between games. It features all but one of the chips in charge of processing data, whether it is game logic, audio, or video.
 
 A summary look at page \pageref{fig:boarda} reveals the powerhouse of the whole system where even an untrained eye will notice the size of the Application-Specific Integrated Circuit (ASIC) and the shear number of bus lines leading to it. In the center left stands the "CPS-A", in charge of 50\% of the graphic system and its 16MHz oscillator. Just above is 384 KiB of VRAM to store a special kind of framebuffer studied in later pages.
@@ -116,10 +145,12 @@ To design an effective multi-CPUs system able to avoid both instructions and dat
 
 
 
-\subsection{Board B}
-   The board B is where the ROMs chip containing all the assets and instructions specific to a game are attached via DIP sockets. ROMs are grouped depending on the system they belong to. 
+\subsection{Board B}\index{Board B}
+   The board B is where the ROMs chip containing all the assets and instructions specific to a game are attached via DIP sockets. 
 
-   There is a capacity of 3x8 = 24 chips dedicated to storing GFX (1-8, 10-17, and 20-27) for a total of 12 MiB (although no game ever used it all).
+   ROM chips are grouped depending on the system they belong to. 
+
+   There is a capacity of 3x8 = 24 chips dedicated to storing GFX (1-8, 10-17, and 20-27) for a total of 12 MiB capacity. In practice, the price of ROM limited how much a title was allowed to use. Few title were granted more than 6 MiB.
 
    One socket (9) with 64KiB capacity stores both the Zilog 80 instructions and the music assets.
 
@@ -129,6 +160,7 @@ To design an effective multi-CPUs system able to avoid both instructions and dat
   \nbimg{90629B-3.jpg}
   \caption*{Empty board B}
   \end{figure}
+\pagebreak
 
     Two sockets (18-19) accounting for 256 KiB store ADPCM samples and are directly connected to the OKI chip.
 
@@ -137,8 +169,9 @@ To design an effective multi-CPUs system able to avoid both instructions and dat
 In the upper right, we find 4 white connectors towards board "C". Soldered on the bottom are also 4 white connectors leading to board "A". 
 
 
-   Notice that despite different data width requirements, all four storage systems are build with only two types of ROM chips.
+   Notice that four groups of ROM are present. Despite the different data width requirements of the GFX, OKI, Zilog-80 and Motorola 68000, all storage systems are build with only two types of ROM chips.
 
+Not on the same bus and not even in the same address space. All connected to different bus.
 \vfill
 \begin{figure}[H]
   \nbimg{90629B.jpg}
@@ -159,7 +192,7 @@ Notice, on the board "B" above, how the PAL \icode{STF29} controls the GFX ROM a
 
 
 
-\subsection{Board C}
+\subsection{Board C}\index{Board C}
 Board "C" hosts the "CPS-B" ASICs video chip. It is the beefy pixel generator directly connected to both the video system and the GFX ROMs.
 
 Capcom concentrated its anti-piracy measures in that chips and as a result revised the board "C" many more times than the two others. This is discussed extensively in the copy-protection section of this chapter.
