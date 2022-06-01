@@ -218,12 +218,12 @@ Copying is done with \icode{ldir} instruction using the linker macros, \icode{s\
 
 
 \subsection{Z-80 Sound Driver}
-A complex scheme using a stream may yield more power to the sound driver but for the purpose of demonstration a simpler approach has more merit.
+A scheme using a stream may yield more power to the sound driver but for the safe of readability a simpler approach is used here.
 
 The code presented here uses a single latch as "immediate value". If bit 0x80 is set, control is requesting a sound effect to be played, otherwise it is a music. 
 
 
-The interrupt trigger allows the main loop to move forward thanks to a counter. It checks for pause, feed to the YM2151 or feed to the OKI.
+The interrupt allows the main loop to tick once which does one of three things. It checks it is must wait, feed bytes to the YM2151 or feed soundID/channelID to the OKI.
 
 \lstinputlisting[style=CStyle]{src/code/z80/music.c}
 
