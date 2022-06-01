@@ -76,7 +76,7 @@ When Capcom had to retrofit Street Fighter 1 pneumatic buttons, they chose to do
 
 
 \section{Physical Architecture}
- The CPS-1 is made of three stacked Printed circuit boards named "A", "B", and "C". A and B are connected via four 2x32-pins connectors while B and C are connected with four 2x20-pin connectors.
+ The CPS-1 is made of three Printed circuit boards named "A", "B", and "C" and stacked on top of each others. The boards A and B are connected via four 2x32-pins connectors while the boards B and C are connected with four 2x20-pin connectors.
 
 The system was revised over the years. In this book are discussed "Street Fighter 2"'s, A (88617A-7B), B (90629B), and C (90628-C).
 
@@ -86,11 +86,11 @@ The system was revised over the years. In this book are discussed "Street Fighte
 % \caption*{A full CPS-1 game made of three PCBs}
 \end{figure}
 
-
+\pagebreak
 \subsection{Board A} 
 The board "A" is the platform that never changes between games. It features all but one of the chips in charge of processing data, whether it is game logic, audio, or video.
 
-A summary look at page \pageref{fig:boarda} reveals the powerhouse of the whole system. Even an untrained eye will notice the size of the Application-Specific Integrated Circuit (ASIC) and the shear number of bus lines leading to it. In the center left stands the "CPS-A", in charge of 50\% of the graphic system and its 16MHz oscillator. Just above is 384 KiB of VRAM to store a special kind of framebuffer studied in later pages.
+A summary look at page \pageref{fig:boarda} reveals the powerhouse of the whole system where even an untrained eye will notice the size of the Application-Specific Integrated Circuit (ASIC) and the shear number of bus lines leading to it. In the center left stands the "CPS-A", in charge of 50\% of the graphic system and its 16MHz oscillator. Just above is 384 KiB of VRAM to store a special kind of framebuffer studied in later pages.
 
 Directly below the CPS-A is the video system and its 8 KiB of SRAM containing the palettes.
 
