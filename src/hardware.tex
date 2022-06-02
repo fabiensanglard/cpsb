@@ -140,21 +140,20 @@ To design an effective multi-CPUs system able to avoid both instructions and dat
 
 
   \sdraw{0.94}{88617A}
-
+\label{fig:drawboarda}
 
 
 
 
 \subsection{Board B}\index{Board B}
-   The board B is where the ROMs chip containing all the assets and instructions specific to a game are attached via DIP sockets. 
+   The board B is where the ROMs chip containing all the assets and instructions specific to a game are attached via DIP sockets. The chips are not soldered but push-in mounted (and easily removable).
 
-   ROM chips are grouped depending on the system they belong to. 
+   Even though all ROM chips are located on the same board, they are not all part of an unified data system on an unified bus. 
 
-   There is a capacity of 3x8 = 24 chips dedicated to storing GFX (1-8, 10-17, and 20-27) for a total of 12 MiB capacity. In practice, the price of ROM limited how much a title was allowed to use. Few title were granted more than 6 MiB.
+   ROM chips are grouped depending on the system they belong to. Each group has its own data lines connected to a dedicated bus leading to a specific processor. 
 
-   One socket (9) with 64KiB capacity stores both the Zilog 80 instructions and the music assets.
+   A total of four ROM groups are visible on the board and none are hiding in the woods. 
 
- 
 \vfill
 \begin{figure}[H]
   \nbimg{90629B-3.jpg}
@@ -162,28 +161,32 @@ To design an effective multi-CPUs system able to avoid both instructions and dat
   \end{figure}
 \pagebreak
 
-    Two sockets (18-19) accounting for 256 KiB store ADPCM samples and are directly connected to the OKI chip.
+   There are 3x8 = 24 chips, referred as "GFX ROM", dedicated to storing GFX via sockets [1-8], sockets [10-17], and sockets [20-27] for a total of 12 MiB capacity. Because of the price of ROM, games were not allowed to max out and few titles were granted more than 6 MiB.
 
-   Finally eight ROMs holding 1 MiB are dedicated to hosting m68k instructions. Note that even though they are related to graphics, palettes are stored along 68000 instructions.
+   One socket (9) with 64KiB capacity, referred as "z80 ROM",  stores both the Zilog 80 instructions and the music assets. 
 
-In the upper right, we find 4 white connectors towards board "C". Soldered on the bottom are also 4 white connectors leading to board "A". 
+   Two sockets (18-19) accounting for 256 KiB, referred as "OKI ROM", store ADPCM samples and are directly connected to the OKI chip. 
+
+   Finally eight ROMs holding 1 MiB,referred as "m68k ROM", are dedicated to hosting m68k instructions. Note that even though they are related to graphics, palettes are stored along 68000 instructions. 
+
+% In the upper right, we find 4 white connectors towards board "C". Soldered on the bottom are also 4 white connectors leading to board "A". 
 
 
-   Notice that four groups of ROM are present. Despite the different data width requirements of the GFX, OKI, Zilog-80 and Motorola 68000, all storage systems are build with only two types of ROM chips.
+   % Three of the ROM groups, the OKI, Zilog-80 and Motorola 68000, seem to use the same type of chips. The case is deceiving in this case, they are in fact different as we will see in later sections.
 
-Not on the same bus and not even in the same address space. All connected to different bus.
+
 \vfill
 \begin{figure}[H]
   \nbimg{90629B.jpg}
   \caption*{Board B with Street Fighter 2 ROMs}
   \end{figure}
-
+\pagebreak
 % We will study in the storage subsystem how all these ROMs can be used to build 8-bit, 16-bit, or even 32-bit data buses.
 
 
 \nbdraw{90629B}
 
-Notice, on the board "B" above, how the PAL \icode{STF29} controls the GFX ROM and the PAL \icode{IOB1} controls the m68k ROM.
+Observant readers will have noticed black chips that have not been explained yet. For now let's say they are in charge of memory mapping. Above, \icode{STF29} handles the GFX ROM and \icode{IOB1} handles the m68k ROM. As an exercise, go back on page \pageref{fig:drawboarda} and guess which chip handle which RAM group. Or don't, I am just a book.
 % \begin{figure}[H]
 % \centering
 % \nbdraw{90629B}
@@ -193,9 +196,9 @@ Notice, on the board "B" above, how the PAL \icode{STF29} controls the GFX ROM a
 
 
 \subsection{Board C}\index{Board C}
-Board "C" hosts the "CPS-B" ASICs video chip. It is the beefy pixel generator directly connected to both the video system and the GFX ROMs.
+Board "C" hosts the "CPS-B" ASICs video chip. It is the beefy pixel generator directly connected to both the video system and the GFX ROMs. Capcom concentrated its anti-piracy measures in that chips and as a result revised the board "C" many more times than the two others. 
 
-Capcom concentrated its anti-piracy measures in that chips and as a result revised the board "C" many more times than the two others. This is discussed extensively in the copy-protection section of this chapter.
+This will be discussed extensively in the copy-protection section of this chapter.
 
 % released many revision of its hardware in order to remain one step ahead of pirates. Since it concentrated most of its countermeasures on the CPS-B, it made sense to have the chip be on its own board.
 
@@ -208,27 +211,36 @@ Capcom concentrated its anti-piracy measures in that chips and as a result revis
 \end{minipage}
 
 \subsection{PALs}
-The black chips are PALs (Programmable Array Logic) which are crucial to the creation of a memory map. They define boolean (\&, \textbar, !) logic between input and output lines to reduce complexity. More importantly they allow tuning the design between games without changing the PCB.
+The black chips on the drawing are called PALs (Programmable Array Logic). They play a crucial role in the creation of the memory maps. 
+
+They pack boolean (\&, \textbar, !) logic between input
+ and output lines to greatly simplify the board. More importantly they allow to tune the logic of a board without changing the PCB hardware lines.
 
 \sdraw{0.45}{PAL16L8A}
 
- Often located near the memory chips group they affect, they are renamed between revision. e.g: Street Fighter II's \icode{STF29} which organizes GFX ROM is named \icode{S224B} in Final Fight, or \icode{DM620} in Ghouls'n Ghosts.
+ Often located near the memory chips group they affect, they are codenamed based on their function. Since most games use slightly different ROM layout, they usually feature different PALs. e.g: Street Fighter II's \icode{STF29} which organizes GFX ROM is named \icode{S224B} in Final Fight, or \icode{DM620} in Ghouls'n Ghosts.
 
 
 
 \section{Logical Architecture}
-The multiple processors are organized hierarchically. Commands issued at the top are carried out to sub-systems via a chain of reports. There is a strong layering where top systems are unable to access sub-systems resources (control has no access to VRAM and audio ROM).
+The CP-System features eight processors, organized hierarchically. Commands issued at the top are carried out to sub-systems via a chain of reports. 
 
+There is a strong isolation via layering where top systems are unable to access sub-systems resources. e.g: Control has no access to VRAM and audio ROM.
+
+\begin{figure}[H]
 \nbdraw{arch_hierarchy}
+  \caption*{CP-System processor hierarchy}
+  \end{figure}
 
-The control system and its 68000 is in charge of coordinating inputs (joystick, buttons, coin) and outputs. It can communicate with both the gfx and audio system.
 
-The audio system runs almost totally in isolation. It is connected to control via two 8-bit latches which the Z-80 actively polls to retrieve commands related to music and sound effects. Notice how these latches bridge different data bus width since control has 16 data lines while the audio system's uses 8 data lines.
+The control system and its m68k is in charge of coordinating inputs (joystick, buttons, coin) and outputs. It can communicate with both the gfx and audio system main processors.
 
-The graphic system needs more communications and exposes not only its CPS-A and CPS-B registers but also the GFX RAM where the screen layout is described. The 68000 and the CPS-A use the same bus to access the GFXRAM so the demarcation is not as clean as with the audio system which result in a bit of bus contention.  
+The audio system runs almost totally in isolation. It is connected to control via two 8-bit latches which the z80 actively polls to retrieve commands related to music and sound effects. Notice how these latches bridge different data bus width since control has 16 data lines while the audio system's uses 8 data lines.
+
+The graphic system needs more communications and exposes not only its CPS-A and CPS-B registers but also the GFX RAM where the screen layout is described. The m68k and the CPS-A use the same bus to access the GFXRAM so the demarcation is not as clean as with the audio system which result in a bit of bus contention.  
 
 The video system produces a stream of palette addresses (pen). Combined with the palette SRAM (ink) and the DAC, it outputs a signal towards JAMMA.
-It is heavy duty to keep up with the 59.64Hz refresh rate.
+It is heavy duty in order to keep up with the 59.64Hz refresh rate inflicted on the CRT.
 
 \begin{figure}[H]
 \nbdraw{arch}
@@ -241,52 +253,60 @@ It is heavy duty to keep up with the 59.64Hz refresh rate.
 % The game code and assets are all stored on ROMs on the Board B. All storage subsystem whether they are meant to the 8-bit Z-80, the 16-bit 68000, or the 64-bit PPUs are build with the same XXXX component.
 
 \section{Control system}
-At the core of the control system we find the immensely popular Motorola model 68000.
+The control system is the master of the platform. As a ruler it needs not to go deep but wide. A tailor made task for the immensely popular Motorola 68000.
+
 
 \subsection{Motorola 68000}
 
  Released in 1979, and clocked at 10 MHz (later upgraded to 12 MHz), the MC68000 was not a particularly powerful chip by the late 80' standards with its two stage pipeline\cite{M68000fv} (prefetch, exec) and no cache. Its 1.7 MIPS placed it on par with an Intel 286 10MHz. By 1989 it was already two generations old behind the 68020 (1984) and the 68030 (1987).
 
-Yet the Atari ST, Amiga, Sega's System 16, Genesis, Sega CD, NeXT Computer, Apple Macintosh, Sharp X68000, and SNK's Neo-Geo all used it as their backbone. The 68,000 transistors CPU was even IBM's first choice for it PC before production issues allowed the Intel's 8088 to prevail\cite{ieee20170630}. 
+\nbdraw{mips}
+
+This lack of velocity did not prevent a a plethora of manufacturers to use it as their backbone. On the list of machine adopting the m68k can be found the Atari ST, Amiga, Sega's System 16, Genesis, Sega CD, NeXT Computer, Apple Macintosh, Sharp X68000, and even SNK's Neo-Geo. It was even IBM's first choice for it PC before production issues allowed the Intel's 8088 to prevail\cite{ieee20170630}. 
 
 Performance is not what made the 68000 rein as the prime hardware designer choice. The reason this CPU was so successful is because it was a great team player.
 
 While most machines used 16-bit address system, its 24-bit address space allowed the 68000 16 MiB of RAM which was considered humongous at the time. This was a considerable advantage when it came to map peripherals. There is so much address space that, had they wished so, Capcom engineers could have allowed the 68000 to see all RAM and all ROM of all systems on the CPS-1.
 
-Moreover, where other CPUs used small address registers resulting in the infamous segmented addressing, Motorola engineers gave their CPU 32-bit data and address registers. This not only allowed elegant flat addressing, it also gave coders a free meal where a program compiled once would get access to more than 16MiB RAM on later products. 
+Moreover, where other CPUs used small address registers resulting in the infamous segmented addressing, Motorola gave its CPU 32-bit data and address registers. This not only allowed elegant flat addressing, it also gave coders a free meal where a program compiled once would get access to more than 16MiB RAM on later products. 
 
 
 \sdraw{0.8}{68000}
 
 
+If one truly appreciate hardware they will certainly enjoy staring at CPUs and their pin. 
 
-The CPU is brought to life via clock (\icode{CLK}), +5V (\icode{VCC}), and Ground (\icode{VSS}).
+A quick glance at the 68000 pins release it is brought to life via clock (\icode{CLK}), +5V (\icode{VCC}), and Ground (\icode{VSS}).
 
 The bus is made of (\icode{D0-D15}) for data, (\icode{A1-A23]}) for addresses, and Address ACK (\icode{AS}), Read/Write (\icode{R/W}), \icode{UDS}, \icode{LDS}, and Data ACK \icode{DTACK} for control.
 
 
-Arbitration to allow peripherals to master the bus is done with Bus Request (\icode{BR}),  Bug Grant (\icode{BG}) and Bus Grant ACK (\icode{GBA-K}).
+Arbitration to allow peripherals to master the bus is done with Bus Request (\icode{BR}),  Bus Grant (\icode{BG}) and Bus Grant ACK (\icode{GBA-K}).
 
 The interrupt system (which will be instrumental in the software chapter) is made of \icode{IPL0}, \icode{IPL1}, \icode{IPL2}, and \icode{VPA} while System control is done via Error (\icode{BERR}), Reset (\icode{RST}), and Halt (\icode{HALT}).
 
 Processor status is given by \icode{FC0}, \icode{FC1}, \icode{FC2} and Peripheral control is done via sync (\icode{E}) and valid sig (\icode{VMA}).
 
-
 \begin{trivia}
- The 68000 has no \icode{A0} pin. Accessing unaligned memory will make the CPU crash. Instead, developers must use \icode{UDS} and \icode{LDS} to indicate which byte or bytes to access.
+Motorola's CPU name is due to its total number of transistors totaling 68,000 units. The 68030 and 68040 had more transistors than their name indicate. 
 \end{trivia}
+
+Despite the raving description provided in the previous page, the 68000 could be a peculiar CPU to program. Its most famous shortcoming involved memory alignment. While Intel's line of CISC allows random memory accesses (at the cost of a great performance penalty), Motorola's CPU will \icode{HALT} while attempting to read/write memory not aligned on a 16-bit (\icode{WORD}) boundary.
+
+This limitation is rooted all the way down to the CPU pins where there is no \icode{A0} line. Instead, pins \icode{UDS} and \icode{LDS}indicate which high-byte or low-bytes part of an aligned \icode{WORD} to access.
+
 
 \begin{trivia}
  The 68000 has 32-bit address registers but used only 24-bit addresses. These 8 bits of "unused" pointers were used by system engineers to mark address as "locked" or "purgeable", making their programs forward-incompatible. 
 \end{trivia}
 
-Perhaps the best testament to the quality of the 68000 design is that, as of 2021, 42 years after its release, Motorola's CPU is still in production.
+Perhaps the best testament to the quality of the 68000 design is that, as of 2022, 43 years after its release, Motorola's CPU is still in production.
 
 
 \subsection{Motorola 68000 "work" RAM}
 With a 16-bit data bus processor it would have been fair to expect a memory system built with 16-bit RAM chips. However these were expensive and a closer look reveals a bunch of \icode{65256BLSP-10} offering fast access time (100ns SRAM) and 32 KiB capacity but only 8 data lines.
 
-\sdraw{0.7}{65256BLSP-10}
+\sdraw{0.58}{65256BLSP-10}
 \pagebreak
 
 Using cheaper of-the-shelves 8-bit RAM chips instead of 16-bit RAM chips helped to drive down the cost. Moreover, these are not hard to combine into a 16-bit RAM system via two-way interleave.
@@ -296,16 +316,22 @@ Using cheaper of-the-shelves 8-bit RAM chips instead of 16-bit RAM chips helped 
 \caption*{32 Ki x 16-bit RAM system with two 32 Ki x 8-bit chips}
 \end{figure}
 
-The two chips are not aware of each others. They are connected to the same 15 address lines and the same control lines for write (\icode{WE}) and read (\icode{OE}). However, they are connected to different lines of the data bus. 
+The two chips are not aware of each others. They are connected to the same 15 address lines and the same control lines for write (\icode{WE}) and read (\icode{OE}). However, they are connected to different lines of the data bus.
 
 % Notice how the 14 address lines of the RAM chips are connected to the bus lines [11-23], effectively placing the RAM at address \icode{0xFF0000}-\icode{0xFFFFFF}. Carefully selecting lines is one of the three building block of designing a memory map. The two others are explained in the next section.
+ \begin{trivia}
+Interleaving chips help to beat memory latency by increasing throughput. Early GPU such as the Voodoo 1 and Voodoo 2 by 3Dfx extensively relied on this technique, even using four-way interleave to keep up with the bandwidth requirements\cite{TheStoryOf3Dfx}.  
+ \end{trivia}
+
+
+Notice how the address lines of the SRAM chips are directly connected to the 68000 address bus. There is no mechanism to prevent these two chips to respond to all requests made on \icode{[0x**0000-0x**7FFF]}. 
+
+This is an over-simplification to introduce complexity progressively. We will see next how chips are organized to not overlap with each others.
 
  \begin{trivia}
  64 KiB of RAM seems like a lot but was not always enough. Some games found themselves with not enough RAM and too much GFXRAM. Street Fighter 2 Champion Edition programmers resolved to generating and executing instructions from the GFXRAM\cite{mame_driver}!
  \end{trivia}
-
-Notice how the address lines of the SRAM chips are directly connected to the 68000 address bus. There is no mechanism to prevent these two chips to respond to all requests made on \icode{[0x**0000-0x**7FFF]}. This is an over-simplification to introduce complexity progressively. We will see next how chips are organized to not overlap with each others.
-
+\pagebreak
 
 
 
@@ -322,7 +348,7 @@ Notice how the address lines of the SRAM chips are directly connected to the 680
 
 The 68000 instructions are provided by eight \icode{27C010} which are 128 Ki x 8-bit chips. They work like the \icode{65256BLSP-10} except that they have sixteen address lines instead of fifteen (and therefore higher capacity).
 
-Like the RAM, ROM chips are combined two-ways to provide 16-bit data. What is peculiar is how the four pairs are arranged to build a memory system with a larger capacity.
+Like the RAM, ROM chips are combined via two-way interleaves to provide 16-bit data. What is peculiar is how the four pairs are arranged to build a memory system with a larger capacity.
 
 
 \begin{figure}[H]
@@ -336,19 +362,19 @@ Here, the first four out PAL pins must be programmed as follows.
 
 \lstinputlisting[style=CStyle]{src/code/pal.c}
 
+
 The first pair of chips is mapped to addresses \icode{0x000000} while the second pair is mapped to \icode{0x40000}. With the same logic, two more pairs of \icode{27C010} are mapped at \icode{0x80000} and \icode{0xc0000} for a total of 1 MiB ROM.
 
 
 
-
-These \icode{CE} / \icode{CS} lines are absolutely crucial to build a memory map. They are present in every chips studied in this book (except CPUs).
+By now, it should be abundantly clear that the \icode{CE} / \icode{CS} lines are absolutely crucial to build a memory map. Even though they won't be mentioned again, keep in mind they impact every chips on the boards (except the CPUs).
 
 \subsection{68000 Memory Map}
 
-All chips are mapped at a static address in memory space.
+Thanks to the PAL chips seen earlier, the 68000 memory space is divided into something called a "memory map".
 
-% \begin{figure}[H]
-% {
+\begin{figure}[H]
+{
 \begin{tabularx}{\textwidth}{rrrX}
 % \toprule    
   \textbf{Start } & \textbf{End  } & \textbf{Size } & \textbf{Function } \\               
@@ -370,11 +396,12 @@ All chips are mapped at a static address in memory space.
   \texttt{0xFF0000} & \texttt{0xFFFFFF} & 64 KiB & Work RAM \\
   % \toprule    
 \end{tabularx}%
-% }\caption*{Control system memory map.}
-% \end{figure}
+}\caption*{Control system memory map.}
+\end{figure}
 
 \subsection{Operations}
-With its memory map in mind, the m68k operation is as follows.
+
+The details of the 68000 operations will be studied in-depth in the next chapters but we can already guess how the CPU operates based on what it has access to.
 
 The m68k bootstraps and retrieves instructions from ROM. Variables and stack live in "Work RAM". Game configuration is retrieved from DIP switches. The game starts and polls inputs to generate video and audio. 
 
@@ -406,7 +433,7 @@ As an 8-bit era processor, the Z-80 features 8-bit data registers, 8-bit data bu
 
 The reason it was selected by Capcom (and by SNK for its Neo Geo) was not for its processing capacity but because it was an inexpensive CPU, well-known by programmers which would also integrate well with other 8-bit chips such as the ROM chips, RAM chips, and most importantly, the audio chips such as the MSM6295 and the YM2151.
 
-\nbdraw{z-80}
+\sdraw{0.9}{z-80}
 
 
 
