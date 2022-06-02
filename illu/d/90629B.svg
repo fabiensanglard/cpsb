@@ -32,14 +32,14 @@
      fit-margin-right="0"
      fit-margin-bottom="0"
      inkscape:zoom="0.67081229"
-     inkscape:cx="538.89889"
+     inkscape:cx="462.1263"
      inkscape:cy="525.48232"
      inkscape:window-width="1536"
      inkscape:window-height="907"
      inkscape:window-x="0"
      inkscape:window-y="25"
      inkscape:window-maximized="0"
-     inkscape:current-layer="layer9"
+     inkscape:current-layer="layer5"
      showguides="true" />
   <defs
      id="defs2" />
@@ -232,21 +232,26 @@
     <rect
        style="display:inline;fill:#c98382;fill-opacity:0.552941;stroke:#000000;stroke-width:0.554;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect1243-6"
-       width="53.892982"
-       height="43.243576"
-       x="20.186977"
-       y="196.88817" />
+       width="51.132023"
+       height="66.90892"
+       x="22.947933"
+       y="173.22282" />
     <text
        xml:space="preserve"
-       style="font-weight:bold;font-size:7.05556px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';display:inline;stroke-width:0.264583"
-       x="32.151207"
-       y="209.46631"
+       style="font-weight:bold;font-size:7.05556px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';text-align:center;text-anchor:middle;display:inline;stroke-width:0.264583"
+       x="48.401691"
+       y="183.81906"
        id="text3158-8"><tspan
          sodipodi:role="line"
-         style="font-size:7.05556px;stroke-width:0.264583"
-         x="32.151207"
-         y="209.46631"
-         id="tspan16889">Z-80 ROM</tspan></text>
+         style="font-size:7.05556px;text-align:center;text-anchor:middle;stroke-width:0.264583"
+         x="48.401691"
+         y="183.81906"
+         id="tspan16889">Z-80 ROM</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:7.05556px;text-align:center;text-anchor:middle;stroke-width:0.264583"
+         x="48.401691"
+         y="192.6385"
+         id="tspan1364">(CODE)</tspan></text>
     <rect
        style="display:inline;fill:#f30b07;fill-opacity:1;stroke:#000000;stroke-width:0.564999;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect1551-8-2"
@@ -264,26 +269,28 @@
     <rect
        style="display:inline;fill:#c98382;fill-opacity:0.552941;stroke:#000000;stroke-width:0.526544;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect1243-6-8"
-       width="71.60865"
-       height="43.604671"
+       width="53.859642"
+       height="66.481171"
        x="79.169777"
-       y="196.51041" />
+       y="173.63391"
+       rx="0.39442232"
+       ry="0" />
     <text
        xml:space="preserve"
        style="font-weight:bold;font-size:7.05556px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';text-align:center;text-anchor:middle;display:inline;stroke-width:0.264583"
-       x="138.75365"
-       y="215.37285"
+       x="106.41103"
+       y="183.81906"
        id="text3158-8-3"><tspan
          sodipodi:role="line"
          style="font-size:7.05556px;text-align:center;text-anchor:middle;stroke-width:0.264583"
-         x="138.75365"
-         y="215.37285"
-         id="tspan16493">OKI </tspan><tspan
+         x="106.41103"
+         y="183.81906"
+         id="tspan33830">OKI  ROM</tspan><tspan
          sodipodi:role="line"
          style="font-size:7.05556px;text-align:center;text-anchor:middle;stroke-width:0.264583"
-         x="138.75365"
-         y="224.19229"
-         id="tspan33830">ROM</tspan></text>
+         x="106.41103"
+         y="192.6385"
+         id="tspan8419">(SOUNDS)</tspan></text>
     <rect
        style="display:inline;fill:#f30b07;fill-opacity:1;stroke:#000000;stroke-width:0.564999;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect1551-8-2-6"

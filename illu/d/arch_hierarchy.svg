@@ -2,12 +2,12 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="295.27499mm"
-   height="89.693748mm"
-   viewBox="0 0 295.275 89.693749"
+   width="290.39548mm"
+   height="124.92078mm"
+   viewBox="0 0 290.39548 124.92078"
    version="1.1"
    id="svg5"
-   inkscape:version="1.1.1 (c3084ef, 2021-09-22)"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
    sodipodi:docname="arch_hierarchy.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -29,7 +29,7 @@
      fit-margin-bottom="0"
      inkscape:snap-global="false"
      inkscape:zoom="0.52121947"
-     inkscape:cx="538.16102"
+     inkscape:cx="431.67996"
      inkscape:cy="121.82968"
      inkscape:window-width="1536"
      inkscape:window-height="907"
@@ -43,15 +43,15 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-1.7889252,-101.4838)">
+     transform="translate(-2.2721001,-101.71015)">
     <path
        style="fill:none;stroke:#000000;stroke-width:1.165;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 205.94277,122.09363 v 23.52654"
+       d="m 205.94277,122.09363 v 42.81624"
        id="path6209-2-3"
        sodipodi:nodetypes="cc" />
     <path
        style="fill:none;stroke:#000000;stroke-width:1.165;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 258.37572,145.04152 v 16.9633"
+       d="m 258.37572,164.09164 v 16.9633"
        id="path6209-2-3-3"
        sodipodi:nodetypes="cc" />
     <path
@@ -61,7 +61,7 @@
        sodipodi:nodetypes="cc" />
     <path
        style="fill:none;stroke:#000000;stroke-width:1.165;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 154.05268,145.54058 104.69057,0.009"
+       d="m 154.05268,164.5907 104.69057,0.009"
        id="path1711-3"
        sodipodi:nodetypes="cc" />
     <circle
@@ -109,7 +109,7 @@
     </g>
     <g
        id="g8009"
-       transform="translate(0,-0.32868958)">
+       transform="translate(0,29.304656)">
       <rect
          style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.687677;stroke-miterlimit:4;stroke-dasharray:none"
          id="rect1174-1"
@@ -132,12 +132,12 @@
     </g>
     <path
        style="fill:none;stroke:#000000;stroke-width:1.165;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 154.5449,145.54979 v 36.25683"
+       d="m 154.5449,164.59991 v 47.42455"
        id="path6209-2"
        sodipodi:nodetypes="cc" />
     <g
        id="g7988"
-       transform="translate(4.6614057)">
+       transform="translate(4.6614057,29.633346)">
       <rect
          style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.687677;stroke-miterlimit:4;stroke-dasharray:none"
          id="rect1174-8"
@@ -160,7 +160,7 @@
     </g>
     <g
        id="g7993"
-       transform="translate(-0.4167117)">
+       transform="translate(-0.4167117,35.98335)">
       <rect
          style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.687677;stroke-miterlimit:4;stroke-dasharray:none"
          id="rect1174-59"
@@ -183,22 +183,22 @@
     </g>
     <path
        style="fill:none;stroke:#000000;stroke-width:1.165;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 35.063688,122.1223 0,39.67562"
+       d="m 35.063688,122.1223 v 60.48819"
        id="path6209"
        sodipodi:nodetypes="cc" />
     <path
        style="fill:none;stroke:#000000;stroke-width:1.165;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 76.380319,122.06702 v 39.67562"
+       d="m 76.380319,122.06702 v 57.95007"
        id="path6209-9"
        sodipodi:nodetypes="cc" />
     <path
        style="fill:none;stroke:#000000;stroke-width:1.165;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 59.29514,155.82068 0,28.84111"
+       d="m 59.29514,185.4542 v 28.84111"
        id="path6209-1"
        sodipodi:nodetypes="cc" />
     <g
        id="g7968"
-       transform="translate(-2.7086261,0.9392395)">
+       transform="translate(-2.7086261,36.92259)">
       <rect
          style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.687677;stroke-miterlimit:4;stroke-dasharray:none"
          id="rect1174-7"
@@ -221,7 +221,7 @@
     </g>
     <g
        id="g7625"
-       transform="translate(-13.60638,-0.4167117)">
+       transform="translate(-13.60638,9.1082888)">
       <rect
          style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.687677;stroke-miterlimit:4;stroke-dasharray:none"
          id="rect1174-5"
@@ -248,22 +248,22 @@
        width="88.873001"
        height="16.994247"
        x="2.9801314"
-       y="148.76642"
+       y="178.39935"
        ry="4.4508739" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
        x="32.008629"
-       y="161.24046"
+       y="190.8734"
        id="text2390-43-2-2-6-7"><tspan
          sodipodi:role="line"
          id="tspan2388-7-6-8-8-9"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Roboto;-inkscape-font-specification:Roboto;stroke-width:0.264583"
          x="32.008629"
-         y="161.24046">CPS-B</tspan></text>
+         y="190.8734">CPS-B</tspan></text>
     <g
        id="g8014"
-       transform="translate(3.5420495,-0.17266263)">
+       transform="translate(3.5420495,9.3523379)">
       <rect
          style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.687677;stroke-miterlimit:4;stroke-dasharray:none"
          id="rect1174-6"

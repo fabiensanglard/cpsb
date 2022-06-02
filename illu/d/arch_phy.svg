@@ -35068,124 +35068,128 @@
        style="fill:none;stroke:#ffffff;stroke-width:0.7;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.7, 0.7;stroke-dashoffset:0;stroke-opacity:1"
        d="m 13.649464,-69.867425 67.52211,-37.994075 5.57522,2.89085 -67.72862,38.20057 z"
        id="path10562-4-7" />
-    <text
-       xml:space="preserve"
-       style="font-size:22.5778px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
-       x="-209.97054"
-       y="461.98413"
-       id="text3905-1-9-4"><tspan
-         sodipodi:role="line"
-         id="tspan3903-24-7-2"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5778px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
-         x="-209.97054"
-         y="461.98413">ROM</tspan></text>
-    <rect
-       style="fill:#898989;fill-opacity:1;stroke:#000000;stroke-width:0.665;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="rect43108-3"
-       width="27.470724"
-       height="19.3911"
-       x="-251.85341"
-       y="444.06989"
-       ry="4.847775" />
-    <text
-       xml:space="preserve"
-       style="font-size:22.5778px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
-       x="-79.749046"
-       y="461.15079"
-       id="text3905-1-9-4-8-1"><tspan
-         sodipodi:role="line"
-         id="tspan3903-24-7-2-0-3"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5778px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
-         x="-79.749046"
-         y="461.15079">OSCIL</tspan></text>
-    <rect
-       style="fill:#f5a021;fill-opacity:1;stroke:#000000;stroke-width:0.665;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="rect43108-3-0-9"
-       width="27.470724"
-       height="19.3911"
-       x="-121.63192"
-       y="443.23654"
-       ry="4.847775" />
     <g
-       id="g101611"
-       transform="translate(0,-3.7041666)">
+       id="g140026"
+       transform="matrix(0.67755627,0,0,0.67755627,-10.909053,139.5473)">
       <text
          xml:space="preserve"
          style="font-size:22.5778px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
          x="-209.97054"
-         y="428.88693"
-         id="text3905-1-9"><tspan
+         y="461.98413"
+         id="text3905-1-9-4"><tspan
            sodipodi:role="line"
-           id="tspan3903-24-7"
+           id="tspan3903-24-7-2"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5778px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
            x="-209.97054"
-           y="428.88693">RAM</tspan></text>
+           y="461.98413">ROM</tspan></text>
       <rect
-         style="fill:#444444;fill-opacity:1;stroke:#000000;stroke-width:0.665;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         id="rect43108"
+         style="fill:#898989;fill-opacity:1;stroke:#000000;stroke-width:0.665;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect43108-3"
          width="27.470724"
          height="19.3911"
          x="-251.85341"
-         y="410.97269"
+         y="444.06989"
          ry="4.847775" />
       <text
          xml:space="preserve"
          style="font-size:22.5778px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
          x="-79.749046"
-         y="431.98413"
-         id="text3905-1-9-4-8"><tspan
+         y="461.15079"
+         id="text3905-1-9-4-8-1"><tspan
            sodipodi:role="line"
-           id="tspan3903-24-7-2-0"
+           id="tspan3903-24-7-2-0-3"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5778px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
            x="-79.749046"
-           y="431.98413">PAL</tspan></text>
+           y="461.15079">OSCIL</tspan></text>
       <rect
-         style="fill:#820303;fill-opacity:1;stroke:#000000;stroke-width:0.665;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         id="rect43108-3-0"
+         style="fill:#f5a021;fill-opacity:1;stroke:#000000;stroke-width:0.665;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect43108-3-0-9"
          width="27.470724"
          height="19.3911"
          x="-121.63192"
-         y="414.06989"
+         y="443.23654"
          ry="4.847775" />
+      <g
+         id="g101611"
+         transform="translate(0,-3.7041666)">
+        <text
+           xml:space="preserve"
+           style="font-size:22.5778px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
+           x="-209.97054"
+           y="428.88693"
+           id="text3905-1-9"><tspan
+             sodipodi:role="line"
+             id="tspan3903-24-7"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5778px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+             x="-209.97054"
+             y="428.88693">RAM</tspan></text>
+        <rect
+           style="fill:#444444;fill-opacity:1;stroke:#000000;stroke-width:0.665;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           id="rect43108"
+           width="27.470724"
+           height="19.3911"
+           x="-251.85341"
+           y="410.97269"
+           ry="4.847775" />
+        <text
+           xml:space="preserve"
+           style="font-size:22.5778px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
+           x="-79.749046"
+           y="431.98413"
+           id="text3905-1-9-4-8"><tspan
+             sodipodi:role="line"
+             id="tspan3903-24-7-2-0"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5778px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+             x="-79.749046"
+             y="431.98413">PAL</tspan></text>
+        <rect
+           style="fill:#820303;fill-opacity:1;stroke:#000000;stroke-width:0.665;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           id="rect43108-3-0"
+           width="27.470724"
+           height="19.3911"
+           x="-121.63192"
+           y="414.06989"
+           ry="4.847775" />
+        <text
+           xml:space="preserve"
+           style="font-size:22.5778px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
+           x="63.584282"
+           y="431.56747"
+           id="text3905-1-9-4-8-5"><tspan
+             sodipodi:role="line"
+             id="tspan3903-24-7-2-0-8"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5778px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+             x="63.584282"
+             y="431.56747">PROCESSOR</tspan></text>
+        <rect
+           style="fill:#6481bf;fill-opacity:1;stroke:#000000;stroke-width:0.665;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           id="rect43108-3-0-8"
+           width="27.470724"
+           height="19.3911"
+           x="21.701408"
+           y="413.65323"
+           ry="4.847775" />
+      </g>
       <text
          xml:space="preserve"
          style="font-size:22.5778px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
          x="63.584282"
-         y="431.56747"
-         id="text3905-1-9-4-8-5"><tspan
+         y="460.73413"
+         id="text3905-1-9-4-8-1-8"><tspan
            sodipodi:role="line"
-           id="tspan3903-24-7-2-0-8"
+           id="tspan3903-24-7-2-0-3-2"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5778px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
            x="63.584282"
-           y="431.56747">PROCESSOR</tspan></text>
+           y="460.73413">CONNECTOR</tspan></text>
       <rect
-         style="fill:#6481bf;fill-opacity:1;stroke:#000000;stroke-width:0.665;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         id="rect43108-3-0-8"
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.665;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect43108-3-0-9-4"
          width="27.470724"
          height="19.3911"
          x="21.701408"
-         y="413.65323"
+         y="442.81989"
          ry="4.847775" />
     </g>
-    <text
-       xml:space="preserve"
-       style="font-size:22.5778px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
-       x="63.584282"
-       y="460.73413"
-       id="text3905-1-9-4-8-1-8"><tspan
-         sodipodi:role="line"
-         id="tspan3903-24-7-2-0-3-2"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5778px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
-         x="63.584282"
-         y="460.73413">CONNECTOR</tspan></text>
-    <rect
-       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.665;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="rect43108-3-0-9-4"
-       width="27.470724"
-       height="19.3911"
-       x="21.701408"
-       y="442.81989"
-       ry="4.847775" />
     <g
        id="g78919"
        transform="matrix(1.10556,0,0,1.10556,-137.74507,186.51025)"
