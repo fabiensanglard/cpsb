@@ -428,22 +428,27 @@ For the audio, the m68k issues simple commands to the Z-80 via two 1 byte latche
 \section{Audio system}
 The audio system runs in isolation from everything else. It has its own bus, its own RAM, its own ROM systems, and its own oscillators. Its only opening to the outside world are two latches to receive commands from the control system and two JAMMA pins where to output sound.
 
-Its internal architecture looks like a repeat of the control system where several components are under the control of a single coordinator. Only this time the CPU in charge is the Zilog-80 running at 3.58 MHz.
+The grandmaster of this microcosm is a Zilog-80 running at 3.58 MHz.
 
 \subsection{Z-80}
-Released in July 1976 by Zilog, the Z-80 was, alike the m68k, an immensely successful CPU. 
+Released in July 1976 by Zilog, the Z-80 was an intended as an Intel 8080 killer. It ended up sharing the front-scene from the late-70s until the mid-80s with the equally mythical MOS 6502. 
 
-It was one of the most widely used processors in home computers, notably featured in the Sinclair ZX Spectrum and the Amstrad CPC. It also found its way in military applications, musical equipment (Roland Jupiter-8), and multiple coin operated arcade games including Pac-Man. 
+The z80 was widely used in home computers, notably featured in the Sinclair ZX Spectrum and the Amstrad CPC. It also found its way in military applications, musical equipment (Roland Jupiter-8), and multiple coin operated arcade games including Pac-Man. 
 
 As an 8-bit era processor, the Z-80 features 8-bit data registers, 8-bit data bus, 16-bit address registers, and 16-bit address bus. In terms of processing power, it had become a particularly weak CPU by the late 80s standards with 0.45 MIPS making it three times slower than the MC68000 in the control system. 
 
-The reason it was selected by Capcom (and by SNK for its Neo Geo) was not for its processing capacity but because it was an inexpensive CPU, well-known by programmers which would also integrate well with other 8-bit chips such as the ROM chips, RAM chips, and most importantly, the audio chips such as the MSM6295 and the YM2151.
+\nbdraw{mips_z80}
+
+But once again, power was not be the deciding factor to elect the master of the Sound system. Thanks for its two powerful co-processors, the CPU would not have to process much data, making the MIPS figure irrelevant. A much more important characteristic would be how well it integrated with its two sidekicks.
+
+Thanks to its 8-bit design, the z80 was a perfect fit for the 8-bit YM2151 and 8-bit MSM6295. Additionally, having been around for a while, the outdated CPU was inexpensive. Equally important, Zilog's CPU enjoyed a good reputation from programmers who enjoyed its simple programming interface.
+% These three points made the z80 a no-brainer to have on the board.
 
 \sdraw{0.9}{z-80}
 
-
-
-
+% \begin{q}{The man who hated hardware}
+% And just like that, we found ourselves staring at pin-outs again. This was going to be a long day!
+% \end{q}
 
 The chip comes to life thanks to its clock (\icode{CLK}), power \icode{+V5}, and ground \icode{GND} pins.
 
