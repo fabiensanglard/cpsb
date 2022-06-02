@@ -399,13 +399,19 @@ Thanks to the PAL chips seen earlier, the 68000 memory space is divided into som
 }\caption*{Control system memory map.}
 \end{figure}
 
-\subsection{Operations}
+\subsection{Putting it all together}
 
 The details of the 68000 operations will be studied in-depth in the next chapters but we can already guess how the CPU operates based on what it has access to.
 
-The m68k bootstraps and retrieves instructions from ROM. Variables and stack live in "Work RAM". Game configuration is retrieved from DIP switches. The game starts and polls inputs to generate video and audio. 
+As the m68k boots, it starts to retrieve instructions from it ROM. For regular operations such as store/load, and also to keep track of its call stack, it uses its RAM. 
 
-For the video, the m68k describes an image to be displayed via the GFXRAM then instructs the graphic ASICs of where to find that data via their registers. For the audio, the m68k issues simple commands to the Z-80 via two 1 byte latches using a protocol detailed later.
+The game engine starts and reads the configuration set by the arcade operator via the DIP switches. While the game runs, the CPU continuously polls the JAMMA registers.
+
+Acting as the orchestrator, the engine detects inputs and delegates generation of video and audio signal to its subordinates.
+
+For the video, the m68k describes an image to be displayed via the GFXRAM then instructs the graphic ASICs of where to find that data via their registers. 
+
+For the audio, the m68k issues simple commands to the Z-80 via two 1 byte latches using a protocol detailed later.
   
 
 
