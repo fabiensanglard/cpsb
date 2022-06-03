@@ -272,6 +272,7 @@ Moreover, where other CPUs used small address registers resulting in the infamou
 
 
 \sdraw{0.8}{68000}
+\label{68000drawing}
 
 
 If one truly appreciate hardware they will certainly enjoy staring at CPUs and their pin. 
@@ -444,6 +445,10 @@ But once again, power was not be the deciding factor to elect the master of the 
 Thanks to its 8-bit design, the z80 was a perfect fit for the 8-bit YM2151 and 8-bit MSM6295. Additionally, having been around for a while, the outdated CPU was inexpensive. Last but not least, Zilog's CPU enjoyed a good reputation from programmers who enjoyed its simple programming interface.
 % These three points made the z80 a no-brainer to have on the board.
 
+\begin{trivia}
+Staring at components teaches to recognize packagings. DIP (Dual In-line Package), like the z80 below, are recognizable by their two lines of pins. The 68000 on page \pageref{68000drawing} with its four sides of pins belongs to the "Chip carrier" family. These can be made of materials such as plastic or ceramic and use barbaric acronyms like as CLCC or PLCC.  
+\end{trivia}
+
 \sdraw{0.9}{z-80}
 
 % \begin{q}{The man who hated hardware}
@@ -461,16 +466,19 @@ In fact, the \icode{BUSRQ} and \icode{BUSAK} pins are not even connected.  Becau
 
 Other pins are \icode{INT} Interrupt line, \icode{NMI} Non Maskable Interrupt, \icode{RESET} Restart CPU, \icode{HALT} Waiting for interrupt, \icode{M1} Fetching next instruction.
 
-\begin{trivia}
+% \begin{trivia}
  The Z-80 has a built-in timer to easily include DRAM on a motherboard. The \icode{RFSH} pin (ReFreSH signal) tics at regular intervals for the memory refresh.
 
  This is not used on the CP-System system since all RAM is Static RAM. Only one components, the VRAM, uses DRAM but it is located on the polar opposite side of the board.
-\end{trivia}
+% \end{trivia}
 
 \pagebreak
 
-\subsection{Z-80 "Work RAM" and ROM}
-Little RAM is needed by the Z-80 since it forwards request from the latches to the OKY6295 and feeds the YM2151 music notes. A  single 2Ki x 8-bit \icode{CXK5816SP} chip is used. The ROM is made of a 64Ki x 8-bit \icode{27C512} chips. It is large to store FM musics along the z80 instructions. 
+\subsection{z80 Work RAM}
+The amount of RAM provided to the z80 may let a modern programmer smile. Because all it has to do is forward request from the latches to the OKI6295 and feeds the YM2151 music notes, the z80 bus is connected to a single 2Ki x 8-bit \icode{CXK5816SP} chip is used. Yes. The master of sounds runs on 2 KiB.
+
+\subsection{z80 ROM}
+The ROM is made of a simple 64Ki x 8-bit \icode{27C512} chip. It is much larger than the RAM in order to store FM musics along the z80 instructions. 
 
 % Sound commands are forwarded as ID/channel/volume to the OKI6295. 
 
@@ -478,11 +486,17 @@ Little RAM is needed by the Z-80 since it forwards request from the latches to t
 
 These chips work alike those the one already studies with pins such as power, ground, addresses, data, control, and of course the crucial \icode{CE}. What is peculiar is that the Z-80 uses 16-bit address registers which grants 65,536 addresses. There is not enough address space for all registers, ROM, and RAM totaling 67 KiB.
 
-The solution Capcom engineers used was to map only the portion of the ROM that contain instructions (32KiB) statically and to use a banking system to provide a 16 KiB "view" into the remaining 32KiB of the ROM where the music assets are stored. This is accomplished with a PAL (\icode{SOU1}) and we will see in the programming section how much of a pain it was for to developers.
+The solution is to map only the portion of the ROM that contain instructions (32KiB) statically and to use a banking system to provide a 16 KiB "view" into the remaining 32KiB of the ROM where the music assets are stored. This is accomplished with a PAL (\icode{SOU1}) it was a royal pain to deal with it.
 
 
+% \begin{trivia}
+Hopefully this awful bank switch control 
+% byte a programmer must juggle with to access data located beyond \icode{0x8000}
+ will leave no doubt with regards of the awesomeness of the 68000 and its 24-bit address space. 
+% \end{trivia}
+% CXK5816SP-15L is only 2 KiB RAM
 
-\subsubsection{Memory Map}
+\subsection{z80 Memory Map}
 
 \begin{figure}[H]
 {
@@ -507,10 +521,7 @@ The solution Capcom engineers used was to map only the portion of the ROM that c
 }\caption*{Audio memory map.}
 \end{figure}
 
-\begin{trivia}
-Hopefully this awful bank switch control byte a programmer must juggle with to access data located beyond \icode{0x8000} will leave no doubt with regards of the awesomeness of the 68000 and its 24-bit address space. 
-\end{trivia}
-% CXK5816SP-15L is only 2 KiB RAM
+
 
 \subsection{YM2151}
 Selecting the music chip was not a matter of shopping vendors but rather to pick one from Yamaha. Thanks to the licensing of Frequency Modulation (FM) patents from Stanford in 1975, the Japanese founder ruled the world of electronic music.
@@ -525,6 +536,7 @@ Other parameters can be applied to the output such as Attack, Decay , Sustain, o
 
 Yamaha's technology is so efficient that the whole Sagat stage music (2mn6s, 10KiB) use fewer bytes than one "Tiger Uppercut"'s ADPCM sample (777ms, 12KiB).
 
+\pagebreak
 Looking at the 2151, we see previously discussed pins such as \icode{+5V}, \icode{GND}, and \icode{CS}. The \icode{CLK} is connected to the same oscillator as the Z-80 for a frequency of 3.58MHz. The \icode{D0-D7} address/data pins (multiplexed via \icode{A0}) fit exactly the Z80's 8-bit data bus with read (\icode{RD}) and write (\icode{WR}) control.
 
 A pin in particular, the \icode{IRQ} which allows the YM2151 to generate interrupt based on internal counters, will be crucial in the latter chapters.
@@ -538,6 +550,7 @@ Because the JAMMA port expect an analog signal, Capcom connected a YM3012 input 
 
 The 3012 is the tailor made DAC which converts the digital stream from the YM2151 to an analog signal that is later mixed with the analog signal of the OKI6295.
 
+\pagebreak
 \subsection{MSM6295}
 For audio sample playback, Capcom spared no expenses and selected a chip capable of 4-bit ADPCM audio decompression over four channels, the MSM6295 (a.k.a OKI). 
 % capable chips by the past with the MSM5205 by OKI Semiconductor. For the CPS-1  they went with a steroids version,
@@ -621,7 +634,7 @@ ADPCM is aggressive in increasing its step size (\icode{2, 4, 6, 8}) when high m
 
 
 
-
+\pagebreak
 \section{Video system}
 The goal of the video system is to drive signals for the CRT to generate images. Even though it is connected to the JAMMA port, there is no abstraction layer or custom protocol. The four red, green, blue, and sync JAMMA output pins are connected directly into the CRT inputs.
 
@@ -1676,6 +1689,8 @@ While other chips on the board-B are \icode{27C010} and \icode{27C512}, the GFXR
 On the Street Fighter II board, twelves \icode{ MB834200B-15} are combined for a total of 6 MiB of GFX assets.
 
 \nbdraw{gfxroms}
+
+TODO: Talk about channel and how it helped to improve performances of the GFXROM. 
 
 \section{Copy protection system}
 
