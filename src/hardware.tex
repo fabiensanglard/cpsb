@@ -431,7 +431,7 @@ The audio system runs in isolation from everything else. It has its own bus, its
 The grandmaster of this microcosm is a Zilog-80 running at 3.58 MHz.
 
 \subsection{Z-80}
-Released in July 1976 by Zilog, the Z-80 was an intended as an Intel 8080 killer. It ended up sharing the front-scene from the late-70s until the mid-80s with the equally mythical MOS 6502. 
+Released in July 1976 by Zilog, the Z-80 was an intended as an Intel 8080 killer thanks to a compatible instruction set. It ended up becoming an icon of the 70s, sharing the front-scene until the mid-80s with the equally mythical MOS 6502. 
 
 The z80 was widely used in home computers, notably featured in the Sinclair ZX Spectrum and the Amstrad CPC. It also found its way in military applications, musical equipment (Roland Jupiter-8), and multiple coin operated arcade games including Pac-Man. 
 
@@ -441,7 +441,7 @@ As an 8-bit era processor, the Z-80 features 8-bit data registers, 8-bit data bu
 
 But once again, power was not be the deciding factor to elect the master of the Sound system. Thanks for its two powerful co-processors, the CPU would not have to process much data, making the MIPS figure irrelevant. A much more important characteristic would be how well it integrated with its two sidekicks.
 
-Thanks to its 8-bit design, the z80 was a perfect fit for the 8-bit YM2151 and 8-bit MSM6295. Additionally, having been around for a while, the outdated CPU was inexpensive. Equally important, Zilog's CPU enjoyed a good reputation from programmers who enjoyed its simple programming interface.
+Thanks to its 8-bit design, the z80 was a perfect fit for the 8-bit YM2151 and 8-bit MSM6295. Additionally, having been around for a while, the outdated CPU was inexpensive. Last but not least, Zilog's CPU enjoyed a good reputation from programmers who enjoyed its simple programming interface.
 % These three points made the z80 a no-brainer to have on the board.
 
 \sdraw{0.9}{z-80}
@@ -454,7 +454,7 @@ The chip comes to life thanks to its clock (\icode{CLK}), power \icode{+V5}, and
 
 The bus lines are dedicated \icode{D0-D15} for addresses and \icode{A0-A7} for data. For control, \icode{RD} indicates read while \icode{WR} indicates a write operation. \icode{WAIT} is used to add waitstates. 
 
-Although it is capable of relinquishing control of the bus via \icode{BUSRQ} Request bus mastering,\icode{BUSAK}, Acknowledge, \icode{MREQ} Request to use bus, and IO bus \icode{IORQ}, the Z-80 completely own its bus and never shares it. 
+Although it is capable of relinquishing control of the bus via \icode{BUSRQ} (Bus Request), \icode{BUSAK} (Bus Acknowledge), \icode{MREQ} (Memory Request), and \icode{IORQ} (IO Request), the Z-80 completely own its bus and never shares it. 
 
 In fact, the \icode{BUSRQ} and \icode{BUSAK} pins are not even connected.  Because it is isolated via latches, the Z-80's bus never suffers contention.
 
@@ -463,7 +463,11 @@ Other pins are \icode{INT} Interrupt line, \icode{NMI} Non Maskable Interrupt, \
 
 \begin{trivia}
  The Z-80 has a built-in timer to easily include DRAM on a motherboard. The \icode{RFSH} pin (ReFreSH signal) tics at regular intervals for the memory refresh.
+
+ This is not used on the CP-System system since all RAM is Static RAM. Only one components, the VRAM, uses DRAM but it is located on the polar opposite side of the board.
 \end{trivia}
+
+\pagebreak
 
 \subsection{Z-80 "Work RAM" and ROM}
 Little RAM is needed by the Z-80 since it forwards request from the latches to the OKY6295 and feeds the YM2151 music notes. A  single 2Ki x 8-bit \icode{CXK5816SP} chip is used. The ROM is made of a 64Ki x 8-bit \icode{27C512} chips. It is large to store FM musics along the z80 instructions. 
