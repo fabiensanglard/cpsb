@@ -116,7 +116,7 @@ The connection points are prominent white connectors. Boards A and B are connect
 
 The system was revised over the years. Approximatively 229 variations are known to exist, including bootlegs. The board which will be studied in this book is the one used to run the original "Street Fighter 2", which uses board A (88617A-7B), board B (90629B), and board C (90628-C).
 
-\subsection{Board A}\index{Board A}
+\subsection{Board A}\index{Board!Board A}
 The board "A" is the platform that never changes between games. It features all but one of the chips in charge of processing data, whether it is game logic, audio, or video.
 
 A summary look at page \pageref{fig:boarda} reveals the powerhouse of the whole system where even an untrained eye will notice the size of the Application-Specific Integrated Circuit (ASIC) and the shear number of bus lines leading to it. In the center left stands the "CPS-A", in charge of 50\% of the graphic system and its 16MHz oscillator. Just above is 384 KiB of VRAM to store a special kind of framebuffer studied in later pages.
@@ -145,7 +145,7 @@ To design an effective multi-CPUs system able to avoid both instructions and dat
 
 
 
-\subsection{Board B}\index{Board B}
+\subsection{Board B}\index{Board!Board B}
    The board B is where the ROMs chip containing all the assets and instructions specific to a game are attached via DIP sockets. The chips are not soldered but push-in mounted (and easily removable).
 
    Even though all ROM chips are located on the same board, they are not all part of an unified data system on an unified bus. 
@@ -195,7 +195,7 @@ Observant readers will have noticed black chips that have not been explained yet
 
 
 
-\subsection{Board C}\index{Board C}
+\subsection{Board C}\index{Board!Board C}
 Board "C" hosts the "CPS-B" ASICs video chip. It is the beefy pixel generator directly connected to both the video system and the GFX ROMs. Capcom concentrated its anti-piracy measures in that chips and as a result revised the board "C" many more times than the two others. 
 
 This will be discussed extensively in the copy-protection section of this chapter.
@@ -526,18 +526,57 @@ Hopefully this awful bank switch control
 \subsection{YM2151}
 Selecting the music chip was not a matter of shopping vendors but rather to pick one from Yamaha. Thanks to the licensing of Frequency Modulation (FM) patents from Stanford in 1975, the Japanese founder ruled the world of electronic music.
 
+\begin{trivia}
+Most profitable Stanford patent is not Google but Yamaha FM.
+
+\end{trivia}
 Three architectures stood out in the early 90s. Among the OPL2 3812 and the OPN2 2612, the OPM (OPerator type M) 2151 was selected for its versatility. 
 
-The YM2151 is able to play 8 channels (a.k.a voices) of audio without requiring any additional ROM or RAM. Each channel consists of four operators (a.k.a slots) which can be setup to produce either percussion or instruments sounds. The principle is to use simple wave forms to module each other in a Modulator/Carrier pair resulting in complex waveforms\cite{fmProgramming}.
+
+
+The principle is to use simple wave forms to module each other in a Modulator/Carrier pair resulting in complex waveforms\cite{fmProgramming}.
+
+\begin{figure}[H]
+\draw{fm_carrier}
+\caption*{Carrier wave}
+\end{figure}
+
+\begin{figure}[H]
+\draw{fm_signal}
+\caption*{Carrier signal}
+\end{figure}
+
+\begin{figure}[H]
+\draw{fm_result}
+\caption*{Resulting waveform}
+\end{figure}
+
+
+
+
+
+
+
+The YM2151 is able to play 8 channels (a.k.a voices) of audio. Each channel consists of four operators (a.k.a slots) which can be setup to produce either percussion or instruments sounds. 
+
+Not limited to sinwaves. Bla blab bla
 
 \nbdraw{waveforms}
 
-Other parameters can be applied to the output such as Attack, Decay , Sustain, or Release Rate. The huge advantage of FM synthesis is the small amount of data required to store a melody since only the notes of each instruments and their tempo to be recorded. 
 
-Yamaha's technology is so efficient that the whole Sagat stage music (2mn6s, 10KiB) use fewer bytes than one "Tiger Uppercut"'s ADPCM sample (777ms, 12KiB).
+
+Other parameters can be applied to the output such as Attack, Decay , Sustain, or Release Rate. 
+
+DRAWING ADSR.
+
+The huge advantage of FM synthesis is the small amount of data required to store a melody. After the instruments Since only the notes of each instruments and their tempo to be recorded. Yamaha's technology is so efficient that the whole Sagat stage music (2mn6s, 10KiB) use fewer bytes than one "Tiger Uppercut"'s ADPCM sample (777ms, 12KiB).
+
+
+
+
+Looking at the 2151, we see previously discussed pins such as \icode{+5V}, \icode{GND}, and \icode{CS}. The \icode{CLK} is connected to the same oscillator as the Z-80 for a frequency of 3.58MHz. The \icode{D0-D7} address/data pins (multiplexed via \icode{A0}) fit exactly the Z80's 8-bit data bus with read (\icode{RD}) and write (\icode{WR}) control.
 
 \pagebreak
-Looking at the 2151, we see previously discussed pins such as \icode{+5V}, \icode{GND}, and \icode{CS}. The \icode{CLK} is connected to the same oscillator as the Z-80 for a frequency of 3.58MHz. The \icode{D0-D7} address/data pins (multiplexed via \icode{A0}) fit exactly the Z80's 8-bit data bus with read (\icode{RD}) and write (\icode{WR}) control.
 
 A pin in particular, the \icode{IRQ} which allows the YM2151 to generate interrupt based on internal counters, will be crucial in the latter chapters.
 
@@ -546,11 +585,11 @@ A pin in particular, the \icode{IRQ} which allows the YM2151 to generate interru
 The only drawback of this chip is that is features no DAC (Digital to Analog Converter). It generates a signal on the Serial Output (\icode{SO}). 
 
 \subsection{YM3012}
-Because the JAMMA port expect an analog signal, Capcom connected a YM3012 input is connected to the YM2151 output. 
+Because the JAMMA port expect an analog signal, Capcom connected a YM3012 input is connected to the YM2151 output. The 3012 is the tailor made DAC which converts the digital stream from the YM2151 to an analog signal that is later mixed with the analog signal of the OKI6295.
 
-The 3012 is the tailor made DAC which converts the digital stream from the YM2151 to an analog signal that is later mixed with the analog signal of the OKI6295.
+\sdraw{0.5}{YM3012}
 
-\pagebreak
+
 \subsection{MSM6295}
 For audio sample playback, Capcom spared no expenses and selected a chip capable of 4-bit ADPCM audio decompression over four channels, the MSM6295 (a.k.a OKI). 
 % capable chips by the past with the MSM5205 by OKI Semiconductor. For the CPS-1  they went with a steroids version,
@@ -598,7 +637,8 @@ In the end, Capcom connected the OKI to the GFX crystal (16MHz) and divided freq
 
 
 
-\subsection{The beauty of ADPCM compression} %\label{adpcm_decompression_label}
+\subsection{PCM 101} %\label{adpcm_decompression_label}
+\index{ADPCM!Decompression}
 We cannot close the OKI section without taking a close look at the beauty that is ADPCM decompression (compression will be studied in the software chapter).
 
 Whether it is recorded or played, PCM (Pulse-code modulation) is a stream of value directly representing the position of a device diaphragm.
@@ -610,6 +650,7 @@ The higher the sampling rate, the more often the diaphragm position can be adjus
 Sound quality increases linearly with the data rate. Land-line phones typically use 8000Hz sampling rate with 8-bit depth mono consuming 8,000 bytes per second while a CD uses 16-bit samples at 44100Hz in stereo taking its data usage to 176,400 bytes per second.
 \pagebreak
 
+\subsection{ADPCM compression}
 ADPCM is able to take 12-bit PCM sample and compress then as 4-bit samples by encoding only the difference between PCM samples. Decompressing an ADPCM stream consist in adding a delta value to the last decompressed  sample, over and over again.
 
 The delta is encoded with a system of weighted offset called "step" which is accurate for small variation but coarser when deltas increase. 
@@ -640,7 +681,13 @@ The goal of the video system is to drive signals for the CRT to generate images.
 
 \nbdraw{rgb_wires}
 
-There are four wires but in fact five signals are transmitted. Each red, green, and blue signal have their own wire but the sync wire carries two signals multiplexed as the horizontal sync pulse and vertical sync pulse. Because it composes two signals, it is called called CSYNC (Composite SYNC). These five signals are everything a CRT needs to work. 
+There are four wires but in fact five signals are transmitted. Each red, green, and blue signal have their own wire but the sync wire carries two signals multiplexed as the horizontal sync pulse and vertical sync pulse. Because it composes two signals, it is called called CSYNC (Composite SYNC). 
+
+These five signals are everything a CRT needs to work. 
+
+\begin{trivia} The CRT is purely a signal consumer. It never sends anything back on these wires. It is a common misconception that the CRT emits VSYNC. In fact, all signals are generated by the video system.
+\end{trivia}
+
 
 \subsection{CRT 101}
 
@@ -687,9 +734,14 @@ Smaller slots can render the horizontal analog signals with better fidelity.
 The lines are drawn one after an other via the RGB signals but to display a proper image there is a need for a control signal so the CRT can synchronize and know which line is at the top of the screen and when a line starts. Without it, the image would be distorted. 
 
 
-\img{desync.jpg}
+\begin{figure}[H]
+\simg{0.9}{desync.jpg}
+\caption*{A desynced display. Lines are correct but not located where they should be.}
+\end{figure}
 
-The previous figure depicts a desynced TV. The lines are correct but they are not located where they should be.
+
+
+
 
 The horizontal syncing is done via HSYNC signal and the vertical syncing is done via VSYNC signal. These signals are detected by the CRT to position the gun properly with regards to the origins sets in the upper left.
 
@@ -700,10 +752,8 @@ HSYNC tells the CRT that a line has been drawn and the gun horizontal position s
 By detecting VSYNC and HSYNC, the CRT can "synchronize" the signal with the guns and draw the image where it belongs.
 
 
-\begin{trivia} The CRT is purely a signal consumer. It never sends anything back on these wires. It is a common misconception that the CRT emits VSYNC. In fact, all signals are generated by the video system.
-\end{trivia}
 
-
+\pagebreak
 \subsection{Fields}
 
 The process of drawing scanlines over the screen, also called "Raster scan", is flawed as described. If the gun draws a line and upon HSYNC goes back to the left, it would be drawing the same upper left line over and over again. 
@@ -765,8 +815,8 @@ Moreover, even though the color signal is analog, there is still a maximum limit
 Finally there was a question of aspect ratio. Since the vertical number of line had been chosen by this point, the horizontal number of points had to be picked to ideally match the 4:3 aspect ratio of the monitor.
 
 
-\subsection{CPS1 choices}
-Besides the vertical and horizontal "rules" we just reviewed, Capcom engineers had additional constraints.
+\subsubsection{Making choices...}
+Besides the vertical and horizontal "rules", Capcom engineers had additional constraints.
 
 First of all, because the GFX system is digital, they had to pick dimension that could be represented as integer. There was also the graphic system which required both axis to be multiple of 8 (for the tilemaps we will study in the next section).
 
@@ -781,21 +831,19 @@ Going for 384x224 was an interesting decision from an aspect-ratio standing poin
 
 The result was that the CPS-1 did not have square pixels which was a huge problem for artists.  
 
+DRAWING ASPECT RATIO HERE
+
 \begin{q}{Akiman, Street Fighter 2, Lead Artist\cite{akiman}}
-When I was working on Forgotten Worlds, I noticed the problem of aspect ratio. "The pixels are not square!" I told my boss.
-
-"Impossible, I ordered them to be square!" he replied and called hardware on the spot.
-
-"The pixels are square!" he replied. 
-
-Later I protested again to which my boss replied it was a calculation error.
+When I was working on Forgotten Worlds, I noticed the problem of aspect ratio. "The pixels are not square!" I told my boss. "Impossible, I ordered them to be square!" he replied and called hardware on the spot. "The pixels are square!" he replied. Later I protested again to which my boss replied it was a calculation error.
 \end{q}
 
-
+\pagebreak
 \begin{trivia}
 The designers of R-Type in 1987 played on CRT tolerance in order to craft a video system with increased horizontal resolution. 
 
-They chose the VSYNC to pulse at 55Hz. This gave them extra time between frames so they had to sacrifice fewer lines to VBLANK. They reinvested this saving into more vertical lines to reach 256. As we have seen before, increasing horizontal resolution is just about improving the analog signal. This is what the people at Irem did to push it to 384. In the end, the game enjoyed a higher than competitors resolution of 384x256 at the cost of a 5Hz refresh penalty.
+They chose the VSYNC to pulse at 55Hz. This gave them extra time between frames so they had to sacrifice fewer lines to VBLANK. They reinvested this saving into more vertical lines to reach 256. I
+
+Increasing horizontal resolution is just about improving the analog signal. This is what the people at Irem did to push it to 384. In the end, the game enjoyed a higher than competitors resolution of 384x256 at the cost of a 5Hz refresh penalty.
 \end{trivia}
 
 
@@ -832,13 +880,17 @@ With a "pixel" clock coming from the GFX oscillator (16MHz) halved to 8MHz, a co
 
 The horizontal resolution of 512 mandates a HSYNC to be generated every 512 * 0.125 = 64$\mu$s. The resulting refresh rate is 8MHz / (512x262) = 59.637Hz and a VSYNC must be issued every 1000/59.637 = 16.7ms.
 
+
 A summary drawing exposes all timing and regions as well as the significant part of the image not usable due to horizontal and vertical blanking.
 
-\begin{trivia}
-The horizontal blank between the end of a scanline and hsync is called the "front porch". The blank section between hsync and the start of the next scanline is called the "back porch".
-\end{trivia}
+
 
 \nbdraw{sf2_withoverscan_zero}
+
+
+% \begin{trivia}
+% The horizontal blank between the end of a scanline and hsync is called the "front porch". The blank section between hsync and the start of the next scanline is called the "back porch".
+% \end{trivia}
 
 Keep in mind that if HSYNC happens 262 tiles (blue vertical line) and VSYNC occurs only once. The dashed horizontal red line is only here to represent where the electron gun reset to the top of the screen.
 
@@ -854,9 +906,11 @@ Note on the previous drawing how large vertical blanking is. It allows more oper
 
 To generate the color signals, the CPS-1 uses a palette system storing colors via 4 x 2Ki x 1B \icode{CXK5814P-35L} SRAM chips.
 
-\sdraw{0.45}{CXK5814P-35L} 
 
 Individually these are simple memory elements with pinouts explained earlier, Power \icode{+5V}, Ground \icode{GND}, Addresses \icode{A0-A10}, Data \icode{D0-D7}, Write (\icode{WE}), Read (\icode{OW}), and Chip Enabled (\icode{CE}).
+
+\sdraw{0.45}{CXK5814P-35L} 
+
 
 What is uncanny is that the component connected to the address lines is not the one connected to the data lines.
  % Instead data is routed towards a DAC.
@@ -876,7 +930,8 @@ Colors are grouped into palettes containing 16 units. As will be studied later, 
 
 % 3,072 colors accounts for 3,072*2= 6,144 bytes. There is a little bit of palette SRAM not used.
 
- The palette SRAM chip are nearly constantly used to generate colors. Their content can only be written to during VBLANK. Designing the machine with long blanking was paramount to allow large updates. 
+ The palette SRAM chip are nearly constantly used to generate colors. Their content can only be written to during VBLANK. 
+ % Designing the machine with long blanking was paramount to allow large updates. 
 
 
 
@@ -940,9 +995,11 @@ Twelves famous palettes. Can you recognize them?
 
 \section{Graphic system}
 
-\emph{This section would have been impossible to write without Lo\"{i}c Petit's contribution. He has been working tirelessly on understanding the CPS-1 and CPS-2 and generously shared his knowledge.}
+% \emph{This section would have been impossible to write without Lo\"{i}c Petit's contribution. He has been working tirelessly on understanding the CPS-1 and CPS-2 and generously shared his knowledge.}
 
 The graphic system is the most complicated to understand in the whole machine. It is complex because it must satisfy three demanding sub-systems.
+
+
 
 On one side, there is Control which requests an elaborated composition of backgrounds and sprites to appear on the screen. The description is much more verbose than a simple integer received by the Sound system to play a sample or a music. Communication happens by not only exposing the graphic registers, but also sharing access to a huge portion of "GFX RAM". Control's 68000 writes "draw commands" which the GFX system reads and executes.
 
@@ -952,15 +1009,19 @@ In the middle is the GFXROM, a huge repository of up to 12MiB graphic assets. It
 
 Solving these problems of timing and latency exceptionally well is what made the CPS-1 stand out. It is unarguably the "secret sauce" of the machine. 
 
+\begin{figure}[H]
+\sdraw{0.7}{ppus}
+\caption*{Architecture of the CPS-1 Graphic System.}
+\end{figure}
+
+
 \subsection{CPS-A and CPS-B: The ASICs powerhouse}
-To make their dream machine become a reality, Capcom did not rely on another company's product. They crafted their own ASICs (Application-Specific Integrated Circuit), tailored to their needs, the CPS-A and CPS-B.
+To make their dream machine become a reality, Capcom did not rely on another company's product. They crafted their own ASICs (Application-Specific Integrated Circuit), tailored to their needs, the CPS-A (the head) and CPS-B (the legs).
+
 
 % The architecture summary shows the heart of GFX is made of not one but two chips called the CPS-A and the CPS-B. 
 
-\begin{figure}[H]
-\sdraw{0.9}{ppus}
-\caption*{Architecture of the CPS-1 Graphic System.}
-\end{figure}
+
 
 
 
@@ -996,17 +1057,19 @@ A background is described in terms of "tiles" which arrangement is described in 
 
 A naive design would work at the same speed as the video system (8MHz). For each pixel (125ns) the GFXRAM would be read to know what tile to display. Then a palette index would be retrieved from the GFXROM. Finally that index would be sent to the palette system where the color would be converted by the video DAC. That would not work.
 
-Even thought the machine uses the fastest type of SRAM, the response time of these component does not permit that many roundtrip. The overhead is too big to complete the operation within just 125ns.
-
-The solution is to reduce the number of memory accesses by reading more than necessary and caching the result. To this effect, the CPS-A features 256 bytes to cache information retrieved from the GFXRAM during HBLANK.
-
  \begin{figure}[H]%
  \nbimg{DL-0311.png}%
  \caption*{CPS-A die. Notice the real estate dedicated to GFXRAM caching.}%
  \end{figure}%
 
+Even thought the machine uses the fastest type of SRAM, the response time of these component does not permit that many roundtrip. The overhead is too big to complete the operation within just 125ns.
+
+The solution is to reduce the number of memory accesses by reading more than necessary and caching the result. To this effect, the CPS-A features 256 bytes to cache information retrieved from the GFXRAM during HBLANK.
 
 
+
+
+\subsubsection{Streaming}
 Another optimization that allows the GFX to keep up with the pixel clock is the streaming of pen values without intermediate storage. 
 
 The system works with the GFXROM addresses lines connected to the CPS-A which acts as the brain but the data lines  connected to the CPS-B (the legs) where pen values are selected/discarded before being sent to the video system.
@@ -1014,13 +1077,19 @@ The system works with the GFXROM addresses lines connected to the CPS-A which ac
 The grid alignment works well with streaming because of the predictable screen location of the tiles in the map.
 
  \begin{figure}[H]%
-\nbdraw{gfx_groups}
- \caption*{In Street Fighter 2, a PAL \icode{STF29} decode tile ids into memory offsets.}%
+\sdraw{0.8}{gfx_groups}
+ \caption*{In Street Fighter 2, a PAL \icode{STF29} decode tiles ids into GFX ROM memory offsets.}%
  \end{figure}%
 
-Notice how the GFXROM data is retrieved four bytes at a time thanks to a 32-bit data bus. This conveniently accounts for eight pen values.f
+Notice how the GFXROM data is retrieved four bytes at a time thanks to a 32-bit data bus. This conveniently accounts for eight pen values.
 
-The CPS-A does not use GFXROM addresses to stream data to the CPS-B. Instead it uses identifier code to stream lines of pen values. 
+\subsubsection{Channels}
+To further improve bandwidth, the GFXROM data uses a layout where 8 consecutives bytes are interleaved four by four across two chips. 
+
+When reading, a memory address is issued to two chips at the same time and their data lines are enabled consecutively alike on a TV "channel" selection.
+
+This technique allows to save one chip "fetch time" per access. The channel concept is further discussed on page \pageref{channels}\index{Channels!Theory}. 
+
 % Keep in mind that at any time, the CPS-B not only receives data from the GFXROM but also stream pen values to the video system. 
 
 % \begin{trivia}
@@ -1057,14 +1126,6 @@ The CPS-A does not use GFXROM addresses to stream data to the CPS-B. Instead it 
 \subsection{CPS1 Tilemaps}
 The CPS-1 features three tilemap layers named SCROLL1, SCROLL2, and SCROLL3. They all rely on tilemaps made of 64x64 tiles. However they all use different tile dimensions. 
 
-SCROLL1 uses tiles of dimensions 8x8 resulting in a total dimensions of 512x512.
-% A tile is 8 lines of 4 bytes = 64 bytes.
-
-SCROLL2 uses tiles of dimensions 16x16 resulting in a total dimensions of 1024x1024.
-% A tile is 16 lines of 8 bytes = 128 bytes.
-
-SCROLL3 uses tiles of dimensions 32x32 resulting in a total dimensions of 2018x2048.
-% A tile is 32 lines of 16 bytes = 5123 bytes.
 
 
 \vfill
@@ -1074,7 +1135,14 @@ SCROLL3 uses tiles of dimensions 32x32 resulting in a total dimensions of 2018x2
  \end{figure}%
 \pagebreak
 
-Each tilemaps has a maximum capacity of 32 palettes which each tile can use freely.
+SCROLL1 uses tiles of dimensions 8x8 resulting in a total dimensions of 512x512. SCROLL2 uses tiles of dimensions 16x16 resulting in a total dimensions of 1024x1024. SCROLL3 uses tiles of dimensions 32x32 resulting in a total dimensions of 2018x2048.
+% A tile is 8 lines of 4 bytes = 64 bytes.
+
+% A tile is 16 lines of 8 bytes = 128 bytes.
+
+% A tile is 32 lines of 16 bytes = 5123 bytes.
+
+Each tilemaps has a maximum capacity of 32 palettes (called a palette page) which any tile can use freely.
 
 For Street Fighter 2, the developers used layers with different horizontal scroll speed to implement parallax. The sprites in black (drawn on a fourth layer called "OBJ" which is discussed later) are used not only for the characters but also for the "GUI" elements.
 
@@ -1095,22 +1163,39 @@ Besides SCROLLs, the CPS-1 has two "STARfields" which are always behind the SCRO
 
 For each of these layers, the GFXROM contains no tiles but instead bytecode dictating the position of points as well as palette cycling timing. By using the 32 palettes of each of these layers astutely, parallaxed starfield can be rendered. 
 
-These STARs layers were a great feature for the many space shoot'em up released when the CPS-1 was designed since it saved considerable GFXROM space and artists time. The first title released on CPS-1, Forgotten Worlds, prominently showcased its starfields.
+These STARs layers were a convenient for the many space shoot'em up released when the CPS-1 was designed since it saved considerable GFXROM space and artists time. 
+
+% The first title released on CPS-1, Forgotten Worlds, prominently showcased its starfields.
+
+% \begin{trivia}
+% Alike the tilemaps, each starfield has a dedicated 32 palettes.
+% \end{trivia}
+
+\subsubsection{Making Noir}
+Long after STARfield came out of fashion, they found a new found and quite unexpected usage.
+
 
 \vfill
 \begin{figure}[!b]
 \img{color_short_forgottn-00000450.png}
- \caption*{Forgotten Worlds. Notice the GUI element alignment}%
+ \caption*{Forgotten Worlds. Notice the GUI elements alignment on SCROLL1}%
  \end{figure}%
 \pagebreak
 
-Alike the tilemaps, each starfield has a dedicated 32 palettes.
+
+
+
+
+When designers needed a full black background, instead of using a SCROLL and repeating requesting rows of black tiles to cover the whole screen, they only had to use a STARfield and request no stars for it. 
+
+This is the unknown poesy of Street Fighter Hyper Fighting intro sequence. As the title appears, the black background is in fact a beautiful dark night sky. And nobody ever knew about it.
 
 \begin{trivia}
-The CPS-1 layer system does not use a painter algorithm where pixels are written over and over in a framebuffer. The CPS-B receives a stream of all layers and based on the priority and the potential transparent pen value (\icode{0xF}) select the one to send to the video system.
+The CPS-1 layer system does not use a painter algorithm where pixels are written over and over in a framebuffer. 
+
+The CPS-B receives a stream of all layers and based on the priority and the potential transparent pen value (\icode{0xF}) select the one to send to the video system.
 \end{trivia}
 
-The STARs layers also proved useful when designers needed a full black background. Instead of using a SCROLL and repeating rows of black tiles, they only had to use a STAR and request no stars for it. Ironically, players starred at a beautiful dark night sky and never knew about it.
 
 \fcolorbox{black}{red}{\vphantom{W}\hphantom{H}} SCROLL1, \fcolorbox{black}{green}{\vphantom{W}\hphantom{H}} SCROLL2, \fcolorbox{black}{blue}{\vphantom{W}\hphantom{H}} SCROLL3, \fcolorbox{black}{mycyan}{\vphantom{W}\hphantom{H}} STAR1, \fcolorbox{black}{myyellow}{\vphantom{W}\hphantom{H}} STAR2, \fcolorbox{black}{black}{\vphantom{W}\hphantom{H}} OBJ.
 
@@ -1134,9 +1219,14 @@ The STARs layers also proved useful when designers needed a full black backgroun
 
 The drawing order (also called "priority") of SCROLLs and the sprite layer we will see next is entirely configurable (although both STARs must remain behind). Any order can be requested but there is an extra feature available to the SCROLL drawn just before the sprite layer.
 
-Take the example of Final Fight Level 1 where the main characters Haggar and Guy exit the subway. 
+Take the example of Final Fight. After fighting their way in a busy subway, Haggar and Guy find themselves exiting the train station to continue happily brawling in a desolated part of the city. 
 
-We can see, in "back to front" order,  \fcolorbox{black}{blue}{\vphantom{W}\hphantom{H}} SCROLL3 used for the skyline, \fcolorbox{black}{green}{\vphantom{W}\hphantom{H}} SCROLL2 used for the main playground, \fcolorbox{black}{black}{\vphantom{W}\hphantom{H}} OBJ for the main characters, tires, and barrel sprites, and on top of all \fcolorbox{black}{red}{\vphantom{W}\hphantom{H}} SCROLL1 for the GUI.
+As they are going up the stairs, observe in "back to front" order the following layers.
+
+- \fcolorbox{black}{blue}{\vphantom{W}\hphantom{H}} SCROLL3 used for the skyline.\\
+- \fcolorbox{black}{green}{\vphantom{W}\hphantom{H}} SCROLL2 used for the main playground.\\
+- \fcolorbox{black}{black}{\vphantom{W}\hphantom{H}} OBJ for the main characters, tires, and barrel sprites.\\
+- \fcolorbox{black}{red}{\vphantom{W}\hphantom{H}} On top of all, SCROLL1 for the GUI.
 
 
 \vfill
@@ -1147,7 +1237,7 @@ We can see, in "back to front" order,  \fcolorbox{black}{blue}{\vphantom{W}\hpha
 \pagebreak
 
 
-This makes sense except for one detail. If we look closely at Haggar, he appears to be both in front and behind SCROLL2.
+It all makes sense except for one detail. If we look closely at Haggar (for those who never played Final Fight, poor soul, Haggar is the bigger of the two. When he does not workout, he is also a mayor. Anyway.), he appears to be both in front and behind SCROLL2.
 
 The CPS-B allows the SCROLL layer behind the OBJs layer to have a special power. If a SCROLL tile is marked property, it can request the CPS-B to display some of its pixels on top of OBJ instead of behind.
 
@@ -1167,10 +1257,13 @@ SCROLL 2 was given the special ability to horizontally offset rows based on thei
 
 This capability is commonly known as "rowscroll" and is implemented via a table of 1024 10-bit integers (one for each line) in GFXRAM.
 
+Note this is a completely hard-coded feature in the ASICs. As we will see in the software/programming chapters, the 68000 has no awareness of HSYNC timing, only VSYNC is known.
+
+\begin{trivia}
+
 This feature does not stresses the cache system in the CPS-A because rows are scrolled predictably.
 
-
-The starfield and rowscroll features are good example of how difficult it is to design hardware. Doing it well consist in accurately predicting what will be useful and what won't. 
+\end{trivia}
 
 \vfill
 \begin{figure}[!b]
@@ -1181,6 +1274,7 @@ The starfield and rowscroll features are good example of how difficult it is to 
 
 \subsubsection{Choosing features}
 
+The starfield and rowscroll features are good example of how difficult it is to design hardware. Doing it well consist in accurately predicting what will be useful and what won't. 
 
 If starfields were heavily used in the inauguration title, "Forgotten Worlds", and prominently featured in the second one , "Strider", rowscrowl on the other side saw no usage for nearly two years. 
 
@@ -1291,35 +1385,59 @@ With a double sprite framebuffer, the PPU does not just draw a line in advance b
 
 The gain is massive but it comes with three drawbacks. 
 
+\subsubsection{Price}
 First, the price of the machine goes up since it requires much more buffering capacity. At the resolution of 384*224, 9 bits per pixel are stored (5-bits palette index + 4-bit color index) requiring 100 KiB of storage per framebuffer.
 
-
+\subsubsection{Bandwidth requirements}
 The second impact is on the bus because a massive amount of data is now written and read to/from the VRAM. It requires so much bandwidth that an especially large data bus connecting the GFX ROM and the VRAM had to be created.
 
+\subsubsection{De-synchronization}
 Lastly, there is the problem of tilemap and sprites rendering desynchronized. When the m68k writes a layout in the GFXRAM, the graphic system picks it up but channels background tiles and sprites tiles to different locations. The tilemap is rasterized directly towards the video system while the sprite layer is rendered to the VRAM framebuffer where it will be picked up on the next frame.
  
-
-
-The issue is visible on the next drawing. On frame 1, the scrolls of frame 1 are displayed. On frame 2, the scrolls of frame 2 are displayed but along with the spritebuffer from frame 1. On frame3, the scrolls of frame 3 are displayed but along with the spritebuffer from frame 2. 
-
-\nbdraw{latency}
 
 \begin{trivia}
 The sync issue is particularly noticeable in Final Fight level 2. The subway wagon moves up and down to simulate rails but inside the handles on the ceiling and the characters appears to lag behind.
 \end{trivia}
 
-\subsubsection{CPS1 Sprites Tile}
-With its architecture based on a double sprite framebuffer, Capcom reached its target to build a powerful system able to move an immense volume of sprites. But performance was only one part of the equation, they also had to come up with a flexible way for artists to use it.
+The issue is visible on the next drawing. On frame 1, the scrolls of frame 1 are displayed. 
 
-Up to that point, the frustration spur from sprite dimensions (all sprites had to had the same sizes), shapes (mandatory rectangular) and colors (one sprite could use at most one palette). 
+\begin{figure}[H]
+\nbdraw{latency}
+ \caption*{Frame 1.}%
+ \end{figure}%
+
+On frame 2, the scrolls of frame 2 are displayed but along with the spritebuffer from frame 1.
+ 
+
+\begin{figure}[H]
+\nbdraw{latency}
+ \caption*{Frame 2.}%
+ \end{figure}%
+
+On frame3, the scrolls of frame 3 are displayed but along with the spritebuffer from frame 2.
+
+\begin{figure}[H]
+\nbdraw{latency}
+ \caption*{Frame 3.}%
+ \end{figure}%
+
+
+
+
+
+\subsubsection{CPS1 Sprites Tile}
+With its architecture based on a double sprite framebuffer, Capcom built a powerful system able to move an immense volume of sprites. But performance was only one part of the equation, they also had to come up with a flexible way for artists to use it.
+
+Up to that point, the frustration spur from sprite dimensions (all sprites had to had the same sizes), shapes (mandatory rectangular) and colors (one palette per sprite). 
 
 The CPS-1 lifted these three limitations by abandoning the concept of sprites. The CPS-1 does have a "sprite" layer but it is made of tile of dimensions 16x16 pixels. Called OBJ (for OBJects) its TILEs can be arranged however an artist requires to build sprites of arbitrary shapes and sizes. 
 
 OBJ has 32 palettes which any tile can freely use for a total of 480 colors.
 % This system also allows to us more colors since each OBJ can use any of the 32 palettes available on the OBJ layer. This greatly increase the total usable colors to a total of 32*16 - 32 = 480 sprites colors. 
 
+\pagebreak
 
-
+Street Fighter II embodies the power of the tile system. Combining them creates a universe of rich characters with specific shapes, contributing to building their personality.
 
 \begin{minipage}[t]{0.453\linewidth}
   \sdraw{1.0}{chunLi}
@@ -1332,7 +1450,7 @@ OBJ has 32 palettes which any tile can freely use for a total of 480 colors.
 
 % made of 4-bit color index where 0 is always considered transparent. Sprite tile arrangement is described along with SCROLL tiles in the GFXRAM. 
 
-Chunli guard, 25 tiles (3,200 bytes). Zanghief standing, 34 tiles (4,352 bytes). 
+Chunli guard pose, 25 tiles (3,200 bytes). Zanghief standing, 34 tiles (4,352 bytes). 
 
 \begin{minipage}[t]{0.3\linewidth}
   \sdraw{1.0}{ryu}
@@ -1342,13 +1460,13 @@ Chunli guard, 25 tiles (3,200 bytes). Zanghief standing, 34 tiles (4,352 bytes).
   \sdraw{1.0}{sagat}
 \end{minipage}
 
-Ruy victory, 29 tiles (3,712 bytes). Sagat TigerP, 30 tiles (3,840 bytes). 
+Ruy victory pose , 29 tiles (3,712 bytes). Sagat Tiger Punch pose, 30 tiles (3,840 bytes). 
 
 
 
 \sdraw{1.0}{kingpin}
 
-Kingpin in "The Punisher" is made of 69 tiles and takes half the screen.
+The ultimate boss in "The Punisher", Kingpin, is a mountain of a man made of 69 tiles which takes half the screen. This impressive feat came at a zero-wasted space thanks to the malleability of tiles.
 
 
 Tiles in the OBJ layer can have attributes to be rendered horizontally and/or vertically flipped but there is not support for rotation or scaling.

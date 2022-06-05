@@ -3,11 +3,11 @@
 
 <svg
    width="243.10506mm"
-   height="114.91354mm"
-   viewBox="0 0 243.10506 114.91355"
+   height="74.913544mm"
+   viewBox="0 0 243.10506 74.91355"
    version="1.1"
    id="svg10050"
-   inkscape:version="1.1.2 (b8e25be833, 2022-02-05)"
+   inkscape:version="1.1.2 (08b2f3d93c, 2022-04-05)"
    sodipodi:docname="latency.svg"
    inkscape:export-filename="/Users/sanglardf/sf2b/latency.png"
    inkscape:export-xdpi="96"
@@ -27,11 +27,11 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:snap-global="false"
-     inkscape:zoom="1.2785988"
-     inkscape:cx="463.39791"
-     inkscape:cy="221.33605"
-     inkscape:window-width="1464"
-     inkscape:window-height="851"
+     inkscape:zoom="0.62431582"
+     inkscape:cx="185.00252"
+     inkscape:cy="209.02882"
+     inkscape:window-width="1280"
+     inkscape:window-height="736"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -100,10 +100,10 @@
     </marker>
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="0 : -33.586462 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_z="210.00001 : -33.586462 : 1"
-       inkscape:persp3d-origin="105.00001 : -83.086454 : 1"
+       inkscape:vp_x="0 : -73.586461 : 1"
+       inkscape:vp_y="0 : 999.99987 : 0"
+       inkscape:vp_z="210.00001 : -73.586461 : 1"
+       inkscape:persp3d-origin="105.00001 : -123.08642 : 1"
        id="perspective14125" />
     <marker
        style="overflow:visible"

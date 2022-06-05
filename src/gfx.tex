@@ -25,6 +25,11 @@ The EPROMs are organized in groups of four chips and serialized. On a board like
 
 \nbdraw{gfx_interleave}
 
+\section{Channels}\label{channels}\index{Channels!Practice}
+The channels mentions earlier are now visible. ROM \icode{01} and ROM \icode{02} are respectively on channel 1 and channel 2. The same division is applied to the rest of the ROMs. 
+
+We can (hopefully) better see here how issuing the same address on two channels allow to retrive the two first byte and so on.
+
 \nbdraw{build_graph_gfx}
 
 \img{smc-70_ad.jpg}
