@@ -5,13 +5,16 @@ Nothing tells your more about a system than the process of actually building sof
 
 The rest of this book describes a full game production pipeline. The goal is to deepen the understanding of Capcom's platform by not only writing code and generating assets but also learning how to process them in order to generate ROMs.
 
-The pipeline ingests the code (\icode{.s}/\icode{.c}) written by programmers, the samples (\icode{.wav}) and musics (\icode{.mvg}) from the musicians, and the graphics assets (\icode{.png}) produced by the artists. The outputs are four sets of ROMs ready to be burned on EPROMs. 
+This chapter describes the high-level architecture. It is intentionally light on details since those are provided in subsequent chapters.
+
+The pipeline we will describe ingests the code (\icode{.s}/\icode{.c}) written by programmers, the samples (\icode{.wav}) and musics (\icode{.mvg}) from the musicians, and the graphics assets (\icode{.png}) produced by the artists. The outputs are four sets of ROMs ready to be burned on EPROMs. 
 
  \begin{figure}[H]
 \sdraw{1.0}{game_pipeline}
 \caption*{Game ROMs dependency graph}
 \end{figure}
 
+\pagebreak
 Some dependencies in the graph make a lot of sense. The Z-80 source code (\icode{.c} and \icode{.s}) only impacts the Z-80 ROM. Likewise, the 68000 code (also \icode{.c} and \icode{.s}) ends up in the 68000 ROM.
 
 Other dependencies are more convoluted. The \icode{.wav} sample files for example need to be compressed to ADPCM before being added to the OKI ROM. To be referencable at runtime, each sample is given an integer ID. These IDs must be collected into a \icode{.h} header file. That file must be compiled along with the rest of the 68000 code.
@@ -51,15 +54,19 @@ Bootstrapping involves simple things like setting the stack pointer and the inst
 
 After compilation and linking, this program will result into a binary of raw instructions (no container like ELF or PE) \icode{prog.rom}. Burned on a ROM, is is mapped somewhere in the CPU address space.
 
+During the linking stage, all the variables and functions were given an address in either ROM or RAM. 
+
 \begin{figure}[H]
 \nbdraw{prog_rom_mapping}
 \caption*{CPU Memory address space, ROM and RAM}
 \end{figure}
 
-During the linking stage, all the variables and functions were given an address in either ROM or RAM. The easier symbol to deal with was function \icode{f} which goes in ROM and points to its own instructions.
+\subsubsection{Read-only}
+The easier symbol to deal with was function \icode{f} which goes in ROM and points to its own instructions.
 
 Another easy symbols are the const \icode{vc} and \icode{vd}. Since they are read only, their values are written to ROM as well. These are grouped in another section \icode{.rodata} apart from functions but nothing fishy there.
 
+\subsubsection{Read-Write}
 Symbol \icode{va} is interesting because it is readable but also writable. The linker will have assigned a RAM address. Since it is uninitialized, it point to whatever is there in the RAM when it started.
 
 Symbol \icode{vb} is even more interesting. Like \icode{va} is is readable and writable but unlike \icode{va} it is initialized  to value \icode{0}. The linker can make \icode{va} point to RAM and even group zero-initialized variable together but setting the value to zero cannot be done. This is something the bootstrap will have to somehow take care off.

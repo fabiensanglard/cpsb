@@ -18,7 +18,7 @@ A PAL programmed for Forgotten Worlds board, the \icode{LW621}, is more complex 
 
 
 \section{Tile format}
-All tiles are stored continuously in memory, using groups of four bytes encoding eight pens. The dimension of a tile varies depending on the layers. OBJ and SCR2 uses the same 16x16 tiles which mean their tiles are 16*16 / 2 = 128 bytes. For the fine tuned SCR1 which uses 8x8, each tile takes 32 bytes. Finally the larger SCR3 uses 512 bytes for each of its 32x32 tiles.
+All tiles are stored continuously in memory, using groups of four bytes encoding eight pens. Rows of pens are stored one after another. The dimension of a tile varies depending on the layers. OBJ and SCR2 uses the same 16x16 tiles which mean their tiles are 16*16 / 2 = 128 bytes. For the fine tuned SCR1 which uses 8x8, each tile takes 32 bytes. Finally the larger SCR3 uses 512 bytes for each of its 32x32 tiles.
 
 \section{GFX Layout}
 The EPROMs are organized in groups of four chips and serialized. On a board like Street Fighter II, we find three groups of four. Inside each group, chips are interleaved every two bytes.
@@ -26,16 +26,151 @@ The EPROMs are organized in groups of four chips and serialized. On a board like
 \nbdraw{gfx_interleave}
 
 \section{Channels}\label{channels}\index{Channels!Practice}
-The channels mentions earlier are now visible. ROM \icode{01} and ROM \icode{02} are respectively on channel 1 and channel 2. The same division is applied to the rest of the ROMs. 
+The channels mentions earlier are now visible. ROM \icode{01} and ROM \icode{02} are respectively on channel 1 and channel 2. Likewise, ROM \icode{03} and \icode{04} are channel pairs. The same division is applied to the rest of the ROMs with the same principle. 
 
-We can (hopefully) better see here how issuing the same address on two channels allow to retrive the two first byte and so on.
+We can (hopefully) better see here how issuing the same address on two channels allow to retrieve the two first byte and so on.
 
 \nbdraw{build_graph_gfx}
 
-\img{smc-70_ad.jpg}
+
+
+
+
+
+
+
+
+
 
 \section{Back then...}
-Thanks to artists interviews, many details of their process transpired.
+The creation of artwork for a game always started with pencil and paper before moving to digitizing. On a big title such as Street Fighter II, up to twenty artists worked in parallel to produces artwork.
+
+\subsection{Pen and Papers}
+A sprite was typically drawn twice, first as a concept art without details in order to captures the essence of a character pose as well as proportions and sense of movement. Once satisfactory, a second phase involved a more detailed drawing.
+
+Even though it was no the norm, both iterations could be done by the same artist, especially if the topic was dear to their heart.
+
+\begin{q}{Akiman}
+I created Chun-Li’s graphics in just 1 month.
+\end{q}
+
+However, it was often the case that the lead designer took care of the first iteration, while delegating the fine-tuning to OBJ artists. In the case of Final Fight (p\pageref{ff_design}, Satoru Yamashita animated Guy and Haggar but Akiman drew the key animations for both of them.
+
+
+
+\begin{q}{Eri Nakamura}
+When I joined on Street Fighter II, Akiman had already done the rough drafts. 
+
+There were four of us as character leads - Satoru Yamashita , Yoshiaki Ohji, and Ikuo Nakayama in addition to myself. Satoru was the most skilled, so he would take Ryu and Ken. 
+
+One day, Akiman brought us the rough sketches of a pro wrestler, sumo wrestler, and a beast, and said "decide who does what." To be fair, we played paper-rock-scissors to determine!
+\end{q}
+
+
+
+
+
+\subsection{Aspect ratio}
+The one constant between these iteration is that all work had to be done on non-square grid paper. In order to compensate for the non-square pixels of the CPS-1, artists had to draw with proportion that pre-stretched drawing vertically. 
+
+\begin{figure}[H]
+\img{ff_design.jpeg}
+\caption*{Final Fight Guy's key frame by Akiman}
+\label{ff_design}
+\end{figure}
+
+The non-square pixels are visible in Guy's concept art. The "pixels" are grouped in elements 16 by 16, resulting in vertically stretched rectangles.
+
+
+
+\img{smc-70_ad.jpg}
+
+\subsection{Digitizing art}
+To digitize their drawings, Capcom employees used SMC-70 computers. Manufactured by Sony, the SMC-70 hit both the US and japan market in the end of 1982. What is particularly noteworthy about this machine is that is built around extensibility. 
+
+The main element of a SMC-70 features its keyboard and the core parts such as the z80 running at 4MHz, 64KiB RAM, and 64 KiB of VRAM. The rest is entirely configurable via daisy chained extenders. 
+
+This architecture allowed Sony's machine capabilities to range from simple office work to a powerful video editing tool in its most extensive modification. 
+
+
+\img{sm70_drawing1.png}
+
+\subsubsection{Noteworthy capabilities}
+The substantial list of extensions and peripherals, totaling nearly 40 pieces, conveys Sony's sense of innovation and malleability bread in its SMC-70. Improvements ranging from a simple a extra floppy-disk drive to a full CPU swap replacing the 8-bit z80 with a 16-bit Intel 8086.  
+
+\begin{figure}[H]
+
+\begin{tabularx}{\textwidth}{rX} 
+  \toprule 
+  \textbf{Extension Name} & \textbf{Function} \\               
+  \toprule    
+\texttt{SMI-7011} & 3.5" floppy drive bay (internal with 1 drive)\\ 
+\texttt{SMI-7012} & 3.5" floppy drive bay (internal with 2 drives)\\ 
+\texttt{SMI-7013} & 3.5" floppy drive bay (external with 1 drive)\\ 
+\texttt{SMI-7014} & 3.5" floppy drive bay (external with 2 drives)\\ 
+\texttt{SMI-7016} & Floppy Disk Control Unit\\ 
+\texttt{SMI-7020} & Dot Matrix Printer\\ 
+\texttt{SMI-7031} & RS232C Serial Interface\\ 
+\texttt{SMI-7032} & IEEE-488 Interface Unit\\ 
+\texttt{SMI-7050} & Cache Disk Unit\\ 
+\texttt{SMI-7056} & Supercharger: 5 MHz Intel 8086 CPU / 256 KiB RAM.\\ 
+\texttt{SMI-7060} & 10-Key Numeric Key Pad\\ 
+\texttt{SMI-7070} & Video Signal Converter\\ 
+\texttt{SMI-7073} & RGB Superimposer\\ 
+\texttt{SMI-7074} & NTSC Superimposer\\ 
+\toprule
+\texttt{SMI-7075} & Videotizer\\ 
+\texttt{SMI-7080} & Battery Back-up Unit\\ 
+\toprule
+\end{tabularx}%
+\caption*{SMC-70 extensions and peripherals}
+\end{figure}
+
+
+\img{smc70_keypad.jpg}
+
+
+In the pack can be found the first 3.5" floppy reader (also invented by Sony in 1981), coming in single or double bay.
+
+
+The only limit to the daisy chain extension system is the capacity of the power supply which also must be located at the very back of the chain.
+
+\begin{trivia}
+Koichi Yotsui: “You had a 16 pixel grid, a 16-color palette, and that was it”
+\end{trivia}
+
+"I used a keyboard to draw all the graphics for Vampire and Street Fighter 2" \href{https://twitter.com/akiman7/status/386598518380453888}{LINK}
+% \img{smc70_genlock.jpg}
+
+
+
+
+The  noteworthy features 
+ ability to display kanji character and its usage of 3.5inch micro-floppy disk (also invented by Sony in 1981).
+
+Running on CP/M OS.
+Sony's machine featuring  It could be extended had high resolution of 320x200 in 16 colors and...no mouse!
+
+The tool used, TCE (Tiny Character Editor), ran on a SMC-70.
+
+
+%  \begin{figure}[H]
+%  \center
+% \begin{tabularx}{0.25\textwidth}{rrr} 
+%   \textbf{Width} & \textbf{Height} & \textbf{Colors} \\               
+%   \toprule    
+% 160& 100& 16 \\
+% 640& 200& 4 \\
+% 320& 200& 16 \\
+% 640& 400& 2 \\
+% \toprule
+% \end{tabularx}%
+% \caption*{Sony SMC-70 resolutions}
+% \end{figure}
+
+
+
+
 
 \subsection{Following the paper trails}
 If breaking free of the rectangular sprites was a blessing for the artists, it was a problem for Capcom project managers. In an era where ROM chips were very expensive, a game was allocated a ROM budget at its beginning which it could not exceed.
@@ -102,7 +237,7 @@ With no scanners available, digitalization was done manually by looking at the p
 
 
 
-The tool used, TCE (Tiny Character Editor), ran on a SMC-70. Sony's machine featuring a z80 running at 4MHz with 64KiB RAM had high resolution of 320x200 in 16 colors and...no mouse!
+
 
 \begin{q}{Akiman\cite{ar20160404}}
   As everything was in hexadecimal we used the 0-F keys and the arrows to make the sprites. There was this one guy who made a complete racket mashing away on his keyboard. He used to do overtime and didn't even sleep, so we'd all have no choice but to stay awake and keep working as well.
@@ -161,6 +296,12 @@ Final Fight is even more impressive. Made on a 2MiB GFXROM budget, it featured a
 \begin{minipage}[t]{0.29\linewidth}
 \simg{1.0}{enemy_wongwho.png}
 \end{minipage}
+
+
+\begin{q}{Nishitani, Capcom – 1991 Retrospective Interview}
+Everyone on the development thought Final Fight was going to be made on hardware with a large memory capacity, but that turned out not to be true. That’s why the final boss Belger hops around like that: we didn’t have enough memory to add more graphics for a walking pattern. However, making something cool with limited resources is like a puzzle to me, so I thought it was fun. 
+\end{q}
+
 
  \begin{figure}[H]
 \nbdraw{0x0100}  

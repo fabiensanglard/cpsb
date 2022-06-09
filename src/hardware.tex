@@ -1485,6 +1485,7 @@ Tiles in the OBJ layer can have attributes to be rendered horizontally and/or ve
 
 \pagebreak
 
+\subsection{OBJ Limitations}
 The sprite system has a hard limit of 256 tiles. This is a simple constraint dictated by how many tile is is able to read from the GFXROM and write to the VRAM during a raster scan (16.7ms).
 
 Because OBJ tiles are the most versatile (they can be placed independently and anywhere on the screen), it was tempting to use them often.
@@ -1501,10 +1502,16 @@ We carefully planned SF2 so that the biggest character and the second biggest ch
 
 But when mirror matches became possible in Champion Edition, that meant that we had to be able to display two copies of the biggest character on screen. We ended up having to remove back- ground elements and such.
 \end{q}
-To remain within the OBJ budget, the "wind, forest, fire, mountain" ("\begin{CJK}{UTF8}{min}風林火山\end{CJK}") sign was removed from Street Fighter 2 Champion Edition.
+To remain within the OBJ budget, the "wind, forest, fire, mountain" ("\begin{CJK}{UTF8}{min}風林火山\end{CJK}") sign was removed from Street Fighter 2 Champion Edition. Many more background like XXX, YYY, and ZZZ had to be reworked in the same fashion.
+
+\begin{trivia}
+Decoration in Street Fighter 2 were the object of much consideration. The stone in Thailland randomly move at the beginning of each round so they cannot be used as hallmark by players.
+
+\end{trivia}
+
 \vfill
 \img{lack_sprites_rgb.png}
-\pagebreak
+
 
 \begin{minipage}[t]{0.32\linewidth}
   \img{sf2frames-00001209}
@@ -1655,11 +1662,23 @@ They faked it with two logos, a small and a large one. Tiles move on a circular 
 
 \pagebreak
 
+
+
+
+
+
+
+
+
+
+
 \subsubsection{The World Warrier}
 The OBJ system was used in a creative way by Akiman, the lead designer on Street Fighter 2 at the time, to solve a show-stopper bug.
 
 \begin{q}{Akiman, Lead graphic design on SF2}
-Just three days before the deadline, I discovered something horrible. I had made a mistake with the subtitle “World Warrior”, mis-spelling it “World Warrier.”
+Just three days before the deadline, I discovered something horrible. 
+
+I had made a mistake with the subtitle “World Warrior”, mis-spelling it “World Warrier.”
 \end{q}
 
 The subtitle is drawn with the OBJ layer, using 16 draw calls pointing to tileID \icode{0x0}, \icode{0x1}, \icode{0x2}, \icode{0x3}, \icode{0x4}, \icode{0x5}, \icode{0x6}, \icode{0x7}, \icode{0x8}, \icode{0x9}, \icode{0xA}, \icode{0xB}, \icode{0xC}, \icode{0xD}, \icode{0xE}, \icode{0xE}. 
@@ -1677,14 +1696,16 @@ It was several months after all the sprite work had been done. Since the logo ha
 
 What Akiman describe is that the GFXROM and all the tiles had been finalized. However they could still make modification to the 68000 instructions and most importantly, the palettes that were stored along with it.
 
+\begin{q}{Akiman, Lead graphic design on SF2}
+"Maybe I can just force it to look like an ‘o’," I thought. I tried layering various other sprites over it until finally, it looked like an ‘o’. Phew!
+\end{q}
+
 \begin{figure}[H]
 \img{sf2_title_warrier.png}
  \caption*{A recreation of problem. Ouch!}%
  \end{figure}%
 
-\begin{q}{Akiman, Lead graphic design on SF2}
-"Maybe I can just force it to look like an ‘o’," I thought. I tried layering various other sprites over it until finally, it looked like an ‘o’. Phew!
-\end{q}
+
 
 How in the wORld, do you make an 'i' looks like an 'o'? It turns out that Akiman was lucky in the mistake he had made since the letters he needed, 'o' and 'r', can be found in the word "World".
 
@@ -1704,10 +1725,10 @@ There is an expensive way to fake pixel plotting. The idea is to find a tile alm
 
 Akiman found that in one of Guile's pose, his calve met these criteria with a simple pen value in its lower left.
 
-
+\begin{figure}[H]
 \nbdraw{guileCalve}
-
-\pagebreak
+\caption*{Guile's calve save the day.}%
+ \end{figure}%
 
 Using Guile's calve as a pencil, but with the title's palette, three tiles are drawn over the 'l' to split it into an 'i'.
 
@@ -1721,12 +1742,13 @@ Using Guile's calve as a pencil, but with the title's palette, three tiles are d
  \caption*{Title palette.}%
  \end{figure}%
 
- % In an extraordinary coindicence, it was a match.
 
-% \begin{figure}[H]
+ In an extraordinary coindicence, the pen corresponding colors were a match.
+
+\begin{figure}[H]
 \nbdraw{world_warrior_title}
- % \caption*{"18 draws calls. Two more than necessary but with proper grammar.}%
- % \end{figure}%
+ \caption*{18 draws calls. Two more than necessary but with proper grammar.}%
+ \end{figure}%
 
 \begin{figure}[H]
 \img{sf2_title.png}
@@ -1740,7 +1762,12 @@ Using Guile's calve as a pencil, but with the title's palette, three tiles are d
 
 We now have enough knowledge to fully understand how the CPS-A and CPS-B cooperate to render graphics.
 
-The two graphics chips closely work together by sharing custody of the GFX ROM and VRAM. The CPS-A generates four interleaved stream of pens (OBJ, SCR1, SR2, and SRC3) by driving the address bus. The CPS-B receives the data and decides for each "pixel" which stream is visible. 
+The two graphics chips closely work together by sharing custody of the GFX ROM and VRAM. 
+
+
+ The CPS-A generates four interleaved stream of pens (OBJ, SCR1, SR2, and SRC3) by driving the address bus.
+  The CPS-B receives the data and decides for each "pixel" which stream is visible. 
+
 
 \begin{figure}[H]
 \nbdraw{shared_custody}
@@ -1770,7 +1797,7 @@ Not only the VRAM system is optimized from an architecture standing point via tw
 
 A quick glance at the \icode{HM53461P} pins shows that this chip does more than the simple data, address, and control we have seen so far.
 
-\sdraw{0.7}{HM53461P-10}
+\sdraw{0.6}{HM53461P-10}
 
 Able to store 65,536 Ki x 4-bit, the \icode{HM53461P} is peculiar because it not only features a RAM port (\icode{D1-D4}), it also features a SAM "serial" port (\icode{SD1-SD4}).
  
@@ -1808,7 +1835,7 @@ On the Street Fighter II board, twelves \icode{ MB834200B-15} are combined for a
 
 \nbdraw{gfxroms}
 
-TODO: Talk about channel and how it helped to improve performances of the GFXROM. 
+% TODO: Talk about channel and how it helped to improve performances of the GFXROM. 
 
 \section{Copy protection system}
 
@@ -1816,13 +1843,9 @@ Upon release, Capcom then CEO Kenzo Tsujimoto, was confident the CPS-1 would sig
 
 \begin{q}{Kenzo Tsujimoto, Capcom CEO\cite{gamest38}}
     
-The new CP System arcade boards are very important to Capcom in two regards. First, they have much more memory than our previous hardware. Game developers will have free reign to explore new, exciting design ideas and take advantage of the latest technological developments. 
+The new CP System arcade boards are very important to Capcom in two regards. First, they have much more memory than our previous hardware. Game developers will have free reign to explore new, exciting design ideas and take advantage of the latest technological developments. The CP System has upped the level of our developers already.
 
-The CP System has upped the level of our developers already.
-
-The second big thing is copy protection. Illegal bootlegs have been a huge problem for us overseas; I believe the CP System is the only PCB hardware today that cannot be copied.
-
-The boards contain various copy protection methods, and their advanced hardware should make it difficult for bootleggers seeking to create knockoffs with today's components. 
+The second big thing is copy protection. Illegal bootlegs have been a huge problem for us overseas; I believe the CP System is the only PCB hardware today that cannot be copied. The boards contain various copy protection methods, and their advanced hardware should make it difficult for bootleggers seeking to create knockoffs with today's components. 
 
 Bootlegs don't only hurt us; they're also a nuisance for our customers who think they are getting a genuine board. We see copy protection as one of the main achievements of the CP System.
 \end{q}
@@ -1926,6 +1949,14 @@ The simplest copy protection available is the chip ID check. By polling a regist
 
 To make instructions patching of the 68000 ROMs more difficult, calls to verify the chip id are placed in several location in the code. That did not prevent people from trying anyway\cite{strider_conversion}!
 
+\subsection{Multiplication check}
+Starting with vB-21, a slightly more robust feature gave the CPS-B the ability to perform multiplications. Two registers are written and a third one can be read. The 68000 code is expected to check that the returned multiplication result is the expected value.
+
+\subsection{Unexpected behavior detection}
+Protection described so far involved an active software and a passive hardware. There is yet another level of protection where the hardware is active by expecting the software to behave properly. If the CPS-B sees that incoherent values are written to the wrong register, it sets and lock all palettes to black. 
+
+The game still runs in the background and the audio is also behaving properly but the screen doesn't display anything. The only way to recover is to reboot the machine\cite{petitSecurity}.
+
 \subsection{Moving registers}
 Another variation between CPS-Bs is the registers locations. The 68000 memory map of the CPS-B registers does not change, but the offset inside that mapping was altered between versions. Accessing the scroll control, scroll priority, and palette upload registers is done using a different offset for each game.
 
@@ -1934,10 +1965,7 @@ Additionally, the meaning of each bit inside a register can changes.
 
 
 
-\subsection{Unexpected behavior detection}
-Protection described so far involved an active software and a passive hardware. There is yet another level of protection where the hardware is active by expecting the software to behave properly. If the CPS-B sees that incoherent values are written to the wrong register, it sets and lock all palettes to black. 
 
-The game still runs in the background and the audio is also behaving properly but the screen doesn't display anything. The only way to recover is to reboot the machine\cite{petitSecurity}.
 
 \subsection{Invalid offset detection}
 
@@ -1947,7 +1975,9 @@ Tile references pointing beyond a range are ignored resulting in rendering "hole
 
 \begin{q}{Mame cps-1 video driver}
 All graphics are
-stored together in the same ROMs but the hardware knows which part of the ROM space
+stored together in the same ROMs.
+
+But the hardware knows which part of the ROM space
 is 8x8 tiles, 16x16 tiles, 16x16 spites, 32x32 tiles, and all games tested only
 draw tiles if their code falls in the valid range. 
 
@@ -1955,11 +1985,12 @@ If a tile is out of range, it is replaced by transparent pixels.
 \end{q}
 
 \begin{trivia}
-Pull-up resistors on the board along the GFX ROM data lines detect if a pen value matches a tileID. If not data is detected, \icode{0xF} is automatically "inserted", resulting in a transparent value.
+Pull-up resistors on the board along the GFX ROM data lines detect if a pen value matches a tileID. 
+
+If not data is detected, \icode{0xF} is automatically "inserted", resulting in a transparent value.
 \end{trivia}
 
-\subsection{Multiplication check}
-Starting with vB-21, a slightly more robust feature gave the CPS-B the ability to perform multiplications. Two registers are written and a third one can be read. The 68000 code is expected to check that the returned multiplication result is the expected value.
+
 
 \subsection{Configuration Key}
 Up to 1991, all CPS-B variations were burned at the factory. They were set in silicon without a way to re-purpose them after the fact. This was not only expensive to have to revise the hardware circuits for each game, it was also a logistic difficulty to provision enough chips for a success and not be stuck with inventory on an unappreciated game.
@@ -1979,8 +2010,12 @@ The infamous "suicide" nickname came from the effect of losing power. A CPS-B v2
 
 As the reader will have guessed, passionate fans found a way to bring these games back to life.
 
-The first method is called "phoenix". It is a tedious process which consist in dumping a game ROM and patch the m68k instructions to replace CPS-B registers accesses to use the "default values"\cite{csp1_phoenix}. The people phoenixing CPS-1 board are so good at it that they even change the splash screen of the game to feature a "Phoenix Edition" icon.
+\subsubsection{Phonenixing}
+The first method is called "phoenix". It is a tedious process which consist in dumping a game ROM and patch the m68k instructions to replace CPS-B registers accesses to use the "default values"\cite{csp1_phoenix}. 
 
+The people phoenixing CPS-1 board are so good at it that they even change the splash screen of the game to feature a "Phoenix Edition" icon.
+
+\subsubsection{De-suiciding}
 The second method is even more impressive since it involves circuit surgery by re-uploading the configuration into the CPB-B, essentially de-suiciding them\cite{arcadeHackerCPS1Desuicide}.
 
 \nbimg{phoenix_screen.png}
@@ -2010,14 +2045,6 @@ As cracks appeared in its shield, Capcom did not give up on protecting its tiles
 \subsection{CPS-1.5 Kabuki}
 In 1992, Capcom released the CP System Dash (a.k.a CPS-1.5). Fully encased in a gray plastic box, it introduced a fourth satellite "Qboard" PCB to handle playback of positional three-dimensional Qsound audio. In total, five games would be produced until late 1993.
 
-
-
-The CPS 1.5 is noteworthy for its improved copy-protection where the audio instructions are stored in encrypted ROM. The audio CPU is a special Z-80 dubbed Kabuki\cite{arcadeHackerKabuki} able to decrypt instructions on the fly.
-
-The encryption scheme is symmetric with the private key being stored in the Z-80. It is not burned in the silicon but, alike the CPS-1 configuration, stored via RAM. To keep that key alive, pin 28 is re-purposed from "DRAM refresh" (the sound system uses SRAM anyway) to providing power via a second "suicide battery". 
-
-
-
 \begin{figure}[H]
 { \setlength{\tabcolsep}{3.0pt}
 \begin{tabularx}{\textwidth}{Xrr}
@@ -2033,6 +2060,14 @@ The encryption scheme is symmetric with the private key being stored in the Z-80
 \end{tabularx}%
 }\caption*{Capcom CPS-1.5 based arcades games.}
 \end{figure}
+
+The CPS 1.5 is noteworthy for its improved copy-protection where the audio instructions are stored in encrypted ROM. The audio CPU is a special Z-80 dubbed Kabuki\cite{arcadeHackerKabuki} able to decrypt instructions on the fly.
+
+The encryption scheme is symmetric with the private key being stored in the Z-80. It is not burned in the silicon but, alike the CPS-1 configuration, stored via RAM. To keep that key alive, pin 28 is re-purposed from "DRAM refresh" (the sound system uses SRAM anyway) to providing power via a second "suicide battery". 
+
+
+
+
 
 \begin{trivia}
 The protection provided by CPS-1.5 held remarkably well over the years. It was only broken in the early 2000s\cite{ame_kabuki}.
