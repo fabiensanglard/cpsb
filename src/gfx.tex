@@ -54,7 +54,7 @@ Even though it was no the norm, both iterations could be done by the same artist
 I created Chun-Li’s graphics in just 1 month.
 \end{q}
 
-However, it was often the case that the lead designer took care of the first iteration, while delegating the fine-tuning to OBJ artists. In the case of Final Fight (p\pageref{ff_design}, Satoru Yamashita animated Guy and Haggar but Akiman drew the key animations for both of them.
+However, it was often the case that the lead designer took care of the first iteration, while delegating the fine-tuning to OBJ artists. In the case of Final Fight (page \pageref{ff_design}), Satoru Yamashita animated Guy and Haggar but Akiman drew the key animations for both of them.
 
 
 
@@ -85,6 +85,7 @@ The non-square pixels are visible in Guy's concept art. The "pixels" are grouped
 
 \img{smc-70_ad.jpg}
 
+
 \subsection{Digitizing art}
 To digitize their drawings, Capcom employees used SMC-70 computers. Manufactured by Sony, the SMC-70 hit both the US and japan market in the end of 1982. What is particularly noteworthy about this machine is that is built around extensibility. 
 
@@ -92,97 +93,125 @@ The main element of a SMC-70 features its keyboard and the core parts such as th
 
 This architecture allowed Sony's machine capabilities to range from simple office work to a powerful video editing tool in its most extensive modification. 
 
-
+\begin{figure}[H]
 \img{sm70_drawing1.png}
+\caption*{A SMC-70 extended with a SMI-7012. Power supply in the back.}
+\end{figure}
 
 \subsubsection{Noteworthy capabilities}
 The substantial list of extensions and peripherals, totaling nearly 40 pieces, conveys Sony's sense of innovation and malleability bread in its SMC-70. Improvements ranging from a simple a extra floppy-disk drive to a full CPU swap replacing the 8-bit z80 with a 16-bit Intel 8086.  
 
 \begin{figure}[H]
 
-\begin{tabularx}{\textwidth}{rX} 
+\begin{tabularx}{\textwidth}{rrX} 
   \toprule 
-  \textbf{Extension Name} & \textbf{Function} \\               
+  \textbf{Extension Name} & \textbf{Peripheral Name} & \textbf{Function} \\               
   \toprule    
-\texttt{SMI-7011} & 3.5" floppy drive bay (internal with 1 drive)\\ 
-\texttt{SMI-7012} & 3.5" floppy drive bay (internal with 2 drives)\\ 
-\texttt{SMI-7013} & 3.5" floppy drive bay (external with 1 drive)\\ 
-\texttt{SMI-7014} & 3.5" floppy drive bay (external with 2 drives)\\ 
-\texttt{SMI-7016} & Floppy Disk Control Unit\\ 
-\texttt{SMI-7020} & Dot Matrix Printer\\ 
-\texttt{SMI-7031} & RS232C Serial Interface\\ 
-\texttt{SMI-7032} & IEEE-488 Interface Unit\\ 
-\texttt{SMI-7050} & Cache Disk Unit\\ 
-\texttt{SMI-7056} & Supercharger: 5 MHz Intel 8086 CPU / 256 KiB RAM.\\ 
-\texttt{SMI-7060} & 10-Key Numeric Key Pad\\ 
-\texttt{SMI-7070} & Video Signal Converter\\ 
-\texttt{SMI-7073} & RGB Superimposer\\ 
-\texttt{SMI-7074} & NTSC Superimposer\\ 
-\toprule
-\texttt{SMI-7075} & Videotizer\\ 
-\texttt{SMI-7080} & Battery Back-up Unit\\ 
+\texttt{SMI-7011} & & 3.5" floppy drive bay (internal with 1 drive)\\ 
+\texttt{SMI-7012} & & 3.5" floppy drive bay (internal with 2 drives)\\ 
+\texttt{SMI-7013} & & 3.5" floppy drive bay (external with 1 drive)\\ 
+\texttt{SMI-7014} & & 3.5" floppy drive bay (external with 2 drives)\\ 
+\texttt{SMI-7016} & & Floppy Disk Control Unit\\ 
+ & \texttt{SMI-7020} & Dot Matrix Printer\\ 
+\texttt{SMI-7031} & & RS232C Serial Interface\\ 
+\texttt{SMI-7032} & & IEEE-488 Interface Unit\\ 
+\texttt{SMI-7050} & & Cache Disk Unit\\ 
+\texttt{SMI-7056} & & Supercharger: 5MHz i8086 w/ 256 KiB RAM.\\ 
+ & \texttt{SMI-7060} & 10-Key Numeric Key Pad\\ 
+\texttt{SMI-7070} & & Video Signal Converter\\ 
+\texttt{SMI-7073} & & RGB Superimposer\\ 
+\texttt{SMI-7074} & & NTSC Superimposer\\ 
+\texttt{SMI-7075} & & Videotizer\\ 
+\texttt{SMI-7080} & & Battery Back-up Unit\\ 
 \toprule
 \end{tabularx}%
-\caption*{SMC-70 extensions and peripherals}
+\caption*{SMC-70 extensions and peripherals\cite{smc70tech}}
 \end{figure}
+
+
+% 
+
+
+The only limit to the daisy chain extension system is the capacity of the power supply which also must be located at the very back of the chain. 
+
+First 3.5" floppy reader (also invented by Sony in 1981), coming in single or double bay. ability to display kanji character.
+
+ \begin{figure}[H]
+ \center
+\begin{tabularx}{0.35\textwidth}{rrr} 
+  \textbf{Width} & \textbf{Height} & \textbf{Colors} \\               
+  \toprule    
+160& 100& 16 \\
+640& 200& 4 \\
+320& 200& 16 \\
+640& 400& 2 \\
+\toprule
+\end{tabularx}%
+\caption*{Sony SMC-70 resolutions}
+\end{figure}
+
+Talk about resolution an the wooping 16 colors display. The goal was mostly to super-impose text on TV signal.
+
+
+\subsection{Tools}
+
+There are no scanner on the list of peripherals. The drawing were digitized by hand.
+
+The tool used, TCE (Tiny Character Editor). Although no screenshot ever merged, Capcom employee gave a rough description of the rough condition they worked with.
+
+\begin{q}{Koichi Yotsui (Strider producer)}
+You had a 16 pixel grid, a 16-color palette, and that was it.
+\end{q}
+
+The task at hand was to look at the detailed drawing, and decide which color from the palette would be used for this coordinate. The value was then set via TCE. No mouse but some people built a joytick. Most productive, Akiman, used a play keyboard.
+
+\begin{q}{Akiman\cite{akiman}}
+I used a keyboard to draw all the graphics for Vampire and Street Fighter 2.
+\end{q}
+
+% \img{smc70_genlock.jpg}
+
+
+
+Running on CP/M OS.
+Sony's machine featuring  It could be extended had high resolution of 320x200 in 16 colors and...no mouse!
+
 
 
 \img{smc70_keypad.jpg}
 
 
-In the pack can be found the first 3.5" floppy reader (also invented by Sony in 1981), coming in single or double bay.
-
-
-The only limit to the daisy chain extension system is the capacity of the power supply which also must be located at the very back of the chain.
-
-\begin{trivia}
-Koichi Yotsui: “You had a 16 pixel grid, a 16-color palette, and that was it”
-\end{trivia}
-
-"I used a keyboard to draw all the graphics for Vampire and Street Fighter 2" \href{https://twitter.com/akiman7/status/386598518380453888}{LINK}
-% \img{smc70_genlock.jpg}
 
 
 
 
-The  noteworthy features 
- ability to display kanji character and its usage of 3.5inch micro-floppy disk (also invented by Sony in 1981).
-
-Running on CP/M OS.
-Sony's machine featuring  It could be extended had high resolution of 320x200 in 16 colors and...no mouse!
-
-The tool used, TCE (Tiny Character Editor), ran on a SMC-70.
-
-
-%  \begin{figure}[H]
-%  \center
-% \begin{tabularx}{0.25\textwidth}{rrr} 
-%   \textbf{Width} & \textbf{Height} & \textbf{Colors} \\               
-%   \toprule    
-% 160& 100& 16 \\
-% 640& 200& 4 \\
-% 320& 200& 16 \\
-% 640& 400& 2 \\
-% \toprule
-% \end{tabularx}%
-% \caption*{Sony SMC-70 resolutions}
-% \end{figure}
+% \subsection{Following the paper trails}
 
 
 
 
 
-\subsection{Following the paper trails}
+
+
+
+\subsection{Tracking ROM space}
+
 If breaking free of the rectangular sprites was a blessing for the artists, it was a problem for Capcom project managers. In an era where ROM chips were very expensive, a game was allocated a ROM budget at its beginning which it could not exceed.
+
 
 Before the CPS-1, remaining within the budget was a simple matter of a division. The number of sprites allowed to the art team was ROM size / rectangular sprite size. But the free form factor introduced a tracking problem.
 
+
+
+ \begin{figure}[H]
+\nbdraw{0x3300}
+\caption*{Dhalsim reconstructed sheet. Tiles are 16x16}
+\end{figure}
+
+The solution came with papers and scissors.
+
 \begin{q}{Akira Nishitani, SF2 Producer (Capcom)}
-In order to make the best use of the capacity we had, we wrote the ROM’s capacity on a board, and cut and paste the pixel characters on the board.
-
-If there was space left on the board, then there was open capacity in the ROM. So, from there we started filling in the spaces, like a puzzle.
-
-One thing that happened that's kinda interesting, we saved making the ending for last, and by the time we got there we were all out of capacity. We were wondering what to do, when we found a board that had gone missing under a desk.
+In order to make the best use of the capacity we had, we wrote the ROM’s capacity on a board, and cut and paste the pixel characters on the board. If there was space left on the board, then there was open capacity in the ROM. So, from there we started filling in the spaces, like a puzzle. We saved making the ending for last, and by the time we got there we were all out of capacity. We were wondering what to do, when we found a board that had gone missing under a desk.
 
 We called it the "Mirac-ulous Memory."
 \end{q}
@@ -194,22 +223,22 @@ We called it the "Mirac-ulous Memory."
 \caption*{Dhalsim released paper sheet}
 \end{figure}
 
+Only two of these sheets have ever been released, one mostly featuring Dhalsim\cite{ffdevinterview} and another of referred to as Ryuy sheet\cite{htmcc}. Thanks to the imprint left in the GFXROM, all other spreadsheet can be reconstructed thank to our knowledge of the pixel format and layout. 
+
+
+
 For a game like Street Fighter II, a budget of 6MiB GFX was approved. With 4.6 MiB dedicated to sprites, 144 OBJ sheets were printer. That was a lot at the time and only warranted because the team had managed to score a huge hit with Final Fight on a tiny 2MiB budget. 
-
-To this day, only two of these sheets have ever been released\cite{ffdevinterview}\cite{htmcc}. If it will without a doubt disappoint the most stubborn of us to know that Capcom may never released more, those people can rejoice. There is a way to look at them thanks to the imprint left in the GFXROM. 
-
-With knowledge of the tile format and the pixel format, they can all be reconstructed.
 
 
 
 
  \begin{figure}[H]
-\nbdraw{0x3300}
-\caption*{Dhalsim reconstructed sheet. Tiles are 16x16}
+\nbdraw{0x4500}
+\caption*{Ryu reconstructed sheet. Tiles are 16x16}
 \end{figure}
 
-Comparing the released material with what actually shipped is the source of many discoveries and hypothesis. 
 
+Comparing the released material with what actually shipped is the source of many discoveries and hypothesis. 
 
 The Dhalsim sheet sits at offset \icode{0x3300} in the GFXROM. It is a near perfect match with the paper version except for the portion starting at \icode{0x60}. One of the pose was dropped in favor of Chun-li animation "Hundred Rending Legs" which would indicate it was a later addition. 
 
@@ -218,25 +247,17 @@ The Dhalsim sheet sits at offset \icode{0x3300} in the GFXROM. It is a near perf
 \caption*{Ryu released paper sheet}
 \end{figure}
 
-Ryu's sheet \icode{0x4500} allows to guess even more about the production process. 
+Ryu's sheet \icode{0x4500} allows to guess even more about the production process. Large coherent sprites show that at the beginning of the production process multiple sheet were allocated on a per-character basis. Tile were layed out and kept together as much as possible to facilitate visual inspection.
 
-Large coherent sprites show that at the beginning of the production process multiple sheet were allocated on a per-character basis. Tile were layed out and kept together as much as possible to facilitate visual inspection.
-
-However, as the project progressed, we can see that the team scrambled for tile. They scrapped the bottom of the barrel and started to allocate space on a per-tile basic, sometimes spreading a character pose across multiple sheets like in Dhalsim sheet where can be found portions of Blanka.
-
- \begin{figure}[H]
-\nbdraw{0x4500}
-\caption*{Ryu reconstructed sheet. Tiles are 16x16}
-\end{figure}
+As the project progressed the team scrapped the bottom of the barrel and started to allocate space on a per-tile basic, sometimes spreading a character pose across multiple sheets like in Dhalsim sheet where can be found portions of Blanka.
 
 
-After a shape was allocated tiles, the artists has to draw it again, this time more detailed and using non-rectangular grilled paper (in order to compensate for the CPS-1 non-square pixels). The last step for the artist was to convert its collection of tiles into graphic files. 
-
-With no scanners available, digitalization was done manually by looking at the paper grid and decide what color would be the most fitting.
+\subsection{Dotting}
 
 
+With no scanners available, digitizing was done manually by looking at the paper grids and decide what color would be the most fitting. The danting task was called "dotting", also known as in North America as "Pixel Art". 
 
-
+Employees were free to use the technique that was the most effective to them.
 
 
 \begin{q}{Akiman\cite{ar20160404}}
@@ -257,9 +278,7 @@ With no scanners available, digitalization was done manually by looking at the p
 
 
 \subsection{Saving tiles}
-Artists used all the trick in the book and even invented new one to save tiles in the sheets. 
-
-In Street Fighter 2, there was only enough GFXROM for eleven challengers. Ken is a patchwork and a palette swap on top of Ryu tiles base. It "weights" only 98,304 bytes. 
+Artists invented many tricks to reuse tiles and avoid allocating tiles in the sheets. In Street Fighter 2, there was only enough GFXROM for eleven challengers. Ken is a patchwork and a palette swap on top of Ryu tiles base. It "weights" only 98,304 bytes.
 
 A remarkable achievement compared to characters such as Zanghief (622,592 bytes), Honda (491,520 bytes) or Ryu (442, 368 bytes). 
 
@@ -285,23 +304,27 @@ A remarkable achievement compared to characters such as Zanghief (622,592 bytes)
 
 Final Fight is even more impressive. Made on a 2MiB GFXROM budget, it featured a whooping 21 enemies and six bosses. While most bosses are originals, the minons are in fact made of only seven bases.
 
-\begin{minipage}[t]{0.29\linewidth}
-\simg{1.0}{enemy_goriber.png}
-\end{minipage}
-\hfill%
-\begin{minipage}[t]{0.29\linewidth}
-\simg{1.0}{enemy_billbull.png}
-\end{minipage}
-\hfill%
-\begin{minipage}[t]{0.29\linewidth}
-\simg{1.0}{enemy_wongwho.png}
-\end{minipage}
+% \begin{minipage}[t]{0.20\linewidth}
+% \simg{1.0}{enemy_goriber.png}
+% \end{minipage}
+% \hfill%
+% \begin{minipage}[t]{0.20\linewidth}
+% \simg{1.0}{enemy_billbull.png}
+% \end{minipage}
+% \hfill%
+% \begin{minipage}[t]{0.20\linewidth}
+% \simg{1.0}{enemy_wongwho.png}
+% \end{minipage}
 
 
 \begin{q}{Nishitani, Capcom – 1991 Retrospective Interview}
-Everyone on the development thought Final Fight was going to be made on hardware with a large memory capacity, but that turned out not to be true. That’s why the final boss Belger hops around like that: we didn’t have enough memory to add more graphics for a walking pattern. However, making something cool with limited resources is like a puzzle to me, so I thought it was fun. 
+Everyone on the development thought Final Fight was going to be allocated with a large memory capacity, but we were wrong.
+That’s why the final boss Belger hops around like that: we didn’t have enough memory to add more graphics for a walking pattern. 
+
+However, making something cool with limited resources is like a puzzle to me, so I thought it was fun. 
 \end{q}
 
+DRAWING of billbull, wonwho and thirt HERE.
 
  \begin{figure}[H]
 \nbdraw{0x0100}  
@@ -317,15 +340,16 @@ Ryu and Ken use the same seven first colors of their palette to facilitate the p
 
 
 
-
+ \begin{figure}[H]
 \nbdraw{0x4e00}
+\caption*{Sagat's sheet}
+\end{figure}
 
-There are no small savings in Street Fighter II. Besides Inter-character patching, the game also uses intra-character patching.  
+Sagat laughing animation is double optimized. The sequence is made of two poses where only the bust is replaced while the legs remain the same. Moreover, the left leg is missing. It is reconstructed at runtime using an horizontal mirror of the right leg found at \icode{0xB9}.
 
-Sagat laughing animation is double optimized. The sequence is made of two poses where only the bust is replaced while the legs remain the same.
-
-Moreover, Sagat's left leg is missing. It is reconstructed at runtime using an horizontal mirror of the right leg found at \icode{0xB9}.
-
+\begin{trivia}
+The capacity of the ASICs to flip tiles horizontally was used extensively in Street Fighter II when challengers facing left or right. Not really an issue for symetrical characters, except for Sagat who' eye patch changes side when he turns.
+\end{trivia}
 
 \pagebreak
 
