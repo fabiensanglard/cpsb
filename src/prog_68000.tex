@@ -50,7 +50,23 @@ The last piece is the \icode{\_boot} function, which setups auto-vector and jump
 
 
 \section{Memory Map}
+Alike for the Sound System and its z80 memory space, we need to make sure the software prehave accordingly to the memory map defined by the board PALs.
+
+The compiler in the GNU Compiler Collection, \icode{gcc} does not have a placemeny keyboard \icode{\_at} but even if it had been available, it would not have been enough to map large portion such as the 196 KiB of GFXRAM.
+
+For what \icode{gcc} lacks, we can compensate thanks to the power of \icode{ld}'s linker script system. The idea is to use a two step method where:
+\begin{itemize}
+\item First, Define memory regions thanks to the \icode{MEMORY} keyboard.
+\item Second Create segments where code and data are stored based on access properties.
+\item Third, Connect regions and segments.
+\end{itemize}
+
+
 % As a reminded, here is the desired memory mapping.
+\pagebreak
+
+\subsection{Goal}
+To avoid flipping pages, here is the memory map studied on page XXX.
 
 \begin{tabularx}{\textwidth}{rrrX}
 \toprule    
@@ -74,19 +90,30 @@ The last piece is the \icode{\_boot} function, which setups auto-vector and jump
   \toprule    
 \end{tabularx}%
 
- GCC's powerful linker script allows to define memory region.
+\subsection{Memory Regions}
+ % GCC's powerful linker script allows to define memory region.
 
 \lstinputlisting[]{src/code/68000/cps1.lk}
+
+\begin{trivia}
+Notice how powerful the linker script is compared to \icode{sdcc}. A directive, \icode{OUTPUT\_FORMAT (" binary ")} allows to directly output raw binary without using container like \icode{elf}. This avoid the extra conversion step from elf to binary using \icode{objcopy}.
+\end{trivia}
+
 
 \lstinputlisting[]{src/code/68000/cps1-2.lk}
 
 In the second part of the script, sections are assigned to a memory region by name.
 
+\begin{trivia}
+Notice the care taken to make sure the 68000 will only attempt to access aligned data via \icode{.ALIGN(4)} directives. Unaligned memory access is an unrecoverable error resulting in the 68000 \icode{HALT}ing.
+\end{trivia}
+
+
+\subsection{Code to segment}
+
 \lstinputlisting[style=CStyle]{src/code/68000/memory_map.c}
 
-\begin{trivia}
-Notice how powerful the linker script is compared to \icode{sdcc}. A directive, \icode{OUTPUT\_FORMAT (" binary ")} allows to directly output raw binary without using container like \icode{elf}. This avoid the extra conversion step from elf to binary using \icode{objcopy}.
-\end{trivia}
+
 
 \section{Initializing variables}
 The linker script created markers and requested section \icode{.data} to be written to \icode{rom} (VMA) but relocate symbols as if they were in \icode{.ram} (LMA).
@@ -95,6 +122,7 @@ With these elements, zeroing the bss and populating .data with initial values is
 
 \lstinputlisting[style=CStyle]{src/code/68000/init_vars.c}
 
+\pagebreak
 \section{Verifying RAM}
 Capcom games bootstrap does more than bringing up the CPUs. They also verify the health of hardware components. These screens are rarely, if ever, seen by players since they are visible only once when the cabinet is turned on. During normal operations, that would be once a day.
 
@@ -111,7 +139,6 @@ Faulty RAM could create issues further down the pipeline. A cabinet would then e
 \end{figure}
 
 
-\pagebreak
 
 
 The technique used is simple but has its limitation. For all byte in each areas of the RAM and GFXRAM, try to write a value, then try to read it back. If they differ, the GFXRAM is faulty and an error message is displayed. 
@@ -273,7 +300,6 @@ Rowscrolling of SRC1 layer is achieved by two registers. Rowscroll base points t
 \lstinputlisting[style=CStyle]{src/code/68000/videocontrol.c} 
 
 
-\pagebreak
 
 All CPS-B registers location change based on the version.
 
@@ -306,8 +332,7 @@ The graphic chip does not use a fixed base + offset to lookup a Palette page. e.
 \paragraph{Layer control} This register allows to enable or disable a layer individually (with the exception of OBJ which uses another way). It is also used to define the priority of layers \icode{OBJ}, \icode{SCR1}, \icode{SCR2}, and \icode{SC3} individually.
 
 Note that STARs are always in the back and in order STAR1, STAR2.
-\pagebreak
-
+  
 \lstinputlisting[style=CStyle]{src/code/68000/layercontrol.c} 
 
 The board studied in this book used CPS-B 11 which does not support STAR1 and STAR2. That feature was not used much besides in Forgotten Words (\icode{CPS-B 01}) and Strider (also \icode{CPS-B 01}).
@@ -578,3 +603,10 @@ Often featuring a raytraced cover to boast the graphic capabilities of the SHARP
 \end{trivia}
 
 Ultimately, SHARP timid updates were not enough to keep even its most recent X68030 competitive. After six years without updating the video or audio hardware the IBM PC caught up. In 1993, many felt a great disturbance in the Force when SHARP discontinued the "god computer".
+
+
+\pagebreak
+Details OSes
+\pagebreak
+Detail resolutions
+\pagebreak
