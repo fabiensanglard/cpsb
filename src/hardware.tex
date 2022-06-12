@@ -567,7 +567,7 @@ Not limited to sinwaves. Bla blab bla
 
 Other parameters can be applied to the output such as Attack, Decay , Sustain, or Release Rate. 
 
-DRAWING ADSR.
+\nbdraw{adsr}
 
 The huge advantage of FM synthesis is the small amount of data required to store a melody. After the instruments Since only the notes of each instruments and their tempo to be recorded. Yamaha's technology is so efficient that the whole Sagat stage music (2mn6s, 10KiB) use fewer bytes than one "Tiger Uppercut"'s ADPCM sample (777ms, 12KiB).
 
@@ -576,7 +576,6 @@ The huge advantage of FM synthesis is the small amount of data required to store
 
 Looking at the 2151, we see previously discussed pins such as \icode{+5V}, \icode{GND}, and \icode{CS}. The \icode{CLK} is connected to the same oscillator as the Z-80 for a frequency of 3.58MHz. The \icode{D0-D7} address/data pins (multiplexed via \icode{A0}) fit exactly the Z80's 8-bit data bus with read (\icode{RD}) and write (\icode{WR}) control.
 
-\pagebreak
 
 A pin in particular, the \icode{IRQ} which allows the YM2151 to generate interrupt based on internal counters, will be crucial in the latter chapters.
 

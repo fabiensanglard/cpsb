@@ -5,6 +5,4 @@ bytecode 2
 
 HERE WE SHOW VGM BYTECODE VALUES
 
-
-
 !

@@ -1,14 +1,16 @@
 \chapter{Sound System}
-Making ROMs for the sound system is a little bit more complicated than for the GFX system. Not only samples and music assets are processed, there is also a need to compile code to bootstrap and then run the Z-80. 
+Making ROMs for the sound system is a little bit more complicated than for the GFX system. 
+
+Not only samples and music assets are processed, there is also a need to compile code to bootstrap and then run the Z-80. This program is commonly called a "Sound Driver".
 
 \begin{figure}[H]
 \sdraw{1.0}{sound_arch}
 \caption*{The Sound System components}
 \end{figure}
 
-The result must be packed into two ROMS, one called "Z-80 ROM" and another called "OKI ROM". This asymmetry where three system result in two ROM is further complicated by the dependency graph that looks like a plate of spaghetti. 
+The assets and the driver must be packed into two ROMS set, one called "Z-80 ROM" and another called "OKI ROM". This asymmetry where three system result in two ROM is further complicated by the dependency graph that looks like a plate of spaghetti. 
 
-The crux is that both the sound effects and the music contribute to the OKI ROM content which must be populated in two steps.
+The difficult part is that both the sound effects and the music contribute to the OKI ROM content which must be populated in two steps.
 
 
 
@@ -63,18 +65,22 @@ Let's take the example of a stream of 16-bit PCM values received from a wav to b
 
 \lstinputlisting[style=CStyle]{src/code/pcm-dpcm.c}
 
+\subsubsection{Compressing sample 1}
 The first 16-bit sample has a value of \icode{960} which becomes \icode{60} in 12-bit. With the current step size at 16, ADPCM can only commands a delta of + ( 16 + 16/2 + 16/4) = +28 which it encodes in a nibble \icode{0b0111}. The step size index is updated via the the transitionTable to now point to 8 (value \icode{34})
 
+\subsubsection{Compressing sample 2}
 The second 16-bit sample also has a value of \icode{960} which becomes \icode{60} in 12-bit. Since the latest sample output was 28, ADPCM must somehow encode a difference of 60-28 = 32. ADPCM commands a delta of + ( 0 + 34/2 + 34/4) = +33 which it encodes in a nibble \icode{0b0011}. 
 
 The decompressor will output 28 (its last value) + 33 = 61. It will slightly overshot the desired value but we can see how the step size has adapted to the delta requested with only two steps. 
 
 Once again the step size index is updated via the transitionTable to 8 (previous value) -1 = 7, which equals 31.
 
+\subsubsection{Compressing sample 3}
 The third 16-bit sample has a value of \icode{950} which becomes \icode{56} in 12-bit. Since the latest sample output was 61, ADPCM encodes a difference of 56-61 = -5. ADPCM commands a delta of - (0 + 0 + 31/4) = -7 which it encodes in a nibble \icode{0b1001}. 
 
 The decompressor will output 61 (its last value) - 5 = 56. The step size index is updated via the transitionTable to 7 (previous value) -1 = 6, which equals 28.
 
+\subsubsection{Compressing sample 4}
 The last 16-bit sample has a value of \icode{160} which becomes \icode{10} in 12-bit. Since the latest sample output was 56, ADPCM encodes a difference of 10-56 = -46. ADPCM commands a delta of - (28 + 28/2 + 0) = -42 which it encodes in a nibble \icode{0b1110}. 
 
 The decompressor will output 56 (its last value) - 42 = 14. The step size index is updated via the transitionTable to 6 (previous value) + 6 = 12, which equals 50.
@@ -83,7 +89,6 @@ The decompressor will output 56 (its last value) - 42 = 14. The step size index 
 Graphing PCM vs ADPCM shows that the decompressed stream "lags" behind upon abrupt changes but catches up aggressively. ADPCM first value is always near zero (+/-28) but it is not audible to players since most samples start with a faded-in anyway. 
 
 \nbdraw{adpcm_graphed}
-
 
 \section{Structure of the OKI ROM}
 The structure of the OKI is very simple. It must feature 127 * 6 bytes table at the beginning. Each entry points to a payload in the ROM. The payload of each entry must be ADPCM stream.
@@ -167,7 +172,7 @@ With the registers covered, only remains placing the \icode{.text} and \icode{.d
 As expected, the \icode{\_DATA} is placed at \icode{0xd000}. The \icode{\_CODE} however is placed not at zero but \icode{0x0200} for reason that will follow soon.
 
 \begin{trivia}
-Trivia: Reading a linker \icode{.map} is a powerful tool for debugging.
+Trivia: Debugging a CPS-1 program can be a tedious task. A good starting point when encountering an issue is to read the linker \icode{.map} file which indicates where each symbol was placed.
 \end{trivia}
 
 \subsection{Bootstrapping}
@@ -180,7 +185,7 @@ At \icode{0x100}, the stack pointer \icode{sp} is set to point at the end of \ic
 All the code in \icode{crt0.s} account for a few bytes, that is why the linker script placed \icode{\_CODE} at \icode{0x200}.
 
 In \icode{crt0.s} below, notice how C functions are prefixed with \icode{\_}.
-
+\pagebreak
 \lstinputlisting[style=Z80Style]{src/code/z80/crt0.s}
 
 
@@ -193,20 +198,20 @@ In \icode{crt0.s} below, notice how C functions are prefixed with \icode{\_}.
 \subsection{Z-80 interrupt}
 In order to interact with the latches properly but also to be able to keep track of wall-time, the Z-80 needs to be interrupted regularly. Zilog's CPU does features a timer RFSH but it is intended for DRAM refresh (which the sound system does not feature anyway).
 
-There are however two timer in the YM2151. Timer A is a 10-bit counter while Timer B is an 8-bit counter. For a YM2151 running at 3,579Hz, the trigger formula is 64 * (1024 - value) / 3579.
+There are two timers in the YM2151. Timer A is a 10-bit counter while Timer B is an 8-bit counter. For a YM2151 at 3,579Hz, the trigger formula is 64 * (1024 - value) / 3579.
 
-Setting the Timer A to value 800 will result in an interrupt 64 * (1024 - value) / 3579 = 4ms later. When the YM2151 counter reaches zero, it asserts a line connected to the Z-80 INT line which makes the CPU jumps to address \icode{0x38}.
+Setting the Timer A to \icode{800} will result in an interrupt 64 * (1024 - 800) / 3579 = 4ms later. When the YM2151 counter reaches zero, it asserts a line connected to the Z-80 INT line which makes the CPU jumps to address \icode{0x38}.
 
 \lstinputlisting[style=CStyle]{src/code/z80/interrupts.c}
 
-In function \icode{schedInterrupt} we write to the YM2151 counter register msb 8-bit \icode{0xC0} and the 2 remaining lsb \icode{0x00}. Notice how before writing to the YM2151 register the z80 makes sure the 2151 is not busy via \icode{waitYM2151()}.
+Function \icode{schedInterrupt} writes msb 8-bit \icode{0xC0} and lsb \icode{0x00}. Notice how before writing to the YM2151 register the z80 makes sure the 2151 is not busy via \icode{waitYM2151()}.
 
 
 
 
 
 \subsection{Initializing variables}
-To finish bootstrapping, \icode{crt0} makes sure initialized C variables are initialized. The linker placed all values requiring initialization in a \icode{\_GSINIT} segment. By placing markers astutely at the source \icode{\_INITIALIZER} and at the destination \icode{\_INITIALIZED}, they can be copied.
+To finish bootstrapping, \icode{crt0} makes sure initialized C variables are initialized. The linker placed all values requiring initialization in a \icode{\_GSINIT} segment. By wrapping it with markers \icode{\_INITIALIZER} (src) and \icode{\_INITIALIZED} (dst), they can be copied.
 
 \lstinputlisting[style=Z80Style]{src/code/z80/initVar.s}
 
@@ -221,13 +226,14 @@ Copying is done with \icode{ldir} instruction using the linker macros, \icode{s\
 \subsection{Z-80 Sound Driver}
 A scheme using a stream may yield more power to the sound driver but for the safe of readability a simpler approach is used here.
 
+
+
+\lstinputlisting[style=CStyle]{src/code/z80/music.c}
+
 The code presented here uses a single latch as "immediate value". If bit 0x80 is set, control is requesting a sound effect to be played, otherwise it is a music. 
 
 
 The interrupt allows the main loop to tick once which does one of three things. It checks it is must wait, feed bytes to the YM2151 or feed soundID/channelID to the OKI.
-
-\lstinputlisting[style=CStyle]{src/code/z80/music.c}
-
 
 \lstinputlisting[style=CStyle]{src/code/z80/driver.c}
 
@@ -237,15 +243,22 @@ The interrupt allows the main loop to tick once which does one of three things. 
 % If nothing ever transpired about the work done on the Z-80, some of the member of "Capcom Sound Team" gave interviews. Their testimony give us a glimpse into how sounds was made.
 In the mid-80s, Capcom recognized the crucial importance of sound for a video-game and set to hire the very best musician they could find.
 
-They would actively recruit by taking advantage of 'careers days' to get graduates to come work for them. Many musicians came from music schools located in Kansai region (Kyoto, Osaka, Kobe). Several alumni of Osaka College of Music ended up working for Capcom where they were able to compose music for a living while having the security of working for a large Japanese company. 
-
-By 1989, Capcom had assembled a pool of talent who called themselves the "Capcom Sound Team".
+By 1989, they had assembled a pool of talent who called themselves the "Capcom Sound Team".
 
 \img{capcom_sound_team.png}
 
 The Capcom Sound team. L-R: Yoko Shimomura, Yoshihiro Sakaguchi, Manami Matsumae, Masaki Izumiya, Yasuaki Fujita, Mari Yamaguchi, Minae Fujii, Toshio Kajino, Isao Abe.
 
+\subsection{Recruiting}
+They would actively recruit by taking advantage of 'careers days' to get graduates to come work for them. Many musicians came from music schools located in Kansai region (Kyoto, Osaka, Kobe). 
 
+Several alumni of Osaka College of Music ended up working for Capcom where they were able to compose music for a living while having the security of working for a large Japanese company. 
+
+
+
+
+
+One of these recruit, Yoko Shimomura, would go on to compose musics of games such as Street Fighter II, Final Fight, and Final Fantasy. Over the years she gave numerous interviews which help to paint a picture of the life of a musician working at Capcom.
 
 
 \begin{q}{Yoko Shimomura, Street Fighter 2 music Composer\cite{beep199010}}
@@ -258,9 +271,7 @@ I decided that when I graduated, I would go work at a place where I could play b
 \end{q}
 
 
-One of the most outspoken musician is Yoshihiro Sakaguchi who is the author of all Street Fighter II musics.
-
-The account of here hiring interview confirm that Capcom was more interested in hiring talented musician than tech savvy people.
+Yoko's account of her hiring interview confirm that Capcom was more interested in hiring talented musician than tech savvy people.
 
 \begin{q}{Yoko Shimomura, Street Fighter 2 music Composer\cite{beep199010}}
   
@@ -273,7 +284,13 @@ I was asked to talk about what I knew about FM generation at the entrance exam. 
 
 
 
-Composer worked alone on a game and could pick their next project (based on availabilities\cite{sf2musics}) as soon as they were done .
+\subsection{Creative process}
+Even though musicians were part of a "Sound Team", they usually worked alone on a game. 
+
+If they could pick based on availabilities\cite{sf2musics}, they were assigned to the next project as soon as they were done with the previous one.
+
+
+Being dropped on a project and asked to write music was difficult. It was mostly the planner's responsability to bried the musician on what kind of music they wanted\cite{sf2_music}.
 
 \begin{q}{Yoko Shimomura, Street Fighter 2 music Composer\cite{sf2_oral_history}}
 Mr. Nishitani would come up to me and show me designs of the characters and explain the personalities of the characters and ask me to make theme songs for each character.
@@ -281,7 +298,17 @@ Mr. Nishitani would come up to me and show me designs of the characters and expl
 I would look at the backgrounds and the character descriptions and all that, and I noticed that each character had a unique background. And because of that, I suggested making each theme song based on their background country and culture.
 \end{q}
 
+The work ethic of the composers had noting to envy to the artists drawing pixels.
 
+\begin{q}{Yoko Shimomura, Street Fighter 2 music Composer\cite{sf2musicsecurity}}
+At 11 o'clock, all the security was activated and you could not move between floors. The elevators stopped moving too. If you had to finish work by 7 o'clock the next day, we had to pass ROM down from the window on a string.
+
+Once I tied a carrier bag and put the ROM inside and gave it to them. 15 mn later, the phone rang. They said "sorry but we broke the pins when we put it in! Can you give us another?"
+\end{q}
+
+
+
+\subsection{Tools}
 Yoshihiro Sakaguchi, author of MegaMan musics, explain what computer they connected their Yamaha keyboard to.
 
 \begin{q}{Yoshihiro Sakaguchi\cite{yoko_shimomura_interview}  }
@@ -290,14 +317,16 @@ We worked on both the music and sound effects for Capcom’s games. We’ve got 
 
 Despite their name, the computers of the 9800 series had nothing to do with the IBM PC. Due to the language barrier, Big Blue's machines never managed to break into the Japanese market.
 
-The PC-98s supported kanjis and had their own C-Bus, BIOS, I/O port addressing, memory management, and graphics system. 
-
-Although having specs far inferior to the Fujitsu FM Towns and Sharp X68000, NEC enjoyed tremendous success, selling 18 millions units from 1982 to 1999.
-
 \begin{figure}[H]
 \img{PC9800.jpg}
 \caption*{PC-9801, the first in the 9800 series (1984).}
 \end{figure}
+
+The PC-98s supported kanjis and had their own C-Bus, BIOS, I/O port addressing, memory management, and graphics system. 
+
+Although having specs far inferior to the Fujitsu FM Towns and Sharp X68000, NEC enjoyed tremendous success, selling 18 millions units from 1982 to 1999.
+
+
 
 
 

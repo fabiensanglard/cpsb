@@ -441,15 +441,17 @@ We didn't have a whole lot of time, so we had a 3-monitor set-up where we could 
 Coincidentally, the Japanese title of "Hard Times" was "The Street Fighter".
 \end{trivia}
 
- \begin{figure}[H]
-\img{ken_stage_design.png}
-\caption*{Ken stage design phase. Inspiration, sketch, pixel art.\cite{sf2completefiles}.}
-\end{figure}
 
 \section{Shapes and Sprites}
 This historical detour was important in order to understand the sheet system. With this knowledge we can review the last GFX ROM requirements involving OBJs.  
 
 On this layer, tiles can be used either directely or in groups which mandate distinct layout strategies.
+
+\begin{figure}[H]
+\img{ken_stage_design.png}
+\caption*{Ken stage design phase. Inspiration, sketch, pixel art.\cite{sf2completefiles}.}
+\end{figure}
+
 
 \subsection{Sprite}
 A sprite is a collection of tiles with rectangular boundaries. As we will see in the m68k programming section it can be rendered by issuing a single draw call mentioning the offset in the sheet, the width in tiles and the height in tiles.
@@ -461,26 +463,22 @@ A sprite is a collection of tiles with rectangular boundaries. As we will see in
 
 It is inefficient for a set of tiles where many of them are transparent. Not only these take storage space in the GFXROM, they also count against the CPS-A/CPS-B limit of 256 tiles.
 
+\pagebreak
 \subsection{Shape}
 
 A much more efficient way is to use a Shape where tiles location is arbitrary. It takes several draw calls to draw (tiles have to be specified one by one) but they can be located anywhere in a sheet.
+
+Shapes have the double advantage to save storage space and narrow down tile count during rendition to the minimum. The example of Honda shows that only 41 tiles are required. It would have taken 60 tiles if a Sprite had been used.
+
 
  \begin{figure}[H]
 \nbdraw{honda_alloc2}
 \caption*{Honda as a shape.}
 \end{figure}
 
-Shapes have the double advantage to save storage space and narrow down tile count during rendition to the minimum. The example of Honda shows that only 41 tiles are required. It would have taken 60 tiles if a Sprite had been used.
 
 To allow sprite draw calls, the build system must allocate images depending on the intended usage. All tiles in a sprite must be placed as they appeared in the original image.
  
-\begin{figure}[H]
-\nbdraw{honda_sheet}
-\caption*{A sheet with two version of Honda, Shape and Sprite}
-\end{figure}
-
-% On the contrary, a shape does not have to follow any constraint.
-
 % \begin{trivia}
 Capcom games use almost exclusively shapes but the paper sheet system mandated to maintain some visual coherency so humans could keep tracks. Modern tools don't have this problem. 
 
@@ -488,5 +486,14 @@ The Honda shape on the sheet looks like mashed potatoes but using automatic allo
 
 By looking at the sheet from later titles, it was inferred that Capcom abandoned the sheet system with the advent of the CPS-2. Likely using a fully computerized toochain devoid of paper and scissors, sheets have no spacial coherency, and they look like mashed potatoes.
 % \end{trivia}
+
+\begin{figure}[H]
+\nbdraw{honda_sheet}
+\caption*{A sheet with two version of Honda, Shape and Sprite}
+\end{figure}
+
+% On the contrary, a shape does not have to follow any constraint.
+
+
 
 

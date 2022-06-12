@@ -10,10 +10,12 @@ While the latch toward the Sound system is a small API surface, the GFX API is h
 
 Luckily, the 68000 is supported by the  GNU Compiler Collection (GCC). It features a much more powerful linker script system than \icode{sdcc} which helps considerably to solve the memory mapping requirements.
 
+Nothing is particularly difficult to understand in this build graph. GCC suite is responsible for the entire pipeline with \icode{gcc} compiling C files to obj, \icode{as} assembling S files to obj, and \icode{ld} linking it all together. 
+
+
 \nbdraw{build_graph_ctrl}
 
 
-Nothing is particularly difficult to understand in this build graph. GCC suite is responsible for the entire pipeline with \icode{gcc} compiling C files to obj, \icode{as} assembling S files to obj, and \icode{ld} linking it all together. 
 
 At the end of the process, the logical 68000 ROM is split and interleaved in chip sized ROMs according to what was described in the hardware chapter.
 
@@ -38,7 +40,7 @@ Since IPL1 is connected to the CPS-A INT lines, the VSYnc handler function is pl
 
 \lstinputlisting[language={[Motorola68k]Assembler}]{src/code/68000/crt1.s}
 
-The last piece of the interrupt puzzle is to write the \icode{\_boot} function, which setups auto-vector and jump to \icode{main}.
+The last piece is the \icode{\_boot} function, which setups auto-vector and jump to \icode{main}.
 
 \lstinputlisting[language={[Motorola68k]Assembler}]{src/code/68000/crt2.s}
 
@@ -48,7 +50,7 @@ The last piece of the interrupt puzzle is to write the \icode{\_boot} function, 
 
 
 \section{Memory Map}
-As a reminded, here is the desired memory mapping.
+% As a reminded, here is the desired memory mapping.
 
 \begin{tabularx}{\textwidth}{rrrX}
 \toprule    

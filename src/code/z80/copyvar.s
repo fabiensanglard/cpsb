@@ -1,9 +1,5 @@
-;----------------------------
-; Initialize global variables
-; Copy values from ROM > RAM.
-;----------------------------
-.area _GSINIT
-gsinit:
+.area _GSINIT                ; Initialize global variables
+gsinit:                      ; Copy values from ROM > RAM.
    ld  bc, #l__INITIALIZER
    ld  a, b
    or  a, c
@@ -12,5 +8,4 @@ gsinit:
    ld  hl, #s__INITIALIZER
    ldir
 gsinit_next:
-   .area _GSFINAL
    ret

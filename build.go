@@ -138,16 +138,15 @@ func prepareDrawing(src string, dst string) {
 }
 
 func prepare(folder string, f func(string, string)) {
-	os.MkdirAll(base+"/"+folder, os.ModePerm)
+	os.MkdirAll(cwd() + out + "/" + folder, os.ModePerm)
 	items, _ := ioutil.ReadDir(folder)
 	for _, item := range items {
 		if item.IsDir() {
 			fmt.Println("Subdirectores in '%s' are not supported", folder)
 			os.Exit(1)
 		}
-
-		var src = folder + item.Name()
-		var dst = base + "/" + folder + item.Name()
+		var src = cwd() + folder + item.Name()
+		var dst = cwd() + out + "/" + folder + item.Name()
 		f(src, dst)
 	}
 }
@@ -171,6 +170,9 @@ func toString(fs []string) string {
 }
 
 func makeCover(src string, dst string) {
+	src = cwd() + src
+	dst = cwd() + dst
+
 	if isOlder(dst, src) {
 		return
 	}
@@ -200,7 +202,16 @@ func makeCover(src string, dst string) {
 }
 
 var mode = "debug"
-var base = ""
+var out = ""
+
+func cwd() string {
+	cwd, err := os.Getwd()
+	if err != nil {
+		panic(err.Error())
+	}
+	cwd += "/"
+	return cwd
+}
 
 func main() {
    findInkscape()
@@ -227,11 +238,11 @@ func main() {
        mode = "release"
 	}
 
-	base = "out/" + mode
-	os.MkdirAll(base, os.ModePerm)
+	out = "out/" + mode
+	os.MkdirAll(out, os.ModePerm)
     
-    makeCover("src/cover/cover_frontw.svg", base + "/illu/cover_front.pdf")
-    makeCover("src/cover/cover_backw.svg", base + "/illu/cover_back.pdf")
+    makeCover("src/cover/cover_frontw.svg", out+ "/illu/cover_front.pdf")
+    makeCover("src/cover/cover_backw.svg", out + "/illu/cover_back.pdf")
 
 	prepare("illu/img/", prepareImg)
 	prepare("illu/d/", prepareDrawing)
@@ -239,7 +250,7 @@ func main() {
 	bin := "pdflatex"
 	arg0 := "-output-directory"
 	arg1 := "out"
-	arg2 := `\def\base{` + base + `} ` + compileOptions + ` \input{src/book.tex}`
+	arg2 := `\def\base{` + out + `} ` + compileOptions + ` \input{src/book.tex}`
 
 	out, err := exec.Command(bin, arg0, arg1, arg2).CombinedOutput()
 
