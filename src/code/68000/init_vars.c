@@ -2,8 +2,12 @@ extern char _etext, _data, _edata, _bss, _ebss;
 char *src = &_etext;
 char *dst = &_data;
 
-while (dst < &_edata) // Copy ROM to DATA */
+// Copy ROM to DATA */
+while (dst < &_edata) {
   *dst++ = *src++;
+}
 
-for (dst = &_bss; dst< &_ebss; dst++) // Zero bss.
+// Zero bss.
+for (dst = &_bss; dst< &_ebss; dst++) {
   *dst = 0;
+}

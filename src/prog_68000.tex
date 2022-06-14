@@ -130,9 +130,19 @@ All CPS-1 games display a slightly different set of text. However all of them en
 
 Faulty RAM could create issues further down the pipeline. A cabinet would then expose faults that could be mis-attributed to other components. By allowing to quickly rules out a whole class of errors, the startup tests sped up debugging and repairing boards.
 
+The technique used is simple but has its limitation. For all byte in each areas of the RAM and GFXRAM, try to write a value, then try to read it back. If they differ, the GFXRAM is faulty and an error message is displayed. 
 
+\begin{trivia}
+No way to checksum the GFXROM or the Sound System. The GFXROM is not mapped and the latch system is one way, making it impossible for the Z-80 to surface problems.
+\end{trivia}
 
 \vfill
+\begin{figure}[H]
+\nbimg{boot_ghouls.png}
+\caption*{Ghouls 'n Ghosts boot screen}
+\end{figure}
+
+
 \begin{figure}[H]
 \nbimg{boot_sf2.png}
 \caption*{Street Fighter 2 boot screen}
@@ -141,13 +151,19 @@ Faulty RAM could create issues further down the pipeline. A cabinet would then e
 
 
 
-The technique used is simple but has its limitation. For all byte in each areas of the RAM and GFXRAM, try to write a value, then try to read it back. If they differ, the GFXRAM is faulty and an error message is displayed. 
 
-\begin{trivia}
-No way to checksum the GFXROM or the Sound System. The GFXROM is not mapped and the latch system is one way, making it impossible for the Z-80 to surface problems.
-\end{trivia}
 
-These tests look that something that would be standard and common to every games. Surprisingly they are all different and even differ between two titles made by a same team consecutively. The GFXRAM part of the RAM hosting the Palettes is not tested in Street Fighter 2 despite having been released after Final Fight.
+
+
+% These tests look that something that would be standard and common to every games. Surprisingly they are all different and even differ between two titles made by a same team consecutively. The GFXRAM part of the RAM hosting the Palettes is not tested in Street Fighter 2 despite having been released after Final Fight.
+
+
+
+\begin{figure}[H]
+\nbimg{boot_forgottn.png}
+\caption*{Forgotten Worlds boot screen}
+\end{figure}
+
 
 
 \vfill
@@ -183,9 +199,14 @@ The solution is to implement a system of queue where only one value is requested
 
 However for the simplification and brevity requirement of this book, no queue is used in the following code.
 
+\lstinputlisting[style=CStyle]{src/code/68000/vsync.c} 
+
+\subsection{Main}
 \lstinputlisting[style=CStyle]{src/code/68000/main.c} 
 
-EMAIL BEN and TALK ABOUT KERNEL!! Look at gitlab and see how kernel works.
+How \icode{hostframe} is implemented is completely at the programmer's discretion. Capcom games used a common kernel framework made of tasks. Since there is no source of interrupt beside \icode{vsync} they implemented a collaborative multi-tasking system where the stack and registers are stored/loaded as each task is executed.
+
+In a game like Street Fighter II, the kernek can be found running an A.I task or even a fireball task\cite{sf2platinium}.
 
 \subsection{Retrieving inputs}
 Besides joystick and buttons, the engine must recover inputs such as the dip settings, P1Start, P2Start, and most importantly detect coins being inserted.
@@ -271,16 +292,19 @@ Note that all registers are 16-bit wide to accommodate the 68000 writing to them
 \texttt{SCR3 base}&  \texttt{0x06}   & SCROLL3 descriptors  \\     
 \texttt{ROWSCROLL base} &  \texttt{0x08}  & 256 rowscroll values   \\     
 \texttt{Palette base} &  \texttt{0x0A}  & Palettes location   \\   
+  \toprule   
 \texttt{Scroll 1 X} &  \texttt{0x0C}  & SCROLL1 Offset X  \\ 
 \texttt{Scroll 1 Y} &  \texttt{0x0E}  & SCROLL1 Offset Y    \\   
 \texttt{Scroll 2 X} &  \texttt{0x10}  & SCROLL2 Offset X    \\ 
 \texttt{Scroll 2 Y} &  \texttt{0x12}  & SCROLL2 Offset Y    \\   
 \texttt{Scroll 3 X} &  \texttt{0x14}  & SCROLL3 Offset X    \\ 
 \texttt{Scroll 3 Y} &  \texttt{0x16}  & SCROLL3 Offset Y    \\     
+  \toprule   
 \texttt{Star1    X} &  \texttt{0x18}  & STAR1   Offset X    \\  
 \texttt{Star1    Y} &  \texttt{0x1A}  & STAR1   Offset Y    \\  
 \texttt{Star2    X} &  \texttt{0x1C}  & STAR2   Offset X    \\  
 \texttt{Star2    Y} &  \texttt{0x1E}  & STAR2   Offset Y    \\  
+  \toprule   
 \texttt{ROWSCROLL\_OFFSETS} &  \texttt{0x20}  & Offsets into ROWSCROLL base\\
 \texttt{Video Control} &  \texttt{0x22}  & flip screen, rowscroll enable\\
   \toprule   
@@ -412,7 +436,6 @@ As alluded in the hardware chapter,a  full back screen can be rendered without u
 Enabling the STAR1 layer without requesting any stars via the bytecode does the trick. It only works if the CPS-B on the board support STARfield (few do). Street Fighter II Champion Edition, a game using no STARfield, features a STARfield capable CPS-B vXX which is used in the popup logo scene.
 % \end{trivia}
 
-\pagebreak
 
 
 \subsubsection{Row Scroll}
@@ -458,11 +481,7 @@ Honda's SCROLL2 features hidden message. It looks like the designers left constr
 
 
 
-\begin{figure}[H]
-\img{honda_bg.png}
- \caption*{Honda SCROLL2 layer}%
- \end{figure}%
-\pagebreak
+
 
 
 
@@ -481,6 +500,8 @@ Honda's SCROLL2 features hidden message. It looks like the designers left constr
 \subsection{Back then...}
 For many years, the machine used to program the CPS-1 was unknown. Only the nickname of Hiroaki Kondo, a Capcom composer/sound programmer often credited as "X68K" rumored a computer manufactured by Sharp. In 2018 however,  Akiman confirmed\cite{x68000usage1}\cite{x68000usage2} that the CPS-1 SDK, named CAT-1, was launched during the making of Street Fighter II and ran on a SHARP X68000.
 
+\subsubsection{SHARP X68000}
+
 The series is largely unknown outside of Japan. But in that country it is known as the "god computer". 
 Released in 1987, the first X68000 was as beautiful and powerful as it was expensive (¥369,000, roughly \$3000 in 1987, equivalent to around \$7,600 in 2022).
 
@@ -494,7 +515,11 @@ Despite mind-blowing hardware specifications, SHARP machine was a risky bet cons
 \end{figure}
 
 
-\begin{wrapfigure}[31]{l}{0.6\textwidth}\simg{0.6}{x68k_front.png}\end{wrapfigure}
+\begin{wrapfigure}[25]{l}{0.6\textwidth}
+% \vspace{-\baselineskip}
+\centering
+\simg{0.6}{x68k_front.png}
+\end{wrapfigure}
 
 Notice the vertical bar between the two towers. Pushing it down release it so it extends past the top of the machine to become a carrying handle.
 
@@ -509,13 +534,41 @@ In later revisions, \icode{HIGH RESO} was replaced with \icode{HD BUSY} to indic
 
 
 Oh my God. It even has an orange power button.
+\pagebreak
 
-\pagebreak%
-\begin{wrapfigure}[6]{l}{0.6\textwidth}\simg{0.6}{x68k_back.png}\end{wrapfigure}
+\begin{wrapfigure}[9]{l}{0.6\textwidth}
+% \vspace{-\baselineskip}
+\centering
+\simg{0.6}{x68k_back.png}
+\end{wrapfigure}
 
 The rich back of the X68000, packed with ports and extension points, illustrates the power of the workstation.
 
 
+TODO
+TODO
+TODO
+TODO
+TODO
+TODO
+TODO
+TODO
+TODO
+TODO
+TODO
+TODO
+TODO
+TODO
+TODO
+TODO
+TODO
+TODO
+TODO
+TODO
+TODO
+TODO
+TODO
+TODO
 TODO
 
 
