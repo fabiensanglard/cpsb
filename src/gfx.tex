@@ -42,7 +42,7 @@ We can (hopefully) better see here how issuing the same address on two channels 
 
 
 
-\section{Back then...}
+\section{Back then...}\index{Back Then!GFX}
 The creation of artwork for a game always started with pencil and paper before moving to digitizing. On a big title such as Street Fighter II, up to twenty artists worked in parallel to produces artwork.
 
 \subsection{Pen and Papers}
@@ -86,7 +86,8 @@ The non-square pixels are visible in Guy's concept art. The "pixels" are grouped
 \img{smc-70_ad.jpg}
 
 
-\subsection{Digitizing art}
+\subsection{Digitizing art}\index{Computers!SONY SMC-70}
+
 To digitize their drawings, Capcom employees used SMC-70 computers. Manufactured by Sony, the SMC-70 hit both the US and japan market in the end of 1982. What is particularly noteworthy about this machine is that is built around extensibility. 
 
 The main element of a SMC-70 features its keyboard and the core parts such as the z80 running at 4MHz, 64KiB RAM, and 64 KiB of VRAM. The rest is entirely configurable via daisy chained extenders. 
@@ -134,7 +135,9 @@ The substantial list of extensions and peripherals, totaling nearly 40 pieces, c
 
 The only limit to the daisy chain extension system is the capacity of the power supply which also must be located at the very back of the chain. 
 
-First 3.5" floppy reader (also invented by Sony in 1981), coming in single or double bay. ability to display kanji character.
+The SMC-70 is notable for being the first computer to allow 3.5" floppy reader (also invented by Sony in 1981) and its ability to display kanji character via a ROM extension. 
+
+However it is really when it comes to graphic resolution that the machine stood out, allowing a whooping 16 colors in a mode likely intended for super-imposing bitmaps on TV signal.
 
  \begin{figure}[H]
  \center
@@ -150,20 +153,18 @@ First 3.5" floppy reader (also invented by Sony in 1981), coming in single or do
 \caption*{Sony SMC-70 resolutions}
 \end{figure}
 
-Talk about resolution an the wooping 16 colors display. The goal was mostly to super-impose text on TV signal.
 
+\subsection{Tiny Character Editor}
 
-\subsection{Tools}
-
-There are no scanner on the list of peripherals. The drawing were digitized by hand.
-
-The tool used, TCE (Tiny Character Editor). Although no screenshot ever merged, Capcom employee gave a rough description of the rough condition they worked with.
+The SMC-70 had no ability to use a scanner. The digitization process was entirely achieved by hand. To help them in their task, artists used a tool called TCE (Tiny Character Editor). Although no screenshot ever merged, Capcom employees gave a rough description of the rough tools they worked with.
 
 \begin{q}{Koichi Yotsui (Strider producer)}
 You had a 16 pixel grid, a 16-color palette, and that was it.
 \end{q}
 
-The task at hand was to look at the detailed drawing, and decide which color from the palette would be used for this coordinate. The value was then set via TCE. No mouse but some people built a joytick. Most productive, Akiman, used a play keyboard.
+The task at hand was to look at the detailed drawing, and decide which color from the palette would be used for this coordinate.
+
+The value was then set via TCE. No mouse but some people built a joytick. Most productive, Akiman, used a play keyboard.
 
 \begin{q}{Akiman\cite{akiman}}
 I used a keyboard to draw all the graphics for Vampire and Street Fighter 2.
@@ -173,12 +174,15 @@ I used a keyboard to draw all the graphics for Vampire and Street Fighter 2.
 
 
 
-Running on CP/M OS.
-Sony's machine featuring  It could be extended had high resolution of 320x200 in 16 colors and...no mouse!
+% Running on CP/M OS.
+% Sony's machine featuring  It could be extended had high resolution of 320x200 in 16 colors and...no mouse!
 
 
-
+\begin{figure}[H]
 \img{smc70_keypad.jpg}
+\caption*{A SMC-70 with a keypad. A likely doter setup.}
+\end{figure}
+
 
 
 
@@ -355,30 +359,52 @@ The capacity of the ASICs to flip tiles horizontally was used extensively in Str
 
 \subsection{Team structure and Culture}
 
-There was a hierarchy in the artists working on graphic assets. 
+Out of all the resources needed for a game, the GFX team was usually the most staffed. Out of 40 peoples working on Street Fighter II, 20 were artists working on character designs, sprites and backgrounds. All reported to Akiman\cite{sf2_oral_history}.
+
+There was a strong pyramidal hierarchy based on skills. 
 
 \begin{q}{Akiman\cite{akiman2003}}Planners at the top. Junior artists work on backgrounds, while more senior get to work on sprites.
 \end{q}
 
-As layered as they where, operations where not set in stone and employees could climb the ladder quickly. Akiman was hired on "Dyn Side Arms" as a SCROLL artist. Two years later, he was a Planner on Forgotten Worlds and went on to work on Final Fight and Street Fighter 2.
+As layered as they where, operations where not set in stone and employees could climb the ladder quickly. 
 
- % \begin{figure}[H]
+Akiman was hired on "Dyn Side Arms" as a SCROLL artist. Two years later, he was a Planner on Forgotten Worlds and went on to work on Final Fight and Street Fighter 2.
+
+\subsubsection{Work Ethic}
+
+A strong working culture was established from the very top.
+
+\begin{q}{Akiman\cite{akiman2003}}
+  We had vacation days, but Okamoto (Capcom development leader) would get mad if you took the day off. A lot of people got yelled at by him for that, “Hey, why weren’t you here on Sunday?!”
+
+  I don’t think anyone can beat my record for “percentage of time lived at Capcom.” During game developments, I always slept under my desk. 
+
+  I had a whole futon laid out and everything! When things were really busy, Yoshiki Okamoto  would be setting new deadlines every 10 hours, so I couldn’t leave my computer… that’s how I acquired the habit of sleeping under my desk. 
+
+  By the way, even now that I’m freelance, I still sleep under my computer desk at home.
+  \end{q}
+
+\subsubsection{Poaching}
+
+
+Retaining talent was a top priority. The credit screen of Street Fighter II illustrates Capcom cautions. Artists were only credited by their nicknames.
+
+ \begin{figure}[H]
 \img{sf2-credit.png}
-% \caption*{Capcom protecte}
-% \end{figure}
+\caption*{Street Fighter II credit screen does not use actual names for fear of poaching.}
+\end{figure}
 
 \begin{trivia}
-Checking \url{mobygames.com} "game credits" section confirms that specialties via titles such as \textbf{OBJ}ects designers and \textbf{SCR}oll designers.
+The most recognition available was a specialty next to a nickname. Some "credit screens" feature \textbf{OBJ}ects artists and \textbf{SCR}oll artists assessing seniority.
 \end{trivia}
 
 % \begin{trivia}
-Out of the team of 40 working on Street Fighter II, 20 were artists working on character designs, faces and backgrounds reporting to Akiman\cite{sf2_oral_history}.
+
 % \end{trivia}
 
 
 
-\subsubsection{Poaching and Work Ethic}
-Retaining talent was a priority. As seen on credit screen of Street Fighter II (see previous figure). Artists were only credited by their nicknames.
+
 
 Despite its precaution, Capcom lost numerous employees to SNK over the years. Among them was Takashi Nishiyama who made Street Fighter 1 and then went on to direct Fatal Fury' The King Of Fighters\cite{YoshikiOkamotoTakashiNishiyama}.
  
@@ -388,16 +414,6 @@ Despite its precaution, Capcom lost numerous employees to SNK over the years. Am
 % As it grew and diversified, the gaming company restructured itself in 1988 to be made of two divisions. One dedicated to arcades and the other home consoles. 
 
 % After its restructuration, Capcom kept the same modus operantis where each team were siloed from each others with an internal organization favoring a strong sense of hierarchy. 
-
-Preventing attrition did not mean to let employees work at their leisure. A strong working culture was established from the very top.
-
-\begin{q}{Akiman\cite{akiman2003}}
-  We had vacation days, but Okamoto (Capcom development leader) would get mad if you took the day off. A lot of people got yelled at by him for that, “Hey, why weren’t you here on Sunday?!”
-
-  I don’t think anyone can beat my record for “percentage of time lived at Capcom.” During game developments, I always slept under my desk. I had a whole futon laid out and everything! When things were really busy, Yoshiki Okamoto  would be setting new deadlines every 10 hours, so I couldn’t leave my computer… that’s how I acquired the habit of sleeping under my desk. 
-
-  By the way, even now that I’m freelance, I still sleep under my computer desk at home.
-  \end{q}
 
 
 
@@ -428,13 +444,17 @@ Originally called M. Tyson, the boxer was renamed to "Balrog" for the US release
 For the backgrounds, Hollywood came to the rescue.
 
 \begin{q}{Akiman\cite{ffdevinterview}}
-I remember stitching together a few movies to make a presentation. “Streets of Fire” and Charles Bronson’s “Hard Times” were the ones I used back then. Basically movies about fighting. I really took the chairman’s words to heart – “Use movies!” he said, so I took that to mean we should just openly plagiarize them!
+I remember stitching together a few movies to make a presentation. "Streets of Fire" and Charles Bronson’s "Hard Times" were the ones I used back then. Basically movies about fighting. 
+
+I really took the chairman’s words to heart – "Use movies!" he said, so I took that to mean we should just openly plagiarize them!
 \end{q}
 
 Employees did not get paid to a watch movie. They got paid to watch three movies at the same time!
 
 \begin{q}{Nishitani\cite{ffdevinterview}}
-We didn't have a whole lot of time, so we had a 3-monitor set-up where we could watch other movies at the same time, as the president told us to "watch them all and learn from them."
+We didn't have a whole lot of time, so we had a 3-monitor set-up where we could watch other movies at the same time.
+
+We did as the president told us: - "Watch them all and learn from them!".
 \end{q}
 
 \begin{trivia}
@@ -448,8 +468,18 @@ This historical detour was important in order to understand the sheet system. Wi
 On this layer, tiles can be used either directely or in groups which mandate distinct layout strategies.
 
 \begin{figure}[H]
-\img{ken_stage_design.png}
-\caption*{Ken stage design phase. Inspiration, sketch, pixel art.\cite{sf2completefiles}.}
+\img{ken_stage_design1.png}
+\caption*{Ken stage inspiration.}
+\end{figure}
+
+\begin{figure}[H]
+\img{ken_stage_design2.png}
+\caption*{Ken stage sketch\cite{sf2completefiles}.}
+\end{figure}
+
+\begin{figure}[H]
+\img{ken_stage_design3.png}
+\caption*{Ken stage as seen in the game.}
 \end{figure}
 
 
@@ -458,39 +488,45 @@ A sprite is a collection of tiles with rectangular boundaries. As we will see in
 
  \begin{figure}[H]
 \nbdraw{honda_alloc1}
-\caption*{If Honda was a 10x6 tiles sprite, it would waste many tiles}
+\caption*{Honda has a Sprite}
 \end{figure}
 
-It is inefficient for a set of tiles where many of them are transparent. Not only these take storage space in the GFXROM, they also count against the CPS-A/CPS-B limit of 256 tiles.
+While it is convenient to be able to use a single command and the best way to render a set of mostly opaque tiles, it is inefficient. A set of tiles where many of them are transparent not only waste precious storage space in the GFXROM, they also count against the CPS-A/CPS-B limit of 256 tiles per frame.
 
-\pagebreak
+Another limitation (or advantage depending how you look at it) is that a single palette is specified when placing the sprite draw command.
+
 \subsection{Shape}
 
-A much more efficient way is to use a Shape where tiles location is arbitrary. It takes several draw calls to draw (tiles have to be specified one by one) but they can be located anywhere in a sheet.
+A much more efficient and flexible way is to use a Shape where tiles location is arbitrary. It takes several draw calls to draw (tiles have to be specified one by one) but they can be located anywhere in a GFXROM.
 
-Shapes have the double advantage to save storage space and narrow down tile count during rendition to the minimum. The example of Honda shows that only 41 tiles are required. It would have taken 60 tiles if a Sprite had been used.
+Shapes have the triple advantage of saving storage space, narrow down tile count during rendition to the minimum, and allow per tile palette. The example of Honda shows that only 41 tiles are required. It would have taken 60 tiles if a Sprite had been used.
 
+\begin{trivia}
+In Street Fighter II artists limited themselves to one palette per character because the OBJ layer was used for multiple things suchs as decoration and GUI. This was purely a design decision, they could have as well gone with 16 palettes per characters since they are draw with shapes instead of sprites commands. 
+\end{trivia}
 
  \begin{figure}[H]
 \nbdraw{honda_alloc2}
-\caption*{Honda as a shape.}
+\caption*{Honda as a Shape.}
 \end{figure}
 
 
 To allow sprite draw calls, the build system must allocate images depending on the intended usage. All tiles in a sprite must be placed as they appeared in the original image.
  
-% \begin{trivia}
+
 Capcom games use almost exclusively shapes but the paper sheet system mandated to maintain some visual coherency so humans could keep tracks. Modern tools don't have this problem. 
 
 The Honda shape on the sheet looks like mashed potatoes but using automatic allocation much more powerful system.
 
+\begin{trivia}
 By looking at the sheet from later titles, it was inferred that Capcom abandoned the sheet system with the advent of the CPS-2. Likely using a fully computerized toochain devoid of paper and scissors, sheets have no spacial coherency, and they look like mashed potatoes.
-% \end{trivia}
+\end{trivia}
 
 \begin{figure}[H]
 \nbdraw{honda_sheet}
 \caption*{A sheet with two version of Honda, Shape and Sprite}
 \end{figure}
+
 
 % On the contrary, a shape does not have to follow any constraint.
 

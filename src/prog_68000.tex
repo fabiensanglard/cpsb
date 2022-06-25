@@ -111,6 +111,8 @@ Notice the care taken to make sure the 68000 will only attempt to access aligned
 
 \subsection{Code to segment}
 
+C variables are placed into these sections using the names defined in the linker script.
+
 \lstinputlisting[style=CStyle]{src/code/68000/memory_map.c}
 
 
@@ -470,7 +472,9 @@ A convenient trick is to allocate a rowscroll array of size 1024 (one entry for 
 \lstinputlisting[style=CStyle]{src/code/68000/rowscroll.c} 
 
 
-Note that rowscroll offsets are unsigned and always indicate an amount to move toward the left side of the screen. To offset toward the right, a developer can take advantage of the wrap around nature of the SCROLL layers and use \icode{decalValue = 1024 - desiredRightOffsetValue}.
+Note that rowscroll offsets are unsigned and always indicate an amount to move toward the left side of the screen. 
+
+To offset toward the right, a developer can take advantage of the wrap around nature of the SCROLL layers and use \icode{decalValue = 1024 - desiredRightOffsetValue}.
 
 % \begin{trivia}
 % Honda's SCROLL2 features hidden message. It looks like the designers left construction block writings as Upper left, (\begin{CJK}{UTF8}{min}左上\end{CJK}), Upper middle (\begin{CJK}{UTF8}{min}中上\end{CJK}), and Upper right (\begin{CJK}{UTF8}{min}右上\end{CJK}) kanji can be spotted.
@@ -495,12 +499,12 @@ Note that rowscroll offsets are unsigned and always indicate an amount to move t
 
 \pagebreak
 
-\subsection{Back then...}
+\subsection{Back then...}\index{Back Then!Programming}
 The system used by Capcom to program the CP-System remained unknown for many years. Only the nickname of Hiroaki Kondo, a composer/sound programmer often credited as "X68K", rumored a computer manufactured by Sharp. 
 
 In 2018,  Akiman confirmed\cite{x68000usage1}\cite{x68000usage2} that Capcom's SDK, named CAT-1, was launched during the making of Street Fighter II and ran on a Sharp X68000.
 
-\subsubsection{SHARP X68000}
+\subsubsection{SHARP X68000}\index{Computers!SHARP X68000}
 
 Unheard of in the rest of the world, the X68000 is a celebrity in Japan where it is called "god computer". 
 Released in 1987, the first machine in the series was as beautiful and powerful as it was expensive (¥369,000, roughly \$3000 in 1987, equivalent to \$7,600 in 2022).
@@ -706,7 +710,9 @@ These limitation did not deter Capcom from releasing five games for the platform
 \subsubsection{Ports Analysis: Ghouls 'n Ghosts}
  Analysis\cite{x68k_games_analysis}
 
-XM6 Pro-68k
+XM6 Pro-68k.
+
+Need 2MiB
 
 \nbimg{x68k_gg_scr.png}
 
@@ -730,14 +736,21 @@ XM6 Pro-68k
 
 \subsubsection{Ports Analysis: Final Fight}
 Subway stairs
+
+2MB
 \pagebreak
+
 Blac
+
 \pagebreak
 
 \subsubsection{Ports Analysis: Super Street Fighter II}
-Need 4 MiB
+Need 4 MiB \href{http://tkhr000.s601.xrea.com/x68softlist/x68soft.htm}{List of games here with MiB}.
+
 \pagebreak
+
 Blac
+
 \pagebreak
 
 

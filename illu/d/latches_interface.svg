@@ -2,12 +2,12 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="277.15897mm"
-   height="57.494911mm"
-   viewBox="0 0 277.15897 57.494911"
+   width="249.159mm"
+   height="63.494999mm"
+   viewBox="0 0 249.159 63.494999"
    version="1.1"
    id="svg5"
-   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   inkscape:version="1.2 (56b05e47e7, 2022-06-09, custom)"
    sodipodi:docname="latches_interface.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -29,14 +29,16 @@
      fit-margin-right="0"
      fit-margin-bottom="0"
      inkscape:zoom="0.76435185"
-     inkscape:cx="423.88855"
-     inkscape:cy="409.49728"
-     inkscape:window-width="1920"
-     inkscape:window-height="1010"
-     inkscape:window-x="-6"
-     inkscape:window-y="-6"
+     inkscape:cx="531.82314"
+     inkscape:cy="189.04906"
+     inkscape:window-width="1280"
+     inkscape:window-height="736"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="layer1"
+     inkscape:showpageshadow="2"
+     inkscape:deskcolor="#d1d1d1" />
   <defs
      id="defs2">
     <marker
@@ -162,12 +164,12 @@
        id="rect24397-4"
        width="28.860157"
        height="30.807693"
-       x="148.06227"
+       x="123.72086"
        y="49.2234"
        ry="3.4615393" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.465;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.465, 0.465;stroke-dashoffset:0;stroke-opacity:1"
-       d="M 122.16421,40.153846 V 94.153845"
+       d="m 103.11409,40.153846 0,62.789064"
        id="path5134"
        sodipodi:nodetypes="cc" />
     <rect
@@ -175,7 +177,7 @@
        id="rect5238"
        width="6.2307682"
        height="18.692308"
-       x="119.04867"
+       x="99.99868"
        y="53.550323" />
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.465;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
@@ -189,102 +191,102 @@
        id="rect5238-7-8-3"
        width="6.2307682"
        height="18.692308"
-       x="251.07518"
+       x="219.32561"
        y="52.51186" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:4.58611px;line-height:1.25;font-family:sans-serif;writing-mode:lr-tb;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
        x="-70.490921"
-       y="123.6445"
+       y="104.59451"
        id="text7284"
        transform="rotate(-90)"><tspan
          sodipodi:role="line"
          id="tspan7282"
          style="font-size:4.58611px;writing-mode:lr-tb;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
          x="-70.490921"
-         y="123.6445">LATCH</tspan></text>
+         y="104.59451">LATCH</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:0.765;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM)"
-       d="M 2.8131407,62.387182 H 8.6977529"
+       d="m -1.4201927,62.387182 h 5.884612"
        id="path23989" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.765;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM-2)"
-       d="m 50.317217,62.550323 h 5.884615"
+       d="m 43.438046,62.550323 h 5.884615"
        id="path23989-7" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.765;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM-2-3)"
-       d="m 156.21391,51.463461 v -5.88461"
+       d="m 131.87209,51.463461 v -5.88461"
        id="path23989-7-03" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.765;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM-2-6)"
-       d="M 99.427158,62.204169 H 105.3118"
+       d="m 88.314651,62.204169 h 5.884612"
        id="path23989-7-0" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.765;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM-2-6-9)"
-       d="m 132.41092,61.833752 h 5.88464"
+       d="m 111.77329,61.833752 h 5.88464"
        id="path23989-7-0-5" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.765;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM-2-6-3)"
-       d="m 180.61776,61.858016 h 5.88461"
+       d="m 156.27594,61.858016 h 5.88461"
        id="path23989-7-0-4" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.765;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM-2-6-8)"
-       d="m 233.30033,61.858015 h 5.88461"
+       d="m 206.31266,61.858015 h 5.88461"
        id="path23989-7-0-0" />
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.565;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect24397"
        width="28.860157"
        height="30.807693"
-       x="62.307693"
+       x="55.42852"
        y="50.434937"
        ry="3.1153855" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:5.64444px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="65.07692"
+       x="58.197746"
        y="78.819557"
        id="text27461"><tspan
          sodipodi:role="line"
          id="tspan27459"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
-         x="65.07692"
+         x="58.197746"
          y="78.819557">ENCODER</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:5.64444px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="150.85782"
+       x="126.51646"
        y="78.056747"
        id="text27461-8"><tspan
          sodipodi:role="line"
          id="tspan27459-4"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
-         x="150.85782"
+         x="126.51646"
          y="78.056747">DECODER</tspan></text>
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.465;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect5238-7"
        width="6.2307682"
        height="18.692308"
-       x="20.076921"
+       x="13.197754"
        y="53.041027" />
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.465;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect5238-7-6"
        width="6.2307682"
        height="18.692308"
-       x="28.384617"
+       x="21.505444"
        y="53.041027" />
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.465;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect5238-7-3"
        width="6.2307682"
        height="18.692308"
-       x="37.384617"
+       x="30.505444"
        y="53.041027" />
     <g
        id="g35368"
-       transform="translate(0,4.2333335)">
+       transform="translate(-6.879167,4.2333335)">
       <path
          style="fill:none;stroke:#000000;stroke-width:0.465;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          d="m 16.442308,46.730769 h 31.5"
@@ -297,13 +299,13 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:5.64444px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="24.365499"
+       x="17.486326"
        y="80.316689"
        id="text27461-1"><tspan
          sodipodi:role="line"
          id="tspan27459-0"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
-         x="24.365499"
+         x="17.486326"
          y="80.316689">FIFO</tspan></text>
     <text
        xml:space="preserve"
@@ -319,17 +321,17 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:5.64444px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="248.08228"
+       x="216.3327"
        y="79.441368"
        id="text27461-1-1-4"><tspan
          sodipodi:role="line"
          id="tspan27459-0-3-4"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
-         x="248.08228"
+         x="216.3327"
          y="79.441368">BYTE</tspan></text>
     <g
        id="g35378-6"
-       transform="translate(179.41052,3.6550268)">
+       transform="translate(155.0687,3.6550268)">
       <rect
          style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.465;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
          id="rect5238-7-61"
@@ -376,7 +378,7 @@
     </g>
     <g
        id="g35266"
-       transform="translate(0,3.7041668)">
+       transform="translate(-6.879167,3.7041668)">
       <rect
          style="fill:#87aabd;fill-opacity:1;stroke:#000000;stroke-width:0.465;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
          id="rect5238-7-3-8"
@@ -402,75 +404,83 @@
        id="rect5238-7-3-8-7"
        width="6.2307682"
        height="18.692308"
-       x="152.79996"
+       x="128.45862"
        y="52.858017" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:4.58611px;line-height:1.25;font-family:sans-serif;writing-mode:lr-tb;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
        x="-67.778938"
-       y="157.58138"
+       y="133.24004"
        id="text7284-0-1"
        transform="rotate(-90)"><tspan
          sodipodi:role="line"
          id="tspan7282-7-3"
          style="font-size:4.58611px;writing-mode:lr-tb;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
          x="-67.778938"
-         y="157.58138">0xFF</tspan></text>
+         y="133.24004">0xFF</tspan></text>
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.465;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect5238-7-3-8-1"
        width="6.2307682"
        height="18.692308"
-       x="79.269234"
+       x="72.39006"
        y="53.20417" />
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.465;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect5238-7-3-8-1-7"
        width="6.2307682"
        height="18.692308"
-       x="164.91522"
+       x="140.57388"
        y="52.858013" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.765;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM-2-3-2)"
-       d="m 70.244968,44.304817 v 5.88461"
+       d="m 63.365797,44.304817 v 5.88461"
        id="path23989-7-03-1" />
-    <rect
-       style="fill:#dd8b7a;fill-opacity:1;stroke:#000000;stroke-width:0.450729;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       id="rect53324"
-       width="50.110355"
-       height="8.0762653"
-       x="33.597454"
-       y="87.455772"
-       ry="2.9474914" />
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:4.87752px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.182907"
-       x="38.189899"
-       y="93.227715"
-       id="text2200"><tspan
-         sodipodi:role="line"
-         id="tspan2198"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.87752px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.182907"
-         x="38.189899"
-         y="93.227715">CONTROL SYSTEM</tspan></text>
-    <rect
-       style="fill:#dd8b7a;fill-opacity:1;stroke:#000000;stroke-width:0.432432;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       id="rect53324-4"
-       width="48.076122"
-       height="7.7484093"
-       x="169.0831"
-       y="87.9758"
-       ry="2.8278379" />
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:4.67952px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.175482"
-       x="176.32698"
-       y="93.513428"
-       id="text2200-9"><tspan
-         sodipodi:role="line"
-         id="tspan2198-7"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.67952px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.175482"
-         x="176.32698"
-         y="93.513428">AUDIO SYSTEM</tspan></text>
+    <g
+       id="g27851"
+       transform="translate(-12.700002)">
+      <rect
+         style="fill:#dd8b7a;fill-opacity:1;stroke:#000000;stroke-width:0.450729;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect53324"
+         width="56.108551"
+         height="8.0762634"
+         x="28.05644"
+         y="90.630775"
+         ry="2.9474914" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:5.99722px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.182907"
+         x="30.950502"
+         y="96.800728"
+         id="text2200"><tspan
+           sodipodi:role="line"
+           id="tspan2198"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.99722px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.182907"
+           x="30.950502"
+           y="96.800728">CONTROL SYSTEM</tspan></text>
+    </g>
+    <g
+       id="g27856"
+       transform="translate(2.1166667)">
+      <rect
+         style="fill:#dd8b7a;fill-opacity:1;stroke:#000000;stroke-width:0.432432;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect53324-4"
+         width="48.076122"
+         height="7.7484093"
+         x="144.74176"
+         y="91.150803"
+         ry="2.8278379" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:5.99722px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.175482"
+         x="147.25659"
+         y="97.15683"
+         id="text2200-9"><tspan
+           sodipodi:role="line"
+           id="tspan2198-7"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.99722px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.175482"
+           x="147.25659"
+           y="97.15683">AUDIO SYSTEM</tspan></text>
+    </g>
   </g>
 </svg>

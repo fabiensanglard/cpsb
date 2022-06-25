@@ -7,7 +7,10 @@ void interrupt () {
     latch = REG_LATCH1;
 }
 
+// TODO Desc variable
 int8_t  musCounter = 0;
+
+// TODO Desc variable
 int8_t  lastLatch;
 
 
@@ -16,7 +19,8 @@ void main () {
   	musCounter++;
     
     // Only tick after interrupt ticks
-    while (musCounter < intCounter) {}
+    while (musCounter < intCounter) {
+    }
 
     updateMusic();	
 	
@@ -30,7 +34,6 @@ void main () {
       // 0x10 = Channel 1, 0x00 = Max volume.
       REG_OKI = 0x10 | 0x00; 
      } else {
-
        setupMusicPlayback(latch & 0x70);
      }
   }

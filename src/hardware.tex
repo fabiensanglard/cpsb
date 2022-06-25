@@ -5,19 +5,19 @@ The project that would later be dubbed by the press "superchip"\cite{tgm198906} 
 The significant time and funds investment left not ambiguities in the mind of Capcom executives. Success would be to dictate the life or death of the company.
 
 \begin{q}{Yoshiki Okamoto, Capcom Producer\cite{gamest38}}
-The CP System is an extremely important business strategy to Capcom: we’ve gambled everything on it.
+The CP System is an extremely important business strategy to Capcom: we have gambled everything on it.
 \end{q}
 
 \section{Goals}
 The CPS-1 was expected to solve most of Capcom arcade division problems. Namely reduce production cost, lower selling price, streamline development, increase capabilities, and stop piracy. 
 
-Cost reduction would be achieved by mimicking home consoles and standardizing the platform. Instead of re-designing hardware boards for each games, the hardware would be a constant with the cabinet differentiated only by the software running on it.
+Cost reduction would be achieved by mimicking home consoles and standardizing the platform. Instead of re-designing boards for each games, the hardware would be a constant with the cabinet differentiated only by the software running on it.
 
 Price lowering would allow arcades operators to renew their games more often. This objective would be reached by designing a platform where new games board containing mostly ROMs could be purchased separately from the processor board therefore facilitating upgrades.
 
 To improve the development toolchain, the CPS-1 was designed to work hand-in-hand with Sharp series of X68000 workstations which featured the same CPUs and programming models.
 
-More importantly, games would had to catch customer eyes and not pale in comparison to competition. The goal was to design a machine with graphic capabilities an order of magnitude above others and generate visuals that would hold they own wehen compared to titles from powerhouse such as Sega or Namco.
+More importantly, games would had to catch customer eyes and not pale in comparison with competition. The goal was to design a machine with graphic capabilities an order of magnitude above others and generate visuals that would hold they own when compared to titles from powerhouse such as Sega or Namco.
 
 Most importantly was the problem of piracy. In a country like Mexico it was estimated that 200,000 bootlegs were in circulation\cite{sf2_oral_history} despite Capcom recording zero sales in that territory. Multiple concurrent copy-protection mechanisms were to be implemented.
 
@@ -30,14 +30,14 @@ Most importantly was the problem of piracy. In a country like Mexico it was esti
 \begin{wrapfigure}[19]{r}{0.3\textwidth}
 \vspace{-\baselineskip}
 \centering
-  \simg{0.3}{cabinet.png}
+  \sdraw{0.3}{cabinet}
 \end{wrapfigure}
 
 
 % \begingroup
-Managing a cabinet involved frequently updating the game it ran to keep on bringing novely to players and quarters to the owner. Thanks to the Japan Amusement Machine and Marketing Association, the process of replacing a game was simple. 
+Operators frequently updated their cabinets by replacing the game it ran in order to keep on bringing novelty to players and quarters to themselves. Thanks to the Japan Amusement Machine and Marketing Association, the process of changing titles was simple. 
 
-Usually hiding an abomination of tangled wires the belly of the machines concentrated toward a JAMMA harness where the motherboard would be inserted as a slot-in. All an operator had to do was to replace the motherboard.
+Usually hiding an abomination of tangled wires the belly of the machines concentrated toward a JAMMA harness where the motherboard would be inserted as a slot-in. All an operator had to do was to swap PCBs.
 
 A JAMMA port has everything a game needs to operate. Its 28 pins on each sides provide inputs (four-direction joystick and three buttons per player, two coin sensors, start button, and service button), outputs (mono speakers lines and CRT screen controls), and even power supply.
 
@@ -101,7 +101,7 @@ Since the three JAMMA buttons were used for punches, the extension was labeled t
 
 
 \section{Physical Architecture}
- The CPS-1 is made of three printed circuit boards named Board "A", Board "B", and Board "C" which are arranged stacked on top of each others.
+ The CPS-1 is made of three printed circuit boards named Board "A", Board "B", and Board "C" which are stacked on top of each others.
 
 
 \begin{figure}[H]
@@ -252,11 +252,11 @@ It is heavy duty in order to keep up with the 59.64Hz refresh rate inflicted on 
 % \section{Storage system}
 % The game code and assets are all stored on ROMs on the Board B. All storage subsystem whether they are meant to the 8-bit Z-80, the 16-bit 68000, or the 64-bit PPUs are build with the same XXXX component.
 
-\section{Control system}
+\section{Control system}\index{Systems!Control}
 The control system is the master of the platform. As a ruler it needs not to go deep but wide. A tailor made task for the immensely popular Motorola 68000.
 
 
-\subsection{Motorola 68000}
+\subsection{Motorola 68000}\index{Processors!Motorola 68000}
 
  Released in 1979, and clocked at 10 MHz (later upgraded to 12 MHz), the MC68000 was not a particularly powerful chip by the late 80' standards with its two stage pipeline\cite{M68000fv} (prefetch, exec) and no cache. Its 1.7 MIPS placed it on par with an Intel 286 10MHz. By 1989 it was already two generations old behind the 68020 (1984) and the 68030 (1987).
 
@@ -426,7 +426,7 @@ For the audio, the m68k issues simple commands to the Z-80 via two 1 byte latche
 
 
 \pagebreak
-\section{Audio system}
+\section{Audio system}\index{Systems!Audio}
 The audio system runs in isolation from everything else. It has its own bus, its own RAM, its own ROM systems, and its own oscillators. Its only opening to the outside world are two latches to receive commands from the control system and two JAMMA pins where to output sound.
 
 The grandmaster of this microcosm is a Zilog-80 running at 3.58 MHz.
@@ -449,7 +449,7 @@ Thanks to its 8-bit design, the z80 was a perfect fit for the 8-bit YM2151 and 8
 Staring at components teaches to recognize packagings. DIP (Dual In-line Package), like the z80 below, are recognizable by their two lines of pins. The 68000 on page \pageref{68000drawing} with its four sides of pins belongs to the "Chip carrier" family. These can be made of materials such as plastic or ceramic and use barbaric acronyms like as CLCC or PLCC.  
 \end{trivia}
 
-\sdraw{0.9}{z-80}
+\sdraw{0.9}{z-80}\index{Processors!Zilog 80}
 
 % \begin{q}{The man who hated hardware}
 % And just like that, we found ourselves staring at pin-outs again. This was going to be a long day!
@@ -523,7 +523,8 @@ Hopefully this awful bank switch control
 
 
 
-\subsection{YM2151}
+\subsection{YM2151}\index{Processors!Yamaha 2151}
+
 Selecting the music chip was not a matter of shopping vendors but rather to pick one from Yamaha. Thanks to the licensing of Frequency Modulation (FM) patents from Stanford in 1975, the Japanese founder ruled the world of electronic music.
 
 \begin{trivia}
@@ -583,17 +584,21 @@ A pin in particular, the \icode{IRQ} which allows the YM2151 to generate interru
 
 The only drawback of this chip is that is features no DAC (Digital to Analog Converter). It generates a signal on the Serial Output (\icode{SO}). 
 
-\subsection{YM3012}
+\subsection{YM3012}\index{Processors!Yamaha 3012}
+
 Because the JAMMA port expect an analog signal, Capcom connected a YM3012 input is connected to the YM2151 output. The 3012 is the tailor made DAC which converts the digital stream from the YM2151 to an analog signal that is later mixed with the analog signal of the OKI6295.
 
 \sdraw{0.5}{YM3012}
 
 
-\subsection{MSM6295}
+\subsection{MSM6295}\index{Processors!OKI MSM6295}
+
 For audio sample playback, Capcom spared no expenses and selected a chip capable of 4-bit ADPCM audio decompression over four channels, the MSM6295 (a.k.a OKI). 
 % capable chips by the past with the MSM5205 by OKI Semiconductor. For the CPS-1  they went with a steroids version,
 
-Despite running at only 1MHz the MSM6295 is a god sent to a game board designer. It does not need instructions since its function is fully hard-coded. Its address (\icode{A0-A15}) and data (\icode{D0-D7}) lines are directly connected to its own 256 KiB ROM, on a local bus where assets are stored. These make it a fully enclosed digitized sound system only communicated via its input lines (\icode{I0-I7}), a perfect match for the z80 data bus, from which it receives commands.
+Despite running at only 1MHz the MSM6295 is a god sent to a game board designer. It does not need instructions since its function is fully hard-coded. Its address (\icode{A0-A15}) and data (\icode{D0-D7}) lines are directly connected to its own 256 KiB ROM, on a local bus where assets are stored. 
+
+These make it a fully enclosed digitized sound system only communicated via its input lines (\icode{I0-I7}), a perfect match for the z80 data bus, from which it receives commands.
 
 To get to work, the OKI only needs to receive a sample ID [1-127], a channel [1-4], and a volume. Via a lookup table in ROM the sample offset is retrieved and playback starts with an analog signal generated on \icode{DA0}. 
 
@@ -636,18 +641,42 @@ In the end, Capcom connected the OKI to the GFX crystal (16MHz) and divided freq
 
 
 
-\subsection{PCM 101} %\label{adpcm_decompression_label}
+\subsection{PCM 101}
 \index{ADPCM!Decompression}
-We cannot close the OKI section without taking a close look at the beauty that is ADPCM decompression (compression will be studied in the software chapter).
+Both input and output of ADPCM are PCM streams. To deepen the understanding of the MSM6295 means to study \textbf{P}ulse-\textbf{C}ode \textbf{M}odulation to the deep down.
 
-Whether it is recorded or played, PCM (Pulse-code modulation) is a stream of value directly representing the position of a device diaphragm.
+Whether it is recorded or played, PCM is a series of value directly representing the position of a device diaphragm. In the case of recording the diagram is in a microphone, whereas upon playing, it is in a loud speaker.
 
+\pagebreak
+% Two parameters impact the fidelity of the signal capture/reproduction. 
+
+\begin{figure}[H]
 \nbdraw{speaker}
+\caption*{Speaker / Mic}
+\end{figure}
+
+
+The sampling rate (on the X axis) and the bit depth (on the Y axis) are the two parameters impacting the fidelity of the signal capture/reproduction.
 
 The higher the sampling rate, the more often the diaphragm position can be adjusted. The higher the bit depth, the more accurately the diaphragm position can be set. Stereo is achieved by interleaving two PCM streams.
 
-Sound quality increases linearly with the data rate. Land-line phones typically use 8000Hz sampling rate with 8-bit depth mono consuming 8,000 bytes per second while a CD uses 16-bit samples at 44100Hz in stereo taking its data usage to 176,400 bytes per second.
-\pagebreak
+\begin{figure}[H]
+\nbdraw{pcm}
+\caption*{PCM values (samples) over time}
+\end{figure}
+
+
+
+
+Sound quality increases linearly with the data rate.
+\begin{itemize}[topsep=0pt]
+\item Land-line phones use 8,000Hz/8-bit mono using 8,000 Byte per Second.
+\item CDs uses 44,100Hz/16-bit stereo using to 176,400 Byte per Second.
+\end{itemize}
+
+\begin{trivia}
+The irony that both examples of land-line and CD are now as obsolete as the CP-System is not lost on the author.
+\end{trivia}
 
 \subsection{ADPCM compression}
 ADPCM is able to take 12-bit PCM sample and compress then as 4-bit samples by encoding only the difference between PCM samples. Decompressing an ADPCM stream consist in adding a delta value to the last decompressed  sample, over and over again.
@@ -656,7 +685,11 @@ The delta is encoded with a system of weighted offset called "step" which is acc
 
 The first bit in a nibble indicates the sign of the delta (+/-). The three other give a "magnitude". The magnitude depends on the "step size" of the ADPCM decompressor.
 
+\begin{figure}[H]
 \sdraw{0.3}{adpcm_nibble}
+\caption*{ADPCM nibble}
+\end{figure}
+
 
 In its initial state, the step size is equal to 16 which means bit three is +/-16, bit two +/-8 and bit one +/-4. In this state, the delta to be applied can vary from 0 (\icode{b000}) to 28 (\icode{b111}). 
 
@@ -675,10 +708,16 @@ ADPCM is aggressive in increasing its step size (\icode{2, 4, 6, 8}) when high m
 
 
 \pagebreak
-\section{Video system}
-The goal of the video system is to drive signals for the CRT to generate images. Even though it is connected to the JAMMA port, there is no abstraction layer or custom protocol. The four red, green, blue, and sync JAMMA output pins are connected directly into the CRT inputs.
+\section{Video system}\index{Systems!Video}
+The goal of the video system is to pilot the CRT (Cathode-Ray Tube) where images are rasterized for the player to see.
 
+Even though it is connected via an intermediate JAMMA port, there is no abstraction layer or custom protocol. The four red, green, blue, and sync JAMMA output pins are connected directly into the CRT inputs.
+
+\begin{figure}[H]
 \nbdraw{rgb_wires}
+\caption*{The four wires needed to drive a CRT}
+\end{figure}
+
 
 There are four wires but in fact five signals are transmitted. Each red, green, and blue signal have their own wire but the sync wire carries two signals multiplexed as the horizontal sync pulse and vertical sync pulse. Because it composes two signals, it is called called CSYNC (Composite SYNC). 
 
@@ -692,7 +731,7 @@ These five signals are everything a CRT needs to work.
 
 Because the timing of operations is propagated deep into the GFX system, it is important to understand how a CTR works.
 
-At its core, a Cathode-Ray Tube (CRT) is a line drawing machine. It draws horizontal lines one after an other, from left to right and top to bottom. While is scans a line, three analog signals (one for each RGB colors) indicates the quantity of electrons to shot from three guns. The higher the signal, the more electrons are shot and the more vivid the color.
+At its core, a CRT is a line drawing machine. It draws horizontal lines one after an other, from left to right and top to bottom. While is scans a line, three analog signals (one for each RGB colors) indicates the quantity of electrons to shot from three guns. The higher the signal, the more electrons are shot and the more vivid the color.
 
 
 On the way toward the panel, electrons are filtered through a shadow mask to make sure they hit the proper type of colored phosphor receptacles which are grouped by three in RGB "slots". The electron beam-slot is not a one to one relationship. As we will see the beam can be larger or smaller than a slot.
@@ -828,12 +867,20 @@ Going for 384x224 was an interesting decision from an aspect-ratio standing poin
 % \begin{trivia}12:7 is to closed to 16:9 that, years later, people new to emulation actually wondered if Capcom actually intended games to be played in 16:9 instead of 4:3!
 % \end{trivia}
 
-The result was that the CPS-1 did not have square pixels which was a huge problem for artists.  
+The result was that the CPS-1 did not have square pixels. This was a huge problem for artists. If they digitized their drawing as is, the CRT would present to players a rendition non-conforming to the original.
 
-DRAWING ASPECT RATIO HERE
+% DRAWING ASPECT RATIO HERE
 
 \begin{q}{Akiman, Street Fighter 2, Lead Artist\cite{akiman}}
-When I was working on Forgotten Worlds, I noticed the problem of aspect ratio. "The pixels are not square!" I told my boss. "Impossible, I ordered them to be square!" he replied and called hardware on the spot. "The pixels are square!" he replied. Later I protested again to which my boss replied it was a calculation error.
+When I was working on my first CPS-1 game, Forgotten Worlds, I noticed the problem of aspect ratio right away. 
+
+- "The pixels are not square!" I told my boss.\\ 
+- "Impossible, I ordered them to be square!" he replied.
+
+He then proceeded to call hardware on the spot.\\ 
+- "The pixels are square!" he added.\\ 
+
+Later I protested again to which my boss replied it was a calculation error.
 \end{q}
 
 \pagebreak
@@ -908,21 +955,24 @@ To generate the color signals, the CPS-1 uses a palette system storing colors vi
 
 Individually these are simple memory elements with pinouts explained earlier, Power \icode{+5V}, Ground \icode{GND}, Addresses \icode{A0-A10}, Data \icode{D0-D7}, Write (\icode{WE}), Read (\icode{OW}), and Chip Enabled (\icode{CE}).
 
-\sdraw{0.45}{CXK5814P-35L} 
-
-
 What is uncanny is that the component connected to the address lines is not the one connected to the data lines.
  % Instead data is routed towards a DAC.
 
+\sdraw{0.45}{CXK5814P-35L} 
 
+
+
+
+The CPS-B drives the address bus at 8MHz to generate the DAC 16-bit inputs which in turn generates three analog Red, Green, and Blue signals. In parallel, the GFX generates the HSYNC and VSYNC signals, composited into CSYNC.
+
+Notice how one line is used not for addressing but to \icode{CE}ing chip pairs. 
 
 
 
 
 \nbdraw{video_lookup}
 
-The CPS-B drives the address bus at 8MHz to generate the DAC 16-bit inputs which in turn generates three analog Red, Green, and Blue signals. In parallel, the GFX generates the HSYNC and VSYNC signals, composited into CSYNC.
-Notice how one line is used not for addressing but to \icode{CE}ing chip pairs. 
+
 
 
 Colors are grouped into palettes containing 16 units. As will be studied later, the GFX system features 6 layers and each of them allows 32 palettes. This brings the total to 6*32*15 = 2, 880 colors which requires 12-bit to be indexed.
@@ -949,7 +999,7 @@ Colors are grouped into palettes containing 16 units. As will be studied later, 
 
 
 
-Twelves famous palettes. Can you recognize them?
+Twelves palettes from the characters of a famous Capcom fighting game. Can you recognize them?
 
 \nbdraw{palette_ryu}
 
@@ -967,7 +1017,7 @@ Twelves famous palettes. Can you recognize them?
 
 \nbdraw{palette_dahlsim}
 
-\par\noindent\rule{\textwidth}{0.4pt}
+\par\noindent\rule{\textwidth}{0.5pt}
 
 \nbdraw{palette_boxer}
 
@@ -977,7 +1027,7 @@ Twelves famous palettes. Can you recognize them?
 
 \nbdraw{palette_bison}
 
- (Hint: RKCHGZBD-BVSB)
+Hint: RKCHGZBD-BVSB.
 
 
 
@@ -992,7 +1042,7 @@ Twelves famous palettes. Can you recognize them?
 
 
 
-\section{Graphic system}
+\section{Graphic system}\index{Systems!Graphics}
 
 % \emph{This section would have been impossible to write without Lo\"{i}c Petit's contribution. He has been working tirelessly on understanding the CPS-1 and CPS-2 and generously shared his knowledge.}
 
@@ -1014,7 +1064,7 @@ Solving these problems of timing and latency exceptionally well is what made the
 \end{figure}
 
 
-\subsection{CPS-A and CPS-B: The ASICs powerhouse}
+\subsection{CPS-A and CPS-B: The ASICs powerhouse}\index{Processors!CPS-A}\index{Processors!CPS-B}
 To make their dream machine become a reality, Capcom did not rely on another company's product. They crafted their own ASICs (Application-Specific Integrated Circuit), tailored to their needs, the CPS-A (the head) and CPS-B (the legs).
 
 
@@ -1240,7 +1290,7 @@ It all makes sense except for one detail. If we look closely at Haggar (for thos
 
 The CPS-B allows the SCROLL layer behind the OBJs layer to have a special power. If a SCROLL tile is marked property, it can request the CPS-B to display some of its pixels on top of OBJ instead of behind.
 
-This feature allows to create complex effect where sprites are sandwitched by a SCROLL. Here, the tiles making the "near" portion of the ramp are added to the priority mask. Then four pens (resulting in colors \fcolorbox{black}{mask1}{\vphantom{W}\hphantom{H}} , \fcolorbox{black}{mask2}{\vphantom{W}\hphantom{H}} , \fcolorbox{black}{mask3}{\vphantom{W}\hphantom{H}} , and \fcolorbox{black}{mask4}{\vphantom{W}\hphantom{H}}) are set for the priority mask.
+This feature allows to create complex effect where sprites are sandwitched by a SCROLL. Here, the tiles making the "near" portion of the ramp are added to the priority mask. Then four pens (resulting in colors \fcolorbox{black}{mask1}{\vphantom{W}\hphantom{H}} , \fcolorbox{black}{mask2}{\vphantom{W}\hphantom{H}} , \fcolorbox{black}{mask3}{\vphantom{W}\hphantom{H}} , and \fcolorbox{black}{mask4}{\vphantom{W}\hphantom{H}}) as well as four pens for the garbage can TODO are set for the priority mask.
 
 Tiles making the "far" part of the ramp are not added to the priority mask so all their colors appear behind OBJs.
 
@@ -1381,6 +1431,10 @@ This choice, made by SNK for its Neo-Geo allowed gorgeous titles such as "Metal 
 Capcom hardware designers wanted something even more powerful than a double line buffer. To allow more time than a scanline to the PPU, the CPS-1 was built around a double sprite framebuffer (the same technology as  Sega Super Scaler). To host these framebuffers, the machine uses a dedicated memory called VRAM.
 
 With a double sprite framebuffer, the PPU does not just draw a line in advance but a whole screen. This technique averages 16\% more time per line for the graphic chip to do its work but more importantly it allows any number of tiles per line (even the powerful Neo-Geo has a limit of 96 tiles per line).
+
+\begin{trivia}
+SEGA X Board used Sprite Framebuffer.
+\end{trivia}
 
 The gain is massive but it comes with three drawbacks. 
 
