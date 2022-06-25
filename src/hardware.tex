@@ -268,7 +268,7 @@ Performance is not what made the 68000 rein as the prime hardware designer choic
 
 While most machines used 16-bit address system, its 24-bit address space allowed the 68000 16 MiB of RAM which was considered humongous at the time. This was a considerable advantage when it came to map peripherals. There is so much address space that, had they wished so, Capcom engineers could have allowed the 68000 to see all RAM and all ROM of all systems on the CPS-1.
 
-Moreover, where other CPUs used small address registers resulting in the infamous segmented addressing, Motorola gave its CPU 32-bit data and address registers. This not only allowed elegant flat addressing, it also gave coders a free meal where a program compiled once would get access to more than 16MiB RAM on later products. 
+Moreover, where other CPUs used small address registers resulting in the infamous segmented addressing, Motorola gave its CPU 32-bit data and address registers. Th resulting flat addressing was elegant and nicely complimented by a generous number, 18, of registers making it a processor praised by programmers. 
 
 
 \sdraw{0.8}{68000}
@@ -434,9 +434,9 @@ The grandmaster of this microcosm is a Zilog-80 running at 3.58 MHz.
 \subsection{Z-80}
 Released in July 1976 by Zilog, the Z-80 was an intended as an Intel 8080 killer thanks to a compatible instruction set. It ended up becoming an icon of the 70s, sharing the front-scene until the mid-80s with the equally mythical MOS 6502. 
 
-The z80 was widely used in home computers, notably featured in the Sinclair ZX Spectrum and the Amstrad CPC. It also found its way in military applications, musical equipment (Roland Jupiter-8), and multiple coin operated arcade games including Pac-Man. 
+The z80 was widely used in home computers, notably featured in the Sinclair ZX Spectrum and the Amstrad CPC. It also found its way in military applications, musical equipment (Roland Jupiter-8), embedded systems and multiple coin operated arcade games. 
 
-As an 8-bit era processor, the Z-80 features 8-bit data registers, 8-bit data bus, 16-bit address registers, and 16-bit address bus. In terms of processing power, it had become a particularly weak CPU by the late 80s standards with 0.45 MIPS making it three times slower than the MC68000 in the control system. 
+As an 8-bit era processor, the Z-80 uses 8-bit data registers, 8-bit data bus, 16-bit addresses, and 16-bit address bus. In terms of processing power, despite its "overlapping fetch/execute" design, the CPU had become particularly weak by the late 80s standards with 0.45 MIPS. It was three times slower than the MC68000 from the control system. 
 
 \nbdraw{mips_z80}
 
@@ -450,6 +450,7 @@ Staring at components teaches to recognize packagings. DIP (Dual In-line Package
 \end{trivia}
 
 \sdraw{0.9}{z-80}\index{Processors!Zilog 80}
+
 
 % \begin{q}{The man who hated hardware}
 % And just like that, we found ourselves staring at pin-outs again. This was going to be a long day!
