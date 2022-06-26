@@ -50,9 +50,9 @@ The last piece is the \icode{\_boot} function, which setups auto-vector and jump
 
 
 \section{Memory Map}
-Alike for the Sound System and its z80 memory space, we need to make sure the software prehave accordingly to the memory map defined by the board PALs.
+Alike for the Sound System and its z80 memory space, we need to make sure the software behaves accordingly to the memory map defined by the board PALs.
 
-The compiler in the GNU Compiler Collection, \icode{gcc} does not have a placemeny keyboard \icode{\_at} but even if it had been available, it would not have been enough to map large portion such as the 196 KiB of GFXRAM.
+The compiler in the GNU Compiler Collection, \icode{gcc} does not have a placement keyword \icode{\_at} but even if it had been available, it would not have been enough to map large portion such as the 196 KiB of GFXRAM.
 
 For what \icode{gcc} lacks, we can compensate thanks to the power of \icode{ld}'s linker script system. The idea is to use a two step method where:
 \begin{itemize}
@@ -208,7 +208,7 @@ However for the simplification and brevity requirement of this book, no queue is
 
 How \icode{hostframe} is implemented is completely at the programmer's discretion. Capcom games used a common kernel framework made of tasks. Since there is no source of interrupt beside \icode{vsync} they implemented a collaborative multi-tasking system where the stack and registers are stored/loaded as each task is executed.
 
-In a game like Street Fighter II, the kernek can be found running an A.I task or even a fireball task\cite{sf2platinium}.
+In a game like Street Fighter II, the kernel can be found running an A.I task or even a fireball task\cite{sf2platinium}.
 
 \subsection{Retrieving inputs}
 Besides joystick and buttons, the engine must recover inputs such as the dip settings, P1Start, P2Start, and most importantly detect coins being inserted.
@@ -526,7 +526,7 @@ Despite mind-blowing hardware specifications, SHARP's new product was a risky be
 \simg{0.6}{x68k_front.png}
 \end{wrapfigure}
 
-The "Manhatthan" twin-tower case of the first model became the signature of the series. 
+The "Manhattan" twin-tower case of the first model became the signature of the series. 
 
 Notice the vertical bar between the two towers. Pushing it down release a spring to allow the bar to extends past the top of the machine and become a carrying handle.
 
@@ -674,7 +674,7 @@ Video-games were obviously a strength of the machine thanks to its Background an
 
 
 \subsubsection{OS}
-Developed by Hudson Soft, the operating system named Human68k is stronly inspired by Microsoft's MS-DOS . 
+Developed by Hudson Soft, the operating system named Human68k is strongly inspired by Microsoft's MS-DOS . 
 
 All English name commands such as \icode{DIR} are present. In fact, Human68k manual is nearly identical to IBM DOS 4.0J manual\cite{human68k_manual}. The system even uses a \icode{CONFIG.SYS} file to boot.
 

@@ -114,7 +114,7 @@ Since the three JAMMA buttons were used for punches, the extension was labeled t
 The connection points are prominent white connectors. Boards A and B are connected via four 2x32-pins connectors while the boards B and C are connected with four 2x20-pin connectors.  Once plugged into each others, the boards are manipulated as a whole with no floating parts.
 
 
-The system was revised over the years. Approximatively 229 variations are known to exist, including bootlegs. The board which will be studied in this book is the one used to run the original "Street Fighter 2", which uses board A (88617A-7B), board B (90629B), and board C (90628-C).
+The system was revised over the years. Approximately 229 variations are known to exist, including bootlegs. The board which will be studied in this book is the one used to run the original "Street Fighter 2", which uses board A (88617A-7B), board B (90629B), and board C (90628-C).
 
 \subsection{Board A}\index{Board!Board A}
 The board "A" is the platform that never changes between games. It features all but one of the chips in charge of processing data, whether it is game logic, audio, or video.
@@ -233,7 +233,7 @@ There is a strong isolation via layering where top systems are unable to access 
   \end{figure}
 
 
-The control system and its m68k is in charge of coordinating inputs (joystick, buttons, coin) and outputs. It can communicate with both the gfx and audio system main processors.
+The control system and its m68k is in charge of coordinating inputs (joystick, buttons, coin) and outputs. It can communicate with both the GFX and audio system main processors.
 
 The audio system runs almost totally in isolation. It is connected to control via two 8-bit latches which the z80 actively polls to retrieve commands related to music and sound effects. Notice how these latches bridge different data bus width since control has 16 data lines while the audio system's uses 8 data lines.
 
@@ -429,7 +429,7 @@ For the audio, the m68k issues simple commands to the Z-80 via two 1 byte latche
 \section{Audio system}\index{Systems!Audio}
 The audio system runs in isolation from everything else. It has its own bus, its own RAM, its own ROM systems, and its own oscillators. Its only opening to the outside world are two latches to receive commands from the control system and two JAMMA pins where to output sound.
 
-The grandmaster of this microcosm is a Zilog-80 running at 3.58 MHz.
+The grand master of this microcosm is a Zilog-80 running at 3.58 MHz.
 
 \subsection{Z-80}
 Released in July 1976 by Zilog, the Z-80 was an intended as an Intel 8080 killer thanks to a compatible instruction set. It ended up becoming an icon of the 70s, sharing the front-scene until the mid-80s with the equally mythical MOS 6502. 
@@ -675,9 +675,9 @@ Sound quality increases linearly with the data rate.
 \item CDs uses 44,100Hz/16-bit stereo using to 176,400 Byte per Second.
 \end{itemize}
 
-\begin{trivia}
-The irony that both examples of land-line and CD are now as obsolete as the CP-System is not lost on the author.
-\end{trivia}
+% \begin{trivia}
+% The irony that both examples of land-line and CD are now as obsolete as the CP-System is not lost on the author.
+% \end{trivia}
 
 \subsection{ADPCM compression}
 ADPCM is able to take 12-bit PCM sample and compress then as 4-bit samples by encoding only the difference between PCM samples. Decompressing an ADPCM stream consist in adding a delta value to the last decompressed  sample, over and over again.
@@ -1134,7 +1134,7 @@ The grid alignment works well with streaming because of the predictable screen l
 Notice how the GFXROM data is retrieved four bytes at a time thanks to a 32-bit data bus. This conveniently accounts for eight pen values.
 
 \subsubsection{Channels}
-To further improve bandwidth, the GFXROM data uses a layout where 8 consecutives bytes are interleaved four by four across two chips. 
+To further improve bandwidth, the GFXROM data uses a layout where 8 consecutive bytes are interleaved four by four across two chips. 
 
 When reading, a memory address is issued to two chips at the same time and their data lines are enabled consecutively alike on a TV "channel" selection.
 
@@ -1559,7 +1559,7 @@ But when mirror matches became possible in Champion Edition, that meant that we 
 To remain within the OBJ budget, the "wind, forest, fire, mountain" ("\begin{CJK}{UTF8}{min}風林火山\end{CJK}") sign was removed from Street Fighter 2 Champion Edition. Many more background like XXX, YYY, and ZZZ had to be reworked in the same fashion.
 
 \begin{trivia}
-Decoration in Street Fighter 2 were the object of much consideration. The stone in Thailland randomly move at the beginning of each round so they cannot be used as hallmark by players.
+Decoration in Street Fighter 2 were the object of much consideration. The stone in Thailand randomly move at the beginning of each round so they cannot be used as hallmark by players.
 
 \end{trivia}
 
@@ -1745,7 +1745,7 @@ Indeed, looking inside the GFXROM, one can find the 16 tiles making the "World W
  \end{figure}%
 
 \begin{q}{Akiman, Lead graphic design on SF2}
-It was several months after all the sprite work had been done. Since the logo had already been created, I couldn’t just go in and change the letter at this point.
+It was several months after all the sprite work had been done. Since the logo had already been created, I couldn't just go in and change the letter at this point.
 \end{q}
 
 What Akiman describe is that the GFXROM and all the tiles had been finalized. However they could still make modification to the 68000 instructions and most importantly, the palettes that were stored along with it.
@@ -1797,7 +1797,7 @@ Using Guile's calve as a pencil, but with the title's palette, three tiles are d
  \end{figure}%
 
 
- In an extraordinary coindicence, the pen corresponding colors were a match.
+ In an extraordinary coincidence, the pen corresponding colors were a match.
 
 \begin{figure}[H]
 \nbdraw{world_warrior_title}
