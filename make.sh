@@ -1,4 +1,4 @@
-mkdir out
+mkdir -p out
 cd out
 makeindex book.idx
 cd ..
