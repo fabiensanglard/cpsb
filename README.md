@@ -1,4 +1,4 @@
-# The Book of CP-1
+# The Book of CPS-1
 
 A study of the revolutionary hardware used by Capcom from 1989 to 1995 to release breath-taking games such as Street Fighter II, Final Fight, and 
 Ghouls 'n Ghosts.
@@ -56,3 +56,20 @@ go run build.go
 ```
 go run build.go debug|release -f
 ```
+
+### Poor typesetting
+
+If upon compilation the typesetting is "off" with blank pages, it may be that the wrong version of TexLive is used to compile. Run the following command and make sure you have at least version 2020.
+
+```
+$ tex --version
+TeX 3.141592653 (TeX Live 2022)
+```
+
+This book is verified to compile properly with TexLive 2020, 2021, and 2022. In case you have an older version, use the following steps to install the lastest.
+
+[Uninstall TexLive](https://puttym.github.io/update-texlive)
+
+[Download TexLive NetInstall](https://www.tug.org/texlive/acquire-netinstall.html)
+
+[Install TexLive](https://www.tug.org/texlive/quickinstall.html)
