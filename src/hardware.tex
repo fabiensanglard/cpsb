@@ -561,8 +561,8 @@ The principle of Frequency Modulation is to use simple wave forms to modulate ea
 
 The YM2151 is able to play 8 channels (a.k.a voices) of audio. Each channel consists of four operators (a.k.a slots) which can be setup to produce either percussion or instruments sounds. 
 
-Not limited to sinwaves. Bla blab bla
-
+Signal form is not made of sinwaves but four types of wave forms.
+ 
 \nbdraw{waveforms}
 
 
@@ -587,9 +587,9 @@ The only drawback of this chip is that is features no DAC (Digital to Analog Con
 
 \subsection{YM3012}\index{Processors!Yamaha 3012}
 
-Because the JAMMA port expect an analog signal, Capcom connected a YM3012 input is connected to the YM2151 output. The 3012 is the tailor made DAC which converts the digital stream from the YM2151 to an analog signal that is later mixed with the analog signal of the OKI6295.
+The YM3012 is a DAC connected to the YM2151 digital output \icode{SO}. The analog signal it outputs on \icode{CH1} and \icode{CH2} is mixed with the signal from the OKI6295 towards JAMMA.
 
-\sdraw{0.5}{YM3012}
+\sdraw{1}{YM3012}
 
 
 \subsection{MSM6295}\index{Processors!OKI MSM6295}

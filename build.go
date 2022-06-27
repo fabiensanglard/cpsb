@@ -173,6 +173,7 @@ func makeCover(src string, dst string) {
 	src = cwd() + src
 	dst = cwd() + dst
 
+
 	if isOlder(dst, src) {
 		return
 	}
@@ -241,8 +242,8 @@ func main() {
 	out = "out/" + mode
 	os.MkdirAll(out, os.ModePerm)
     
-    makeCover("src/cover/cover_frontw.svg", out+ "/illu/cover_front.pdf")
-    makeCover("src/cover/cover_backw.svg", out + "/illu/cover_back.pdf")
+    makeCover("src/cover/kdp/cover_frontw.svg", out+ "/illu/cover_front.pdf")
+    makeCover("src/cover/kdp/cover_backw.svg", out + "/illu/cover_back.pdf")
 
 	prepare("illu/img/", prepareImg)
 	prepare("illu/d/", prepareDrawing)

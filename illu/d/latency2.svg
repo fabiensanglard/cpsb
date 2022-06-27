@@ -1,0 +1,1404 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="243.10506mm"
+   height="74.913544mm"
+   viewBox="0 0 243.10506 74.91355"
+   version="1.1"
+   id="svg10050"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   sodipodi:docname="latency2.svg"
+   inkscape:export-filename="/Users/sanglardf/sf2b/latency.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview10052"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:snap-global="false"
+     inkscape:zoom="0.62431582"
+     inkscape:cx="189.0069"
+     inkscape:cy="208.22794"
+     inkscape:window-width="1920"
+     inkscape:window-height="1010"
+     inkscape:window-x="-6"
+     inkscape:window-y="-6"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <defs
+     id="defs10047">
+    <marker
+       style="overflow:visible"
+       id="TriangleOutM"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutM"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path13799" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker30425"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutS"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.2)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path13802" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleOutS"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutS"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.2)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path18244" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleOutL"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutL"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.8)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path18238" />
+    </marker>
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : -73.586461 : 1"
+       inkscape:vp_y="0 : 999.99987 : 0"
+       inkscape:vp_z="210.00001 : -73.586461 : 1"
+       inkscape:persp3d-origin="105.00001 : -123.08642 : 1"
+       id="perspective14125" />
+    <marker
+       style="overflow:visible"
+       id="TriangleOutM-4"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutM"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path13799-4" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleOutM-4-5"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutM"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path13799-4-9" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleOutM-4-0"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutM"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path13799-4-8" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleOutM-49"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutM"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path13799-5" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleOutM-4-8"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutM"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path13799-4-3" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleOutM-4-0-6"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutM"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path13799-4-8-5" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleOutM-4-5-4"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutM"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path13799-4-9-0" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleOutM-8"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutM"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path13799-3" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleOutM-4-2"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutM"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path13799-4-5" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleOutM-4-0-3"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutM"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path13799-4-8-3" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleOutM-4-5-2"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutM"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path13799-4-9-00" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleOutM-4-5-4-3"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutM"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path13799-4-9-0-3" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleOutM-4-5-2-3"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutM"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path13799-4-9-00-6" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleOutM-4-5-2-5"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutM"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path13799-4-9-00-3" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleOutM-6"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutM"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path13799-0" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleOutM-4-6"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutM"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path13799-4-2" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleOutM-4-0-61"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutM"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path13799-4-8-8" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleOutM-4-5-7"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutM"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path13799-4-9-9" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleOutM-3"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutM"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path13799-2" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleOutM-4-06"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutM"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path13799-4-1" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleOutM-4-0-5"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutM"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path13799-4-8-54" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleOutM-4-5-76"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutM"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path13799-4-9-5" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleOutM-4-5-6"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutM"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path13799-4-9-56" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleOutM-4-5-9"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutM"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path13799-4-9-4" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleOutM-32"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutM"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path13799-02" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleOutM-44"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutM"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path13799-6" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleOutM-44-6"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutM"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path13799-6-1" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleOutM-44-0"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutM"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path13799-6-6" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleOutM-44-0-7"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutM"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path13799-6-6-3" />
+    </marker>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-4.1174041,1.4993562)">
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.544088;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect10133"
+       width="61.724449"
+       height="10.249896"
+       x="-81.994446"
+       y="93.27948"
+       ry="1.6748972" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:7.18222px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.179556"
+       x="-57.124817"
+       y="101.01534"
+       id="text10731"><tspan
+         sodipodi:role="line"
+         id="tspan10729"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.179556"
+         x="-57.124817"
+         y="101.01534">CRT</tspan></text>
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.581001"
+       id="rect10901"
+       width="36.591175"
+       height="68.636147"
+       x="6.5825844"
+       y="1.5510864"
+       ry="2.4511714" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.581001"
+       id="rect10901-98"
+       width="36.591175"
+       height="68.636147"
+       x="101.51847"
+       y="1.4767307"
+       ry="2.4511714" />
+    <rect
+       style="fill:#d6d6d6;fill-opacity:1;stroke:#000000;stroke-width:0.581001"
+       id="rect10901-1"
+       width="52.271671"
+       height="68.636147"
+       x="192.21109"
+       y="1.0529312"
+       ry="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:7.05556px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="-58.017597"
+       y="195.60597"
+       id="text11477"><tspan
+         sodipodi:role="line"
+         id="tspan11475"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05556px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+         x="-58.017597"
+         y="195.60597">68000</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:7.05556px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="14.782494"
+       y="40.845612"
+       id="text11477-0"><tspan
+         sodipodi:role="line"
+         id="tspan11475-4"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05556px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+         x="14.782494"
+         y="40.845612">68000</tspan></text>
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.581001"
+       id="rect10901-9"
+       width="64.138489"
+       height="11.847313"
+       x="-82.470535"
+       y="139.33699"
+       ry="2.4511714" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="-57.200188"
+       y="147.73422"
+       id="text11477-9"><tspan
+         sodipodi:role="line"
+         id="tspan11475-3"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05556px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+         x="-57.200188"
+         y="147.73422">GFX</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="112.8997"
+       y="40.101067"
+       id="text11477-9-5"><tspan
+         sodipodi:role="line"
+         id="tspan11475-3-3"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05556px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+         x="112.8997"
+         y="40.101067">GFX</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="-61.848679"
+       y="207.85207"
+       id="text11477-9-7"><tspan
+         sodipodi:role="line"
+         id="tspan11475-3-9"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+         x="-61.848679"
+         y="207.85207">Frame 1</tspan></text>
+    <rect
+       style="fill:#aaaaaa;fill-opacity:1;stroke:#000000;stroke-width:0.641712"
+       id="rect12811"
+       width="30.652946"
+       height="16.537445"
+       x="-80.493874"
+       y="162.1078"
+       ry="0" />
+    <rect
+       style="fill:#aaaaaa;fill-opacity:1;stroke:#000000;stroke-width:0.641712"
+       id="rect12811-12"
+       width="30.652946"
+       height="16.537445"
+       x="-48.39143"
+       y="162.133"
+       ry="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="-65.177238"
+       y="168.38773"
+       id="text11477-1"><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:center;text-anchor:middle;stroke-width:0.264583"
+         x="-65.177238"
+         y="168.38773"
+         id="tspan25298">GFXRAM</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="-33.121384"
+       y="168.38773"
+       id="text11477-1-5"><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:center;text-anchor:middle;stroke-width:0.264583"
+         x="-33.121384"
+         y="168.38773"
+         id="tspan25298-0">GFXRAM</tspan></text>
+    <rect
+       style="fill:#aaaaaa;fill-opacity:1;stroke:#000000;stroke-width:0.641712"
+       id="rect12811-1"
+       width="26.395342"
+       height="18.641529"
+       x="-73.892921"
+       y="113.08121"
+       ry="0" />
+    <rect
+       style="fill:#aaaaaa;fill-opacity:1;stroke:#000000;stroke-width:0.641712"
+       id="rect12811-1-7"
+       width="26.395342"
+       height="18.641529"
+       x="-45.991032"
+       y="113.02578"
+       ry="0" />
+    <rect
+       style="fill:#aaaaaa;fill-opacity:1;stroke:#000000;stroke-width:0.542;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect12811-1-7-2-7"
+       width="37.837875"
+       height="30.084055"
+       x="146.96605"
+       y="40.350502"
+       ry="0" />
+    <rect
+       style="fill:#aaaaaa;fill-opacity:1;stroke:#000000;stroke-width:0.542;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect12811-1-7-2-7-9"
+       width="37.837875"
+       height="30.084055"
+       x="146.87595"
+       y="8.5610647"
+       ry="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="-68.610054"
+       y="120.10874"
+       id="text27633"><tspan
+         sodipodi:role="line"
+         id="tspan27631"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+         x="-68.610054"
+         y="120.10874">VRAM</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="154.80118"
+       y="47.904736"
+       id="text27633-2"><tspan
+         sodipodi:role="line"
+         id="tspan27631-5"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+         x="154.80118"
+         y="47.904736">VRAM B</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="155.58791"
+       y="15.79687"
+       id="text27633-2-0"><tspan
+         sodipodi:role="line"
+         id="tspan27631-5-1"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+         x="155.58791"
+         y="15.79687">VRAM A</tspan></text>
+    <rect
+       style="fill:#aaaaaa;fill-opacity:1;stroke:#000000;stroke-width:0.542;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect12811-1-7-2-7-4"
+       width="37.837875"
+       height="30.084055"
+       x="53.315659"
+       y="40.246288"
+       ry="0" />
+    <rect
+       style="fill:#aaaaaa;fill-opacity:1;stroke:#000000;stroke-width:0.542;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect12811-1-7-2-7-9-8"
+       width="37.837875"
+       height="30.084055"
+       x="53.225563"
+       y="8.4568548"
+       ry="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="57.704185"
+       y="16.750992"
+       id="text27633-2-0-3"><tspan
+         sodipodi:role="line"
+         id="tspan27631-5-1-9"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+         x="57.704185"
+         y="16.750992">GFXRAM A</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="-40.743107"
+       y="119.71661"
+       id="text27633-48"><tspan
+         sodipodi:role="line"
+         id="tspan27631-7"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+         x="-40.743107"
+         y="119.71661">VRAM</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="-77.803955"
+       y="100.12161"
+       id="text27633-4"><tspan
+         sodipodi:role="line"
+         id="tspan27631-4"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.93889px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#ff0000;fill-opacity:1;stroke-width:0.264583"
+         x="-77.803955"
+         y="100.12161">TILES1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="209.70177"
+       y="7.145916"
+       id="text27633-4-5"><tspan
+         sodipodi:role="line"
+         id="tspan27631-4-6"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.93889px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#ff0000;fill-opacity:1;stroke-width:0.264583"
+         x="209.70177"
+         y="7.145916">TILES 2</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="-74.970245"
+       y="175.51918"
+       id="text27633-4-8"><tspan
+         sodipodi:role="line"
+         id="tspan27631-4-5"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.93889px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#ff0000;fill-opacity:1;stroke-width:0.264583"
+         x="-74.970245"
+         y="175.51918">SCENES1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="62.676132"
+       y="31.928162"
+       id="text27633-4-8-2-4"><tspan
+         sodipodi:role="line"
+         id="tspan27631-4-5-3-4"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.93889px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#ff0000;fill-opacity:1;stroke-width:0.264583"
+         x="62.676132"
+         y="31.928162">SCENE 1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="154.53593"
+       y="32.034107"
+       id="text27633-4-8-2-1"><tspan
+         sodipodi:role="line"
+         id="tspan27631-4-5-3-0"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.93889px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#ff0000;fill-opacity:1;stroke-width:0.264583"
+         x="154.53593"
+         y="32.034107">SPRITES 1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="208.99547"
+       y="32.042263"
+       id="text27633-4-8-2-1-2"><tspan
+         sodipodi:role="line"
+         id="tspan27631-4-5-3-0-8"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.93889px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#ff0000;fill-opacity:1;stroke-width:0.264583"
+         x="208.99547"
+         y="32.042263">SPRITES 1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="-68.728996"
+       y="127.92139"
+       id="text27633-4-1"><tspan
+         sodipodi:role="line"
+         id="tspan27631-4-9"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.93889px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#ff0000;fill-opacity:1;stroke-width:0.264583"
+         x="-68.728996"
+         y="127.92139">SPRT1</tspan></text>
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM)"
+       d="m -77.36415,138.89895 v -32.2728"
+       id="path30422"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM-4)"
+       d="m -68.974476,186.69536 v -4.87161"
+       id="path30422-9"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM-4-0)"
+       d="m -65.778765,161.42982 v -6.74589"
+       id="path30422-9-9"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM-4-5)"
+       d="M -62.656988,139.17472 V 134.9701"
+       id="path30422-9-6"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM-4-5-6)"
+       d="M 27.499102,111.89732 V 107.6927"
+       id="path30422-9-6-3"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM-4-5-9)"
+       d="M 142.86868,111.48022 V 107.2756"
+       id="path30422-9-6-8"
+       sodipodi:nodetypes="cc" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.544088;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect10133-0"
+       width="61.724449"
+       height="10.249896"
+       x="6.178256"
+       y="93.27948"
+       ry="1.6748972" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:7.18222px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.179556"
+       x="31.047884"
+       y="101.01534"
+       id="text10731-2"><tspan
+         sodipodi:role="line"
+         id="tspan10729-3"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.179556"
+         x="31.047884"
+         y="101.01534">CRT</tspan></text>
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.581001"
+       id="rect10901-7"
+       width="64.138489"
+       height="11.847313"
+       x="6.6054564"
+       y="187.17429"
+       ry="2.4511714" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:7.05556px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="30.155107"
+       y="195.60597"
+       id="text11477-5"><tspan
+         sodipodi:role="line"
+         id="tspan11475-9"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05556px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+         x="30.155107"
+         y="195.60597">68000</tspan></text>
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.581001"
+       id="rect10901-9-2"
+       width="64.138489"
+       height="11.847313"
+       x="5.7021666"
+       y="139.33699"
+       ry="2.4511714" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="30.972513"
+       y="147.73422"
+       id="text11477-9-2"><tspan
+         sodipodi:role="line"
+         id="tspan11475-3-8"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05556px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+         x="30.972513"
+         y="147.73422">GFX</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="26.324022"
+       y="207.85207"
+       id="text11477-9-7-9"><tspan
+         sodipodi:role="line"
+         id="tspan11475-3-9-7"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+         x="26.324022"
+         y="207.85207">Frame 2</tspan></text>
+    <rect
+       style="fill:#aaaaaa;fill-opacity:1;stroke:#000000;stroke-width:0.641712"
+       id="rect12811-3"
+       width="30.652946"
+       height="16.537445"
+       x="7.6788282"
+       y="162.1078"
+       ry="0" />
+    <rect
+       style="fill:#aaaaaa;fill-opacity:1;stroke:#000000;stroke-width:0.641712"
+       id="rect12811-12-6"
+       width="30.652946"
+       height="16.537445"
+       x="39.781277"
+       y="162.133"
+       ry="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="22.995462"
+       y="168.63968"
+       id="text11477-1-1"><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:center;text-anchor:middle;stroke-width:0.264583"
+         x="22.995462"
+         y="168.63968"
+         id="tspan25298-2">GFXRAM</tspan></text>
+    <rect
+       style="fill:#aaaaaa;fill-opacity:1;stroke:#000000;stroke-width:0.641712"
+       id="rect12811-1-9"
+       width="26.395342"
+       height="18.641529"
+       x="14.27978"
+       y="113.08121"
+       ry="0" />
+    <rect
+       style="fill:#aaaaaa;fill-opacity:1;stroke:#000000;stroke-width:0.641712"
+       id="rect12811-1-7-3"
+       width="26.395342"
+       height="18.641529"
+       x="42.181667"
+       y="113.02578"
+       ry="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="19.562654"
+       y="119.8896"
+       id="text27633-1"><tspan
+         sodipodi:role="line"
+         id="tspan27631-9"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+         x="19.562654"
+         y="119.8896">VRAM</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="47.348598"
+       y="119.8896"
+       id="text27633-1-2"><tspan
+         sodipodi:role="line"
+         id="tspan27631-9-7"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+         x="47.348598"
+         y="119.8896">VRAM</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="13.202449"
+       y="175.74551"
+       id="text27633-4-8-8"><tspan
+         sodipodi:role="line"
+         id="tspan27631-4-5-4"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.93889px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#ff0000;fill-opacity:1;stroke-width:0.264583"
+         x="13.202449"
+         y="175.74551">SCENES1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="53.84837"
+       y="168.63968"
+       id="text11477-1-1-1"><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:center;text-anchor:middle;stroke-width:0.264583"
+         x="53.84837"
+         y="168.63968"
+         id="tspan25298-2-7">GFXRAM</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="44.055355"
+       y="175.50378"
+       id="text27633-4-8-8-7"><tspan
+         sodipodi:role="line"
+         id="tspan27631-4-5-4-1"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.93889px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#ff0000;fill-opacity:1;stroke-width:0.264583"
+         x="44.055355"
+         y="175.50378">SCENES2</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="19.443705"
+       y="127.92139"
+       id="text27633-4-1-5"><tspan
+         sodipodi:role="line"
+         id="tspan27631-4-9-0"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.93889px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#ff0000;fill-opacity:1;stroke-width:0.264583"
+         x="19.443705"
+         y="127.92139">SPRT1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="48.029751"
+       y="127.66649"
+       id="text27633-4-1-5-1"><tspan
+         sodipodi:role="line"
+         id="tspan27631-4-9-0-7"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.93889px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#ff0000;fill-opacity:1;stroke-width:0.264583"
+         x="48.029751"
+         y="127.66649">SPRT2</tspan></text>
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM-6)"
+       d="m 10.808553,138.89895 v -32.2728"
+       id="path30422-3"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM-4-6)"
+       d="m 53.594272,186.69536 v -4.87161"
+       id="path30422-9-61"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM-4-0-61)"
+       d="m 53.805612,161.15903 v -6.74589"
+       id="path30422-9-9-0"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM-4-5-7)"
+       d="m 54.793232,138.81743 v -4.20461"
+       id="path30422-9-6-6"
+       sodipodi:nodetypes="cc" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.544088;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect10133-9"
+       width="61.724449"
+       height="10.249896"
+       x="94.35096"
+       y="93.27948"
+       ry="1.6748972" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:7.18222px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.179556"
+       x="156.52641"
+       y="100.46706"
+       id="text10731-3"><tspan
+         sodipodi:role="line"
+         id="tspan10729-7"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.179556"
+         x="156.52641"
+         y="100.46706">CRT</tspan></text>
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.581001"
+       id="rect10901-4"
+       width="64.138489"
+       height="11.847313"
+       x="94.77816"
+       y="187.17429"
+       ry="2.4511714" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:7.05556px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="118.32781"
+       y="195.60597"
+       id="text11477-52"><tspan
+         sodipodi:role="line"
+         id="tspan11475-5"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05556px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+         x="118.32781"
+         y="195.60597">68000</tspan></text>
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.581001"
+       id="rect10901-9-4"
+       width="64.138489"
+       height="11.847313"
+       x="93.87487"
+       y="139.33699"
+       ry="2.4511714" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="119.14523"
+       y="147.73422"
+       id="text11477-9-74"><tspan
+         sodipodi:role="line"
+         id="tspan11475-3-4"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05556px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+         x="119.14523"
+         y="147.73422">GFX</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="114.49673"
+       y="207.85207"
+       id="text11477-9-7-3"><tspan
+         sodipodi:role="line"
+         id="tspan11475-3-9-0"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+         x="114.49673"
+         y="207.85207">Frame 3</tspan></text>
+    <rect
+       style="fill:#aaaaaa;fill-opacity:1;stroke:#000000;stroke-width:0.641712"
+       id="rect12811-7"
+       width="30.652946"
+       height="16.537445"
+       x="95.85154"
+       y="162.1078"
+       ry="0" />
+    <rect
+       style="fill:#aaaaaa;fill-opacity:1;stroke:#000000;stroke-width:0.641712"
+       id="rect12811-12-8"
+       width="30.652946"
+       height="16.537445"
+       x="127.95397"
+       y="162.133"
+       ry="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="111.16817"
+       y="168.63968"
+       id="text11477-1-6"><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:center;text-anchor:middle;stroke-width:0.264583"
+         x="111.16817"
+         y="168.63968"
+         id="tspan25298-8">GFXRAM</tspan></text>
+    <rect
+       style="fill:#aaaaaa;fill-opacity:1;stroke:#000000;stroke-width:0.641712"
+       id="rect12811-1-8"
+       width="26.395342"
+       height="18.641529"
+       x="102.45248"
+       y="113.08121"
+       ry="0" />
+    <rect
+       style="fill:#aaaaaa;fill-opacity:1;stroke:#000000;stroke-width:0.641712"
+       id="rect12811-1-7-4"
+       width="26.395342"
+       height="18.641529"
+       x="130.35439"
+       y="113.02578"
+       ry="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="107.73536"
+       y="120.10874"
+       id="text27633-3"><tspan
+         sodipodi:role="line"
+         id="tspan27631-1"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+         x="107.73536"
+         y="120.10874">VRAM</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="101.37516"
+       y="175.64932"
+       id="text27633-4-8-0"><tspan
+         sodipodi:role="line"
+         id="tspan27631-4-5-6"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.93889px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#ff0000;fill-opacity:1;stroke-width:0.264583"
+         x="101.37516"
+         y="175.64932">SCENES3</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="107.61642"
+       y="127.92139"
+       id="text27633-4-1-8"><tspan
+         sodipodi:role="line"
+         id="tspan27631-4-9-9"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.93889px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#ff0000;fill-opacity:1;stroke-width:0.264583"
+         x="107.61642"
+         y="127.92139">SPRT3</tspan></text>
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM-3)"
+       d="m 98.981262,138.89895 v -32.2728"
+       id="path30422-2"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM-4-06)"
+       d="m 111.75935,186.81014 v -4.87161"
+       id="path30422-9-66"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM-4-0-5)"
+       d="m 111.17127,161.19379 v -6.7459"
+       id="path30422-9-9-4"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM-4-5-76)"
+       d="m 115.53626,139.27737 v -4.20461"
+       id="path30422-9-6-9"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="135.78143"
+       y="119.91708"
+       id="text27633-1-22"><tspan
+         sodipodi:role="line"
+         id="tspan27631-9-6"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+         x="135.78143"
+         y="119.91708">VRAM</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="142.82924"
+       y="168.63968"
+       id="text11477-1-1-15"><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:center;text-anchor:middle;stroke-width:0.264583"
+         x="142.82924"
+         y="168.63968"
+         id="tspan25298-2-9">GFXRAM</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="133.03622"
+       y="175.63716"
+       id="text27633-4-8-8-77"><tspan
+         sodipodi:role="line"
+         id="tspan27631-4-5-4-6"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.93889px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#ff0000;fill-opacity:1;stroke-width:0.264583"
+         x="133.03622"
+         y="175.63716">SCENES2</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="136.59676"
+       y="128.28729"
+       id="text27633-4-1-5-1-7"><tspan
+         sodipodi:role="line"
+         id="tspan27631-4-9-0-7-3"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.93889px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#ff0000;fill-opacity:1;stroke-width:0.264583"
+         x="136.59676"
+         y="128.28729">SPRT2</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="137.71609"
+       y="100.29242"
+       id="text27633-4-1-5-1-7-9"><tspan
+         sodipodi:role="line"
+         id="tspan27631-4-9-0-7-3-3"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.93889px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#ff0000;fill-opacity:1;stroke-width:0.264583"
+         x="137.71609"
+         y="100.29242">SPRT2</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="48.385403"
+       y="100.09762"
+       id="text27633-4-1-1"><tspan
+         sodipodi:role="line"
+         id="tspan27631-4-9-2"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.93889px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#ff0000;fill-opacity:1;stroke-width:0.264583"
+         x="48.385403"
+         y="100.09762">SPRT1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="10.040858"
+       y="99.927055"
+       id="text27633-4-9"><tspan
+         sodipodi:role="line"
+         id="tspan27631-4-0"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.93889px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#ff0000;fill-opacity:1;stroke-width:0.264583"
+         x="10.040858"
+         y="99.927055">TILES2</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="134.63007"
+       y="99.605919"
+       id="text27633-4-88"><tspan
+         sodipodi:role="line"
+         id="tspan27631-4-50"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.93889px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#ff0000;fill-opacity:1;stroke-width:0.264583"
+         x="134.63007"
+         y="99.605919">TILES3</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:7.18222px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.179556"
+       x="212.96199"
+       y="39.616932"
+       id="text10731-0"><tspan
+         sodipodi:role="line"
+         id="tspan10729-2"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.179556"
+         x="212.96199"
+         y="39.616932">CRT</tspan></text>
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM-44-6)"
+       d="m 138.06808,5.2814003 64.4814,0"
+       id="path30422-6-8"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="58.873768"
+       y="47.799366"
+       id="text27633-2-0-3-2"><tspan
+         sodipodi:role="line"
+         id="tspan27631-5-1-9-3"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+         x="58.873768"
+         y="47.799366">GFXRAM B</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="62.676132"
+       y="59.974022"
+       id="text34388"><tspan
+         sodipodi:role="line"
+         id="tspan34386"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.93889px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#ff0000;fill-opacity:1;stroke-width:0.264583"
+         x="62.676132"
+         y="59.974022">SCENE 2</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="154.53593"
+       y="60.079967"
+       id="text34392"><tspan
+         sodipodi:role="line"
+         id="tspan34390"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.93889px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#ff0000;fill-opacity:1;stroke-width:0.264583"
+         x="154.53593"
+         y="60.079967">SPRITES 2</tspan></text>
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM-32)"
+       d="M 38.793005,58.324338 H 57.92809"
+       id="path34394"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#TriangleOutM-44)"
+       d="M 87.738128,58.324334 H 97.973476"
+       id="path34396"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#TriangleOutM-44-0)"
+       d="m 137.85619,58.33129 h 12.77813"
+       id="path34398"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#TriangleOutM-44-0-7)"
+       d="m 184.47389,30.709235 18.71129,0"
+       id="path34398-8"
+       sodipodi:nodetypes="cc" />
+  </g>
+</svg>
