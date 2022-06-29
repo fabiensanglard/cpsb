@@ -624,8 +624,8 @@ The \textbf{Bitmap Plane} is particularly well suited to plot pixels and render 
 \begin{itemize}[topsep=0pt]
 % \setlength\itemsep{0.2em}
 \item One 512x512 layer with direct 16bpp colors.
-\item Two 512x512 layers with 8bpp indexed colors.
-\item Four 512x512 layers with 4bpp indexed colors.
+\item Two 512x512 layers with shared 8bpp indexed colors.
+\item Four 512x512 layers with shared 4bpp indexed colors.
 \item One 1024x1024 layer in 4bpp indexed colors.
 \end{itemize}
 
@@ -645,7 +645,7 @@ The \textbf{Background Plane} works as a tilemap.
 \item One 1024x1024 tilemap using 16x16 tiles with 4bpp indexed colors.
 \end{itemize}
 
-Finally, the \textbf{Sprite Plane} is a sprite layer allowing 128 sprite on-screen (with a max of 32 sprites per scanlines).
+Finally, the \textbf{Sprite Plane} is a sprite layer allowing 128 sprite on-screen (with a max of 32 sprites per scanlines). Each sprite uses 4bpp indexed color (within 16 palettes).
 
 
  \begin{figure}[H]
@@ -698,23 +698,25 @@ The similarities between the X68000 and the CPS-1 are many. A quick glance over 
 
 Since developers never elaborated to which extends SHARP's machine were used to make games, we can only make an educated guess.
 
-The first element of response are the capabilities of the X68000. If the Motorola 680000 CPU and the Yahama 2151 are identical, the rest diverge rather significantly.
+The first element of response are the hardware components of the X68000. If the Motorola 680000 CPU and the Yahama 2151 are identical, the rest diverge rather significantly.
 
 The sound chip is an OKI but it is "only" a MSM6258. Although it works alike the MSM6296 with ADPCM, it features only one channel which severely impact how rich the sound effects and music systems can be.
 
 The sprite system is also, at first sight, weaker since the number of tile displayable is half the capacity of the CPS-1 (128 instead of 256). However that is an issue easily circumvented thanks to techniques such as Sprite doubler by Koichi Yoshida\cite{x68000spritedoubler} relying on raster effect.
 
+Lastly, there is the issue of storage and loading time from the floppy drives, a notoriously slow medium. To solve this issue, X68000 developers often resulted to loading all assets to RAM between levels, which increased the RAM requirements of a title.
+
 \subsubsection{32 KiB VRAM wall}
 
-The real issue is the amount of VRAM availale to the sprite and tilemap systems. Where a CPS-1 game ships with a minimum of 2MiB of GFX assets, the X68000 can only uses 32KiB out of the 1MiB of VRAM for the same purpose. 
+The real issue for all Capcom ports was the amount of VRAM availale to the sprite and tilemap systems. Where a CPS-1 game ships with a minimum of 2MiB ROM storing the GFX assets, the X68000 can only uses 32KiB out of the 1MiB of VRAM for the same purpose. 
 
 This small amount effectively keepcap the idea of using both the Sprite and Tilemap system simulataneously since one of them would starve for tiles. 
 
 \subsubsection{Learning from X68000 ports}
 
-The limited amount of VRAM likely relegated the X68000 to test 68000 ASM, run a port of TCE for GFX integration, and perhaps allocated and compile the GFXROM for CPS-2 games. 
+The limited amount of VRAM likely relegated the X68000 to test 68000 ASM, run a port of TCE for GFX integration, and allocate then compile the GFXROM for CPS-2 games. 
 
-This is a theory further reinforced by the study of five CPS-1 games ported to the platform by Capcom programmers.
+This theory is further reinforced by the study of five games ports by Capcom.
 
 \begin{figure}[H]
 
@@ -734,65 +736,90 @@ This is a theory further reinforced by the study of five CPS-1 games ported to t
 
 None of these titles exhibit the common pattern of an emulation layer. On the contrary, the architecture of the GFX is tailor each time, sometimes even differing between levels of a same title. 
 
-
-
-
- For some games developers were able to release "perfect port" which were visually identical to the arcade version. Capcom's Ghouls 'n Ghosts and Street Fighter 2 are considered perfect whereas in Final Fight the number of enemies on screen had to be lowered to handle loading time.
-
-\pagebreak
+Thanks to the awesome XM6 Pro-68k, we can study the GFX composition\cite{x68k_games_analysis} and see how rendering was often done in software which stresses the 68000. Accordingly, the manual of Ghouls 'n Ghosts recommends a 16MHz CPU and warns about slowdown with a machine using a 10MHz 68000.
 
 \nbimg{gg_manual.jpg}
 
 
 \subsubsection{Ports Analysis: Ghouls 'n Ghosts}
- Analysis\cite{x68k_games_analysis}
+Ghouls 'n Ghosts was released in 1994, five years after its arcade release. It is noteworthy for its low RAM requirements of 2MiB RAM and its resolution of 512x512 which is higher than the 384x224 arcade cabinet. 
 
-Released X years later.
+It is considered a "Perfect port" because of its GFX faithfulness to the CPS-1 version even though its graphic renderer is completely different. Tilemaps are not used at all since the background lives in two 512x512 Graphic layer with shared 8-bit indexed colors.
 
-XM6 Pro-68k.
+\begin{figure}[H]
+\img{x68k_gg_scr.png}
+\caption*{Ghouls 'n Ghosts on SHARP x68000}
+\end{figure}
 
-Need 2MiB
 
-\nbimg{x68k_gg_scr.png}
+Notice the vertical "cut" in the right of Graphic plane Pages 0 and 1. Thanks to the hardware scrolling wraparound, only new portions of the screen had to be software rendered. 
 
+The rain effect is replicated as seen on page X by alternating the offset in the Text layer. The sprite layer must overlap exactly with Page 0 when the wind animates the grass.
+
+\vspace{-4ex}
 \begin{minipage}[t]{0.49\linewidth}
-  \nbimg{x68k_gg_bitmap1.png}
+  \begin{figure}[H]
+  \img{x68k_gg_bitmap1.png}
+  \caption*{512x512 Graphic Plane Page 0}
+  \end{figure}
 \end{minipage}%
 \hfill
 \begin{minipage}[t]{0.49\linewidth}
-  \nbimg{x68k_gg_bitmap2.png}
+  \begin{figure}[H]
+  \img{x68k_gg_bitmap2.png}
+  \caption*{512x512 Graphic Plane Page 1}
+  \end{figure}
 \end{minipage}%
 
 \begin{minipage}[t]{0.49\linewidth}
-  \nbimg{x68k_gg_text.png}
+  \begin{figure}[H]
+  \img{x68k_gg_text.png}
+  \caption*{Portion of 1024x1024 Text Layer}
+  \end{figure}
 \end{minipage}%
 \hfill
 \begin{minipage}[t]{0.49\linewidth}
-  \nbimg{x68k_gg_sprites.png}
+   \begin{figure}[H]
+  \img{x68k_gg_sprites.png}
+  \caption*{512x512 Sprite Layer}
+  \end{figure}
 \end{minipage}%
 
 
 \pagebreak
 
 \subsubsection{Ports Analysis: Final Fight}
+ 
+Released in 1992, Final Fight uses a similar architecture as Ghouls 'n Ghosts. It did a good job but the number of enemies on screen had to be lowered.
+
+The stair trick is achieved by using a special blending mode where the MSB indicates precedence over Sprite layer. As a result the Background uses only 128 colors instead of the 256 possible.
+
 \nbimg{x68k_ff_scr.png}
 
-2MB
 
+
+\nbimg{x68k_ff_text.png}
+  
   \nbimg{x68k_ff_bitmap0.png}
 
   \nbimg{x68k_ff_bitmap1.png}
 
 
-  \nbimg{x68k_ff_text.png}
+  
 
 
 
   \nbimg{x68k_ff_sprites.png}
 
 
-\subsubsection{Ports Analysis: Super Street Fighter II}
-Need 4 MiB \href{http://tkhr000.s601.xrea.com/x68softlist/x68soft.htm}{List of games here with MiB}.
+
+
+\subsubsection{Ports Analysis: Street Fighter II Champion Edition}
+Need 2 MiB \href{http://tkhr000.s601.xrea.com/x68softlist/x68soft.htm}{List of games here with MiB}.
+
+Four disk instead of two.
+
+Per line parralax done using HSYNC.
 
 \pagebreak
 
