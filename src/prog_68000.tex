@@ -792,14 +792,18 @@ The rain effect is replicated as seen on page X by alternating the offset in the
 
 \subsubsection{Ports Analysis: Final Fight (1992)}
  
-Final Fight uses the same architecture as Ghouls 'n Ghosts. It is a faithful port except for the restricted number of enemies on screen to lower the 32 KiB VRAM stress.
+Final Fight uses the same architecture as Ghouls 'n Ghosts. It is a faithful port except for the restricted number of enemies (4-5) compared to the arcade (7-8) on screen to lower the 32 KiB VRAM stress.
 
-The stair trick is is done with a special blending mode where the MSBs indicates precedence over the Sprite layer. Therefore, the Background uses 128 colors instead of 256.
+The stair trick is is done with a special blending mode where the MSBs indicates precedence over the Sprite layer. This leaves 7bpp for the color indexes. The Background end up using 128 colors instead of 256.
+
+In the next level, the stair trick is not needed so the Bitmap layers go back to using 8bpp for a total of 256 colors available.
 
 \begin{figure}[H]
 \img{x68k_ff_scr.png}
-\caption*{Street Fighter 2 CE on X68000}
+\caption*{Final Fight on X68000}
 \end{figure}
+
+MUsic are the same as arcare but you can add side MIDI source.
 
 \begin{minipage}[t]{0.49\linewidth}
   \begin{figure}[H]
