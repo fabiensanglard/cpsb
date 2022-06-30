@@ -734,7 +734,7 @@ This theory is further reinforced by the study of five games ports by Capcom.
 \caption*{X68000 Ports of CPS-1 games by Capcom}
 \end{figure}
 
-None of these titles exhibit the common pattern of an emulation layer. On the contrary, the architecture of the GFX is tailor each time, sometimes even differing between levels of a same title. 
+None of these titles exhibit the common pattern of an emulation layer. On the contrary, the architecture of the GFX rendere is tailor each time, sometimes even differing between levels of a same title. 
 
 Thanks to the awesome XM6 Pro-68k, we can study the GFX composition\cite{x68k_games_analysis} and see how rendering was often done in software which stresses the 68000. Accordingly, the manual of Ghouls 'n Ghosts recommends a 16MHz CPU and warns about slowdown with a machine using a 10MHz 68000.
 
@@ -742,7 +742,7 @@ Thanks to the awesome XM6 Pro-68k, we can study the GFX composition\cite{x68k_ga
 
 
 \subsubsection{Ports Analysis: Ghouls 'n Ghosts (1994)}
-Ghouls 'n Ghosts was released in 1994, five years after its arcade release. It is noteworthy for its low RAM requirements of 2MiB RAM and its resolution of 512x512 which is higher than the 384x224 arcade cabinet. 
+Ghouls 'n Ghosts was released in 1994, six years after its arcade release. It is noteworthy for its low RAM requirements of 2MiB RAM and its resolution of 512x512 which is higher than the 384x224 arcade cabinet. 
 
 It is considered a "Perfect port" because of its GFX faithfulness to the CPS-1 version even though its graphic renderer is completely different. Tilemaps are not used at all since the background lives in two software rendered 512x512 Graphic layers using a shared 8-bit indexed colors palette. 
 
@@ -757,6 +757,8 @@ The Text layer is also fully software rendered. Because it is used in 16 colors 
 Notice the vertical "cut" in the right of Graphic plane Pages 0 and 1. This artifact reveals the usage of hardware scrolling and its wraparound. This allows the CPU to render only new portion of the scrolling. 
 
 The rain effect is replicated as seen on page X by alternating the offset in the Text layer. The sprite layer must overlap exactly with Page 0 when the wind animates the grass.
+
+There is no DMA support toward the VRAM so every single pixel except for the Sprite layer, is plotted by the CPU. Thank to hardware scrolling, the cost of rendering a whole screen is amortized over several frames which allows to reach a descent framerate.
 
 \vspace{-4ex}
 \begin{minipage}[t]{0.49\linewidth}
@@ -791,30 +793,36 @@ The rain effect is replicated as seen on page X by alternating the offset in the
 \pagebreak
 
 \subsubsection{Ports Analysis: Final Fight (1992)}
- 
-Final Fight uses the same architecture as Ghouls 'n Ghosts. It is a faithful port except for the restricted number of enemies (4-5) compared to the arcade (7-8) on screen to lower the 32 KiB VRAM stress.
 
-The stair trick is is done with a special blending mode where the MSBs indicates precedence over the Sprite layer. This leaves 7bpp for the color indexes. The Background end up using 128 colors instead of 256.
+Final Fight was released in 1992, three years after its arcade release. Alike, Ghouls'n Ghosts the arcade version used 2MiB of GFXROM and managed to ship on two 5.25-inch 1.2 MiB floppies.
 
-In the next level, the stair trick is not needed so the Bitmap layers go back to using 8bpp for a total of 256 colors available.
+The graphic renders uses the same technique as Ghouls 'n Ghosts where the tilemaps are not used in order to feed the Sprite layer. Two bitmap layers along with a Text layer are rendered in software for a graphic result faithful to the orignal version.
+
+The port is not "perfect" since the number of opponents on screen was restricted to 5 which is less than the arcade version where up to 8 enemies where visible. In all likelihood, this was done to lower the 32 KiB VRAM stress.
+
+The trick describe on page \pageref{finalfight_trick} where part of the stair case must appear on front of the Sprite is done with a special blending mode. The MSBs indicates precedence over the Sprite layer. This leaves 7bpp for the color indexes. The Background end up using 128 colors instead of 256.
 
 \begin{figure}[H]
 \img{x68k_ff_scr.png}
 \caption*{Final Fight on X68000}
 \end{figure}
 
-MUsic are the same as arcare but you can add side MIDI source.
 
+In the other levels, this blending mode is not used so the Bitmap layers go back to using 8bpp for a total of 256 colors available.
+
+Thanks to the X68000's 2151, musics are close to the arcade version, except for the lack of embelishment from the OKI6295. To address this shortcoming, the game supports MIDI audio playback if a MIDI capable device is connected.
+
+\vspace{-4ex}
 \begin{minipage}[t]{0.49\linewidth}
   \begin{figure}[H]
-  \img{x68k_sf2ce_bitmap0.png}
+  \img{x68k_ff_bitmap1.png}
   \caption*{512x512 Graphic Plane Page 0}
   \end{figure}
 \end{minipage}%
 \hfill
 \begin{minipage}[t]{0.49\linewidth}
   \begin{figure}[H]
-  \img{x68k_ff_bitmap1.png}
+  \img{x68k_ff_bitmap2.png}
   \caption*{512x512 Graphic Plane Page 1}
   \end{figure}
 \end{minipage}%
@@ -836,11 +844,13 @@ MUsic are the same as arcare but you can add side MIDI source.
 
 \pagebreak
 \subsubsection{Ports Analysis: Street Fighter II Champion Edition (1993)}
-Need 2 MiB \href{http://tkhr000.s601.xrea.com/x68softlist/x68soft.htm}{List of games here with MiB}.
+Street Fighter II Champion Edition was released only a few after the arcade version, Capcom likely being motivated by the collosal success of the series.
 
-Four disk instead of two.
+The volume of assets forced the title into being shipped over four 5.25-inch 1.2 MiB floppies. The game manages to run with 2 MiB or RAM but suffers numerous loading, including between opponents. However, on a machine with 4MiB the game engine loads all floppies to RAM to provide a loadingless experience in-game.
 
-Per line parralax done using HSYNC.
+In terms of GFX rendering, we find, again, software rendered layers. The floor however and its per-line parallax is not done via software. The X68000 is notified of HSYNC events from the video system and the hardware scroll is adjusted accordingly. This technique allows to render Page 0 once for all and never touch it.
+
+When fighting occurs in Thailland, Text layer is used to render decorative Sprite such as the statue. It is likely that the 32 KiB was once again not big enough to contain the sprites for both opponents and decorations.
 
 \begin{figure}[H]
 \img{x68k_sf2ce_scrw.png}
@@ -848,11 +858,13 @@ Per line parralax done using HSYNC.
 \end{figure}
 
 
-Notice the vertical "cut" in the right of Graphic plane Pages 0 and 1. This artifact reveals the usage of hardware scrolling and its wraparound. This allows the CPU to render only new portion of the scrolling. 
+\pagebreak
 
-The rain effect is replicated as seen on page X by alternating the offset in the Text layer. The sprite layer must overlap exactly with Page 0 when the wind animates the grass.
+Notice the noise in the Graphic layers, the bottom part in Page 0 and the top part in Page 1. 
 
+The programmers used every venues willing to welcome assetes in order to avoid loading from the floppy drives. The parts of the pages not used for composition are used to "cache" background tiles. When the CPU renders, it transfers VRAM to VRAM (sadly without DMA).
 
+\vspace{-4ex}
 \begin{minipage}[t]{0.49\linewidth}
   \begin{figure}[H]
   \img{x68k_sf2ce_bitmap0.png}
@@ -883,17 +895,21 @@ The rain effect is replicated as seen on page X by alternating the offset in the
 
 \pagebreak
 
-Investigating further into Street Fighter 2: Champion Edition reveals that each level was handcrafted to replicate the CPS-1 version as well as possible.
+Investigating further into Street Fighter 2: Champion Edition reveals the collosals work that went into converting a CPS-1 title to X68000. Each level seems to have been handcrafted to replicate the arcade pecularities as well as possible.
 
-In the china arena, we can see that the Text layer is not used for Sprite decoration anymore. Instead it is dedicated to the sky and its animation. Two "frames" are drawn once and then the hardware offset does the rest. This was likely done because of the high cost of animating the sky in software.
+When fighting occurs in China, the Text layer is not used for Sprite decoration anymore. Instead it is dedicated to the sky and its animation. Two rows of clouds, accounting for two "frames" animation are drawn once and the hardware offset is leveraged to render the animation. This was likely done because of the high fillrate required to update this whole layer.
+
+
+If we look further, we see that Page 1 is used for the street even though no parallax is used. Again, this was likely done in order to spare the CPU.
 
 \begin{figure}[H]
 \img{x68k_sf2ce2_scrw.png}
 \caption*{Street Fighter 2 CE on X68000}
 \end{figure}
 
+Bla
 
-
+\vspace{-4ex}
 \begin{minipage}[t]{0.49\linewidth}
   \begin{figure}[H]
   \img{x68k_sf2ce2_bitmap0.png}
@@ -922,7 +938,6 @@ In the china arena, we can see that the Text layer is not used for Sprite decora
   \end{figure}
 \end{minipage}%
 
-\pagebreak
 
 
 \subsubsection{Rise and Fall}
