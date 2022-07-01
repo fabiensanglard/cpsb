@@ -895,7 +895,10 @@ The programmers used every venues willing to welcome assetes in order to avoid l
 
 \pagebreak
 
-Investigating further into Street Fighter 2: Champion Edition reveals the collosals work that went into converting a CPS-1 title to X68000. Each level seems to have been handcrafted to replicate the arcade pecularities as well as possible.
+Investigating further into Street Fighter 2: Champion Edition confirms the colossal work that went into converting a CPS-1 title to X68000. 
+
+\subsubsection{Per level renderer}
+Where in Final Fight, the background color space was modified on a per-level basis, here each level uses a different rendering strategy to replicate the arcade peculiarities as well as possible.
 
 When fighting occurs in China, the Text layer is not used for Sprite decoration anymore. Instead it is dedicated to the sky and its animation. Two rows of clouds, accounting for two "frames" animation are drawn once and the hardware offset is leveraged to render the animation. This was likely done because of the high fillrate required to update this whole layer.
 
