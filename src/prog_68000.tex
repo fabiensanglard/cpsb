@@ -456,7 +456,7 @@ Rowscrolling allows to offset each visible row via a discrete X amounts. In Stre
 \caption*{Fighters move to the right of the dohyō.}
  \end{figure}%
 
-To sroll each row, the CPS-A reads 256 values. That is 224 (each visible lines) + 16 (one tile height above) + 16 (one tile heigh below) = 256 values to render a frame.
+To scroll each row, the CPS-A reads 256 values. That is 224 (each visible lines) + 16 (one tile height above) + 16 (one tile heigh below) = 256 values to render a frame.
 
 Each unsigned 16-bit offset value is expected in an array located in GFXRAM and pointed to via the CPS-A register \icode{ROWSCROLL\_BASE}.
 
@@ -467,14 +467,17 @@ The \icode{ROWSCROLL\_OFFSET} instructs the CPS-A to use values not starting at 
  \caption*{CPS-A rowscroll data access}%
  \end{figure}%
 
-A convenient trick is to allocate a rowscroll array of size 1024 (one entry for the full height of SCROLL2), generate all the rowscrollo offset and only manipulate \icode{ROWSCROLL\_OFFSET} if SCROLL2 is moved vertically. When a contestant in Street Figther II jumps, SCROLL2 moves vertically but no rowscroll offset are re-calculated, only \icode{ROWSCROLL\_OFFSET}  is moved. This allows to amortize the generation of perspective correct rowscroll offset.
+A convenient trick is to allocate a rowscroll array of size 1024 with one entry for the full height of \icode{SCROLL2} and generate all the rowscroll offsets. If \icode{SCROLL2} is scrolled vertically, the engine only needs to manipulate \icode{ROWSCROLL\_OFFSET} and no new values are to be generated.
 
 \lstinputlisting[style=CStyle]{src/code/68000/rowscroll.c} 
 
+Trivia: No connection to HSYNC, this is fully hard-coded.
 
-Note that rowscroll offsets are unsigned and always indicate an amount to move toward the left side of the screen. 
+\subsubsection{Real-life example}
 
-To offset toward the right, a developer can take advantage of the wrap around nature of the SCROLL layers and use \icode{decalValue = 1024 - desiredRightOffsetValue}.
+When a contestant in Street Figther II jumps, SCROLL2 moves vertically but no rowscroll offset are re-calculated, only \icode{ROWSCROLL\_OFFSET}  is moved. This allows to amortize the generation of perspective correct rowscroll offset.
+
+Note that rowscroll offsets are unsigned and always indicate an amount to move toward the left side of the screen. To offset toward the right, Street Fighter II developers took advantage of the wrap around nature of the SCROLL layers and used \icode{decalValue = 1024 - desiredRightOffsetValue}.
 
 % \begin{trivia}
 % Honda's SCROLL2 features hidden message. It looks like the designers left construction block writings as Upper left, (\begin{CJK}{UTF8}{min}左上\end{CJK}), Upper middle (\begin{CJK}{UTF8}{min}中上\end{CJK}), and Upper right (\begin{CJK}{UTF8}{min}右上\end{CJK}) kanji can be spotted.
@@ -499,7 +502,7 @@ To offset toward the right, a developer can take advantage of the wrap around na
 
 \pagebreak
 
-\subsection{Back then...}\index{Back Then!Programming}
+\section{Back then...}\index{Back Then!Programming}
 The system used by Capcom to program the CP-System remained unknown for many years. Only the nickname of Hiroaki Kondo, a composer/sound programmer often credited as "X68K", rumored a computer manufactured by Sharp. 
 
 In 2018,  Akiman confirmed\cite{x68000usage1}\cite{x68000usage2} that Capcom's SDK, named CAT-1, was launched during the making of Street Fighter II and ran on a Sharp X68000.
@@ -946,9 +949,11 @@ If we look further, we see that Page 1 is used for the street even though no par
 \subsubsection{Rise and Fall}
  SHARP kept on improving the series with better CPU (68030), more RAM (up to 12MiB) and even HDD (up to 80 MiB). Peripheral manufacturers embraced the computer with extensions cards covering anything one can thing off. 
 
- In the end, SHARP bet was a phenomenal success. Users loved the platform dearly and publishers released, accounting for games only, no less than 823 titles between 1988 and 1999.
+
 
 \nbdraw{68000_series}
+
+ SHARP bet was a phenomenal success. Users loved the platform dearly and publishers released, accounting for games only, no less than 823 titles between 1988 and 1999.
 
 
 \begin{trivia}

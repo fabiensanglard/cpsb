@@ -1,4 +1,5 @@
-GFXRAM uint_16t BASE[1024];
+GFXRAM uint_16 ROWSCROLL_BASE[1024];
 
-BASE[OFFSET + 16] = first visible line.
-BASE[OFFSET + 239] = last visible line. 
+
+ROWSCROLL_BASE[16] = first visible line.
+ROWSCROLL_BASE[239] = last visible line. 
