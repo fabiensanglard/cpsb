@@ -208,7 +208,7 @@ However for the simplification and brevity requirement of this book, no queue is
 
 How \icode{hostframe} is implemented is completely at the programmer's discretion. Capcom games used a common kernel framework made of tasks. Since there is no source of interrupt beside \icode{vsync} they implemented a collaborative multi-tasking system where the stack and registers are stored/loaded as each task is executed.
 
-In a game like Street Fighter II, the kernel can be found running an A.I task or even a fireball task\cite{sf2platinium}.
+To lean more about the Capcom kernel and how Street Fighter II uses it to multi-task A.I bytecode and moving fireballs make sure to checkout Street Fighter II Paladium source code\cite{sf2platinium}.
 
 \subsection{Retrieving inputs}
 Besides joystick and buttons, the engine must recover inputs such as the dip settings, P1Start, P2Start, and most importantly detect coins being inserted.
