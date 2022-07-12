@@ -250,12 +250,12 @@ It is heavy duty in order to keep up with the 59.64Hz refresh rate inflicted on 
 % The game code and assets are all stored on ROMs on the Board B. All storage subsystem whether they are meant to the 8-bit Z-80, the 16-bit 68000, or the 64-bit PPUs are build with the same XXXX component.
 
 \section{Control system}\index{Systems!Control}
-The control system is the master of the platform. As a ruler it needs not to go deep but wide. A tailor made task for the immensely popular Motorola 68000.
+The control system is the master of the platform. As a ruler it needs not excel at at specific task but to be able to direct and keep tabs on many components. A tailor made task for the immensely popular Motorola 68000.
 
 
 \subsection{Motorola 68000}\index{Processors!Motorola 68000}
 
- Released in 1979, and clocked at 10 MHz (later upgraded to 12 MHz), the MC68000 was not a particularly powerful chip by the late 80' standards with its two stage pipeline\cite{M68000fv} (prefetch, exec) and no cache. Its 1.7 MIPS placed it on par with an Intel 286 10MHz (1.5 MIPS). By 1989 it was already two generations old behind the 1984 M68020 (3 MIPS) and the 1987 M68030 (5 MIPS)\cite{mips}.
+ Released in 1979, and clocked at 10 MHz (later upgraded to 12 MHz), the 68000 was not a particularly powerful chip by the late 80' standards with its two stage pipeline\cite{M68000fv} (prefetch, exec) and no cache. Its 1.7 MIPS placed it on par with an Intel 286 10MHz (1.5 MIPS). By 1989 it was already two generations old behind the 1984 M68020 (3 MIPS) and the 1987 M68030 (5 MIPS)\cite{mips}.
 
 \nbdraw{mips}
 
@@ -265,25 +265,32 @@ Performance is not what made the 68000 rein as the prime hardware designer choic
 
 While most machines used 16-bit address system, its 24-bit address space allowed the 68000 16 MiB of RAM which was considered humongous at the time. This was a considerable advantage when it came to map peripherals. There is so much address space that, had they wished so, Capcom engineers could have allowed the 68000 to see all RAM and all ROM of all systems on the CPS-1.
 
-Moreover, where other CPUs used small address registers resulting in the infamous segmented addressing, Motorola gave its CPU 32-bit data and address registers. Th resulting flat addressing was elegant and nicely complimented by a generous number, 18, of registers making it a processor praised by programmers. 
+Other CPUs used small address registers resulting in the infamous segmented addressing, Motorola gave its CPU 32-bit data and address registers. The elegant flat addressing and eighteen registers make it a processor loved by programmers. 
 
 
-\sdraw{0.8}{68000}
+\begin{figure}[H]
+
+ 
+\sdraw{0.75}{68000}
+ \caption*{Motorola 68000 pin-outs}
 \label{68000drawing}
+  \end{figure}
 
 
-If one truly appreciate hardware they will certainly enjoy staring at CPUs and their pin. 
 
-A quick glance at the 68000 pins release it is brought to life via clock (\icode{CLK}), +5V (\icode{VCC}), and Ground (\icode{VSS}).
+The 68000 is brought to life via its clock (\icode{CLK}), +5V (\icode{VCC}), and Ground (\icode{VSS}) pins.
 
-The bus is made of (\icode{D0-D15}) for data, (\icode{A1-A23]}) for addresses, and Address ACK (\icode{AS}), Read/Write (\icode{R/W}), \icode{UDS}, \icode{LDS}, and Data ACK \icode{DTACK} for control.
+The bus is made of \icode{D0-D15} for data, \icode{A1-A23]} for addresses. Address ACK (\icode{AS}), Read/Write (\icode{R/W}), \icode{UDS}, \icode{LDS}, and Data ACK \icode{DTACK} are bus control pins.
 
 
 Arbitration to allow peripherals to master the bus is done with Bus Request (\icode{BR}),  Bus Grant (\icode{BG}) and Bus Grant ACK (\icode{GBA-K}).
 
-The interrupt system (which will be instrumental in the software chapter) is made of \icode{IPL0}, \icode{IPL1}, \icode{IPL2}, and \icode{VPA} while System control is done via Error (\icode{BERR}), Reset (\icode{RST}), and Halt (\icode{HALT}).
+The interrupt system is made of a generous three pins \icode{IPL0}, \icode{IPL1}, \icode{IPL2}, and \icode{VPA}. While other CPUs like the x86s or Zilog's Z80 have a single interrupt line, the multiple \icode{IPL} allow to code interrupt number directly via the pins without need for an interrupt controller. How this is leveraged will be explained in the programming section.
 
-Processor status is given by \icode{FC0}, \icode{FC1}, \icode{FC2} and Peripheral control is done via sync (\icode{E}) and valid sig (\icode{VMA}).
+
+System control is done via Error (\icode{BERR}), Reset (\icode{RST}), and Halt (\icode{HALT}). 
+
+Finally, processor status is given by \icode{FC0}, \icode{FC1}, \icode{FC2} and Peripheral control is done via sync (\icode{E}) and valid sig (\icode{VMA}).
 
 \begin{trivia}
 Motorola's CPU name is due to its total number of transistors totaling 68,000 units. The 68030 and 68040 had more transistors than their name indicate. 
