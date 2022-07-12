@@ -1,11 +1,11 @@
 \chapter{Hardware: CPS-1}
 
-The project that would later be dubbed by the press "superchip"\cite{tgm198906} started between 1985 and 1986. It was a massive investment that would require two years and five millions dollars, the equivalent of \$12 millions dollars in 2022.
+The project that would later be dubbed by the press "superchip"\cite{tgm198906} started between 1985 and 1986. It was a massive investment that would require two years and five millions dollars\cite{becareful} (the equivalent of \$12 millions dollars in 2022).
 
 The significant time and funds investment left not ambiguities in the mind of Capcom executives. Success would be to dictate the life or death of the company.
 
 \begin{q}{Yoshiki Okamoto, Capcom Producer\cite{gamest38}}
-The CP System is an extremely important business strategy to Capcom: we have gambled everything on it.
+The CP-System is an extremely important business strategy to Capcom: we have gambled everything on it.
 \end{q}
 
 \section{Goals}
@@ -15,7 +15,7 @@ Cost reduction would be achieved by mimicking home consoles and standardizing th
 
 Price lowering would allow arcades operators to renew their games more often. This objective would be reached by designing a platform where new games board containing mostly ROMs could be purchased separately from the processor board therefore facilitating upgrades.
 
-To improve the development toolchain, the CPS-1 was designed to work hand-in-hand with Sharp series of X68000 workstations which featured the same CPUs and programming models.
+The development toolchain would improve thanks to the stability of the target platform. Without having to constantly rewrite parts, Capcom could invest in the long term and build an SDK running on powerful workstations such as SHARP's series of X68000s.
 
 More importantly, games would had to catch customer eyes and not pale in comparison with competition. The goal was to design a machine with graphic capabilities an order of magnitude above others and generate visuals that would hold they own when compared to titles from powerhouse such as Sega or Namco.
 
@@ -114,7 +114,7 @@ Since the three JAMMA buttons were used for punches, the extension was labeled t
 The connection points are prominent white connectors. Boards A and B are connected via four 2x32-pins connectors while the boards B and C are connected with four 2x20-pin connectors.  Once plugged into each others, the boards are manipulated as a whole with no floating parts.
 
 
-The system was revised over the years. Approximately 229 variations are known to exist, including bootlegs. The board which will be studied in this book is the one used to run the original "Street Fighter 2", which uses board A (88617A-7B), board B (90629B), and board C (90628-C).
+The system was revised over the years. Approximately 229 variations are known to exist, including bootlegs\cite{mame_cps1_video}. The board which will be studied in this book is the one used to run "Street Fighter 2", which uses board A "88617A-7B", board B "90629B", and board C "90628-C".
 
 \subsection{Board A}\index{Board!Board A}
 The board "A" is the platform that never changes between games. It features all but one of the chips in charge of processing data, whether it is game logic, audio, or video.
@@ -127,7 +127,7 @@ The upper right section is the control system with a Motorola 68000, a 10MHz osc
 
 The middle right part is where the audio system lives. It is made of a Zilog-80, a 3.58MHz oscillator, and 2 KiB of "work" SRAM. Also in this area are present the audio chips dedicated to music (YM2151 and YM3012) and sound effects (OKI6295).
 
-Finally, in the bottom part we find all the components taking care of the inputs and outputs leading to the JAMMA connector. Alongside are three DIP switches which an arcade operator can use to configure game parameters such as difficulty or how many credits a coin grants.
+Finally, in the bottom part we find all the components taking care of the inputs and outputs of the JAMMA connector. Alongside are three DIP switches which an arcade operator can use to configure game parameters such as difficulty or how many credits a coin grants.
 
 There are many chips on these three boards but it would be a mistake to conclude that combining many processors inevitably leads to better performance. That would be ignoring issues such as bus congestion, bus size difference, bus timings or even processor endianness. 
 
@@ -152,7 +152,7 @@ To design an effective multi-CPUs system able to avoid both instructions and dat
 
    ROM chips are grouped depending on the system they belong to. Each group has its own data lines connected to a dedicated bus leading to a specific processor. 
 
-   A total of four ROM groups are visible on the board and none are hiding in the woods. 
+   Thirty-eight DIP slots are visible on the board. They are grouped in four ROM groups. 
 
 \vfill
 \begin{figure}[H]
@@ -161,18 +161,13 @@ To design an effective multi-CPUs system able to avoid both instructions and dat
   \end{figure}
 \pagebreak
 
-   There are 3x8 = 24 chips, referred as "GFX ROM", dedicated to storing GFX via sockets [1-8], sockets [10-17], and sockets [20-27] for a total of 12 MiB capacity. Because of the price of ROM, games were not allowed to max out and few titles were granted more than 6 MiB.
+   There are 3x8 = 24 chips, referred as "GFX ROM", dedicated to storing GFX via sockets [1-8], sockets [10-17], and sockets [20-27] for a total of 12 MiB capacity. Because of the price of ROM, games were not budgeted to allowed the max capacity. Most titles were granted 2/4MiB, two (like Street Fighter II below) were allowed 6 MiB and one (Dynasty Wars) got a whooping 8MiB.
 
-   One socket (9) with 64KiB capacity, referred as "z80 ROM",  stores both the Zilog 80 instructions and the music assets. 
+   One socket (9) with 64KiB capacity, referred as "z80 ROM",  stores both the Zilog 80 instructions and the music assets (instructions for the YM2151). 
 
    Two sockets (18-19) accounting for 256 KiB, referred as "OKI ROM", store ADPCM samples and are directly connected to the OKI chip. 
 
-   Finally eight ROMs holding 1 MiB,referred as "m68k ROM", are dedicated to hosting m68k instructions. Note that even though they are related to graphics, palettes are stored along 68000 instructions. 
-
-% In the upper right, we find 4 white connectors towards board "C". Soldered on the bottom are also 4 white connectors leading to board "A". 
-
-
-   % Three of the ROM groups, the OKI, Zilog-80 and Motorola 68000, seem to use the same type of chips. The case is deceiving in this case, they are in fact different as we will see in later sections.
+   Finally eight ROMs holding 1 MiB, referred as "M68K ROM", are dedicated to hosting m68k instructions. Note that even though they are related to graphics, palettes are also stored in this ROM group. 
 
 
 \vfill
@@ -186,7 +181,7 @@ To design an effective multi-CPUs system able to avoid both instructions and dat
 
 \nbdraw{90629B}
 
-Observant readers will have noticed black chips that have not been explained yet. For now let's say they are in charge of memory mapping. Above, \icode{STF29} handles the GFX ROM and \icode{IOB1} handles the m68k ROM. As an exercise, go back on page \pageref{fig:drawboarda} and guess which chip handle which RAM group. Or don't, I am just a book.
+Observant readers will have noticed unexplained black chips. For now we'll say they are in charge of bus traffic management. In the drawing above, \icode{STF29} handles the GFX ROM and \icode{IOB1} handles the M68K ROM. As an exercise, go back on page \pageref{fig:drawboarda} and guess which chip handle which ROM/RAM group. Or don't, I am just a book.
 % \begin{figure}[H]
 % \centering
 % \nbdraw{90629B}
@@ -196,7 +191,7 @@ Observant readers will have noticed black chips that have not been explained yet
 
 
 \subsection{Board C}\index{Board!Board C}
-Board "C" hosts the "CPS-B" ASICs video chip. It is the beefy pixel generator directly connected to both the video system and the GFX ROMs. Capcom concentrated its anti-piracy measures in that chips and as a result revised the board "C" many more times than the two others. 
+Board "C" hosts the "CPS-B" ASICs video chip. It is the beefy pixel generator directly connected to both the video system and the GFX ROMs. Capcom concentrated its anti-piracy measures in that chips and as a result revised the board "C" many more times than the board A and board B. 
 
 This will be discussed extensively in the copy-protection section of this chapter.
 
@@ -210,15 +205,17 @@ This will be discussed extensively in the copy-protection section of this chapte
   \nbdraw{90628-C}
 \end{minipage}
 
+
+
 \subsection{PALs}
 The black chips on the drawing are called PALs (Programmable Array Logic). They play a crucial role in the creation of the memory maps. 
 
-They pack boolean (\&, \textbar, !) logic between input
- and output lines to greatly simplify the board. More importantly they allow to tune the logic of a board without changing the PCB hardware lines.
+They pack boolean (\&, \textbar, !) logic between input and output lines to simplify the board, 
+reduce the number of components, and allow tuning the logic without changing the PCB hardware lines.
 
 \sdraw{0.45}{PAL16L8A}
 
- Often located near the memory chips group they affect, they are codenamed based on their function. Since most games use slightly different ROM layout, they usually feature different PALs. e.g: Street Fighter II's \icode{STF29} which organizes GFX ROM is named \icode{S224B} in Final Fight, or \icode{DM620} in Ghouls'n Ghosts.
+ Often located near the memory chips group they affect, they are codenamed based on their function. Since most games use slightly different ROM layout, they usually feature different PALs. e.g: Street Fighter II's \icode{STF29} which organizes GFX ROM is named \icode{S224B} in Final Fight, and \icode{DM620} in Ghouls'n Ghosts.
 
 
 
@@ -240,7 +237,7 @@ The audio system runs almost totally in isolation. It is connected to control vi
 The graphic system needs more communications and exposes not only its CPS-A and CPS-B registers but also the GFX RAM where the screen layout is described. The m68k and the CPS-A use the same bus to access the GFXRAM so the demarcation is not as clean as with the audio system which result in a bit of bus contention.  
 
 The video system produces a stream of palette addresses (pen). Combined with the palette SRAM (ink) and the DAC, it outputs a signal towards JAMMA.
-It is heavy duty in order to keep up with the 59.64Hz refresh rate inflicted on the CRT.
+It is heavy duty in order to keep up with the 59.64Hz refresh rate inflicted on the display.
 
 \begin{figure}[H]
 \nbdraw{arch}
@@ -1487,7 +1484,6 @@ Up to that point, the frustration spur from sprite dimensions (all sprites had t
 The CPS-1 lifted these three limitations by abandoning the concept of sprites. The CPS-1 does have a "sprite" layer but it is made of tile of dimensions 16x16 pixels. Called OBJ (for OBJects) its TILEs can be arranged however an artist requires to build sprites of arbitrary shapes and sizes. 
 
 OBJ has 32 palettes which any tile can freely use for a total of 480 colors.
-% This system also allows to us more colors since each OBJ can use any of the 32 palettes available on the OBJ layer. This greatly increase the total usable colors to a total of 32*16 - 32 = 480 sprites colors. 
 
 \pagebreak
 

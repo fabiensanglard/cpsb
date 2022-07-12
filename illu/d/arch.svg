@@ -3,8 +3,8 @@
 
 <svg
    width="205.03915mm"
-   height="272.14172mm"
-   viewBox="0 0 205.03915 272.14173"
+   height="285.14172mm"
+   viewBox="0 0 205.03915 285.14173"
    version="1.1"
    id="svg5"
    inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
@@ -27,13 +27,13 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:snap-global="false"
-     inkscape:zoom="0.5"
-     inkscape:cx="298"
-     inkscape:cy="360"
-     inkscape:window-width="1920"
-     inkscape:window-height="1010"
-     inkscape:window-x="-6"
-     inkscape:window-y="-6"
+     inkscape:zoom="2.410579"
+     inkscape:cx="286.23828"
+     inkscape:cy="1021.7462"
+     inkscape:window-width="1280"
+     inkscape:window-height="763"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
      showguides="false"
@@ -41,7 +41,7 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     height="272.14172mm" />
+     height="285.14172mm" />
   <defs
      id="defs2">
     <marker
@@ -234,14 +234,14 @@
        id="rect27264-3-8-0"
        width="23.169186"
        height="32.809917"
-       x="75.538284"
+       x="74.47995"
        y="18.749069" />
     <path
        style="opacity:1;fill:none;stroke:#000000;stroke-width:1.32882;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.32882, 1.32882;stroke-dashoffset:0;stroke-opacity:1"
        d="M 8.5626024,103.86143 H 212.10791"
        id="path22940-8" />
     <rect
-       style="fill:#1e1110;fill-opacity:1;stroke:#000000;stroke-width:0.813016;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.813016;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect27554-8-3-5"
        width="20.636625"
        height="8.2806396"
@@ -269,14 +269,14 @@
        x="18.149059"
        y="44.292873" />
     <rect
-       style="fill:#1e1110;fill-opacity:1;stroke:#000000;stroke-width:1.22677;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.22677;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect27554-8-08"
        width="49.456676"
        height="7.8668876"
        x="31.514225"
        y="57.539295" />
     <rect
-       style="fill:#1e1110;fill-opacity:1;stroke:#000000;stroke-width:1.22677;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.22677;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect27554-8-08-7"
        width="49.456676"
        height="7.8668876"
@@ -290,21 +290,21 @@
        x="122.59495"
        y="158.27585" />
     <rect
-       style="fill:#1e1110;fill-opacity:1;stroke:#000000;stroke-width:1.10121;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       style="fill:#000002;fill-opacity:1;stroke:#000000;stroke-width:1.10121;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect27554-8-6-8"
        width="30.337934"
        height="10.333669"
        x="90.230896"
        y="157.91809" />
     <rect
-       style="fill:#1e1110;fill-opacity:1;stroke:#000000;stroke-width:1.13147;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.13147;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect27554-8-3"
        width="41.567543"
        height="7.9621906"
        x="82.62352"
        y="213.1713" />
     <rect
-       style="fill:#1e1110;fill-opacity:1;stroke:#000000;stroke-width:1.96064;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.96064;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect27554-8-0"
        width="139.32237"
        height="7.1330233"
@@ -331,7 +331,7 @@
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.76111px;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
          x="121.12383"
-         y="229.91435"
+         y="229.89436"
          id="tspan28034-1">BUS</tspan></text>
     <rect
        style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.626505;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
@@ -393,12 +393,12 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:7.76111px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="86.435631"
+       x="85.906464"
        y="28.516825"
        id="text28032-7-5-1"><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.76111px;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
-         x="86.435631"
+         x="85.906464"
          y="28.516825"
          id="tspan28034-1-1-8">32-bit</tspan></text>
     <text
@@ -446,7 +446,7 @@
          y="59.144138"
          id="tspan28034-1-1-8-2-9">4-bit</tspan></text>
     <rect
-       style="opacity:1;fill:#1e1110;fill-opacity:1;stroke:#000000;stroke-width:1.42799;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.42799;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect27554"
        width="52.6805"
        height="10.006891"
@@ -540,6 +540,24 @@
        y="24.907671"
        ry="3.4250412" />
     <rect
+       style="fill:#898989;fill-opacity:1;stroke:#000000;stroke-width:0.581001;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect1400-3-4-5"
+       width="18.10379"
+       height="8.3489542"
+       x="110.06464"
+       y="99.178642" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.64444px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="114.35817"
+       y="105.49467"
+       id="text23414-9-9"><tspan
+         sodipodi:role="line"
+         id="tspan23412-2-3"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:Roboto;-inkscape-font-specification:Roboto;stroke-width:0.264583"
+         x="114.35817"
+         y="105.49467">REG</tspan></text>
+    <rect
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.581;stroke-miterlimit:4;stroke-dasharray:none"
        id="rect912-3"
        width="52.354202"
@@ -550,14 +568,14 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:7.05556px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="125.57045"
-       y="88.872589"
+       x="124.81429"
+       y="90.37487"
        id="text3310"><tspan
          sodipodi:role="line"
          id="tspan3308"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;font-family:Roboto;-inkscape-font-specification:Roboto;stroke-width:0.264583"
-         x="125.57045"
-         y="88.872589">CPS-A</tspan></text>
+         x="124.81429"
+         y="90.37487">CPS-A</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:7.05556px;line-height:1.25;font-family:sans-serif;text-align:center;text-anchor:middle;opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
@@ -572,7 +590,7 @@
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;stroke-width:0.264583"
          x="28.057728"
-         y="41.560448"
+         y="41.542278"
          id="tspan21133">(JAMMA)</tspan></text>
     <rect
        style="fill:#6e89b0;fill-opacity:1;stroke:#000000;stroke-width:0.586224;stroke-miterlimit:4;stroke-dasharray:none"
@@ -606,12 +624,12 @@
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:start;text-anchor:start;stroke-width:0.264583"
          x="143.87709"
-         y="139.57222"
+         y="139.55768"
          id="tspan51664">- m68k Instructions</tspan><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:start;text-anchor:start;stroke-width:0.264583"
          x="143.87709"
-         y="146.83847"
+         y="146.8094"
          id="tspan43470">- Palettes</tspan></text>
     <text
        xml:space="preserve"
@@ -627,7 +645,7 @@
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;stroke-width:0.264583"
          x="167.49309"
-         y="138.94777"
+         y="138.73706"
          id="tspan43470-6" /></text>
     <rect
        style="opacity:1;fill:#b0716e;fill-opacity:1;stroke:#000000;stroke-width:0.581001;stroke-miterlimit:4;stroke-dasharray:none"
@@ -651,7 +669,7 @@
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;stroke-width:0.264583"
          x="122.38554"
-         y="269.44632"
+         y="269.42816"
          id="tspan21133-6">(JAMMA)</tspan></text>
     <text
        xml:space="preserve"
@@ -667,18 +685,18 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:7.05556px;line-height:1.25;font-family:sans-serif;opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="78.753151"
+       x="78.746262"
        y="219.98479"
        id="text3310-9"><tspan
          sodipodi:role="line"
          id="tspan3308-33"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;font-family:Roboto;-inkscape-font-specification:Roboto;stroke-width:0.264583"
-         x="78.753151"
+         x="78.746262"
          y="219.98479">z80</tspan><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;font-family:Roboto;-inkscape-font-specification:Roboto;stroke-width:0.264583"
-         x="78.753151"
-         y="229.06763"
+         x="78.746262"
+         y="228.80423"
          id="tspan8066" /></text>
     <path
        style="opacity:1;fill:none;stroke:#000000;stroke-width:1.32402;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.32402, 1.32402;stroke-dashoffset:0;stroke-opacity:1"
@@ -709,7 +727,7 @@
            sodipodi:role="line"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;stroke-width:0.264583"
            x="170.37984"
-           y="170.12015"
+           y="170.10197"
            id="tspan21133-3">(JAMMA)</tspan></text>
       <circle
          id="path22942"
@@ -747,49 +765,24 @@
            x="108.01366"
            y="181.44661">LATCHES</tspan></text>
     </g>
-    <g
-       id="g32625">
-      <rect
-         style="fill:#898989;fill-opacity:1;stroke:#000000;stroke-width:0.581001;stroke-miterlimit:4;stroke-dasharray:none"
-         id="rect1400-3-4"
-         width="18.103792"
-         height="11.253707"
-         x="79.30822"
-         y="98.390556" />
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-weight:normal;font-size:5.64444px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+    <rect
+       style="fill:#898989;fill-opacity:1;stroke:#000000;stroke-width:0.581001;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect1400-3-4"
+       width="18.10379"
+       height="7.5973487"
+       x="78.779053"
+       y="100.45941" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.64444px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="83.072586"
+       y="106.02383"
+       id="text23414-9"><tspan
+         sodipodi:role="line"
+         id="tspan23412-2"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:Roboto;-inkscape-font-specification:Roboto;stroke-width:0.264583"
          x="83.072586"
-         y="106.02383"
-         id="text23414-9"><tspan
-           sodipodi:role="line"
-           id="tspan23412-2"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:Roboto;-inkscape-font-specification:Roboto;stroke-width:0.264583"
-           x="83.072586"
-           y="106.02383">REG</tspan></text>
-    </g>
-    <g
-       id="g32617"
-       transform="translate(0,-0.40415192)">
-      <rect
-         style="fill:#898989;fill-opacity:1;stroke:#000000;stroke-width:0.581001;stroke-miterlimit:4;stroke-dasharray:none"
-         id="rect1400-3-4-5"
-         width="18.103792"
-         height="11.253707"
-         x="110.06464"
-         y="98.794708" />
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-weight:normal;font-size:5.64444px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-         x="113.829"
-         y="106.42799"
-         id="text23414-9-9"><tspan
-           sodipodi:role="line"
-           id="tspan23412-2-3"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:Roboto;-inkscape-font-specification:Roboto;stroke-width:0.264583"
-           x="113.829"
-           y="106.42799">REG</tspan></text>
-    </g>
+         y="106.02383">REG</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:5.64444px;line-height:1.25;font-family:sans-serif;opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
@@ -807,7 +800,7 @@
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;stroke-width:0.264583"
          x="28.349466"
-         y="92.41497"
+         y="92.400436"
          id="tspan24508">PALETTES</tspan></text>
     <rect
        style="fill:#898989;fill-opacity:1;stroke:#000000;stroke-width:0.581001;stroke-miterlimit:4;stroke-dasharray:none"
@@ -831,12 +824,12 @@
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;stroke-width:0.264583"
          x="175.99931"
-         y="52.180149"
+         y="52.165611"
          id="tspan47976">Dual Port DRAM </tspan><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;stroke-width:0.264583"
          x="175.99931"
-         y="59.446407"
+         y="59.417336"
          id="tspan35756">384 KiB</tspan></text>
     <rect
        style="fill:#898989;fill-opacity:1;stroke:#000000;stroke-width:0.581001;stroke-miterlimit:4;stroke-dasharray:none"
@@ -859,7 +852,7 @@
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;stroke-width:0.264583"
          x="183.45195"
-         y="93.283318"
+         y="93.268784"
          id="tspan34482">192 KiB</tspan></text>
     <text
        xml:space="preserve"
@@ -875,7 +868,7 @@
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;stroke-width:0.264583"
          x="84.559074"
-         y="141.23271"
+         y="141.21817"
          id="tspan44080"> 64 KiB</tspan></text>
     <text
        xml:space="preserve"
@@ -894,7 +887,7 @@
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;stroke-width:0.264583"
          x="84.652725"
-         y="199.8821"
+         y="199.86755"
          id="tspan44080-2"> 2 KiB</tspan></text>
     <text
        xml:space="preserve"
@@ -910,55 +903,45 @@
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;stroke-width:0.264583"
          x="155.40648"
-         y="241.41631"
+         y="241.40176"
          id="tspan39829">(PCM)</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:5.64444px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
        x="189.9807"
-       y="230.72537"
+       y="228.60873"
        id="text24506-9-1"><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;stroke-width:0.264583"
          x="189.9807"
-         y="230.72537"
-         id="tspan39829-1">ROM </tspan><tspan
-         sodipodi:role="line"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;stroke-width:0.264583"
-         x="189.9807"
-         y="237.99164"
-         id="tspan25999">APCM</tspan><tspan
-         sodipodi:role="line"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;stroke-width:0.264583"
-         x="189.9807"
-         y="245.25789"
-         id="tspan40623">SAMPLES</tspan></text>
+         y="228.60873"
+         id="tspan4593">ROM</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:5.64444px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="166.90613"
-       y="193.74774"
+       x="172.19772"
+       y="192.16026"
        id="text24506-9-1-0"><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;stroke-width:0.264583"
-         x="166.90613"
-         y="193.74774"
+         x="172.19772"
+         y="192.16026"
          id="tspan41791"> ROM</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:5.64444px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="83.515991"
+       x="84.973358"
        y="242.24069"
        id="text24506-18"><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;stroke-width:0.264583"
-         x="83.515991"
+         x="84.973358"
          y="242.24069"
          id="tspan24508-90">YM2151</tspan><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;stroke-width:0.264583"
-         x="83.515991"
-         y="249.50696"
+         x="84.973358"
+         y="249.29625"
          id="tspan39307" /></text>
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.581001;stroke-miterlimit:4;stroke-dasharray:none"
@@ -971,17 +954,17 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:5.64444px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="30.874405"
-       y="235.66713"
+       x="30.875782"
+       y="235.47096"
        id="text24506-18-3"><tspan
          sodipodi:role="line"
          style="font-size:5.64444px;text-align:center;text-anchor:middle;stroke-width:0.264583"
-         x="30.874405"
-         y="235.66713"
+         x="30.875782"
+         y="235.47096"
          id="tspan24508-90-3" /><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;stroke-width:0.264583"
-         x="30.874405"
+         x="30.875782"
          y="242.72269"
          id="tspan39307-6">YM3012</tspan></text>
     <text
@@ -1014,7 +997,7 @@
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.76111px;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
          x="120.87918"
-         y="150.47702"
+         y="150.45703"
          id="tspan28034">BUS</tspan></text>
     <text
        xml:space="preserve"
@@ -1030,7 +1013,7 @@
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:8.46667px;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';text-align:center;text-anchor:middle;stroke-width:0.264583"
          x="29.29237"
-         y="20.003353"
+         y="19.981554"
          id="tspan36510">SYSTEM</tspan></text>
     <text
        xml:space="preserve"
@@ -1057,7 +1040,7 @@
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:8.46667px;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';text-align:center;text-anchor:middle;stroke-width:0.264583"
          x="34.885422"
-         y="155.06308"
+         y="155.04128"
          id="tspan57278">SYSTEM</tspan></text>
     <text
        xml:space="preserve"
@@ -1073,7 +1056,7 @@
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:8.46667px;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';text-align:center;text-anchor:middle;stroke-width:0.264583"
          x="34.170174"
-         y="212.66586"
+         y="212.64406"
          id="tspan59052">SYSTEM</tspan></text>
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.581;stroke-miterlimit:4;stroke-dasharray:none"
@@ -1094,14 +1077,14 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:7.05556px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="77.263115"
-       y="54.007378"
+       x="76.038773"
+       y="55.03326"
        id="text3310-5"><tspan
          sodipodi:role="line"
          id="tspan3308-6"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;font-family:Roboto;-inkscape-font-specification:Roboto;stroke-width:0.264583"
-         x="77.263115"
-         y="54.007378">CPS-B</tspan></text>
+         x="76.038773"
+         y="55.03326">CPS-B</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:7.05556px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
@@ -1117,17 +1100,33 @@
        xml:space="preserve"
        style="font-size:5.64444px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
        x="146.31783"
-       y="200.93459"
+       y="203.58038"
        id="text15846"><tspan
          sodipodi:role="line"
          id="tspan15844"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:Roboto;-inkscape-font-specification:Roboto;stroke-width:0.264583"
          x="146.31783"
-         y="200.93459">- Z80 Instructions</tspan><tspan
+         y="203.58038">- Z80 Instructions</tspan><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:Roboto;-inkscape-font-specification:Roboto;stroke-width:0.264583"
          x="146.31783"
-         y="208.20085"
+         y="210.83211"
          id="tspan15848">- Music</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:4.9389px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;stroke-width:0.264583"
+       x="177.76675"
+       y="237.69099"
+       id="text9289"><tspan
+         sodipodi:role="line"
+         id="tspan9287"
+         style="stroke-width:0.264583"
+         x="177.76675"
+         y="237.69099">- ADPCM</tspan><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.264583"
+         x="177.76675"
+         y="243.86462"
+         id="tspan9291">samples</tspan></text>
   </g>
 </svg>

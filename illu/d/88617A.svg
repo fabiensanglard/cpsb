@@ -7,7 +7,7 @@
    viewBox="0 0 324.99564 507.44727"
    version="1.1"
    id="svg5"
-   inkscape:version="1.1.2 (08b2f3d93c, 2022-04-05)"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
    sodipodi:docname="88617A.svg"
    inkscape:export-filename="/Users/sanglardf/sf2b/88617A.png"
    inkscape:export-xdpi="96"
@@ -28,8 +28,8 @@
      showgrid="false"
      inkscape:snap-global="false"
      inkscape:zoom="0.4881583"
-     inkscape:cx="472.1829"
-     inkscape:cy="584.85127"
+     inkscape:cx="419.94574"
+     inkscape:cy="1473.9071"
      inkscape:window-width="1280"
      inkscape:window-height="736"
      inkscape:window-x="0"
@@ -1064,22 +1064,27 @@
     <rect
        style="display:inline;fill:#57eb59;fill-opacity:0.645161;stroke:#000000;stroke-width:0.565;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect3947"
-       width="30.669518"
+       width="30.67"
        height="108.5208"
        x="-326.40097"
        y="87.464584"
        transform="rotate(-90)" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:8.46666667px;line-height:1.25;font-family:sans-serif;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="141.59735"
-       y="314.32666"
+       style="font-style:normal;font-weight:normal;font-size:8.46667px;line-height:1.25;font-family:sans-serif;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="141.60509"
+       y="308.63681"
        id="text6492-7"><tspan
          sodipodi:role="line"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';text-align:center;text-anchor:middle;stroke-width:0.264583;font-size:8.46666667px"
-         x="141.59735"
-         y="314.32666"
-         id="tspan4561">PLAYERS INPUTS</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:8.46667px;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';text-align:center;text-anchor:middle;stroke-width:0.264583"
+         x="141.60509"
+         y="308.63681"
+         id="tspan4561">PLAYERS INPUTS</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:8.46667px;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';text-align:center;text-anchor:middle;stroke-width:0.264583"
+         x="141.60509"
+         y="319.5144"
+         id="tspan13131">BUFFERS</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:11.2889px;line-height:1.25;font-family:sans-serif;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
@@ -1286,16 +1291,16 @@
          transform="rotate(-90)" />
       <text
          xml:space="preserve"
-         style="font-style:normal;font-weight:normal;font-size:8.46666667px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-         x="-281.8284"
-         y="316.50433"
+         style="font-style:normal;font-weight:normal;font-size:8.11389px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="-281.29922"
+         y="315.97516"
          id="text6492-6-73"
          transform="rotate(-90)"><tspan
            sodipodi:role="line"
            id="tspan6490-8-43"
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';stroke-width:0.264583;font-size:8.46666667px"
-           x="-281.8284"
-           y="316.50433">YM3012</tspan></text>
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:8.11389px;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';stroke-width:0.264583"
+           x="-281.29922"
+           y="315.97516">YM3012</tspan></text>
     </g>
   </g>
 </svg>

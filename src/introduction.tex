@@ -196,7 +196,8 @@ A new era began in 1988. With the release of Forgotten Worlds and Strider, playe
 
 
 
- \begin{figure}[H]
+\label{nin_fw}
+\begin{figure}[H]
 \img{fw_4_3.png}
 \caption*{Forgotten Worlds (1988)}
 \end{figure}
@@ -204,7 +205,7 @@ A new era began in 1988. With the release of Forgotten Worlds and Strider, playe
 
 
  
-
+\label{fw_flyer}
   \begin{figure}[H]
   \img{cps1_announcement.jpg}
   \caption*{Capcom's CPS-1 announcement flyer (1989).}
@@ -246,7 +247,7 @@ Perhaps the best compliment came from competitors who, years later, would admit 
 
 Not only quality improved, quantity also increased. Thanks to its stable platform and tools, Capcom was able to release more than thirty tile between 1988 and 1995, all based on its CPS-1 platform. 
 
-And then in 1991 came the worldwide mega-hit, "Street Fighter 2".\index{Game!Street Fighter 2}
+And then in 1991 "Street Fighter 2"\index{Game!Street Fighter 2} took the world over by storm.
 
 \label{nin_sf2}
 \begin{figure}[H]
@@ -306,42 +307,52 @@ Mega Man the Power Battle & 8 MiB  & 1995 \\
 
 
 
-"Street Fighter 2" was a quantum leap in gaming. 
+More than a game, "Street Fighter 2" was phenomenon. Sitting at the intersection of Capcom's new found technology and the artistic and design skills its staff had learned in the necessity of survival.
 
-It was the result of a perfect timing where Capcom design skills crafted in the necessity of survival entered into a synergy with their new found technology. The game blew gamers minds. The eight characters came in different size, shape and gender. They each had their own characteristics, moves and powers. They had depth. The music was engaging, the audio effects crisp. Control felt precise. 
+It was quality quantum leap which blew gamers minds. The eight characters came in different size, shape and gender. They each had their own moves and special abilities. These characterization gave them depth. The music was engaging, the audio effects crisp. Control felt precise. 
 
-And what to say about the outstanding per-line parallax and full screen 60Hz animation?
-
-
+The video was breathtaking with per-line parallax running at 60Hz showcasing Akiman's team artistic talent. 
 
 
-
-
-\label{nin_sf2}
 \begin{figure}[H]
 \img{sf2_tournament.png}
 \caption*{Street Fighter 2 tournament flyer.}
 \end{figure}
 
-The game immediately developed a cult following. Players had to wait in lines to drop a quarter. "Continue" were frowned upon by other players waiting for their turn. The popularity was such that tournaments with cash rewards were held. 
+The game immediately developed a cult following. Players had to wait in lines to drop a quarter. Purchasing "Continue" with quarter was frowned upon by other players impatiently waiting for their turn. Operators purchased multiple copies to reduce the wait time but at the end of the days machines still overflowed with coins\cite{sf2_oral_history}.
 
-Operators purchased multiple copies\cite{sf2_oral_history} to reduce the wait time but at the end of the days machines still overflowed with coins.
-
-
+The popularity was such that tournaments with handsome rewards (opposing page) were held. 
 
 By 1995, the series had generated \$2.3 billion with 200,000 cabinets sold\cite{usgamer20160101} (60,000 World Warriors units and 140,000 Champion Edition units). By 2017 that figure reached \$10.61 billions\cite{gamerevolution20140126}, making "Street Fighter 2" the third top grossing game of all time.
 
+\begin{trivia}
+Who is this blinking \textbf{NIN} featured in the high-score of Forgotten Worlds (p\pageref{nin_fw}), Final Fight (p\pageref{nin_ff}), and Street Fighter II (p\pageref{nin_sf2})? It is the nickname of Akira Nishitani, the planner (designer) on all these titles!
+\end{trivia}
 
 \section{Ode to CP-System}
 
-This book is a engineering love letter to the system that enabled Capcom to operate a metamorphosism. To evolve from a company fighting for survival to become an arcades household.
+This book is a engineering love letter to the system that enabled Capcom to operate its metamorphosis, to evolve from a company fighting for survival to become an arcades household.
 
-The goal of this work is to understand the CP-System completely. This will (hopefully) be achieved by first investigating the metal and them progressively moving up, all the way to the game engine layer.
+The goal of this work is to understand the CP-System completely. This will (hopefully) be achieved by first exposing the hardware and then progressively moving up, all the way to the programming and game engine architecture level.
 
-In the first chapter, the hardware of the three systems making the CP-System is explored. Beyond the hard reality of silicon and bus lines, a discussion of the design choices and real-life examples of how games leveraged features is provided when relevant.
+In the first chapter, the hardware of the four systems making the CP-System is explored.
+\begin{itemize}[topsep=0pt]
+\item Control System.
+\item Audio System.
+\item GFX System.
+\item Video System.
+\end{itemize}
+ Beyond the hard reality of silicon and bus lines, a discussion of the design choices and real-life examples of how games leveraged features is provided when relevant.
 
-The sub-sequent chapters study the software and how to build it. In particular are explained the five pipelines resulting in a game. From the Motorola 68000 and Zilog 80 programming to the integration of assets for the OKI (SFX), the YM2151 (musics) and the CPS-A/B (GFX).
 
+The sub-sequent chapters study the software and how to build it. In particular are explained the four ROM groups resulting in a game. 
+
+\begin{itemize}[topsep=0pt]
+\item Motorola 68000 ROM.
+\item Zilog Z80 programming and YM2151 (musics) ROM.
+\item MSM6295 (audio samples) ROM.
+\item CPS-A/CPS-B (GFX) ROM.
+\end{itemize}
 
 \begin{CJK}{UTF8}{min}
 Ready? さあ行こう!
