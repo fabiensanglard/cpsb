@@ -250,7 +250,7 @@ It is heavy duty in order to keep up with the 59.64Hz refresh rate inflicted on 
 The control system is the master of the platform. As a ruler it needs not excel at at specific task but to be able to direct and keep tabs on many components. A tailor made task for the immensely popular Motorola 68000.
 
 
-\subsection{Motorola 68000}\index{Processors!Motorola 68000}
+\subsection{Motorola 68000 CPU}\index{Processors!Motorola 68000}
 
  Released in 1979, and clocked at 10 MHz (later upgraded to 12 MHz), the 68000 was not a particularly powerful chip by the late 80' standards with its two stage pipeline\cite{M68000fv} (prefetch, exec) and no cache. Its 1.7 MIPS placed it on par with an Intel 286 10MHz (1.5 MIPS). By 1989 it was already two generations old behind the 1984 M68020 (3 MIPS) and the 1987 M68030 (5 MIPS)\cite{mips}.
 
@@ -427,34 +427,28 @@ For the audio, the m68k issues simple commands to the z80 via two 1 byte latches
 \section{Audio system}\index{Systems!Audio}
 The audio system runs in isolation from everything else. It has its own bus, its own RAM, its own ROM systems, and its own oscillators. Its only opening to the outside world are two latches to receive commands from the control system and two JAMMA pins where to output sound.
 
-The grand master of this microcosm is a Zilog-80 running at 3.58 MHz.
+The component in charge is a surprisingly light-weight z80 running at 3.58 MHz.
 
-\subsection{z80}
-Released in July 1976 by Zilog, the z80 was an intended as an Intel 8080 killer thanks to a compatible instruction set. It ended up becoming an icon of the 70s, sharing the front-scene until the mid-80s with the equally mythical MOS 6502. 
+\subsection{Zilog 80 CPU}
+Released in July 1976 by Zilog, the z80 was an intended as an Intel 8080 killer thanks to a compatible instruction set. It ended up becoming an icon of the 70s, sharing the front-scene with the equally mythical MOS 6502 well into the mid-80s. 
 
 The z80 was widely used in home computers, notably featured in the Sinclair ZX Spectrum and the Amstrad CPC. It also found its way in military applications, musical equipment (Roland Jupiter-8), embedded systems and multiple coin-ops arcades. 
 
-As an 8-bit era processor, the z80 uses 8-bit data registers, 8-bit data bus, 16-bit addresses, and 16-bit address bus. In terms of processing power, despite its "overlapping fetch/execute" design, the CPU had become particularly weak by the late 80s standards with 0.45 MIPS. It was three times slower than the MC68000 from the control system\cite{mips}. 
+As an 8-bit era processor, the z80 uses 8-bit data registers, 8-bit data bus, 16-bit addresses, and 16-bit address bus. In terms of processing power, despite its "overlapping fetch/execute" design, the CPU had become particularly weak by the late 80s standards with 0.45 MIPS. It was three times slower than the 68000 featured in the control system\cite{mips}. 
 
 \nbdraw{mips_z80}
 
-But once again, power was not be the deciding factor to elect the master of the Sound system. Thanks for its two powerful co-processors, the CPU would not have to process much data, making the MIPS figure irrelevant. A much more important characteristic would be how well it integrated with its two sidekicks.
+Processing power was not to be the deciding factor to elect the master of the Sound system. Thanks for its two powerful co-processors, the CPU would not have to process much data, making the MIPS figure irrelevant. A much more important characteristic would be how well it integrated with its two sidekicks.
 
-Thanks to its 8-bit design, the z80 was a perfect fit for the 8-bit YM2151 and 8-bit MSM6295. Additionally, having been around for a while, the outdated CPU was inexpensive. Last but not least, Zilog's CPU enjoyed a good reputation from programmers who enjoyed its simple programming interface.
-% These three points made the z80 a no-brainer to have on the board.
+Thanks to its 8-bit design, the z80 was a perfect fit for the 8-bit YM2151 and 8-bit MSM6295. Having been around for a while, the "outdated" CPU was inexpensive. Lastly, it enjoyed a good reputation thanks to its simple programming interface.
 
 \begin{trivia}
-Staring at components teaches to recognize packagings. DIP (Dual In-line Package), like the z80 below, are recognizable by their two lines of pins. The 68000 on page \pageref{68000drawing} with its four sides of pins belongs to the "Chip carrier" family. These can be made of materials such as plastic or ceramic and use barbaric acronyms like as CLCC or PLCC.  
+The number of pin lines on a chip dictate their packaging names. DIP (Dual In-line Package), like the z80 below, are recognizable by their two lines of pins. The Motorola 68000 on page \pageref{68000drawing} with its four sides of pins belongs to the "Chip carrier" family. Packaging can use materials such as plastic or ceramic and are referred using increasingly barbaric acronyms such as CLCC or PLCC.
 \end{trivia}
 
 \sdraw{0.9}{z-80}\index{Processors!Zilog 80}
 
-
-% \begin{q}{The man who hated hardware}
-% And just like that, we found ourselves staring at pin-outs again. This was going to be a long day!
-% \end{q}
-
-The chip comes to life thanks to its clock (\icode{CLK}), power \icode{+V5}, and ground \icode{GND} pins.
+The z80 comes to life thanks to its clock (\icode{CLK}), power \icode{+V5}, and ground \icode{GND} pins.
 
 The bus lines are dedicated \icode{D0-D15} for addresses and \icode{A0-A7} for data. For control, \icode{RD} indicates read while \icode{WR} indicates a write operation. \icode{WAIT} is used to add waitstates. 
 
@@ -465,26 +459,27 @@ In fact, the \icode{BUSRQ} and \icode{BUSAK} pins are not even connected.  Becau
 
 Other pins are \icode{INT} Interrupt line, \icode{NMI} Non Maskable Interrupt, \icode{RESET} Restart CPU, \icode{HALT} Waiting for interrupt, \icode{M1} Fetching next instruction.
 
- The z80 has a built-in timer to easily include DRAM on a motherboard. The \icode{RFSH} pin (ReFreSH signal) tics at regular intervals for the memory refresh.
+\label{z80_pinRFSH}
+The \icode{RFSH} pin (ReFreSH signal) tics at regular intervals to trigger DRAM refreshes. The sound system uses only SRAM so it is not used although this pin was re-purposed in a creative way for CP-S 1.5 "Kabuki" (page \pageref{kabuki}).
 
  This is not used on the CP-System system since all RAM is Static RAM. Only one components, the VRAM, uses DRAM but it is located on the polar opposite side of the board.
 
 \pagebreak
 
 \subsection{z80 Work RAM}
-The amount of RAM provided to the z80 may let a modern programmer smile. Because all it has to do is forward request from the latches to the OKI6295 and feeds the YM2151 music notes, the z80 bus is connected to a single 2Ki x 8-bit \icode{CXK5816SP} chip is used. Yes. The master of sounds runs on 2 KiB.
+The amount of RAM provided to the z80 may appear scandalously small by today standards. Because all it has to do is forward request from the latches to the MSM6295 and feeds the YM2151 music notes, the z80 bus is connected to a single 2Ki x 8-bit \icode{CXK5816SP} chip.
 
 \subsection{z80 ROM}
-The ROM is made of a simple 64Ki x 8-bit \icode{27C512} chip. It is much larger than the RAM in order to store FM musics along the z80 instructions. 
+The ROM is made of a simple 64Ki x 8-bit \icode{27C512} chip. It is much larger than the RAM in order to store YM2151 instructions along the z80 instructions. 
 
 
-These chips work alike those the one already studies with pins such as power, ground, addresses, data, control, and of course the crucial \icode{CE}. What is peculiar is that the z80 uses 16-bit address registers which grants 65,536 addresses. There is not enough address space for all registers, ROM, and RAM totaling 67 KiB.
+These ROM chips work alike those the one already studies with pins such as power, ground, addresses, data, control, and of course the crucial \icode{CE}. What is peculiar is that the z80 uses 16-bit address registers which grants 65,536 addresses. There is not enough address space for all registers, ROM, and RAM totaling 67 KiB.
 
-The solution is to map only the portion of the ROM that contain instructions (32KiB) statically and to use a banking system to provide a 16 KiB "view" into the remaining 32KiB of the ROM where the music assets are stored. This is accomplished with a PAL (\icode{SOU1}) it was a royal pain to deal with it.
+The solution is to map only the portion of the ROM that contain instructions (32KiB) statically and to use a banking system to provide a 16 KiB "view" into the remaining 32KiB of the ROM where the music assets are stored. This is accomplished simply with a PAL (\icode{SOU1}) and was the source of great pain to the developers (page \red{XXX}).
 
 
 Hopefully this awful bank switch control 
- will leave no doubt with regards of the awesomeness of the 68000 and its 24-bit address space. 
+ will leave no doubt with regards of the awesomeness of the 68000 and its 24-bit flat addressing system. 
 
 \subsection{z80 Memory Map}
 
@@ -2103,16 +2098,17 @@ In 1992, Capcom released the CP System Dash (a.k.a CPS-1.5). Fully encased in a 
 }\caption*{Capcom CPS-1.5 based arcades games.}
 \end{figure}
 
+\label{kabuki}
 The CPS 1.5 is noteworthy for its improved copy-protection where the audio instructions are stored in encrypted ROM. The audio CPU is a special z80 dubbed Kabuki\cite{arcadeHackerKabuki} able to decrypt instructions on the fly.
 
-The encryption scheme is symmetric with the private key being stored in the z80. It is not burned in the silicon but, alike the CPS-1 configuration, stored via RAM. To keep that key alive, pin 28 is re-purposed from "DRAM refresh" (the sound system uses SRAM anyway) to providing power via a second "suicide battery". 
+The encryption scheme is symmetric with the private key being stored in the z80. It is not burned in the silicon but, alike the CPS-1 configuration, stored via RAM. To keep that key alive, the unused pin 28 we saw on page \pageref{z80_pinRFSH} is re-purposed from "DRAM refresh" to providing power. To this effect, it is connected to a second "suicide battery" (not the same as the CPS-Bs). 
 
 
 
 
 
 \begin{trivia}
-The protection provided by CPS-1.5 held remarkably well over the years. It was only broken in the early 2000s\cite{ame_kabuki}.
+The protection provided by CPS-1.5 held remarkably well over the years. It was only broken in the early 2000s\cite{mame_kabuki}.
 \end{trivia}
 
 \subsection{CPS-2}
