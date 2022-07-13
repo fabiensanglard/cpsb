@@ -246,9 +246,6 @@ It is heavy duty in order to keep up with the 59.64Hz refresh rate inflicted on 
   \end{figure}
 
 
-% \section{Storage system}
-% The game code and assets are all stored on ROMs on the Board B. All storage subsystem whether they are meant to the 8-bit Z-80, the 16-bit 68000, or the 64-bit PPUs are build with the same XXXX component.
-
 \section{Control system}\index{Systems!Control}
 The control system is the master of the platform. As a ruler it needs not excel at at specific task but to be able to direct and keep tabs on many components. A tailor made task for the immensely popular Motorola 68000.
 
@@ -285,7 +282,7 @@ The bus is made of \icode{D0-D15} for data, \icode{A1-A23]} for addresses. Addre
 
 Arbitration to allow peripherals to master the bus is done with Bus Request (\icode{BR}),  Bus Grant (\icode{BG}) and Bus Grant ACK (\icode{GBA-K}).
 
-The interrupt system is made of a generous three pins \icode{IPL0}, \icode{IPL1}, \icode{IPL2}, and \icode{VPA}. While other CPUs like the x86s or Zilog's Z80 have a single interrupt line, the multiple \icode{IPL} allow to code interrupt number directly via the pins without need for an interrupt controller. How this is leveraged will be explained in the programming section.
+The interrupt system is made of a generous three pins \icode{IPL0}, \icode{IPL1}, \icode{IPL2}, and \icode{VPA}. While other CPUs like the x86s or Zilog's z80 have a single interrupt line, the multiple \icode{IPL} allow to code interrupt number directly via the pins without need for an interrupt controller. How this is leveraged will be explained in the programming section.
 
 
 System control is done via Error (\icode{BERR}), Reset (\icode{RST}), and Halt (\icode{HALT}). 
@@ -298,14 +295,14 @@ Motorola's CPU name is due to its total number of transistors totaling 68,000 un
 
 Despite the raving description provided in the previous page, the 68000 could be a peculiar CPU to program. Its most famous shortcoming involved memory alignment. While Intel's line of CISC allows random memory accesses (at the cost of a great performance penalty), Motorola's CPU will \icode{HALT} while attempting to read/write memory not aligned on a 16-bit (\icode{WORD}) boundary.
 
-This limitation is rooted all the way down to the CPU pins where there is no \icode{A0} line. Instead, pins \icode{UDS} and \icode{LDS}indicate which high-byte or low-bytes part of an aligned \icode{WORD} to access.
+This limitation is rooted all the way down to the CPU pins where there is no \icode{A0} line. Pins \icode{UDS} and \icode{LDS}indicate which of the high-byte or low-bytes part of a 16-bit \icode{WORD} to access.
 
 
 \begin{trivia}
- The 68000 has 32-bit address registers but used only 24-bit addresses. These 8 bits of "unused" pointers were used by system engineers to mark address as "locked" or "purgeable", making their programs forward-incompatible. 
+ The 68000 has 32-bit address registers but used only 24-bit addresses. These 8 bits of "unused" pointers were hijacked by system engineers to mark address as "locked" or "purgeable", making their programs forward-incompatible. 
 \end{trivia}
 
-Perhaps the best testament to the quality of the 68000 design is that, as of 2022, 43 years after its release, Motorola's CPU is still in production.
+Perhaps the best testament to the quality of the 68000 design is that, as of 2022, 43 years after its release, Motorola's immortal CPU is still in production.
 
 
 \subsection{Motorola 68000 "work" RAM}
@@ -321,20 +318,20 @@ Using cheaper of-the-shelves 8-bit RAM chips instead of 16-bit RAM chips helped 
 \caption*{32 Ki x 16-bit RAM system with two 32 Ki x 8-bit chips}
 \end{figure}
 
-The two chips are not aware of each others. They are connected to the same 15 address lines and the same control lines for write (\icode{WE}) and read (\icode{OE}). However, they are connected to different lines of the data bus.
+The two \icode{65256BLSP-10} are not aware of each others. They are connected to the same 15 address lines and the same control lines for Write Enabled (\icode{WE}) and Read Enabled (\icode{OE}). However, they are connected to different lines of the data bus.
 
-% Notice how the 14 address lines of the RAM chips are connected to the bus lines [11-23], effectively placing the RAM at address \icode{0xFF0000}-\icode{0xFFFFFF}. Carefully selecting lines is one of the three building block of designing a memory map. The two others are explained in the next section.
+
  \begin{trivia}
 Interleaving chips help to beat memory latency by increasing throughput. Early GPU such as the Voodoo 1 and Voodoo 2 by 3Dfx extensively relied on this technique, even using four-way interleave to keep up with the bandwidth requirements\cite{TheStoryOf3Dfx}.  
  \end{trivia}
 
 
-Notice how the address lines of the SRAM chips are directly connected to the 68000 address bus. There is no mechanism to prevent these two chips to respond to all requests made on \icode{[0x**0000-0x**7FFF]}. 
+Notice how the address lines of the SRAM chips are directly connected to the 68000 address bus. There is no mechanism to prevent these two chips to respond to all bus requests. 
 
-This is an over-simplification to introduce complexity progressively. We will see next how chips are organized to not overlap with each others.
+This is an over-simplification to introduce complexity progressively. We will see next how chips are organized to not conflict with each others.
 
  \begin{trivia}
- 64 KiB of RAM seems like a lot but was not always enough. Some games found themselves with not enough RAM and too much GFXRAM. Street Fighter 2 Champion Edition programmers resolved to generating and executing instructions from the GFXRAM\cite{mame_driver}!
+ 64 KiB of work RAM seems like a lot but was not always enough. Some games found themselves with not enough RAM and too much GFXRAM. Street Fighter 2 Champion Edition programmers resolved to generating and executing instructions from the GFXRAM\cite{mame_driver}!
  \end{trivia}
 \pagebreak
 
@@ -347,9 +344,6 @@ This is an over-simplification to introduce complexity progressively. We will se
 
 \subsection{Motorola 68000 Program ROM}
 
-% \begin{trivia}
-% Notice how important alignment becomes with such a memory system. Reading 2-byte aligned addresses yields the correct result but to put unaligned memory on the 16-bit data bus is not possible. An unaligned read requires two 16-bit aligned read, two shifts and one OR. It is a very expensive operation.
-% \end{trivia}
 
 The 68000 instructions are provided by eight \icode{27C010} which are 128 Ki x 8-bit chips. They work like the \icode{65256BLSP-10} except that they have sixteen address lines instead of fifteen (and therefore higher capacity).
 
@@ -363,7 +357,7 @@ Like the RAM, ROM chips are combined via two-way interleaves to provide 16-bit d
 
 To place one pair after another in memory space, the \icode{CE} (Chip Enabled, sometimes labeled \icode{CS} for "Chip Selected") pin is leveraged. Asserting it let a chip respond to address request while de-asserting it keeps it dormant. All CEs on all chips on all boards are controlled via PALs.
 
-Here, the first four out PAL pins must be programmed as follows.
+In this example, the first four out PAL pins must be programmed as follows.
 
 \lstinputlisting[style=CStyle]{src/code/pal.c}
 
@@ -376,7 +370,7 @@ By now, it should be abundantly clear that the \icode{CE} / \icode{CS} lines are
 
 \subsection{68000 Memory Map}
 
-Thanks to the PAL chips seen earlier, the 68000 memory space is divided into something called a "memory map".
+Thanks to the PAL chips enabling/disabling components, the 68000 memory space is partitioned. The result is summarized in a "memory map".
 
 \begin{figure}[H]
 {
@@ -408,15 +402,15 @@ Thanks to the PAL chips seen earlier, the 68000 memory space is divided into som
 
 The details of the 68000 operations will be studied in-depth in the next chapters but we can already guess how the CPU operates based on what it has access to.
 
-As the m68k boots, it starts to retrieve instructions from it ROM. For regular operations such as store/load, and also to keep track of its call stack, it uses its RAM. 
+As the m68k boots, it starts to retrieve instructions from it ROM. For regular operations such as store/load, and also to keep track of its call stack, it uses its work RAM. 
 
-The game engine starts and reads the configuration set by the arcade operator via the DIP switches. While the game runs, the CPU continuously polls the JAMMA registers.
+The game engine starts and reads the configuration set by the arcade operators via the DIP switches. While the game runs, the CPU continuously polls the JAMMA registers.
 
-Acting as the orchestrator, the engine detects inputs and delegates generation of video and audio signal to its subordinates.
+Acting as the orchestrator, the engine detects JAMMA inputs and delegates generation of video and audio signal to its subordinates towards JAMMA outputs.
 
-For the video, the m68k describes an image to be displayed via the GFXRAM then instructs the graphic ASICs of where to find that data via their registers. 
+For the video, the m68k describes the scene to be displayed via the GFXRAM. The graphic ASICs are then instructed how to retrieve the scene data via their registers. 
 
-For the audio, the m68k issues simple commands to the Z-80 via two 1 byte latches using a protocol detailed later.
+For the audio, the m68k issues simple commands to the z80 via two 1 byte latches using a protocol detailed later.
   
 
 
@@ -435,12 +429,12 @@ The audio system runs in isolation from everything else. It has its own bus, its
 
 The grand master of this microcosm is a Zilog-80 running at 3.58 MHz.
 
-\subsection{Z-80}
-Released in July 1976 by Zilog, the Z-80 was an intended as an Intel 8080 killer thanks to a compatible instruction set. It ended up becoming an icon of the 70s, sharing the front-scene until the mid-80s with the equally mythical MOS 6502. 
+\subsection{z80}
+Released in July 1976 by Zilog, the z80 was an intended as an Intel 8080 killer thanks to a compatible instruction set. It ended up becoming an icon of the 70s, sharing the front-scene until the mid-80s with the equally mythical MOS 6502. 
 
 The z80 was widely used in home computers, notably featured in the Sinclair ZX Spectrum and the Amstrad CPC. It also found its way in military applications, musical equipment (Roland Jupiter-8), embedded systems and multiple coin-ops arcades. 
 
-As an 8-bit era processor, the Z-80 uses 8-bit data registers, 8-bit data bus, 16-bit addresses, and 16-bit address bus. In terms of processing power, despite its "overlapping fetch/execute" design, the CPU had become particularly weak by the late 80s standards with 0.45 MIPS. It was three times slower than the MC68000 from the control system\cite{mips}. 
+As an 8-bit era processor, the z80 uses 8-bit data registers, 8-bit data bus, 16-bit addresses, and 16-bit address bus. In terms of processing power, despite its "overlapping fetch/execute" design, the CPU had become particularly weak by the late 80s standards with 0.45 MIPS. It was three times slower than the MC68000 from the control system\cite{mips}. 
 
 \nbdraw{mips_z80}
 
@@ -464,18 +458,16 @@ The chip comes to life thanks to its clock (\icode{CLK}), power \icode{+V5}, and
 
 The bus lines are dedicated \icode{D0-D15} for addresses and \icode{A0-A7} for data. For control, \icode{RD} indicates read while \icode{WR} indicates a write operation. \icode{WAIT} is used to add waitstates. 
 
-Although it is capable of relinquishing control of the bus via \icode{BUSRQ} (Bus Request), \icode{BUSAK} (Bus Acknowledge), \icode{MREQ} (Memory Request), and \icode{IORQ} (IO Request), the Z-80 completely own its bus and never shares it. 
+Although it is capable of relinquishing control of the bus via \icode{BUSRQ} (Bus Request), \icode{BUSAK} (Bus Acknowledge), \icode{MREQ} (Memory Request), and \icode{IORQ} (IO Request), the z80 completely own its bus and never shares it. 
 
-In fact, the \icode{BUSRQ} and \icode{BUSAK} pins are not even connected.  Because it is isolated via latches, the Z-80's bus never suffers contention.
+In fact, the \icode{BUSRQ} and \icode{BUSAK} pins are not even connected.  Because it is isolated via latches, the z80's bus never suffers contention.
 
 
 Other pins are \icode{INT} Interrupt line, \icode{NMI} Non Maskable Interrupt, \icode{RESET} Restart CPU, \icode{HALT} Waiting for interrupt, \icode{M1} Fetching next instruction.
 
-% \begin{trivia}
- The Z-80 has a built-in timer to easily include DRAM on a motherboard. The \icode{RFSH} pin (ReFreSH signal) tics at regular intervals for the memory refresh.
+ The z80 has a built-in timer to easily include DRAM on a motherboard. The \icode{RFSH} pin (ReFreSH signal) tics at regular intervals for the memory refresh.
 
  This is not used on the CP-System system since all RAM is Static RAM. Only one components, the VRAM, uses DRAM but it is located on the polar opposite side of the board.
-% \end{trivia}
 
 \pagebreak
 
@@ -485,21 +477,14 @@ The amount of RAM provided to the z80 may let a modern programmer smile. Because
 \subsection{z80 ROM}
 The ROM is made of a simple 64Ki x 8-bit \icode{27C512} chip. It is much larger than the RAM in order to store FM musics along the z80 instructions. 
 
-% Sound commands are forwarded as ID/channel/volume to the OKI6295. 
 
-% Music commands are a bit more involved since when a music ID is received the Z-80 needs to constantly retrieve notes from its ROM and feed them to the YM2151.
-
-These chips work alike those the one already studies with pins such as power, ground, addresses, data, control, and of course the crucial \icode{CE}. What is peculiar is that the Z-80 uses 16-bit address registers which grants 65,536 addresses. There is not enough address space for all registers, ROM, and RAM totaling 67 KiB.
+These chips work alike those the one already studies with pins such as power, ground, addresses, data, control, and of course the crucial \icode{CE}. What is peculiar is that the z80 uses 16-bit address registers which grants 65,536 addresses. There is not enough address space for all registers, ROM, and RAM totaling 67 KiB.
 
 The solution is to map only the portion of the ROM that contain instructions (32KiB) statically and to use a banking system to provide a 16 KiB "view" into the remaining 32KiB of the ROM where the music assets are stored. This is accomplished with a PAL (\icode{SOU1}) it was a royal pain to deal with it.
 
 
-% \begin{trivia}
 Hopefully this awful bank switch control 
-% byte a programmer must juggle with to access data located beyond \icode{0x8000}
  will leave no doubt with regards of the awesomeness of the 68000 and its 24-bit address space. 
-% \end{trivia}
-% CXK5816SP-15L is only 2 KiB RAM
 
 \subsection{z80 Memory Map}
 
@@ -580,7 +565,7 @@ The huge advantage of FM synthesis is the small amount of data required to store
 
 
 
-Looking at the 2151, we see previously discussed pins such as \icode{+5V}, \icode{GND}, and \icode{CS}. The \icode{CLK} is connected to the same oscillator as the Z-80 for a frequency of 3.58MHz. The \icode{D0-D7} address/data pins (multiplexed via \icode{A0}) fit exactly the Z80's 8-bit data bus with read (\icode{RD}) and write (\icode{WR}) control.
+Looking at the 2151, we see previously discussed pins such as \icode{+5V}, \icode{GND}, and \icode{CS}. The \icode{CLK} is connected to the same oscillator as the z80 for a frequency of 3.58MHz. The \icode{D0-D7} address/data pins (multiplexed via \icode{A0}) fit exactly the z80's 8-bit data bus with read (\icode{RD}) and write (\icode{WR}) control.
 
 
 A pin in particular, the \icode{IRQ} which allows the YM2151 to generate interrupt based on internal counters, will be crucial in the latter chapters.
@@ -2118,9 +2103,9 @@ In 1992, Capcom released the CP System Dash (a.k.a CPS-1.5). Fully encased in a 
 }\caption*{Capcom CPS-1.5 based arcades games.}
 \end{figure}
 
-The CPS 1.5 is noteworthy for its improved copy-protection where the audio instructions are stored in encrypted ROM. The audio CPU is a special Z-80 dubbed Kabuki\cite{arcadeHackerKabuki} able to decrypt instructions on the fly.
+The CPS 1.5 is noteworthy for its improved copy-protection where the audio instructions are stored in encrypted ROM. The audio CPU is a special z80 dubbed Kabuki\cite{arcadeHackerKabuki} able to decrypt instructions on the fly.
 
-The encryption scheme is symmetric with the private key being stored in the Z-80. It is not burned in the silicon but, alike the CPS-1 configuration, stored via RAM. To keep that key alive, pin 28 is re-purposed from "DRAM refresh" (the sound system uses SRAM anyway) to providing power via a second "suicide battery". 
+The encryption scheme is symmetric with the private key being stored in the z80. It is not burned in the silicon but, alike the CPS-1 configuration, stored via RAM. To keep that key alive, pin 28 is re-purposed from "DRAM refresh" (the sound system uses SRAM anyway) to providing power via a second "suicide battery". 
 
 
 

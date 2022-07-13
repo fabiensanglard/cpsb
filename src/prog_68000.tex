@@ -135,7 +135,7 @@ Faulty RAM could create issues further down the pipeline. A cabinet would then e
 The technique used is simple but has its limitation. For all byte in each areas of the RAM and GFXRAM, try to write a value, then try to read it back. If they differ, the GFXRAM is faulty and an error message is displayed. 
 
 \begin{trivia}
-No way to checksum the GFXROM or the Sound System. The GFXROM is not mapped and the latch system is one way, making it impossible for the Z-80 to surface problems.
+No way to checksum the GFXROM or the Sound System. The GFXROM is not mapped and the latch system is one way, making it impossible for the z80 to surface problems.
 \end{trivia}
 
 \vfill
@@ -185,7 +185,7 @@ This is now \pageref{this} page in the "Book of CP-System". With each chapter pe
 
 The function \icode{main} is where developers will have their game engine convert player inputs into visual and audio outputs.
 
-The architecture is much alike the Z-80 sound system where two "threads" run in lockstep. Function \icode{VSync} is awakened roughly every 16ms. Its job is to read inputs and save them locally, read latch buffer and write them to the latch, and more importantly, flip the GFXRAM double buffered descriptors. 
+The architecture is much alike the z80 sound system where two "threads" run in lockstep. Function \icode{VSync} is awakened roughly every 16ms. Its job is to read inputs and save them locally, read latch buffer and write them to the latch, and more importantly, flip the GFXRAM double buffered descriptors. 
 
 \begin{trivia}
 The \icode{frameCounter} variable not only allow to pace the main thread so a new frame is only hosted every 16ms instead of rendering as fast as possible, it is also useful too keep track of wall-time to render animation and game logic properly.
@@ -195,7 +195,7 @@ The \icode{frameCounter} variable not only allow to pace the main thread so a ne
 \subsection{Commanding sound}
 By now it will be abundantly clear that requesting a sound or a music playback is only about writing to a latch and forget about it. 
 
-Special care has to occur if the engine may request multiple sound during a same frame. If this were to happen the value in the latch could be overwritten before the Z-80 picked it up.
+Special care has to occur if the engine may request multiple sound during a same frame. If this were to happen the value in the latch could be overwritten before the z80 picked it up.
 
 The solution is to implement a system of queue where only one value is requested by frame.
 

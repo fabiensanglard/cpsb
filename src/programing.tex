@@ -15,13 +15,13 @@ The pipeline we will describe ingests the code (\icode{.s}/\icode{.c}) written b
 \end{figure}
 
 \pagebreak
-Some dependencies in the graph make a lot of sense. The Z-80 source code (\icode{.c} and \icode{.s}) only impacts the Z-80 ROM. Likewise, the 68000 code (also \icode{.c} and \icode{.s}) ends up in the 68000 ROM.
+Some dependencies in the graph make a lot of sense. The z80 source code (\icode{.c} and \icode{.s}) only impacts the z80 ROM. Likewise, the 68000 code (also \icode{.c} and \icode{.s}) ends up in the 68000 ROM.
 
 Other dependencies are more convoluted. The \icode{.wav} sample files for example need to be compressed to ADPCM before being added to the OKI ROM. To be referencable at runtime, each sample is given an integer ID. These IDs must be collected into a \icode{.h} header file. That file must be compiled along with the rest of the 68000 code.
 
 Likewise, the \icode{.png} files are transformed before making their way to the GFX ROM. They also require to generate a \icode{.h} header file, this time containing tileID. Additionally, a \icode{.c} file containing each tile palette is generated in order to be compiled into the 68000 ROM. 
 
-An even more complicated graph emerge from the music \icode{.vmg} files. The music track contains YM2151 commands that must be transformed in bytecode, stored in a \icode{.c} file, and compiled along with the Z-80 code. To be referenced, a header file containing music ID must also be generated and compiled with the 68000 ROM. Lastly, music are embellished with audio samples which must also be compressed to ADPCM and added to the OKI ROM.
+An even more complicated graph emerge from the music \icode{.vmg} files. The music track contains YM2151 commands that must be transformed in bytecode, stored in a \icode{.c} file, and compiled along with the z80 code. To be referenced, a header file containing music ID must also be generated and compiled with the 68000 ROM. Lastly, music are embellished with audio samples which must also be compressed to ADPCM and added to the OKI ROM.
 
 To complicate things even further, each of the four ROM mentioned must use different word size and interleaving across chips containing it.
 
@@ -92,9 +92,9 @@ That is eight communication lines, but the dotted one on the drawing are not pro
 
 \subsection{M68000-CPSA, M68000-CPSB} Communication occurs over the CPS-A and CPS-B registers. Additionally draw commands are written by the 68000 to the GFXRAM where they are read by the CPS-A. All accesses to GFXRAM are arbitrated by the 68000 bus protocol.
 
-\subsection{z80-YM2151} Communication occurs over the YM2151 registers which are mapped on the z80 bus. These accesses are arbitrated by the Z-80 bus protocol.
+\subsection{z80-YM2151} Communication occurs over the YM2151 registers which are mapped on the z80 bus. These accesses are arbitrated by the z80 bus protocol.
 
-\subsection{z80-MSM6295} Communication  occurs over the MSM6295 registers which are mapped on the z80 bus. These accesses are arbitrated by the Z-80 bus protocol. 
+\subsection{z80-MSM6295} Communication  occurs over the MSM6295 registers which are mapped on the z80 bus. These accesses are arbitrated by the z80 bus protocol. 
 
 \subsection{M68000-z80} Communication between these two CPUs is not trivial. They both have their own bus protocol, run at different speed, have different address space, and data width.
 

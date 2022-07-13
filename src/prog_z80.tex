@@ -1,14 +1,14 @@
 \chapter{Sound System}
 Making ROMs for the sound system is a little bit more complicated than for the GFX system. 
 
-Not only samples and music assets are processed, there is also a need to compile code to bootstrap and then run the Z-80. This program is commonly called a "Sound Driver".
+Not only samples and music assets are processed, there is also a need to compile code to bootstrap and then run the z80. This program is commonly called a "Sound Driver".
 
 \begin{figure}[H]
 \sdraw{1.0}{sound_arch}
 \caption*{The Sound System components}
 \end{figure}
 
-The assets and the driver must be packed into two ROMS set, one called "Z-80 ROM" and another called "OKI ROM". This asymmetry where three system result in two ROM is further complicated by the dependency graph that looks like a plate of spaghetti. 
+The assets and the driver must be packed into two ROMS set, one called "z80 ROM" and another called "OKI ROM". This asymmetry where three system result in two ROM is further complicated by the dependency graph that looks like a plate of spaghetti. 
 
 The difficult part is that both the sound effects and the music contribute to the OKI ROM content which must be populated in two steps.
 
@@ -134,7 +134,7 @@ The build system can take care of compressing the PCM via ADPCM and resample fro
 
 
 
-\section{Programming the Z-80}
+\section{Programming the z80}
 Programming Zilog's CPU into a sound driver involves doing two things right, bootstrapping and behaving according to the memory map. Solving the memory map is the easier. To avoid page turning, the requirements are reproduced here.
 
 \begin{figure}[H]
@@ -157,7 +157,7 @@ Programming Zilog's CPU into a sound driver involves doing two things right, boo
   \texttt{0xF00A} & \texttt{0xF00A} & 1 B& Sound commands (latch 2)\\
   \toprule    
 \end{tabularx}%
-}\caption*{Z-80 memory map.}
+}\caption*{z80 memory map.}
 \end{figure}
 
 
@@ -176,11 +176,11 @@ Trivia: Debugging a CPS-1 program can be a tedious task. A good starting point w
 \end{trivia}
 
 \subsection{Bootstrapping}
-A Z-80 starts fetching and executing instructions from \icode{0x0000} so the bootstrap code \icode{crt0.s} is placed there via \icode{.org 0}.
+A z80 starts fetching and executing instructions from \icode{0x0000} so the bootstrap code \icode{crt0.s} is placed there via \icode{.org 0}.
 
-The code immediately jumps to \icode{0x100} in order to skip the interrupt handler. The Z-80 can work in interrupt modes 0, 1, or 2. Modes 0 and 2 are the most powerful and complex. They imply retrieving the id of the interrupting peripheral by reading a byte on the data bus. This mechanism allows support of multi-devices interruption. However in this case, it is overkill. The z80 uses Mode 1 and jumps to \icode{0x38} when interrupted.
+The code immediately jumps to \icode{0x100} in order to skip the interrupt handler. The z80 can work in interrupt modes 0, 1, or 2. Modes 0 and 2 are the most powerful and complex. They imply retrieving the id of the interrupting peripheral by reading a byte on the data bus. This mechanism allows support of multi-devices interruption. However in this case, it is overkill. The z80 uses Mode 1 and jumps to \icode{0x38} when interrupted.
 
-At \icode{0x100}, the stack pointer \icode{sp} is set to point at the end of \icode{RAM} (the Z-80 stack grows downward), the first interrupt is requested and a mystery \icode{gsinit} function is called.
+At \icode{0x100}, the stack pointer \icode{sp} is set to point at the end of \icode{RAM} (the z80 stack grows downward), the first interrupt is requested and a mystery \icode{gsinit} function is called.
 
 All the code in \icode{crt0.s} account for a few bytes, that is why the linker script placed \icode{\_CODE} at \icode{0x200}.
 
@@ -195,12 +195,12 @@ In \icode{crt0.s} below, notice how C functions are prefixed with \icode{\_}.
 
 
 
-\subsection{Z-80 interrupt}
-In order to interact with the latches properly but also to be able to keep track of wall-time, the Z-80 needs to be interrupted regularly. Zilog's CPU does features a timer RFSH but it is intended for DRAM refresh (which the sound system does not feature anyway).
+\subsection{z80 interrupt}
+In order to interact with the latches properly but also to be able to keep track of wall-time, the z80 needs to be interrupted regularly. Zilog's CPU does features a timer RFSH but it is intended for DRAM refresh (which the sound system does not feature anyway).
 
 There are two timers in the YM2151. Timer A is a 10-bit counter while Timer B is an 8-bit counter. For a YM2151 at 3,579Hz, the trigger formula is 64 * (1024 - value) / 3579.
 
-Setting the Timer A to \icode{800} will result in an interrupt 64 * (1024 - 800) / 3579 = 4ms later. When the YM2151 counter reaches zero, it asserts a line connected to the Z-80 INT line which makes the CPU jumps to address \icode{0x38}.
+Setting the Timer A to \icode{800} will result in an interrupt 64 * (1024 - 800) / 3579 = 4ms later. When the YM2151 counter reaches zero, it asserts a line connected to the z80 INT line which makes the CPU jumps to address \icode{0x38}.
 
 \lstinputlisting[style=CStyle]{src/code/z80/interrupts.c}
 
@@ -223,7 +223,7 @@ Copying is done with \icode{ldir} instruction using the linker macros, \icode{s\
 % No initialization of BSS
 
 
-\subsection{Z-80 Sound Driver}
+\subsection{z80 Sound Driver}
 A scheme using a stream may yield more power to the sound driver but for the safe of readability a simpler approach is used here.
 
 
@@ -240,7 +240,6 @@ The interrupt allows the main loop to tick once which does one of three things. 
 
 
 \section{Back then...}\index{Back Then!SFX/Musics}
-% If nothing ever transpired about the work done on the Z-80, some of the member of "Capcom Sound Team" gave interviews. Their testimony give us a glimpse into how sounds was made.
 In the mid-80s, Capcom recognized the crucial importance of sound for a video-game and set to hire the very best musician they could find.
 
 By 1989, they had assembled a pool of talent who called themselves the "Capcom Sound Team".
