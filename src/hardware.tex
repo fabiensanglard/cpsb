@@ -513,10 +513,10 @@ Hopefully this awful bank switch control
 Selecting the music chip was not a matter of shopping vendors but rather to pick one from Yamaha. Thanks to the licensing of Frequency Modulation (FM) patents from Stanford in 1975, the Japanese founder ruled the world of electronic music.
 
 \begin{trivia}
-Most profitable Stanford patent is not Google but Yamaha FM.
+Yamaha licensed FM technology from Stanford starting in 1975 at the cost of \$10/keyboard. Licensing was renegotiated in 1985 on a per-chips basis\cite{fm_licensing}.
 
 \end{trivia}
-Three architectures stood out in the early 90s. Among the OPL2 3812 and the OPN2 2612, the OPM (OPerator type M) 2151 was selected for its versatility. 
+Three architectures stood out in the early 90s. Among the OPL2 3812 and the OPN2 2612, the OPM (\textbf{OP}erator type \textbf{M}) 2151 was selected for its versatility. 
 
 
 
@@ -543,29 +543,31 @@ The principle of Frequency Modulation is to use simple wave forms to modulate ea
 
 
 
-The YM2151 is able to play 8 channels (a.k.a voices) of audio. Each channel consists of four operators (a.k.a slots) which can be setup to produce either percussion or instruments sounds. 
+The YM2151 is able to play 8 channels (a.k.a voices) of audio. Each channel consists of four operators (a.k.a slots) which can be setup to produce either percussion or instruments sounds.  
 
-Signal form is not made of sinwaves but four types of wave forms.
+Slots are even able to modulate their own output. With proper adjustments virtually any wave form can be obtained. 
  
+\begin{figure}[H]
 \nbdraw{waveforms}
+\caption*{Some of the wave forms the YM2151 can generate}
+\end{figure}
 
 
-
-Other parameters can be applied to the output such as Attack, Decay , Sustain, or Release Rate. 
+Other parameters can be applied to a channel's output. The "envelop" features adjustable Attack, Decay , Sustain, and Release Rate. 
 
 \nbdraw{adsr}
 
-The huge advantage of FM synthesis is the small amount of data required to store a melody. After the instruments Since only the notes of each instruments and their tempo to be recorded. Yamaha's technology is so efficient that the whole Sagat stage music (2mn6s, 10KiB) use fewer bytes than one "Tiger Uppercut"'s ADPCM sample (777ms, 12KiB).
+The huge advantage of FM synthesis is the small amount of data required to store a melody. After the instruments are defined, only the notes of each instruments and their tempo need to be recorded. Yamaha's technology is so efficient that, in Street Fighter 2, the whole Sagat main stage music (2mn6s, 10KiB) use fewer bytes than one "Tiger Uppercut"'s ADPCM sample (777ms, 12KiB).
 
 
 
 
-Looking at the 2151, we see previously discussed pins such as \icode{+5V}, \icode{GND}, and \icode{CS}. The \icode{CLK} is connected to the same oscillator as the z80 for a frequency of 3.58MHz. The \icode{D0-D7} address/data pins (multiplexed via \icode{A0}) fit exactly the z80's 8-bit data bus with read (\icode{RD}) and write (\icode{WR}) control.
+Looking at the YM2151, we see previously discussed pins such as \icode{+5V}, \icode{GND}, and \icode{CS}. The \icode{CLK} is connected to the same oscillator as the z80 for a frequency of 3.58MHz. The \icode{D0-D7} address/data pins (multiplexed via \icode{A0}) fit exactly the z80's 8-bit data bus with read (\icode{RD}) and write (\icode{WR}) control.
 
 
-A pin in particular, the \icode{IRQ} which allows the YM2151 to generate interrupt based on internal counters, will be crucial in the latter chapters.
+A pin is of particular interest to us. \icode{IRQ} allows the YM2151 to generate interrupts based on two internal counters, It is detailed in the programming section.
 
-\sdraw{0.5}{YM2151}
+\sdraw{0.48}{YM2151}
 
 The only drawback of this chip is that is features no DAC (Digital to Analog Converter). It generates a signal on the Serial Output (\icode{SO}). 
 
@@ -573,7 +575,7 @@ The only drawback of this chip is that is features no DAC (Digital to Analog Con
 
 The YM3012 is a DAC connected to the YM2151 digital output \icode{SO}. The analog signal it outputs on \icode{CH1} and \icode{CH2} is mixed with the signal from the OKI6295 towards JAMMA.
 
-\sdraw{1}{YM3012}
+\sdraw{0.95}{YM3012}
 
 
 \subsection{MSM6295}\index{Processors!OKI MSM6295}
