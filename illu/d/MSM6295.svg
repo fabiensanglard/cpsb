@@ -27,13 +27,13 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:zoom="1.171764"
-     inkscape:cx="-46.937779"
-     inkscape:cy="145.08041"
-     inkscape:window-width="1920"
-     inkscape:window-height="1010"
-     inkscape:window-x="-6"
-     inkscape:window-y="-6"
+     inkscape:zoom="18.912682"
+     inkscape:cx="195.45086"
+     inkscape:cy="352.19753"
+     inkscape:window-width="3840"
+     inkscape:window-height="2036"
+     inkscape:window-x="-12"
+     inkscape:window-y="-12"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1" />
   <defs
@@ -764,97 +764,94 @@
        x="636.90289"
        y="-24.450356"
        transform="matrix(0.26458333,0,0,0.26458333,110.07448,185.63754)">11</text>
-    <g
-       id="g253336">
-      <text
-         font-family="'LetterGothicStd-Bold'"
-         font-size="3.70417px"
-         id="textdp01-3-44"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
-         x="-181.49182"
-         y="212.02925"
-         transform="rotate(-90)">VSS</text>
-      <text
-         font-family="'LetterGothicStd-Bold'"
-         font-size="3.70417px"
-         id="textdp01-3-4-1"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
-         x="-181.50449"
-         y="218.97978"
-         transform="rotate(-90)">RD</text>
-      <text
-         font-family="'LetterGothicStd-Bold'"
-         font-size="3.70417px"
-         id="textdp01-3-2-31"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
-         x="-181.50449"
-         y="225.89417"
-         transform="rotate(-90)">WD</text>
-      <text
-         font-family="'LetterGothicStd-Bold'"
-         font-size="3.70417px"
-         id="textdp01-3-7-7"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
-         x="-181.49182"
-         y="232.84471"
-         transform="rotate(-90)">CS</text>
-      <text
-         font-family="'LetterGothicStd-Bold'"
-         font-size="3.70417px"
-         id="textdp01-3-4-2-0"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
-         x="-181.54066"
-         y="246.70963"
-         transform="rotate(-90)">CLK</text>
-      <text
-         font-family="'LetterGothicStd-Bold'"
-         font-size="3.70417px"
-         id="textdp01-3-4-2-0-9"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
-         x="-181.54066"
-         y="239.79524"
-         transform="rotate(-90)">CLK</text>
-      <text
-         font-family="'LetterGothicStd-Bold'"
-         font-size="3.70417px"
-         id="textdp01-3-2-8-1"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
-         x="-181.49182"
-         y="253.66017"
-         transform="rotate(-90)">SS</text>
-      <text
-         font-family="'LetterGothicStd-Bold'"
-         font-size="3.70417px"
-         id="textdp01-3-4-9-3-4"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
-         x="-181.41766"
-         y="267.63541"
-         transform="rotate(-90)">D0</text>
-      <text
-         font-family="'LetterGothicStd-Bold'"
-         font-size="3.70417px"
-         id="textdp01-3-23-1"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
-         x="-181.54066"
-         y="260.64688"
-         transform="rotate(-90)">RST</text>
-      <text
-         font-family="'LetterGothicStd-Bold'"
-         font-size="3.70417px"
-         id="textdp01-3-4-6-4"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
-         x="-180.84975"
-         y="274.58597"
-         transform="rotate(-90)">D1</text>
-      <text
-         font-family="'LetterGothicStd-Bold'"
-         font-size="3.70417px"
-         id="textdp01-3-2-3-2"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
-         x="-181.37968"
-         y="281.5365"
-         transform="rotate(-90)">D2</text>
-    </g>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.70417px"
+       id="textdp01-3-44"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
+       x="-181.49182"
+       y="212.02925"
+       transform="rotate(-90)">VSS</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.70417px"
+       id="textdp01-3-4-1"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
+       x="-181.50449"
+       y="218.97978"
+       transform="rotate(-90)">RD</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.70417px"
+       id="textdp01-3-2-31"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
+       x="-181.50449"
+       y="225.89417"
+       transform="rotate(-90)">WD</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.70417px"
+       id="textdp01-3-7-7"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
+       x="-181.49182"
+       y="232.84471"
+       transform="rotate(-90)">CS</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.70417px"
+       id="textdp01-3-4-2-0"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
+       x="-181.54066"
+       y="247.23878"
+       transform="rotate(-90)">CLK</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.70417px"
+       id="textdp01-3-4-2-0-9"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
+       x="-181.54066"
+       y="239.79524"
+       transform="rotate(-90)">CLK</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.70417px"
+       id="textdp01-3-2-8-1"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
+       x="-181.49182"
+       y="253.66017"
+       transform="rotate(-90)">SS</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.70417px"
+       id="textdp01-3-4-9-3-4"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
+       x="-181.41766"
+       y="267.63541"
+       transform="rotate(-90)">D0</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.70417px"
+       id="textdp01-3-23-1"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
+       x="-181.54066"
+       y="260.64688"
+       transform="rotate(-90)">RST</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.70417px"
+       id="textdp01-3-4-6-4"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
+       x="-180.84975"
+       y="274.58597"
+       transform="rotate(-90)">D1</text>
+    <text
+       font-family="'LetterGothicStd-Bold'"
+       font-size="3.70417px"
+       id="textdp01-3-2-3-2"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';text-align:end;text-anchor:end;stroke-width:0.264583"
+       x="-181.37968"
+       y="281.5365"
+       transform="rotate(-90)">D2</text>
     <text
        font-family="'LetterGothicStd-Bold'"
        font-size="3.175px"
@@ -998,5 +995,9 @@
          cy="164.21156"
          r="3.8601952" />
     </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 243.83483,181.62332 v 6.29538"
+       id="path1105" />
   </g>
 </svg>

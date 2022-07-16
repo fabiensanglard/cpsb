@@ -380,7 +380,7 @@ Thanks to the PAL chips enabling/disabling components, the 68000 memory space is
   \toprule    
   \texttt{0x000000} & \texttt{0x3FFFFF} & 3 MiB & ROM \\
   \toprule    
-  \texttt{0x800000} & \texttt{0x800007} & 8 B & JAMMA players inputs \\
+  \texttt{0x800000} & \texttt{0x800007} & 8 B & JAMMA Players inputs \\
   \texttt{0x800018} & \texttt{0x80001F} & 8 B & JAMMA Dip Switches \\
   \texttt{0x800030} & \texttt{0x800037} & 8 B & JAMMA Coin sensors \\
   \texttt{0x800176} & \texttt{0x800177} & 1 B & Kick harness \\
@@ -448,7 +448,7 @@ The number of pin lines on a chip dictate their packaging names. DIP (Dual In-li
 
 \sdraw{0.9}{z-80}\index{Processors!Zilog 80}
 
-The z80 comes to life thanks to its clock (\icode{CLK}), power \icode{+V5}, and ground \icode{GND} pins.
+The z80 comes to life thanks to its \icode{CLK} (clock ), \icode{+V5} (power), and \icode{GND} (ground) pins.
 
 The bus lines are dedicated \icode{D0-D15} for addresses and \icode{A0-A7} for data. For control, \icode{RD} indicates read while \icode{WR} indicates a write operation. \icode{WAIT} is used to add waitstates. 
 
@@ -583,15 +583,15 @@ The YM3012 is a DAC connected to the YM2151 digital output \icode{SO}. The analo
 For audio sample playback, Capcom spared no expenses and selected a chip capable of 4-bit ADPCM audio decompression over four channels, the MSM6295 (a.k.a OKI). 
 % capable chips by the past with the MSM5205 by OKI Semiconductor. For the CPS-1  they went with a steroids version,
 
-Despite running at only 1MHz the MSM6295 is a god sent to a game board designer. It does not need instructions since its function is fully hard-coded. Its address (\icode{A0-A15}) and data (\icode{D0-D7}) lines are directly connected to its own 256 KiB ROM, on a local bus where assets are stored. 
+Despite running at only 1MHz the MSM6295 is a god sent to a game board designer. It does not need instructions since its function is fully hard-coded. Its address (\icode{A0-A15}) and data (\icode{D0-D7}) lines are directly connected to its own 256 KiB ROM, on a local bus where assets are stored which avoid contention with the z80 bus. 
 
 These make it a fully enclosed digitized sound system only communicated via its input lines (\icode{I0-I7}), a perfect match for the z80 data bus, from which it receives commands.
 
-To get to work, the OKI only needs to receive a sample ID [1-127], a channel [1-4], and a volume. Via a lookup table in ROM the sample offset is retrieved and playback starts with an analog signal generated on \icode{DA0}. 
+To get to work, the OKI only needs to receive a sample ID [1-127], a channel [1-4], and a volume [0-127]. Via a lookup table in its ROM the sample offset is retrieved and playback starts with an analog signal generated on \icode{DA0}. 
 
 \sdraw{0.75}{MSM6295}
 
-Up to four channels can be active simultaneously. Since games don't need that many sound effects simultaneously, two channels are reserved for sample while two are dedicated to embellishing musics.
+Up to four channels can be active simultaneously. Since games don't need that many sound effects simultaneously, two channels are usually reserved for sample while two are dedicated to embellishing musics.
 
 ADPCM lossy compression is able to divides space consumption by three by converting 12-bit PCM samples into 4-bit nibbles. 
 
@@ -599,7 +599,7 @@ ADPCM lossy compression is able to divides space consumption by three by convert
 \subsubsection{Making choices}
 If the choice of the Yamaha music chips left little ambiguity to the hardware designer, the MSM6295 was a different story.
 
-First off all, the sampling rate expected in ROM is directly correlated to the clock rate of the MSM6295. Second of all, the OKI can operate in two modes, a high quality (H) where the divisor is 132, and a low quality (L) where the divisor is 165.
+First off all, the sampling rate expected in ROM is directly correlated to the clock rate of the MSM6295. Second of all, the OKI can operate in two modes via its \icode{SS} pin. In high quality (H), the divisor is 132 and in low quality (L) the divisor is 165.
 
 Clockable between [1MHz-5MHz] with two modes, the goals was to maximize quality while minimizing required storage. The table shows that the best quality (37kHz) only allowed to store 13 seconds of samples while the worse (6060Hz) gave 86 seconds.
 \begin{figure}[H]
@@ -630,7 +630,7 @@ In the end, Capcom connected the OKI to the GFX crystal (16MHz) and divided freq
 
 \subsection{PCM 101}
 \index{ADPCM!Decompression}
-Both input and output of ADPCM are PCM streams. To deepen the understanding of the MSM6295 means to study \textbf{P}ulse-\textbf{C}ode \textbf{M}odulation to the deep down.
+The MSM6295 input and output are respectively ADPCM and PCM streams. To deepen the understanding of the chip means to extensively study how \textbf{P}ulse-\textbf{C}ode \textbf{M}odulation works.
 
 Whether it is recorded or played, PCM is a series of value directly representing the position of a device diaphragm. In the case of recording the diagram is in a microphone, whereas upon playing, it is in a loud speaker.
 
