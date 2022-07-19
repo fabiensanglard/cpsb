@@ -635,22 +635,23 @@ The MSM6295 input and output are respectively ADPCM and PCM streams. To deepen t
 Whether it is recorded or played, PCM is a series of value directly representing the position of a device diaphragm. In the case of recording the diagram is in a microphone, whereas upon playing, it is in a loud speaker.
 
 \pagebreak
-% Two parameters impact the fidelity of the signal capture/reproduction. 
 
 \begin{figure}[H]
 \nbdraw{speaker}
-\caption*{Speaker / Mic}
+\caption*{A speaker cone moves via a coil interacting with a magnet.}
 \end{figure}
 
 
-The sampling rate (on the X axis) and the bit depth (on the Y axis) are the two parameters impacting the fidelity of the signal capture/reproduction.
-
-The higher the sampling rate, the more often the diaphragm position can be adjusted. The higher the bit depth, the more accurately the diaphragm position can be set. Stereo is achieved by interleaving two PCM streams.
+The sampling rate and the bit depth are the two parameters impacting the fidelity of the signal capture/restitution.
 
 \begin{figure}[H]
 \nbdraw{pcm}
 \caption*{PCM values (samples) over time}
 \end{figure}
+
+
+The higher the sampling rate (on the X axis) , the more often the diaphragm position can be adjusted. The higher the bit depth (on the Y axis) , the more accurately the diaphragm position can be set. Stereo is achieved by interleaving two PCM streams.
+
 
 
 
@@ -661,9 +662,7 @@ Sound quality increases linearly with the data rate.
 \item CDs uses 44,100Hz/16-bit stereo using to 176,400 Byte per Second.
 \end{itemize}
 
-% \begin{trivia}
-% The irony that both examples of land-line and CD are now as obsolete as the CP-System is not lost on the author.
-% \end{trivia}
+
 
 \subsection{ADPCM compression}
 ADPCM is able to take 12-bit PCM sample and compress then as 4-bit samples by encoding only the difference between PCM samples. Decompressing an ADPCM stream consist in adding a delta value to the last decompressed  sample, over and over again.
@@ -685,7 +684,8 @@ The decompressor constantly monitor how much of the step size was used. The step
 \lstinputlisting[style=CStyle]{src/code/adpcm_transition.c}
 
 
-ADPCM is aggressive in increasing its step size (\icode{2, 4, 6, 8}) when high magnitude are used) and conservative in decreasing it (\icode{-1, -1, -1, -1}).
+
+The transition table dictates how to adjust the step size index. ADPCM is aggressive in increasing the index for magnitude values ranging from 4 to 7 where it is bumped between \icode{2} and \icode{8}. Meanwhile it is conservative in decreasing it for small magnitude values ranging from 0 to 3 where it is always modified in \icode{-1} decrements.
 
 
 

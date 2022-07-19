@@ -30,13 +30,13 @@
      inkscape:snap-global="false"
      inkscape:zoom="1.8293265"
      inkscape:cx="568.78857"
-     inkscape:cy="76.530898"
+     inkscape:cy="163.99478"
      inkscape:window-width="2560"
      inkscape:window-height="1382"
      inkscape:window-x="26"
      inkscape:window-y="23"
      inkscape:window-maximized="0"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="g8014" />
   <defs
      id="defs2" />
   <g
@@ -266,14 +266,14 @@
       <text
          xml:space="preserve"
          style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-         x="193.32805"
+         x="194.81116"
          y="137.91183"
          id="text2390-4"><tspan
            sodipodi:role="line"
            id="tspan2388-3"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Roboto;-inkscape-font-specification:Roboto;stroke-width:0.264583"
-           x="193.32805"
-           y="137.91183">Z-80</tspan></text>
+           x="194.81116"
+           y="137.91183">Z80</tspan></text>
     </g>
   </g>
 </svg>
