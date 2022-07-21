@@ -677,7 +677,7 @@ The first bit in a nibble indicates the sign of the delta (+/-). The three other
 \end{figure}
 
 
-In its initial state, the step size is equal to 16 which means bit three is +/-16, bit two +/-8 and bit one +/-4. In this state, the delta to be applied can vary from 0 (\icode{b000}) to 28 (\icode{b111}). 
+In its initial state, the step size is 16 which means bit three is +/-16, bit two +/-8 and bit one +/-4. In this state, the delta to be applied can vary from 0 (\icode{b000}) to 28 (\icode{b111}). 
 
 The decompressor constantly monitors how much of the step size was used. The step size is adjusted after each sample via a  predetermined transition table indexed via the magnitude value. 
 
@@ -723,13 +723,6 @@ At its core, a CRT is a line drawing machine. It draws horizontal lines one afte
 
 On the way toward the panel, electrons are filtered through a shadow mask to make sure they hit the proper type of colored phosphor receptacles which are grouped by three in RGB "slots". The electron beam-slot is not a one to one relationship. The beam can be larger or smaller than a slot.
 
-% \begin{trivia}
-% Triads in CRT, Slots in TV.
-
-% Also mention Sony Positron.
-
-% \end{trivia}
-
 
 \begin{figure}[H]
 \draw{shadow_mask}
@@ -756,25 +749,24 @@ Smaller slots can render the horizontal analog signals with better fidelity.
 
 
 \subsection{Syncing}
-The lines are drawn one after an other via the RGB signals but to display a proper image there is a need for a control signal so the CRT can synchronize and know which line is at the top of the screen and when a line starts. Without it, the image would be distorted. 
-
+The RGB signals describe lines to be drawn but to render an image properly the CRT needs to know where to draw them. The control signal allows the CRT to synchronize the cannon orientation with the lines color signal so they are rasterized where they should. Without syncing, the image appears distorted. 
 
 \begin{figure}[H]
 \simg{0.9}{desync.jpg}
-\caption*{A desynced display. Lines are correct but not located where they should be.}
+\caption*{A desynced CRT. Lines are correct but not located where they should be.}
 \end{figure}
 
 
 
 
 
-The horizontal syncing is done via HSYNC signal and the vertical syncing is done via VSYNC signal. These signals are detected by the CRT to position the gun properly with regards to the origins sets in the upper left.
+The horizontal syncing is done via a HSYNC signal and the vertical syncing is done via a VSYNC signal. These signals are detected by the CRT to position the gun properly with regards to the origins sets in the upper left.
 
-VSYNC tells the CRT that it should reset the gun's vertical position to 0 which is the top of the screen. This motion from bottom to top is called vertical retrace. During the retrace the gun keeps on shooting electrons but, as we will see later, is requested to use color black (no electrons). This "blanking" of the RGB lines happens a little bit before and after VSYNC. The total time not drawing anything is called VBLANK.
+VSYNC tells the CRT that it should reset the gun's vertical position to 0 at the top of the screen. This motion from bottom to top is called vertical retrace. During the retrace the gun must stop shooting electrons. This is achieved by requesting a black color on the RGB signal. This "blanking" of the RGB lines happens a little bit before and after VSYNC. The total time not drawing anything is called VBLANK.
 
 HSYNC tells the CRT that a line has been drawn and the gun horizontal position should be reset to the left of the screen. This motion is called horizontal retrace. Alike the VBLANK, there is a HBLANK timespan.
 
-By detecting VSYNC and HSYNC, the CRT can "synchronize" the signal with the guns and draw the image where it belongs.
+By detecting VSYNC and HSYNC, the CRT can "synchronize" the signal with the guns and draw the line at the right location on screen.
 
 
 
@@ -791,11 +783,11 @@ It is barely noticeable but scanlines are not drawn straight. There is a slight 
 
 As long as VSYNC is issued at the same time as a HSYNC, the CRT lines are always on the same location on the screen.
 
-Let's look at what happen if VSYNC \circled{3} happens in the middle of the last line being draw (between HSYNC \circled{2} and \circled{4}).
+In then next drawing, see what happen if VSYNC \circled{3} is issued in the middle of the last line being draw (between HSYNC \circled{2} and \circled{4}).
 
 \nbdraw{i_scan}
 
-Because only half a line was drawn at the bottom, it only progressed down half a space vertically. As a result, the next frame will be interlaced with the previous. This is a technique used by TV broadcast such as NTSC in USA and Japan. A signal transmit frames at 30Hz, each contains two "fields" to be drawn interlaced one after an others.
+Because only half a line was drawn at the bottom, it only progressed down half a space vertically. As a result, the next frame will be interlaced with the previous. This is a technique used by TV broadcast such as NTSC in USA and Japan. A signal transmit frames at 30Hz, each contains two "fields" to be drawn interlaced at 60Hz.
 
 While interlacing is acceptable for TV images, it is not for gaming since the artifacts are disturbingly visible on moving text and sprites. 
 
@@ -803,11 +795,15 @@ The solution to this problem is to only use one field and never display anything
 
 Since this space is not used for another field, the resulting effect is black horizontal strips on the screen. Note that the problem is compensated by line bleeding so the black lines are not as big as visible lines.
 
+\begin{figure}[H]
 \img{sf2_4_3_interlaced.png}
+\caption*{Non-interlaced scanning show a black space between lines.}
+\end{figure}
 
-HSYNC, VSYNC, and color signals don't seem like a lot but they allow hardware designers a great deal of freedom. 
 
-Besides interlacing which had to be avoided, there are also decisions to make about how many lines to draw, how much horizontal resolution to use, and at what frequency should the screen be refreshed.
+% HSYNC, VSYNC, and color signals don't seem like a lot but they allow hardware designers a great deal of freedom and mandate tuning decisions. 
+
+Besides interlacing which had to be avoided, many other key decisions must be made by the hardware engineers. Namely, how many lines to draw, how much horizontal resolution to use, and at what frequency should the screen be full redrawn (a.k.a: "refreshed").
 
 
 
@@ -821,29 +817,29 @@ Besides interlacing which had to be avoided, there are also decisions to make ab
 
 
 \subsubsection{Vertical scan rate}
-Because these CRTs were made to display NTSC signals, they were guaranteed to sync with VSYNC in the vicinity of 60Hz. Combining this figure with the horizontal scan rate gave 15,720 / 60 = 262 lines per image.
+Because these CRTs were made to display NTSC signals, they were guaranteed to sync with VSYNC in the vicinity of 60Hz. Combining this figure with the horizontal scan rate gives 15,720 / 60 = 262 lines per image.
 
 
 \subsubsection{Picking a vertical resolution}
-Out of these 262 lines, not all of them can be used. The issue is that when the VSYNC is emitted, the electron gun resets vertically in a nearly instantaneous fashion. As a result, the electron beam wobbles for a bit afterward which results in visible artifacts. To avoid visual disturbance, the trick is to simply draw black on these disturbed lines. 
+Out of these 262 lines, not all of them can be used. The issue is that when VSYNC is emitted, the electron gun resets vertically in a nearly instantaneous fashion. This causes the electron beam wobbles for a bit afterward which results in visible artifacts. To avoid visual disturbance, the electron beam is stopped by requesting black on the color wires until the stream stabilize. 
 
-Besides mechanical issues, hardware designers had to account for various CRT quality. Some screen drew lines outside of their visible bounds, a phenomenon known as over-scan. To solve this problem, the number of lines for colors had to further be reduced to ensure a "safe area" would always been drawn regardless of the CRT overscan properties.
+Besides mechanical issues, varying quality of CRT have to be accounted for. Some screen drew lines outside of their visible bounds, a phenomenon known as over-scan. To solve this problem, the number of lines for colors had to further be reduced to ensure a "safe area" would always been drawn regardless of the CRT overscan properties.
 
 % Considering these two constraints, Capcom settled on discarding 38 lines, keeping 224 active lines
 
 
 \subsubsection{Picking an horizontal resolution}
-Similar constraints came into consideration when choosing an horizontal resolution. Like VSYNC, HSYNC induces wobbling which must be hidden, reducing the length of a line. Similarly, horizontal overscan had to be factored in.
+Similar constraints come into consideration when choosing an horizontal resolution. Alike VSYNC, HSYNC induces wobbling which must be hidden which reduces the length of a line. Similarly, horizontal overscan must be factored in.
 
-Moreover, even though the color signal is analog, there is still a maximum limit due to bandwidth. CRTs of the era usually were able to keep up with 512 color changes per line.
+Moreover, even though the color signal is analog, there is still a maximum limit due to bandwidth limitation. CRTs of the era were able to keep up with a maximum of 512 color changes per line.
 
-Finally there was a question of aspect ratio. Since the vertical number of line had been chosen by this point, the horizontal number of points had to be picked to ideally match the 4:3 aspect ratio of the monitor.
+Ideally, the proportion of horizontal points versus the number of lines would result in an aspect-ratio of 4:3 perfectly matching the CRT dimensions. In this case, there would be no distortion when the signal is rendered on the physical screen. A condition called "square-pixels". 
 
 
 \subsubsection{Making choices...}
 Besides the vertical and horizontal "rules", Capcom engineers had additional constraints.
 
-First of all, because the GFX system is digital, they had to pick dimension that could be represented as integer. There was also the graphic system which required both axis to be multiple of 8 (for the tilemaps we will study in the next section).
+First of all, because the GFX system is digital, they had to pick dimension that could be represented as integer. There was also condition dictated by the graphic system which required both axis to be multiple of 8 (for the tilemaps we will study in the next section).
 
 To check all the boxes, Capcom had the choice between only two resolutions, 288x216 and 320x240. Ultimately they picked neither. They gave 38 lines to VBLANK and kept 224 active lines\cite{petitCRT}. Horizontally, they left 128 elements to HBLANK and kept 384 active ones.  
 
@@ -854,7 +850,7 @@ Going for 384x224 was an interesting decision from an aspect-ratio standing poin
 % \begin{trivia}12:7 is to closed to 16:9 that, years later, people new to emulation actually wondered if Capcom actually intended games to be played in 16:9 instead of 4:3!
 % \end{trivia}
 
-The result was that the CPS-1 did not have square pixels. This was a huge problem for artists. If they digitized their drawing as is, the CRT would present to players a rendition non-conforming to the original.
+The result is that the CPS-1 does not have square "pixels". It has wide rectangular "pixels". This was a huge problem for artists. If they digitized their drawing as is, the CRT would present to players a rendition non-conforming to their original vision.
 
 % DRAWING ASPECT RATIO HERE
 
@@ -865,16 +861,15 @@ When I was working on my first CPS-1 game, Forgotten Worlds, I noticed the probl
 - "Impossible, I ordered them to be square!" he replied.
 
 He then proceeded to call hardware on the spot.\\ 
-- "The pixels are square!" he added.\\ 
-
+- "The pixels are square!" he added.\\
 Later I protested again to which my boss replied it was a calculation error.
 \end{q}
 
 \pagebreak
 \begin{trivia}
-The designers of R-Type in 1987 played on CRT tolerance in order to craft a video system with increased horizontal resolution. 
+The designers of R-Type in 1987 played on CRT tolerance in order to craft a video system with increased vertical resolution. 
 
-They chose the VSYNC to pulse at 55Hz. This gave them extra time between frames so they had to sacrifice fewer lines to VBLANK. They reinvested this saving into more vertical lines to reach 256. I
+They chose the VSYNC to pulse at 55Hz. This gave them extra time between frames so they had to sacrifice fewer lines to VBLANK. They reinvested this saving into more vertical lines to reach 256.
 
 Increasing horizontal resolution is just about improving the analog signal. This is what the people at Irem did to push it to 384. In the end, the game enjoyed a higher than competitors resolution of 384x256 at the cost of a 5Hz refresh penalty.
 \end{trivia}
@@ -898,20 +893,20 @@ The CPS-1 uses 16 bits to encode colors with 4 bits per RGB components for a tot
 \caption*{CPS-1's 12-bit per color cube.}
 \end{figure}
   
-The four remaining bits express brightness to allow 16 shades of a base color. Overall, 65,536 different colors are available.
+The four remaining bits express brightness to allow 16 shades of a base color. In total, 65,536 different colors are available to artists.
 
 \begin{figure}[H]
 \nbdraw{brightness}
-\caption*{All 15 brightness possible using Red \icode{\{0xF,0x0, 0x0\}} base.}
+\caption*{All 15 shades of red using a \icode{\{0xF,0x0, 0x0\}} base color.}
 \end{figure}
 
 \subsection{Putting it all together}
 
-Knowing how a CRT works and what decisions Capcom engineers made, we can now connect the dots and understand the video signal as a whole.
+Knowing how a CRT works and what decisions Capcom engineers made, we can now understand the video signal as a whole.
 
 With a "pixel" clock coming from the GFX oscillator (16MHz) halved to 8MHz, a color is issued every 1s / 8MHz = 125ns.
 
-The horizontal resolution of 512 mandates a HSYNC to be generated every 512 * 0.125 = 64$\mu$s. The resulting refresh rate is 8MHz / (512x262) = 59.637Hz and a VSYNC must be issued every 1000/59.637 = 16.7ms.
+The horizontal resolution of 512 mandates a HSYNC to be generated every 512 * 0.125 = 64$\mu$s. The resulting refresh rate is 8MHz / (512x262) = 59.637Hz and a VSYNC is issued every 1000ms/59.637 = 16.7ms.
 
 
 A summary drawing exposes all timing and regions as well as the significant part of the image not usable due to horizontal and vertical blanking.
@@ -925,9 +920,9 @@ A summary drawing exposes all timing and regions as well as the significant part
 % The horizontal blank between the end of a scanline and hsync is called the "front porch". The blank section between hsync and the start of the next scanline is called the "back porch".
 % \end{trivia}
 
-Keep in mind that if HSYNC happens 262 tiles (blue vertical line) and VSYNC occurs only once. The dashed horizontal red line is only here to represent where the electron gun reset to the top of the screen.
+Keep in mind that HSYNC happens 262 times (blue vertical line) but VSYNC occurs only once. The dashed horizontal red line in the previous drawing is only here to represent where the electron gun reset to the top of the screen.
 
-Note on the previous drawing how large vertical blanking is. It allows more operations in the background. On CPS-1, 16 lines are required for a palette page (32 palettes) upload, limiting the rate to two per frame.
+The sheer amount of black in the drawings show the extend of the overhead associated with beam and overscan management but the time spent not drawing is not wasted. It is leveraged to perform background operations such as modifying palette colors. Sixteen lines are necessary to a palette page (32 palettes).
 
 \begin{figure}[H]
 \nbdraw{sf2_withoverscan}
@@ -940,7 +935,7 @@ Note on the previous drawing how large vertical blanking is. It allows more oper
 To generate the color signals, the CPS-1 uses a palette system storing colors via 4 x 2Ki x 1B \icode{CXK5814P-35L} SRAM chips.
 
 
-Individually these are simple memory elements with pinouts explained earlier, Power \icode{+5V}, Ground \icode{GND}, Addresses \icode{A0-A10}, Data \icode{D0-D7}, Write (\icode{WE}), Read (\icode{OW}), and Chip Enabled (\icode{CE}).
+These simple memory elements features pinouts explained earlier, Power \icode{+5V}, Ground \icode{GND}, Addresses \icode{A0-A10}, Data \icode{D0-D7}, Write (\icode{WE}), Read (\icode{OW}), and Chip Enabled (\icode{CE}).
 
 What is uncanny is that the component connected to the address lines is not the one connected to the data lines.
  % Instead data is routed towards a DAC.
