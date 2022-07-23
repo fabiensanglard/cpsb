@@ -252,6 +252,7 @@ func main() {
 	arg0 := "-output-directory"
 	arg1 := "out"
 	arg2 := `\def\base{` + out + `} ` + compileOptions + ` \input{src/book.tex}`
+        fmt.Println(bin, arg0, arg1, arg2)
 
 	out, err := exec.Command(bin, arg0, arg1, arg2).CombinedOutput()
 
