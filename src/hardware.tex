@@ -922,7 +922,7 @@ A summary drawing exposes all timing and regions as well as the significant part
 
 Keep in mind that HSYNC happens 262 times (blue vertical line) but VSYNC occurs only once. The dashed horizontal red line in the previous drawing is only here to represent where the electron gun reset to the top of the screen.
 
-The sheer amount of black in the drawings show the extend of the overhead associated with beam and overscan management but the time spent not drawing is not wasted. It is leveraged to perform background operations such as modifying palette colors. Sixteen lines are necessary to a palette page (32 palettes).
+The sheer amount of black in the drawings show the extend of the overhead associated with beam and overscan management. But the time spent not drawing is not wasted. It is leveraged to perform background operations such as modifying palette colors. Sixteen lines are necessary to a palette page (32 palettes).
 
 \begin{figure}[H]
 \nbdraw{sf2_withoverscan}
@@ -945,9 +945,9 @@ What is uncanny is that the component connected to the address lines is not the 
 
 
 
-The CPS-B drives the address bus at 8MHz to generate the DAC 16-bit inputs which in turn generates three analog Red, Green, and Blue signals. In parallel, the GFX generates the HSYNC and VSYNC signals, composited into CSYNC.
+The CPS-B drives the address bus at 8MHz to generate the DAC 16-bit inputs which in turn generates three analog Red, Green, and Blue signals. In parallel, it generates the HSYNC and VSYNC signals, composited into CSYNC.
 
-Notice how one line is used not for addressing but to \icode{CE}ing chip pairs. 
+Notice how one line out of twelve is used not for addressing but to \icode{CE}ing chip pairs. 
 
 
 
@@ -957,11 +957,11 @@ Notice how one line is used not for addressing but to \icode{CE}ing chip pairs.
 
 
 
-Colors are grouped into palettes containing 16 units. As will be studied later, the GFX system features 6 layers and each of them allows 32 palettes. This brings the total to 6*32*15 = 2, 880 colors which requires 12-bit to be indexed.
+Colors are grouped into palettes containing 16 units. As will be studied later, the GFX system features 6 layers and each of them allows 32 palettes (called page). This brings the total to 6*32*15 = 2,880 colors which requires 12-bit to be indexed.
 
 % 3,072 colors accounts for 3,072*2= 6,144 bytes. There is a little bit of palette SRAM not used.
 
- The palette SRAM chip are nearly constantly used to generate colors. Their content can only be written to during VBLANK. 
+ The palette SRAM chips are nearly constantly used to generate colors. Their content can only modified to during VBLANK (cf: Importance of BLANKing in last section). 
  % Designing the machine with long blanking was paramount to allow large updates. 
 
 
@@ -1028,7 +1028,7 @@ Hint: RKCHGZBD-BVSB.
 
 % \emph{This section would have been impossible to write without Lo\"{i}c Petit's contribution. He has been working tirelessly on understanding the CPS-1 and CPS-2 and generously shared his knowledge.}
 
-The graphic system is the most complicated to understand in the whole machine. It is complex because it must satisfy three demanding sub-systems.
+The graphic system is the most complicated to understand in the whole machine. It is complex because it must satisfy three demanding systems.
 
 
 
@@ -1036,9 +1036,9 @@ On one side, there is Control which requests an elaborated composition of backgr
 
 On the other side is the 8 MHz Video system which mercilessly demand a pixel color every 125ns. The CRT cannons never wait and a color must be issued on the dot, no matter what. 
 
-In the middle is the GFXROM, a huge repository of up to 12MiB graphic assets. It has a finite latency and throughput which cannot satisfy the Video systems if it were to work on a per-pixel request/response.
+Finally there is the GFXROM, a huge repository of up to 12MiB graphic assets. It has a finite latency and throughput which cannot satisfy the Video systems if it were to work on a per-pixel request/response.
 
-Solving these problems of timing and latency exceptionally well is what made the CPS-1 stand out. It is unarguably the "secret sauce" of the machine. 
+Solving these problems of timing and latency well is what made the CPS-1 stand out. It is unarguably the "secret sauce" of the machine GFX system. 
 
 \begin{figure}[H]
 \sdraw{0.7}{ppus}
@@ -1058,19 +1058,18 @@ To make their dream machine become a reality, Capcom did not rely on another com
 
 
 \subsection{Pens and Ink}
-The elementary unit of work is a 4-bit value which is an index into a 16 colors palette. Everything, from backgrounds to sprites uses these 4-bit nibbles. A good analogy, and the terminology used in this chapter, is to picture the GFX manipulating "pens" (palette indexes). The color to appear on the screen is decided not by the pen but by the value at this index, which we will call "ink".
+The elementary unit of work is a 4-bit value which is an index into a 16 colors palette. Everything, from backgrounds to sprites uses these 4-bit nibble indexes. A good analogy, and the terminology used in this book, is to picture the GFX manipulating "pens" (palette indexes). The color to appear on the screen is decided not by the pen but by the value at this index, which is called "ink".
 
-% As a result, this system is completely unaware of what color will end up being issued by the video system to the CRT.
+This division make the GFX system unaware of the ink that will appear on the CRT since it only manipulates pens.
 
-All graphic assets in GFXROM are stored one line after another. Pen values are stored in the GFXROM across four bytes in a planar fashion.
-
-
+% All graphic assets in GFXROM are stored one line after another. Pen values are stored in the GFXROM across four bytes in a planar fashion.
 
 
+
+
+Groups of four bytes encoding 8 pens are "tile lines" which combined vertically make a "tile", the elementary unit manipulated by background and sprite layers.
 
 \nbdraw{gfx_format}
-
-Sequences of four bytes encoding 8 pens form "tile lines" which combined make a "tile", an element extensively discussed in the next pages.
 
  \begin{trivia}
  Pen value \icode{0xF} is always treated as transparent!
@@ -1080,22 +1079,25 @@ Sequences of four bytes encoding 8 pens form "tile lines" which combined make a 
 
 \subsection{Elements of drawing}
 
-Games are made of a background on top of which are drawn sprites. The easier to implement from a technical standing point is the background which we will study first.
+Games are made of backgrounds on top of which are drawn sprites. The easier to implement are the background circuits. They are studied first, followed by the sprite circuits.
 
 \subsection{Drawing background}
 
-A background is described in terms of "tiles" which arrangement is described in a map of tiles. The goal of a tilemap circuit is to "rasterize" the "tilemap".
+A background is described in terms of "tiles" which arrangement is described in a map. The goal of the circuit is to "rasterize" the map of tiles (called "tilemap").
 
-A naive design would work at the same speed as the video system (8MHz). For each pixel (125ns) the GFXRAM would be read to know what tile to display. Then a palette index would be retrieved from the GFXROM. Finally that index would be sent to the palette system where the color would be converted by the video DAC. That would not work.
+A naive design would work at the same speed as the video system (8MHz). For each pixel (every 125ns) the GFXRAM would be read to know what tile to display. Then a pen would be retrieved from the GFXROM. Finally that pen would be sent to the palette system where the color would be converted by the video DAC.
 
  \begin{figure}[H]%
  \nbimg{DL-0311.png}%
  \caption*{CPS-A die. Notice the real estate dedicated to GFXRAM caching.}%
  \end{figure}%
 
-Even thought the machine uses the fastest type of SRAM, the response time of these component does not permit that many roundtrip. The overhead is too big to complete the operation within just 125ns.
+ Even thought the machine uses the fastest type of memory (SRAM), its response time does not permit that many roundtrips. The solution comes via three optimizations made of caching, streaming, and channeling. 
 
-The solution is to reduce the number of memory accesses by reading more than necessary and caching the result. To this effect, the CPS-A features 256 bytes to cache information retrieved from the GFXRAM during HBLANK.
+
+\subsubsection{Caching}
+The CPS-A only accesses the GFXRAM during the HBLANK interval. To eliminate memory read operations while a scanline is rasterized, a whole line worth of tilemap is retrieved and stored in an internal cache of 256 bytes.
+%  the CPS-A reads more tilemap than necessary each time it runs out of map. To this effect, it features 256 bytes to cache information retrieved from the GFXRAM during HBLANK.
 
 
 
@@ -1105,14 +1107,15 @@ Another optimization that allows the GFX to keep up with the pixel clock is the 
 
 The system works with the GFXROM addresses lines connected to the CPS-A which acts as the brain but the data lines  connected to the CPS-B (the legs) where pen values are selected/discarded before being sent to the video system.
 
-The grid alignment works well with streaming because of the predictable screen location of the tiles in the map.
+% The grid alignment works well with streaming because of the predictable screen location of the tiles in the map.
 
  \begin{figure}[H]%
-\sdraw{0.8}{gfx_groups}
- \caption*{In Street Fighter 2, a PAL \icode{STF29} decode tiles ids into GFX ROM memory offsets.}%
+\sdraw{0.9}{gfx_groups}
+ \caption*{The GFXROM data is retrieved eight pen at a time thanks to a 32-bit data bus.}%
+ % \caption*{In Street Fighter 2, a PAL \icode{STF29} decode tiles ids into GFX ROM memory offsets.}%
  \end{figure}%
 
-Notice how the GFXROM data is retrieved four bytes at a time thanks to a 32-bit data bus. This conveniently accounts for eight pen values.
+% Notice how the GFXROM data is retrieved four bytes at a time thanks to a 32-bit data bus. This conveniently accounts for eight pen values.
 
 \subsubsection{Channels}
 To further improve bandwidth, the GFXROM data uses a layout where 8 consecutive bytes are interleaved four by four across two chips. 
