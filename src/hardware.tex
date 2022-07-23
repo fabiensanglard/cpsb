@@ -1092,7 +1092,7 @@ A naive design would work at the same speed as the video system (8MHz). For each
  \caption*{CPS-A die. Notice the real estate dedicated to GFXRAM caching.}%
  \end{figure}%
 
- Even thought the machine uses the fastest type of memory (SRAM), its response time does not permit that many roundtrips. The solution comes via three optimizations made of caching, streaming, and channeling. 
+ Even thought the machine uses the fastest type of memory (SRAM), its response time does not permit that many roundtrips. A problem solved via caching, streaming, channeling and an humongous (at that time) 32-bit GFXROM/CPS-B local data bus. 
 
 
 \subsubsection{Caching}
@@ -1103,63 +1103,31 @@ The CPS-A only accesses the GFXRAM during the HBLANK interval. To eliminate memo
 
 
 \subsubsection{Streaming}
-Another optimization that allows the GFX to keep up with the pixel clock is the streaming of pen values without intermediate storage. 
+Pen values are streamed from GFXROM to the CRT without intermediate storage. The GFXROM data is retrieved eight pen at a time thanks to a 32-bit data bus.
 
 The system works with the GFXROM addresses lines connected to the CPS-A which acts as the brain but the data lines  connected to the CPS-B (the legs) where pen values are selected/discarded before being sent to the video system.
 
 % The grid alignment works well with streaming because of the predictable screen location of the tiles in the map.
 
  \begin{figure}[H]%
-\sdraw{0.9}{gfx_groups}
- \caption*{The GFXROM data is retrieved eight pen at a time thanks to a 32-bit data bus.}%
+\sdraw{1}{gfx_groups}
+ % \caption*{}%
  % \caption*{In Street Fighter 2, a PAL \icode{STF29} decode tiles ids into GFX ROM memory offsets.}%
  \end{figure}%
 
 % Notice how the GFXROM data is retrieved four bytes at a time thanks to a 32-bit data bus. This conveniently accounts for eight pen values.
 
 \subsubsection{Channels}
-To further improve bandwidth, the GFXROM data uses a layout where 8 consecutive bytes are interleaved four by four across two chips. 
+To further improve response time, the GFXROM data uses a layout where 8 consecutive bytes are interleaved 16 bits at a time across four chips. 
 
-When reading, a memory address is issued to two chips at the same time and their data lines are enabled consecutively alike on a TV "channel" selection.
+Upon reading, an address is issued to two chips at the same time but their data lines are enabled consecutively. Channeling avoids one "fetch time" every two reads.
+ % The  concept is further explained on page \pageref{channels}\index{Channels!Theory}. 
 
-This technique allows to save one chip "fetch time" per access. The channel concept is further discussed on page \pageref{channels}\index{Channels!Theory}. 
-
-% Keep in mind that at any time, the CPS-B not only receives data from the GFXROM but also stream pen values to the video system. 
-
-% \begin{trivia}
-% All home-consoles of the late-80 and early 90s, and even the powerful 16-bit systems such as Nintendo's SNES and Sega's Genesis relied on tilemap systems.
-% \end{trivia}
-
-
-
-% A tilemap rasterizer circuit consist of a "sampler" inside which is a buffer. When the CRT start drawing a scanline, the sampler consult the GFXRAM to know what to drawn (this is typically a list of tile ids with their associated palette), retrieve a tile width worth of colors from the asset repository (GFX ROM), and issued them to the CRT when the timing requires it.
-
-% As the line is being drawn, the sampler buffer gets depleted (a buffer is typically a few bytes wide) so the sampler goes back to the GFXRAM to retrieve the next tile ID and refill itself in the GFX ROM.
-
-% The process repeats itself until all lines in a frame have been drawn.
-
-
-
-% The sampler system allows to move the background vertically or horizontally with minimum circuitry since each axis changes is a simple matter of introducing a delta in the sampler tile coordinates.
-
-
-
-% \subsection{Drawing backgroundS}
-% A visual improvement which appeared around 1985 in Capcom games was to use a second tilemap to generate parallax backgrounds. In this case, the board must feature a second sampler and have a compositor on top to handle tiles priority.
-
-% \nbimg{tilemap_two_sampler.png}
-
-% However since the memory access time remains the same but twice as much data must be retrieved from the GFX RAM and ROM, the board is facing a bandwidth issue. 
-
-% The solution is to either increase the bus throughput by using wider data lines or increase the sampler buffer size.
-
-% The advantages of these samplers compared to the framebuffer used by PCs is that they cost less. Memory was very expensive and using a few small buffers compared to a full "frame-buffer" made a significant difference. The second advantage is that by reducing the amount of data to write, a higher framerate could be reached since no CPU could write a full framebuffer fast enough while performing at 60Hz.
-
+\nbdraw{channels}
 
 
 \subsection{CPS1 Tilemaps}
-The CPS-1 features three tilemap layers named SCROLL1, SCROLL2, and SCROLL3. They all rely on tilemaps made of 64x64 tiles. However they all use different tile dimensions. 
-
+The CPS-1 features three tilemap layers named SCROLL1, SCROLL2, and SCROLL3. They all rely on tilemaps made of 64x64 tiles.
 
 
 \vfill
@@ -1176,13 +1144,17 @@ SCROLL1 uses tiles of dimensions 8x8 resulting in a total dimensions of 512x512.
 
 % A tile is 32 lines of 16 bytes = 5123 bytes.
 
-Each tilemaps has a maximum capacity of 32 palettes (called a palette page) which any tile can use freely.
+Each tilemaps has a maximum capacity of 32 palettes (called a palette page) which any tile can use freely. SCROLLS can be offset by any X or Y value, appear in any order and be used for any purpose.
 
+<<<<<<< HEAD
 For Street Fighter 2, the developers moved layers using different horizontal speed to implement parallax. The sprites in black (drawn on a fourth layer called "OBJ" which is discussed later) are used not only for the characters but also for the "GUI" elements.
+=======
+In Street Fighter 2, different horizontal scroll speed result in parallax. The sprites in black (drawn on a fourth layer called "OBJ") are used not only for the characters but also for the "GUI" elements.
+>>>>>>> Proof reading p82
 
-Other titles such as Forgotten World required all the sprites the machine could provide for the gameplay. To avoid wasting any of them to the GUI, the design team chose to implement it with SCROLL1 instead of OBJ. It is a good trade-off because the only restrictions is that elements are aligned on a 8 pixels grid which is not really a problem for a GUI.
+Other titles such as Forgotten World required all the sprites the machine could provide for the gameplay. To avoid wasting any of them, the GUI is implemented with SCROLL1 instead of OBJ. It was a good trade-off because the only restrictions is that elements are aligned on a 8 pixels grid which is not a problem for a GUI.
 
-\fcolorbox{black}{red}{\vphantom{W}\hphantom{H}} SCROLL1, \fcolorbox{black}{green}{\vphantom{W}\hphantom{H}} SCROLL2, \fcolorbox{black}{blue}{\vphantom{W}\hphantom{H}} SCROLL3, \fcolorbox{black}{black}{\vphantom{W}\hphantom{H}} OBJ.
+Color codes used in this section are \fcolorbox{black}{red}{\vphantom{W}\hphantom{H}} SCROLL1, \fcolorbox{black}{green}{\vphantom{W}\hphantom{H}} SCROLL2, \fcolorbox{black}{blue}{\vphantom{W}\hphantom{H}} SCROLL3, \fcolorbox{black}{black}{\vphantom{W}\hphantom{H}} OBJ.
 
 \vfill
 \begin{figure}[!b]
@@ -1193,11 +1165,16 @@ Other titles such as Forgotten World required all the sprites the machine could 
 
 
 \subsubsection{Starfields}
-Besides SCROLLs, the CPS-1 has two "STARfields" which are always behind the SCROLLs and always in order STAR1 then STAR2. 
+Besides SCROLLs, the CPS-1 has two "STARfields" layers which are always behind the SCROLLs and always in order STAR1 then STAR2. Alike the other layers, one page of palettes is available to each of them.
 
-For each of these layers, the GFXROM contains no tiles but instead bytecode dictating the position of points as well as palette cycling timing. By using the 32 palettes of each of these layers astutely, parallaxed starfield can be rendered. 
+To render the stars, the GFXROM contains no tiles but instead bytecode dictating the position of points as well as palette cycling timing.
 
-These STARs layers were a convenient for the many space shoot'em up released when the CPS-1 was designed since it saved considerable GFXROM space and artists time. 
+It is surprising nowadays to see so much silicon dedicated to a "niche" feature. The extreme popularity of R-Type, Gradius, or Darius at the time made a good case for it.
+ %  
+
+Providing a system saving both considerable GFXROM space and artists time was a good idea at the time. Ironically, the platform ended up receiving no space shooter! 
+
+Long after STARfield came out of fashion, the system was re-purposed in quite an unexpected fashion.
 
 % The first title released on CPS-1, Forgotten Worlds, prominently showcased its starfields.
 
@@ -1205,8 +1182,7 @@ These STARs layers were a convenient for the many space shoot'em up released whe
 % Alike the tilemaps, each starfield has a dedicated 32 palettes.
 % \end{trivia}
 
-\subsubsection{Making Noir}
-Long after STARfield came out of fashion, they found a new found and quite unexpected usage.
+
 
 
 \vfill
@@ -1216,6 +1192,7 @@ Long after STARfield came out of fashion, they found a new found and quite unexp
  \end{figure}%
 \pagebreak
 
+\subsubsection{Noir Black}
 
 
 
@@ -1225,13 +1202,11 @@ When designers needed a full black background, instead of using a SCROLL and rep
 This is the unknown poesy of Street Fighter Hyper Fighting intro sequence. As the title appears, the black background is in fact a beautiful dark night sky. And nobody ever knew about it.
 
 \begin{trivia}
-The CPS-1 layer system does not use a painter algorithm where pixels are written over and over in a framebuffer. 
-
-The CPS-B receives a stream of all layers and based on the priority and the potential transparent pen value (\icode{0xF}) select the one to send to the video system.
+The layers system does not use a painter algorithm where pixels are written over and over in a framebuffer. The CPS-B receives a stream of all layers and based on the priority and the potential transparent pen value (\icode{0xF}) select the one to be send. The pen value is forwarded directly to the video system.
 \end{trivia}
 
 
-\fcolorbox{black}{red}{\vphantom{W}\hphantom{H}} SCROLL1, \fcolorbox{black}{green}{\vphantom{W}\hphantom{H}} SCROLL2, \fcolorbox{black}{blue}{\vphantom{W}\hphantom{H}} SCROLL3, \fcolorbox{black}{mycyan}{\vphantom{W}\hphantom{H}} STAR1, \fcolorbox{black}{myyellow}{\vphantom{W}\hphantom{H}} STAR2, \fcolorbox{black}{black}{\vphantom{W}\hphantom{H}} OBJ.
+Layers color codes, \fcolorbox{black}{red}{\vphantom{W}\hphantom{H}} SCROLL1, \fcolorbox{black}{green}{\vphantom{W}\hphantom{H}} SCROLL2, \fcolorbox{black}{blue}{\vphantom{W}\hphantom{H}} SCROLL3, \fcolorbox{black}{mycyan}{\vphantom{W}\hphantom{H}} STAR1, \fcolorbox{black}{myyellow}{\vphantom{W}\hphantom{H}} STAR2, \fcolorbox{black}{black}{\vphantom{W}\hphantom{H}} OBJ.
 
 \vfill
 \begin{figure}[!b]
@@ -1251,7 +1226,7 @@ The CPS-B receives a stream of all layers and based on the priority and the pote
 \subsubsection{Draw order and Priority mask}\label{finalfight_trick}
 
 
-The drawing order (also called "priority") of SCROLLs and the sprite layer we will see next is entirely configurable (although both STARs must remain behind). Any order can be requested but there is an extra feature available to the SCROLL drawn just before the sprite layer.
+The drawing order (also called "priority") of SCROLLs and the sprite layer we will see next is entirely configurable (although both STARs must remain behind). Any order can be requested but there is an extra feature available to the SCROLL drawn just behind the sprite layer.
 
 Take the example of Final Fight. After fighting their way in a busy subway, Haggar and Guy find themselves exiting the train station to continue happily brawling in a desolated part of the city. 
 
@@ -1271,7 +1246,7 @@ As they are going up the stairs, observe in "back to front" order the following 
 \pagebreak
 
 
-It all makes sense except for one detail. If we look closely at Haggar (for those who never played Final Fight, poor soul, Haggar is the bigger of the two. When he does not workout, he is also a mayor. Anyway.), he appears to be both in front and behind SCROLL2.
+It all makes sense except for one detail. If we look closely at Haggar (for those who never played Final Fight, Haggar is the bigger of the two). When he does not workout, he is also a mayor. Anyway.) who appears to be both in front and behind SCROLL2.
 
 The CPS-B allows the SCROLL layer behind the OBJs layer to have a special power. If a SCROLL tile is marked property, it can request the CPS-B to display some of its pixels on top of OBJ instead of behind.
 
