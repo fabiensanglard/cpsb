@@ -1432,17 +1432,17 @@ Lastly, there is the problem of tilemap and sprites synchronization. When the m6
  
 
 \begin{trivia}
-The sync issue is particularly noticeable in Final Fight level 2. The subway wagon moves up and down to simulate rails but inside the handles on the ceiling and the characters appears to lag behind.
+The sync issue is particularly noticeable in Final Fight level 2. The subway wagon moves up and down to simulate rails junction bumps but the handles on the ceiling and the characters appears to lag behind.
 \end{trivia}
 
-The issue is visible on the next drawing. On frame 1, the scrolls of frame 1 are displayed. 
+A three frames sequence is enough to illustrate the issue. On frame 1, the scrolls of frame 1 are displayed. No sprites are visible at that point.
 
 \begin{figure}[H]
 \nbdraw{latency1}
  \caption*{Frame 1.}%
  \end{figure}%
 
-On frame 2, the scrolls of frame 2 are displayed but along with the spritebuffer from frame 1.
+Next, the scrolls of frame 2 are displayed but along with the spritebuffer from frame 1.
  
 
 \begin{figure}[H]
@@ -1450,7 +1450,7 @@ On frame 2, the scrolls of frame 2 are displayed but along with the spritebuffer
  \caption*{Frame 2.}%
  \end{figure}%
 
-On frame3, the scrolls of frame 3 are displayed but along with the spritebuffer from frame 2. The desycing can only be compensated in software.
+Finally, the scrolls of frame 3 are displayed but along with the spritebuffer from frame 2. The desycing can only be compensated in software.
 
 \begin{figure}[H]
 \nbdraw{latency3}
