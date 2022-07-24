@@ -1146,11 +1146,8 @@ SCROLL1 uses tiles of dimensions 8x8 resulting in a total dimensions of 512x512.
 
 Each tilemaps has a maximum capacity of 32 palettes (called a palette page) which any tile can use freely. SCROLLS can be offset by any X or Y value, appear in any order and be used for any purpose.
 
-<<<<<<< HEAD
-For Street Fighter 2, the developers moved layers using different horizontal speed to implement parallax. The sprites in black (drawn on a fourth layer called "OBJ" which is discussed later) are used not only for the characters but also for the "GUI" elements.
-=======
+
 In Street Fighter 2, different horizontal scroll speed result in parallax. The sprites in black (drawn on a fourth layer called "OBJ") are used not only for the characters but also for the "GUI" elements.
->>>>>>> Proof reading p82
 
 Other titles such as Forgotten World required all the sprites the machine could provide for the gameplay. To avoid wasting any of them, the GUI is implemented with SCROLL1 instead of OBJ. It was a good trade-off because the only restrictions is that elements are aligned on a 8 pixels grid which is not a problem for a GUI.
 
@@ -1248,36 +1245,49 @@ As they are going up the stairs, observe in "back to front" order the following 
 
 It all makes sense except for one detail. If we look closely at Haggar (for those who never played Final Fight, Haggar is the bigger of the two). When he does not workout, he is also a mayor. Anyway.) who appears to be both in front and behind SCROLL2.
 
-The CPS-B allows the SCROLL layer behind the OBJs layer to have a special power. If a SCROLL tile is marked property, it can request the CPS-B to display some of its pixels on top of OBJ instead of behind.
+To achieve this effect, the CPS-B allows the SCROLL layer behind the OBJs to tag its tiles. Tagged tiles pens are looked up against up to four mask (each allowing for pen values) indicating which pen have precedence over OBJ.
 
-This feature allows to create complex effect where sprites are sandwitched by a SCROLL. Here, the tiles making the "near" portion of the ramp are added to the priority mask. Then four pens (resulting in colors \fcolorbox{black}{mask1}{\vphantom{W}\hphantom{H}} , \fcolorbox{black}{mask2}{\vphantom{W}\hphantom{H}} , \fcolorbox{black}{mask3}{\vphantom{W}\hphantom{H}} , and \fcolorbox{black}{mask4}{\vphantom{W}\hphantom{H}}) as well as four pens for the garbage can TODO are set for the priority mask.
+This feature allows to create complex effect where sprites are sandwitched by a SCROLL. In Final Fight, the tiles making the "near" portion of the ramp are tagged to use priority masks. The "wood" tile use one mask using four pens (
+\fcolorbox{black}{mask1}{\vphantom{W}\hphantom{H}} , 
+\fcolorbox{black}{mask2}{\vphantom{W}\hphantom{H}} , 
+\fcolorbox{black}{mask3}{\vphantom{W}\hphantom{H}} , and 
+\fcolorbox{black}{mask4}{\vphantom{W}\hphantom{H}}). The garbage tiles are tagged to use two masks for a total of eight pens (
+\fcolorbox{black}{mask5}{\vphantom{W}\hphantom{H}}  , 
+\fcolorbox{black}{mask6}{\vphantom{W}\hphantom{H}} , 
+\fcolorbox{black}{mask7}{\vphantom{W}\hphantom{H}} , 
+\fcolorbox{black}{mask8}{\vphantom{W}\hphantom{H}} , 
+\fcolorbox{black}{mask9}{\vphantom{W}\hphantom{H}} ,
+\fcolorbox{black}{maska}{\vphantom{W}\hphantom{H}} , 
+\fcolorbox{black}{maskb}{\vphantom{W}\hphantom{H}} and  
+\fcolorbox{black}{maskc}{\vphantom{W}\hphantom{H}}).
 
-Tiles making the "far" part of the ramp are not added to the priority mask so all their colors appear behind OBJs.
+Once the exit animation is over, all tiles are unmarked to allow free roaming and brawling over the whole screen without priority concerns.
 
+Refer to the CPS-B register API on pXXX for more information on tagging and masking.
 \vfill
 \begin{figure}[!b]
 \img{ff_rgb-00007375.png}
- \caption*{Final Fight ... with layers!}%
+ \caption*{Final Fight with SROLL2 layer grid.}%
  \end{figure}%
 \pagebreak
 
 \subsubsection{Rowscrolling}
-SCROLL 2 was given the special ability to horizontally offset rows based on their vertical position. 
+SCROLL 2 has the ability to horizontally offset rows based on their vertical position. 
 
-This capability is commonly known as "rowscroll" and is implemented via a table of 1024 10-bit integers (one for each line) in GFXRAM.
+This capability, commonly known as "rowscroll", is implemented via a table of 1024 10-bit integers (one for each line) in GFXRAM.
 
-Note this is a completely hard-coded feature in the ASICs. As we will see in the software/programming chapters, the 68000 has no awareness of HSYNC timing, only VSYNC is known.
+This is a feature completely hard-coded in the ASICs. Once requested, the 68000 is uninvolved, it has no awareness of HSYNC, only VSYNC is known.
 
-\begin{trivia}
-
-This feature does not stresses the cache system in the CPS-A because rows are scrolled predictably.
-
-\end{trivia}
+% \begin{trivia} This feature does not stresses the cache system in the CPS-A because rows are scrolled predictably.
+% \end{trivia}
+\begin{q}{Akira Nishitani, SF2 Producer}
+I knew we had raster scrolling so I talked with the programmers and we gave it a shot.  It was effective. However, to this day I have no idea about what's going on under the hood!
+\end{q}
 
 \vfill
 \begin{figure}[!b]
 \draw{ryu_rowscroll}
- \caption*{Street Fighter 2, Ryu's floor is rowscrolled}%
+ \caption*{Street Fighter 2, Ryu's floor is rowscrolled.}%
  \end{figure}%
 \pagebreak
 
@@ -1287,16 +1297,18 @@ The starfield and rowscroll features are good example of how difficult it is to 
 
 If starfields were heavily used in the inauguration title, "Forgotten Worlds", and prominently featured in the second one , "Strider", rowscrowl on the other side saw no usage for nearly two years. 
 
-Relegated to implementing flames effects in "Magic Sword" and hazy background in "Carrier Air Wing", rowscrolling was barely used in the five titles\cite{mame_cps1_video} it was featured in.
+Relegated to implementing flames effects in "Magic Sword" and hazy background in "Carrier Air Wing", rowscrolling was barely used for a few second of gameplay in the five titles\cite{mame_cps1_video} it was featured in.
 
-Ultimately, the balance of these two features found itself reversed when rowscroll was used to implement a beautiful per-line floor parallax in Street Fighter 2, massively contributing to the graphic appeal of the game.
+% STARs were awesome and rowscroll useless.
+
+Ultimately, the balance of these two features found itself reversed when rowscroll was used to implement the notoriously beautiful per-line floor parallax in Street Fighter 2, massively contributing to the graphic appeal of the game.
 
 
 \vfill
 \begin{figure}[!b]
 \draw{honda_rowscroll}
 % color-00016530.png}
- \caption*{Street Fighter 2, Honda's level is triple rowscrolled}%
+ \caption*{Street Fighter 2, Honda's level is triple rowscrolled.}%
  \end{figure}%
 \pagebreak
 
@@ -1308,13 +1320,19 @@ Ultimately, the balance of these two features found itself reversed when rowscro
 
 \subsubsection{Pushing the limits}
 
-Besides priority mask, tiles can be flipped horizontally and/or vertically but there is no scaling or rotation possible. Furthermore, the CPU has no access to the VRAM which makes it impossible to "plot" pixels. That did not prevent designers to use impossible tricks.
+Besides priority mask, tiles can be flipped horizontally and/or vertically but there is no scaling or rotation. The CPU has no access to the VRAM which makes it impossible to "plot" pixels. That did not prevent seemingly impossible effects to be achieved.
 
 
 
-In Ghouls 'n Ghosts first level, on top of hordes of zombies, a Red Arremer, and unforgiving control, the player must face the weather. Wind picks up and soon come an heavy rains. If you look at the screenshot of the layer below, all layers are used and no rain should be possible.
+In Ghouls 'n Ghosts first level, on top of hordes of zombies, a Red Arremer, and unforgiving control, the player must face the weather. Wind picks up and soon come an heavy rains. If you look at the screenshot of the layer below, most layers are used and no rain should be possible.
 
-To add rainfall, developers leveraged temporal blending on the same layer as the GUI (\fcolorbox{black}{red}{\vphantom{W}\hphantom{H}} SCROLL1). 
+- \fcolorbox{black}{cyan}{\vphantom{W}\hphantom{H}} STAR1 used for the dark sky.\\
+- \fcolorbox{black}{blue}{\vphantom{W}\hphantom{H}} SCROLL3 used for background.\\
+- \fcolorbox{black}{green}{\vphantom{W}\hphantom{H}} SCROLL2 used for the playground.\\
+- \fcolorbox{black}{black}{\vphantom{W}\hphantom{H}} OBJ for the main character, big rain drops, and enemies.\\
+- \fcolorbox{black}{red}{\vphantom{W}\hphantom{H}} On top of all, SCROLL1 for the GUI.\\
+
+
 
 \vfill
 \begin{figure}[!b]
@@ -1323,9 +1341,12 @@ To add rainfall, developers leveraged temporal blending on the same layer as the
  \end{figure}%
 \pagebreak
 
-Every five frames, a full screen of rain tiles is displayed instead, resulting in a convincing effect.Temporal blending is often used to implement translucency. 
+To add rainfall, developers leveraged temporal blending on the same layer as the GUI.
+ % (\fcolorbox{black}{red}{\vphantom{W}\hphantom{H}} SCROLL1). 
 
-Tile granularity was circumvented in the intro Carrier Air Wing where fizzledade is in fact pre-rendered tiles.
+Every five frames the GUI is not drawn. Instead a full screen of rain tiles is rendered, resulting in a convincing effect. In many games, temporal blending is used to fake translucency. 
+
+In another resourceful trick seen in the intro Carrier Air Wing, pixel plotting was faked. The fizzledade effect of the jet stream is in fact made of pre-rendered tiles.
 
 \draw{fizzlefade}
  
@@ -1341,16 +1362,16 @@ Tile granularity was circumvented in the intro Carrier Air Wing where fizzledade
 
 
 \subsection{Drawing Sprites}
-Drawing sprites resolves around the same problematic as tilemap involving bandwidth and latency only it is more difficult because sprites can appear anywhere and are not aligned in a grid.
+Drawing sprites is more difficult than drawing tilemaps. It involves solving the same problem of bandwidth and latency only sprites can appear anywhere on the screen and are not aligned in a grid.
 
-In order to fully appreciate how the CPS-1 solved this problem, it is worth understanding how other platforms tackled it.
+In order to fully appreciate how the Capcom solved this problem, it is worth understanding how other platforms tackled it.
 
 \subsubsection{Hardware sprite}
-A sprite circuit can be implemented using the same logic as a tilemap. Only it is a special case where there is only one tile and the map cannot be scrolled horizontally or vertically.
+A sprite circuit can be implemented using the same logic as a tilemap. It is a special case where the map features a single tile and no  horizontally or vertically scrolling is allowed.
 
 Every HSYNC, the GFXRAM is read to know if a sprite appears on the next scanline. If it does, the circuit makes sure it intercept tilemap pens to issue sprite pens instead. 
 
-That is a solution that has two problems. It requires one circuit per sprite which is expensive and the one-to-one complexity make it impossible to scale to more than a few units. Nonetheless, this is the solution used by machines such as the Commodore 64 which advertised their circuitry as "hardware sprites".
+It is an approach that comes with two drawbacks. Fisrt, it requires one circuit per sprite which is expensive. Second, the one-to-one complexity make it impossible to scale to more than a few units. Nonetheless, this is the solution used by machines such as the Commodore 64 which advertised their circuitry as "hardware sprites".
 
 
 As limiting as it sounds there is a bit of flexibility thanks to a technique known as multiplexing. A C64 has 8 sprites "units" but that does not mean it can only draw eight sprites on the whole screen. It only means it can only draw eight sprites on the same scanline.
@@ -1379,33 +1400,35 @@ System like the Super Nintendo use a line buffer with an impressive PPU resultin
 \subsubsection{Double Line buffer}
 A straight forward way to make a GFX more powerful is to simply give it more time to do its jobs. The merciless 8MHz pixel clock cannot be cheated but the pipeline can be made deeper.
 
-By using two linebuffers alternatively, the GFX increases its latency but also frees itself from rendering only during HBLANK. While a linebuffer is fed to the video, another one is rendered. This allows drawing during one full scanline (64$\mu$s) and a GFX 4x more capable. 
+By using two linebuffers alternatively, the GFX increases its latency but also frees itself from rendering only during HBLANK. While a linebuffer is fed to the video, another one is rendered. This allows drawing during one full scanline (64$\mu$s) and a GFX four times more capable than one using a single line buffer. 
 
-This choice, made by SNK for its Neo-Geo allowed gorgeous titles such as "Metal Slug" to be build entirely with sprites without using tilemaps.
+This choice, made by SNK for its Neo-Geo, allowed gorgeous titles such as "Metal Slug" to be build entirely with sprites without using tilemaps. 
+
+This system is so powerful that the entire Neo-Geo rendering pipelien revolves around its double line buffer system. It need no tilemap system.
 
 % The counterpart of this architecture is not only the price of a second line buffer but also an humongous amount of GFX ROM to store the assets which drive up game price tag significantly. 
 
 
 
 \subsubsection{CPS1 Sprite FrameBuffer}
-Capcom hardware designers wanted something even more powerful than a double line buffer. To allow more time than a scanline to the PPU, the CPS-1 was built around a double sprite framebuffer (the same technology as  Sega Super Scaler). To host these framebuffers, the machine uses a dedicated memory called VRAM.
+Capcom engineers wanted something even more powerful than a double line buffer. To allow more time than the 64$\mu$s allowed by a double line buffer, the CPS-1 was built around a double sprite framebuffer (the same technology as  Sega Super Scaler). To host these framebuffers, the machine uses a dedicated memory called VRAM.
 
 With a double sprite framebuffer, the PPU does not just draw a line in advance but a whole screen. This technique averages 16\% more time per line for the graphic chip to do its work but more importantly it allows any number of tiles per line (even the powerful Neo-Geo has a limit of 96 tiles per line).
 
-\begin{trivia}
-SEGA X Board used Sprite Framebuffer.
-\end{trivia}
+% \begin{trivia}
+% SEGA X Board used Sprite Framebuffer.
+% \end{trivia}
 
 The gain is massive but it comes with three drawbacks. 
 
-\subsubsection{Price}
+\subsubsection{Price tag}
 First, the price of the machine goes up since it requires much more buffering capacity. At the resolution of 384*224, 9 bits per pixel are stored (5-bits palette index + 4-bit color index) requiring 100 KiB of storage per framebuffer.
 
 \subsubsection{Bandwidth requirements}
-The second impact is on the bus because a massive amount of data is now written and read to/from the VRAM. It requires so much bandwidth that an especially large data bus connecting the GFX ROM and the VRAM had to be created.
+The second impact is on the bus. A massive amount of data is now written and read to/from the VRAM. It requires so much bandwidth that an especially large data bus connecting the GFX ROM and the VRAM had to be designed.
 
 \subsubsection{De-synchronization}
-Lastly, there is the problem of tilemap and sprites rendering desynchronized. When the m68k writes a layout in the GFXRAM, the graphic system picks it up but channels background tiles and sprites tiles to different locations. The tilemap is rasterized directly towards the video system while the sprite layer is rendered to the VRAM framebuffer where it will be picked up on the next frame.
+Lastly, there is the problem of tilemap and sprites synchronization. When the m68k writes a layout in the GFXRAM, the graphic system picks it up but routes background tiles and sprites tiles to different locations. The tilemap is rasterized directly towards the video system while the sprite layer is rendered to the VRAM framebuffer where it will be picked up on the next frame.
  
 
 \begin{trivia}
@@ -1427,7 +1450,7 @@ On frame 2, the scrolls of frame 2 are displayed but along with the spritebuffer
  \caption*{Frame 2.}%
  \end{figure}%
 
-On frame3, the scrolls of frame 3 are displayed but along with the spritebuffer from frame 2.
+On frame3, the scrolls of frame 3 are displayed but along with the spritebuffer from frame 2. The desycing can only be compensated in software.
 
 \begin{figure}[H]
 \nbdraw{latency3}
@@ -1509,7 +1532,7 @@ When Ken faces Ryu in Japan, nearly 200 tiles are used. This high number became 
 \img{lack_sprites_color.png}
 \pagebreak
 
-\begin{q}{- Akira Nishitani, SF2 Producer}
+\begin{q}{Akira Nishitani, SF2 Producer}
 We carefully planned SF2 so that the biggest character and the second biggest character could just barely fit on screen at the same time. 
 
 But when mirror matches became possible in Champion Edition, that meant that we had to be able to display two copies of the biggest character on screen. We ended up having to remove back- ground elements and such.
