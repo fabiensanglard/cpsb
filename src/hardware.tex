@@ -1468,11 +1468,11 @@ Up to that point, the frustration spur from sprite dimensions (all sprites had t
 
 The CPS-1 lifted these three limitations by abandoning the concept of sprites. The CPS-1 does have a "sprite" layer but it is made of tile of dimensions 16x16 pixels. Called OBJ (for OBJects) its TILEs can be arranged however an artist requires to build sprites of arbitrary shapes and sizes. 
 
-OBJ has 32 palettes which any tile can freely use for a total of 480 colors.
+Alike the other layers, OBJ palette page features 32 units which any tile can freely use.
 
 \pagebreak
 
-Street Fighter II embodies the power of the tile system. Combining them creates a universe of rich characters with specific shapes, contributing to building their personality.
+Street Fighter II embodies the power of the tile system. Combining them creates a universe of rich characters with specific shapes, giving them more personality.
 
 \begin{minipage}[t]{0.453\linewidth}
   \sdraw{1.0}{chunLi}
@@ -1501,10 +1501,10 @@ Ruy victory pose , 29 tiles (3,712 bytes). Sagat Tiger Punch pose, 30 tiles (3,8
 
 \sdraw{1.0}{kingpin}
 
-The ultimate boss in "The Punisher", Kingpin, is a mountain of a man made of 69 tiles which takes half the screen. This impressive feat came at a zero-wasted space thanks to the malleability of tiles.
+The ultimate boss in "The Punisher", Kingpin, is a mountain of a man made of 69 tiles which covers half the screen. This impressive feat came without minimal "wasted" pixel thanks to the usage of non-rectangular shapes.
 
 
-Tiles in the OBJ layer can have attributes to be rendered horizontally and/or vertically flipped but there is not support for rotation or scaling.
+Tiles in the OBJ layer have attributes allowing them to be rendered horizontally and/or vertically flipped. However, once again, there is not support for rotation or scaling.
 
 \begin{minipage}[t]{0.535\linewidth}
   \nbdraw{damnd}
@@ -1514,33 +1514,35 @@ Tiles in the OBJ layer can have attributes to be rendered horizontally and/or ve
   \nbdraw{damnd2}
 \end{minipage}
 
- When Final Fight boss, Damned, does its back-flip, the CPS-1 does not rotate anything. Two sets of tiles are used and X flip/Y flip generate two extra mirrored sets. The effect works with four poses, thanks to fast movement and players's brain interpolation.
+ When Final Fight min-boss, Damned, does a back-flip in level 1, no rotation is performed. Two sets of tiles are used and X flip/Y flipped to generate two extra mirrored sets. The effect works with four poses, thanks to fast movement and players's brain interpolation.
 
  % The system has an advertised capacity of 256 sprite tile per frame \red{(Source?)}.
 
 \pagebreak
 
 \subsection{OBJ Limitations}
-The sprite system has a hard limit of 256 tiles. This is a simple constraint dictated by how many tile is is able to read from the GFXROM and write to the VRAM during a raster scan (16.7ms).
+The sprite system has a hard limit of 256 tiles. This is not an arbitrary number, the constraint is dictated by how many tile the system is able to read from the GFXROM and write to the VRAM during a full raster scan (16.7ms).
 
 Because OBJ tiles are the most versatile (they can be placed independently and anywhere on the screen), it was tempting to use them often.
 
-Street Fighter II designers pushed the machine on the edge of its limits by using OBJ tiles for the opponents, arena decoration, GUI, and to embellish the background parallax effect.
+Street Fighter II designers pushed the machine on the edge of its limits by using OBJ tiles not only for the opponents, arena decoration, GUI, but also to embellish the background parallax effect. This led to problems when a sequel was in the making.
 
-When Ken faces Ryu in Japan, nearly 200 tiles are used. This high number became an issue in the sequel "Street Fighter 2 Champion Edition" which allowed mirror opponents to face each other on any location.
+When Ken faces Ryu in Japan, nearly 200 tiles are used. If two of the biggest contestant, Honda and Zangief, were to face each other on this stage, the CPS-1 would be unable to render all OBJ tiles necessary. Such configuration was impossible in "Street Fighter 2" but became a feature of "Street Fighter 2: Champion Edition"  which allowed mirror opponents to face each other on any location.
 \vfill
 \img{lack_sprites_color.png}
-\pagebreak
+
 
 \begin{q}{Akira Nishitani, SF2 Producer}
 We carefully planned SF2 so that the biggest character and the second biggest character could just barely fit on screen at the same time. 
 
-But when mirror matches became possible in Champion Edition, that meant that we had to be able to display two copies of the biggest character on screen. We ended up having to remove back- ground elements and such.
+But when mirror matches became possible in Champion Edition, that meant that we had to be able to display two copies of the biggest character on screen. 
+
+We ended up having to remove back- ground elements and such.
 \end{q}
-To remain within the OBJ budget, the "wind, forest, fire, mountain" ("\begin{CJK}{UTF8}{min}風林火山\end{CJK}") sign was removed from Street Fighter 2 Champion Edition. Many more background like XXX, YYY, and ZZZ had to be reworked in the same fashion.
+To remain within the OBJ budget, the "wind, forest, fire, mountain" ("\begin{CJK}{UTF8}{min}風林火山\end{CJK}") sign was removed. All breakable (Ken's barrel, Guile's crate and Dictator's statues) were allowed to remain.
 
 \begin{trivia}
-Decoration in Street Fighter 2 were the object of much consideration. The stone in Thailand randomly move at the beginning of each round so they cannot be used as hallmark by players.
+Decoration in Street Fighter 2 were the object of much consideration. The stone on the ground in Sagat's stage randomly move at the beginning of each round so they cannot be used as landmarks by players.
 
 \end{trivia}
 
@@ -1691,11 +1693,12 @@ Decoration in Street Fighter 2 were the object of much consideration. The stone 
   \img{sf2frames-00001241}
 \end{minipage}
 
-The lack of scaling and rotation was a problem for developers of Street Fighter 2 where the intro called for exactly these operations. 
+The lack of OBJ scaling and rotation was a problem for developers of Street Fighter 2 where the intro needed precisely these two operations. 
 
-They faked it with two logos, a small and a large one. Tiles move on a circular pattern. The small to large substitution happens in one-go at the mid-animation timestamp.
+To fake it, two logos are used, a small (beginning) and a large one (final). Tiles move on a circular pattern revolving around the center of the shape. The small to large substitution happens at the end of the first revolution.
 
-\pagebreak
+Once again, Capcom banked on fast movement, brain interpolation and maybe forgiveness due to a damn good game.
+
 
 
 
@@ -1716,23 +1719,25 @@ Just three days before the deadline, I discovered something horrible.
 I had made a mistake with the subtitle “World Warrior”, mis-spelling it “World Warrier.”
 \end{q}
 
-The subtitle is drawn with the OBJ layer, using 16 draw calls pointing to tileID \icode{0x0}, \icode{0x1}, \icode{0x2}, \icode{0x3}, \icode{0x4}, \icode{0x5}, \icode{0x6}, \icode{0x7}, \icode{0x8}, \icode{0x9}, \icode{0xA}, \icode{0xB}, \icode{0xC}, \icode{0xD}, \icode{0xE}, \icode{0xE}. 
+The subtitle was drawn with the OBJ layer, using 16 draw calls pointing to tileID \icode{0x0}, \icode{0x1}, \icode{0x2}, \icode{0x3}, \icode{0x4}, \icode{0x5}, \icode{0x6}, \icode{0x7}, \icode{0x8}, \icode{0x9}, \icode{0xA}, \icode{0xB}, \icode{0xC}, \icode{0xD}, \icode{0xE}, \icode{0xE}. 
 
-Indeed, looking inside the GFXROM, one can find the 16 tiles making the "World Warrier". 
+Looking inside the GFXROM, one can find the 16 tiles making the "World Warrier". 
 
 \begin{figure}[H]
 \nbdraw{worldwarrier_tile}
- \caption*{The 16 OBJ tiles making the title. With a typo.}%
+ \caption*{The 16 OBJ tiles making the title, with a typo.}%
  \end{figure}%
 
 \begin{q}{Akiman, Lead graphic design on SF2}
 It was several months after all the sprite work had been done. Since the logo had already been created, I couldn't just go in and change the letter at this point.
 \end{q}
 
-What Akiman describe is that the GFXROM and all the tiles had been finalized. However they could still make modification to the 68000 instructions and most importantly, the palettes that were stored along with it.
+What Akiman describe is that the GFXROM and all the tiles in it had been finalized. However they could still make modification to the 68000 instructions and most importantly, the palettes that were stored along with it.
 
 \begin{q}{Akiman, Lead graphic design on SF2}
-"Maybe I can just force it to look like an ‘o’," I thought. I tried layering various other sprites over it until finally, it looked like an ‘o’. Phew!
+"Maybe I can just force it to look like an ‘o’," I thought. I tried layering various other sprites over it until finally, it looked like an ‘o’. 
+
+Phew!
 \end{q}
 
 \begin{figure}[H]
@@ -1754,15 +1759,15 @@ It only partially solved the problem since the spit 'W' looked like an 'l' which
  \end{figure}%
 
 
-The problem was displaced from turning an 'i' into an 'o', to turning an 'l' into and 'i'. That would have been simple if the CPU could have written in the VRAM but are we have seen these chips are not mapped in the m68k address space.
+The problem was displaced from turning an 'i' into an 'o', to turning an 'l' into and 'i'. That would have been simple if the CPU could have written in the VRAM but as we have seen these chips are not mapped in the m68k address space.
 
-There is an expensive way to fake pixel plotting. The idea is to find a tile almost fully transparent (\icode{0xF}) but with only a single pen value in it. 
+There is an expensive way to fake pixel plotting. The idea is to find a tile almost fully transparent (\icode{0xF}) but with only a single pen value set in its. 
 
 Akiman found that in one of Guile's pose, his calve met these criteria with a simple pen value in its lower left.
 
 \begin{figure}[H]
 \nbdraw{guileCalve}
-\caption*{Guile's calve save the day.}%
+\caption*{Guile's calve saves the day.}%
  \end{figure}%
 
 Using Guile's calve as a pencil, but with the title's palette, three tiles are drawn over the 'l' to split it into an 'i'.
@@ -1782,7 +1787,7 @@ Using Guile's calve as a pencil, but with the title's palette, three tiles are d
 
 \begin{figure}[H]
 \nbdraw{world_warrior_title}
- \caption*{18 draws calls. Two more than necessary but with proper grammar.}%
+ \caption*{18 draws calls. Three more than necessary but with proper grammar.}%
  \end{figure}%
 
 \begin{figure}[H]
@@ -1828,11 +1833,11 @@ To keep up with the bandwidth requirements, the VRAM and GFX ROM systems are spe
 
 
 \subsubsection{VRAM}
-Not only the VRAM system is optimized from an architecture standing point via two completely independents blocks A and B, it also benefit from exceptionally powerful components.
+The VRAM system is physically split via two independents blocks A and B to facilitate sprite buffer double buffering. This component also benefit from exceptionally powerful chip compared to the rest of the machine.
 
-A quick glance at the \icode{HM53461P} pins shows that this chip does more than the simple data, address, and control we have seen so far.
+A quick glance at the \icode{HM53461P} shows the usual \icode{+5V}, \icode{GND}, \icode{CLK}, and address/data pins. However \icode{SD} pins are visible, indicating this chip does more than the one we have seen so far.
 
-\sdraw{0.6}{HM53461P-10}
+\sdraw{0.55}{HM53461P-10}
 
 Able to store 65,536 Ki x 4-bit, the \icode{HM53461P} is peculiar because it not only features a RAM port (\icode{D1-D4}), it also features a SAM "serial" port (\icode{SD1-SD4}).
  
@@ -1840,10 +1845,9 @@ The RAM port is accessed "normally" by first asserting the address lines along w
 
 The SAM port is different. Upon asserting the address lines, an internal buffer is latched. Each subsequent control operation automatically increment the address counter.
 
-This design allows RAM and SAM to be accessed simultaneously (although this never happen since when A is read, B is written and the other way around).
- More interesting is the access time which on the RAM port is 100ms and more than twice as fast (40ms) on the SAM port. 
+This design would allows RAM and SAM to be accessed simultaneously but this never happen since when A is read, B is written and the other way around). The real value is in the access time. If the RAM port's 100ms is "normal" figure, the SAM port read operations complete more than twice as fast, taking only 40ms. 
 
- This is a perfect component for a system that needs to write a few values at varying locations (like when the CPS-B renders a sprite buffer) but read a very large amount sequentially (like when the CPS-B must compose color code towards the palette system).
+ This is a perfect component for a system that needs to write a few values at varying locations (like when the CPS-B renders a sprite buffer) but read a very large amount sequentially (like when the CPS-B must compose pens towards the palette system).
 
  On the Street Fighter II board, twelves \icode{HM53461P} are combined into six pairs, resulting in 384 Ki * 8-bit.
 
@@ -1861,7 +1865,7 @@ This design allows RAM and SAM to be accessed simultaneously (although this neve
 \subsubsection{GFX ROM}
 To keep up with the much higher storage requirements, the GFX ROM system is not designed like the others. 
 
-While other chips on the board-B are \icode{27C010} and \icode{27C512}, the GFXROM is made of \icode{MB834200B} (256 Ki x 16-bit). Because of their slow access time of 150ns, they are arranged in a two-way interleave resulting in two 16-bit "channels" data path.
+While other chips on the board-B are \icode{27C010} and \icode{27C512}, the GFXROM is made of \icode{MB834200B} (256 Ki x 16-bit). This type of ROM have a much higher capacity but also a slower access time (150ns). To compensate they are arranged in two concurrently addressed banks in two 32-bit "channels" data path.
 
 
 \sdraw{0.8}{MB834200B-15}
