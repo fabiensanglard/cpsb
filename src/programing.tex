@@ -7,7 +7,7 @@ The rest of this book describes a full game production pipeline. The goal is to 
 
 This chapter describes the high-level architecture. It is intentionally light on details since those are provided in subsequent chapters.
 
-The pipeline we will describe ingests the code (\icode{.s}/\icode{.c}) written by programmers, the samples (\icode{.wav}) and musics (\icode{.mvg}) from the musicians, and the graphics assets (\icode{.png}) produced by the artists. The outputs are four sets of ROMs ready to be burned on EPROMs. 
+The pipeline we will describe ingests the source code (\icode{.s}/\icode{.c}) written by programmers, the samples (\icode{.wav}) and musics (\icode{.mvg}) from the musicians, and the graphics assets (\icode{.png}) produced by the artists. The outputs are four sets of ROMs ready to be burned on EPROMs. 
 
  \begin{figure}[H]
 \sdraw{1.0}{game_pipeline}
@@ -17,13 +17,13 @@ The pipeline we will describe ingests the code (\icode{.s}/\icode{.c}) written b
 \pagebreak
 Some dependencies in the graph make a lot of sense. The z80 source code (\icode{.c} and \icode{.s}) only impacts the z80 ROM. Likewise, the 68000 code (also \icode{.c} and \icode{.s}) ends up in the 68000 ROM.
 
-Other dependencies are more convoluted. The \icode{.wav} sample files for example need to be compressed to ADPCM before being added to the OKI ROM. To be referencable at runtime, each sample is given an integer ID. These IDs must be collected into a \icode{.h} header file. That file must be compiled along with the rest of the 68000 code.
+Other dependencies are more convoluted. The \icode{.wav} sample files for example need to be compressed to ADPCM before being added to the OKI ROM. To be referencable at runtime, each sample is given an integer ID. These IDs must be collected into a \icode{.h} header and this file must be compiled along with the rest of the 68000 code.
 
-Likewise, the \icode{.png} files are transformed before making their way to the GFX ROM. They also require to generate a \icode{.h} header file, this time containing tileID. Additionally, a \icode{.c} file containing each tile palette is generated in order to be compiled into the 68000 ROM. 
+Likewise, the \icode{.png} files containing the artworks are transformed before making their way to the GFX ROM. They also require to generate a \icode{.h} header file, this time containing tileID. Additionally, a \icode{.c} file containing each tile palette is generated in order to be compiled into the 68000 ROM. 
 
 An even more complicated graph emerge from the music \icode{.vmg} files. The music track contains YM2151 commands that must be transformed in bytecode, stored in a \icode{.c} file, and compiled along with the z80 code. To be referenced, a header file containing music ID must also be generated and compiled with the 68000 ROM. Lastly, music are embellished with audio samples which must also be compressed to ADPCM and added to the OKI ROM.
 
-To complicate things even further, each of the four ROM mentioned must use different word size and interleaving across chips containing it.
+To complicate things even further, each of the four ROM mentioned must use different \icode{WORD} size and interleaving across chips containing it.
 
 \section{CCPS: The CPS-1 Build System}
 As this book was being written, several tools were authored to validate the understanding of the hardware.
@@ -39,22 +39,24 @@ Even if only to check what obscure compiler flags must be used, it is freely ava
 
 
 \section{Programming Language}
-For all their CPS-1 titles, Capcom developers used z80/m68k assembly. They did not have much choice anyway since high-level languages did not allow variable placement and humans were better at hand crafting instructions. Additionally, ROM space was precious and controlling the volume of instructions with accuracy was paramount.
+For all their CPS-1 titles, Capcom developers used z80/m68k assembly. They did not have much choice anyway since high-level languages did not allow variable placement and humans were better at hand optimizing instructions. Additionally, ROM space was precious and controlling the volume of instructions with accuracy was paramount.
 
-Even with the improvements of compilers capabilities, output compactness and optimization performances, a developer willing to take a CPS-1 to the next level will undoubtedly use assembly.
+Even with the improvements of modern compilers capabilities, output compactness and optimization performances, a developer willing to take a CPS-1 to the next level will undoubtedly use assembly.
 
 Since the goal of this book is to explains how things works, it uses C for its greater readability and wider knowledge base among programmers. A little bit of assembly is used but only to bootstrap the CPUs.
 	
 \section{CPUs Bootstrapping}
-Without libraries, frameworks, dynamic linker, syscalls, virtual memory, a loader, or even an operating system, development happens down to the metal. 
+Without libraries, frameworks, dynamic linker, syscalls, virtual memory, a loader, or even an operating system, CP-System games run on the bare metal. 
 
-Bootstrapping involves simple things like setting the stack pointer and the instruction pointer of a CPU. But it also involves harder tasks like setting up interrupts and more importantly preparing the program to run before calling its \icode{main} function. A innocent six lines C program offers a glimpse into what is involved.
+Bootstrapping involves simple things like setting the stack pointer and the instruction pointer of a CPU. But it also involves harder tasks like setting up interrupts and more importantly preparing the program to run before calling its \icode{main} function. 
+
+An innocent six lines C program offers a glimpse into what is involved.
 
 \lstinputlisting[style=CStyle]{src/code/variablesDeclaration.c}
 
-After compilation and linking, this program will result into a binary of raw instructions (no container like ELF or PE) \icode{prog.rom}. Burned on a ROM, is is mapped somewhere in the CPU address space.
+After compilation and linking, this program will result into a binary of raw instructions (no container like ELF or PE) \icode{prog.rom}. Burned on a ROM, is is mapped somewhere in the CPU address space depending on the mapping established for the z80 and m68k.
 
-During the linking stage, all the variables and functions were given an address in either ROM or RAM. 
+During the linking stage, all the variables and functions are given an address in either ROM or RAM. 
 
 \begin{figure}[H]
 \nbdraw{prog_rom_mapping}
@@ -62,20 +64,20 @@ During the linking stage, all the variables and functions were given an address 
 \end{figure}
 
 \subsubsection{Read-only}
-The easier symbol to deal with was function \icode{f} which goes in ROM and points to its own instructions.
+Instructions for \icode{f} go in ROM at offset 0. Since the linker knows both where the ROM will be mapped and the section offest in the ROM, it can inline calls to \icode{.text + 0}. This means \icode{0x0000} for both the z80 and the m68k.
 
-Another easy symbols are the const \icode{vc} and \icode{vd}. Since they are read only, their values are written to ROM as well. These are grouped in another section \icode{.rodata} apart from functions but nothing fishy there.
+Const values \icode{c} and \icode{d} are read only so they go in ROM as well. These are grouped in section \icode{.rodata} apart from \icode{.text}. Read and write access are respectively inlined values equal to \icode{.rodata + 0} and \icode{.rodata + 1}.
 
 \subsubsection{Read-Write}
-Symbol \icode{va} is interesting because it is readable but also writable. The linker will have assigned a RAM address. Since it is uninitialized, it point to whatever is there in the RAM when it started.
+Symbol \icode{a} is interesting because it is readable but also writable. The linker will have assigned a RAM address (starting at \icode{0xD000} on z80 and \icode{0xFF0000} on m68k). Since it is uninitialized, it will point to whatever is there in the RAM when it started.
 
-Symbol \icode{vb} is even more interesting. Like \icode{va} is is readable and writable but unlike \icode{va} it is initialized  to value \icode{0}. The linker can make \icode{va} point to RAM and even group zero-initialized variable together but setting the value to zero cannot be done. This is something the bootstrap will have to somehow take care off.
+Like \icode{a}, \icode{b} is readable and writable but it is initialized to value \icode{0}. The linker can make \icode{a} point to RAM and even group zero-initialized variable together but setting the value to zero cannot be done. This is something the bootstrap will have to take care off.
 
-Finally we come to variable \icode{ve}. Since it is writable, the linker will have used the next available address in RAM after \icode{va}. But how can the linker initialize that location to value \icode{5} since it can only write to file \icode{pro.rom} which is not mapped there? 
+Finally we come to variable \icode{e}. Since it is writable, the linker will have used the next available address in RAM after \icode{a}. But how can the linker initialize that location to value \icode{5} since it can only write to file \icode{pro.rom} which is not mapped there? 
 
-The answer is that it cannot. That  task, also called ""copy-down" " is another think the bootstrap will have to take care of.
+The answer is that it cannot. That task, called copy-down", is another thing the bootstrap will have to take care of.
 
-Since it involves very low operations, both bootstraps (one for z80 and one for m68k) are written using assembly and bundled in a file named \icode{crt0.s}.
+Since they involves low-level operations, both bootstraps for z80 and the m68k are written using assembly and bundled in a file named \icode{crt0.s}.
 
 
 
@@ -90,7 +92,7 @@ There are many chip in the machine that need to talk to each others. In the hier
 That is eight communication lines, but the dotted one on the drawing are not programmable which lower the task to five APIs.
 % Most of these interfaces are registers where values are written and read. To arbitrate these access, the CPU buses are leveraged.
 
-\subsection{M68000-CPSA, M68000-CPSB} Communication occurs over the CPS-A and CPS-B registers. Additionally draw commands are written by the 68000 to the GFXRAM where they are read by the CPS-A. All accesses to GFXRAM are arbitrated by the 68000 bus protocol.
+\subsection{M68000-CPSA and M68000-CPSB} Communication occurs over the CPS-A and CPS-B registers. Additionally draw commands are written by the 68000 to the GFXRAM where they are read by the CPS-A. All accesses to GFXRAM are arbitrated by the 68000 bus protocol.
 
 \subsection{z80-YM2151} Communication occurs over the YM2151 registers which are mapped on the z80 bus. These accesses are arbitrated by the z80 bus protocol.
 
