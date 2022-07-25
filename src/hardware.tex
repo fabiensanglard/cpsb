@@ -1865,10 +1865,12 @@ This design would allows RAM and SAM to be accessed simultaneously but this neve
 \subsubsection{GFX ROM}
 To keep up with the much higher storage requirements, the GFX ROM system is not designed like the others. 
 
-While other chips on the board-B are \icode{27C010} and \icode{27C512}, the GFXROM is made of \icode{MB834200B} (256 Ki x 16-bit). This type of ROM have a much higher capacity but also a slower access time (150ns). To compensate they are arranged in two concurrently addressed banks in two 32-bit "channels" data path.
+While other chips on the board-B are \icode{27C010} and \icode{27C512}, the GFXROM is made of \icode{MB834200B} (256 Ki x 16-bit). This type of ROM have a much higher capacity but also a slower access time (150ns). 
+
+It is likely the dual-channel architecture is the result of a desire to use inexpensive components to keep the price down.
 
 
-\sdraw{0.8}{MB834200B-15}
+\sdraw{0.7}{MB834200B-15}
 
 On the Street Fighter II board, twelves \icode{ MB834200B-15} are combined for a total of 6 MiB of GFX assets.
 
@@ -1893,14 +1895,14 @@ Bootlegs don't only hurt us; they're also a nuisance for our customers who think
 There were good reasons to be optimistic. Engineers had crammed the platform with protections to prevent two types of piracy.
 
 
-Hardware piracy meant producing bootlegs by physically copying Capcom PCBs. By dumping the ROMs content from a legitimate board, buying the same off-the-shelf CPUs and TTLs components (Transistor–transistor Logic) pirates would sell the same game  for cheaper.
+\textbf{Hardware piracy} means selling physical copies of PCBs (called bootlegs). By dumping the ROMs content from a legitimate board, buying the same off-the-shelf components, pirates sold the same game for cheaper.
 
-The CPS-1 answer was to use custom components that would not be readily available for purchase, thus preventing counterfeiters from replicating a PCB. Capcom had Ricoh exclusively fabricate the two custom ASICs, the CPS-A and CPS-B. To protect against decapping, metal grids were layered on top of the ASICs\cite{arcadeHackerCPS1Rev}. 
+The CPS-1 answer was to use custom components that would not be readily available for purchase, thus preventing counterfeiters from replicating a PCB. Capcom had Ricoh exclusively fabricate the two custom ASICs, the CPS-A and CPS-B. To protect against decapping and reverse-engineering, metal grids were layered on top of the ASICs\cite{arcadeHackerCPS1Rev}. 
 
 
-Software piracy involved operators purchasing an authentic game to get the PCBs but then copying ROMs and get newer games for free. 
+\textbf{Software piracy} involved operators purchasing an authentic game to get the PCBs but then copying ROMs and get newer games for free. 
 
-Capcom's response was a dual verifier with a hardware system that could be actively used by the game runtime to check the board authenticity backed by "passive" mechanisms that allowed the hardware to check the software behavior.
+Capcom's response was a two-way verification where the hardware that could be actively used by the software to check the board authenticity backed by "passive" mechanisms that allowed the hardware to check the software behavior.
 
 \begin{figure}[H]
 \nbimg{copy_protection.png}
@@ -1950,9 +1952,9 @@ To this effect, twenty-five versions the CPS-B exist\cite{mame_cps1_video} somet
 }\caption*{A selection of the many Capcom CPS-1 games revisions.}
 \end{figure}
 
-Originally, the CPS-B chips changed frequently. The table above only contains a few of the many PCB revisions. The full list give a good idea of how successful a game was. Street Fighter 2 was revised 34 times, while Final Fight received 13 "refreshes".
+In the early days of the CP-System, the CPS-B chips changed frequently. The table above only contains a few of the many PCB revisions. There is a correlation between the number of revisions and how successful a game was. Street Fighter 2 was revised 34 times, while Final Fight received 13 "refreshes".
 
-With the released of "Three Wonders", Capcom singled out their chips via configuration micro-code so all CPS-B ASICs onward were CPS-B v21.
+With the released of "Three Wonders", Capcom singled out their chips via embedded software instead of hardware alterations. All CPS-B ASICs onward were CPS-B v21.
 
 \begin{figure}[H]
 { \setlength{\tabcolsep}{3.0pt}
