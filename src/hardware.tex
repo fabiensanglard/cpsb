@@ -1954,7 +1954,7 @@ To this effect, twenty-five versions the CPS-B exist\cite{mame_cps1_video} somet
 
 In the early days of the CP-System, the CPS-B chips changed frequently. The table above only contains a few of the many PCB revisions. There is a correlation between the number of revisions and how successful a game was. Street Fighter 2 was revised 34 times, while Final Fight received 13 "refreshes".
 
-With the released of "Three Wonders", Capcom singled out their chips via embedded software instead of hardware alterations. All CPS-B ASICs onward were CPS-B v21.
+With the released of "Three Wonders", Capcom stopped changing the CPS-B in favor of a better protection system. All CPS-B ASICs onward were CPS-B v21.
 
 \begin{figure}[H]
 { \setlength{\tabcolsep}{3.0pt}
@@ -1985,23 +1985,25 @@ Mega Man the Power Battle & \texttt{CPS-B-21}  & 1995 \\
 \end{figure}
 
 
-\subsection{CPS-ID check}
+\subsection{ID check}
 The simplest copy protection available is the chip ID check. By polling a register, the m68k prompts the CPS-B to return its version number. A simple version matches let the code know if its belongs to the right PCB. 
 
 To make instructions patching of the 68000 ROMs more difficult, calls to verify the chip id are placed in several location in the code. That did not prevent people from trying anyway\cite{strider_conversion}!
 
 \subsection{Multiplication check}
-Starting with vB-21, a slightly more robust feature gave the CPS-B the ability to perform multiplications. Two registers are written and a third one can be read. The 68000 code is expected to check that the returned multiplication result is the expected value.
-
-\subsection{Unexpected behavior detection}
-Protection described so far involved an active software and a passive hardware. There is yet another level of protection where the hardware is active by expecting the software to behave properly. If the CPS-B sees that incoherent values are written to the wrong register, it sets and lock all palettes to black. 
-
-The game still runs in the background and the audio is also behaving properly but the screen doesn't display anything. The only way to recover is to reboot the machine\cite{petitSecurity}.
+Starting with CPS-B v21, a slightly more robust feature gave the CPS-B the ability to perform multiplications. Two registers are written and a third one can be read. The 68000 code is expected to check that the returned multiplication result is the expected value.
 
 \subsection{Moving registers}
-Another variation between CPS-Bs is the registers locations. The 68000 memory map of the CPS-B registers does not change, but the offset inside that mapping was altered between versions. Accessing the scroll control, scroll priority, and palette upload registers is done using a different offset for each game.
+The CPS-Bs registers move between revisions. They 68000 memory map of the CPS-B registers does not change, but the offset inside that mapping is altered. Accessing the scroll control, scroll priority, and palette upload registers is done using a different offset for each game.
 
-Additionally, the meaning of each bit inside a register can changes.
+Additionally, the meaning of each bit inside each register is altered between version.
+
+
+
+\subsection{Unexpected behavior detection}
+Protection described so far involved an active software and a passive hardware. The hardware can also actively monitor the software by leveraging the moving registers policy. If the CPS-B detects incoherent values written to the wrong registers, it sets and lock all palettes of all layers to black. 
+
+The game still runs in the background and the audio is also behaving properly but the screen doesn't display anything. The only way to recover is to reboot the machine\cite{petitSecurity}.
 
 
 
@@ -2034,32 +2036,34 @@ If not data is detected, \icode{0xF} is automatically "inserted", resulting in a
 
 
 \subsection{Configuration Key}
-Up to 1991, all CPS-B variations were burned at the factory. They were set in silicon without a way to re-purpose them after the fact. This was not only expensive to have to revise the hardware circuits for each game, it was also a logistic difficulty to provision enough chips for a success and not be stuck with inventory on an unappreciated game.
+Up to 1991, the behavior of a CPS-B was hard-coded in its silicon at the factory level. There was no way to alter or re-purpose them after they shipped. 
 
-To solve this issue, Capcom resolved to stop making different silicon in favor of using a standard configurable CPS1-B.
+It was not only expensive to have to revise the hardware circuits for each game, it was also a logistic difficulty to provision enough chips for a success and not be stuck with inventory on an unappreciated game. To solve this issue, Capcom revisted the CPS-B chip one last time and made it configurable via software.
 
-"Street Fighter 2: The World Warriors" did not get the treatment but starting with "Three Wonders" the CPS-B v21 featured a small internal 18 bytes RAM. This was enough for the chip to retain a configuration dictating its behavior\cite{petitSecurity}.
+The whole behavior is encoded in a small internal 18 bytes area using not ROM but a RAM. To keep these bytes alive, the CPS-B v21 must be supplied with current at all time\cite{petitSecurity}.
 
 The configuration RAM was designed to survive when the cabinet was turned off thanks to a battery located  on the soldering side of Board C and connected to the CPS-B. The chip was even designed to survive having no battery for a few minutes to allow battery replacement.
 
 \begin{trivia}
-These battery worked remarkably well since thirty years later you can still find some of these boards in working condition.
+These battery worked remarkably well since, thirty years later, one can find boards in working condition still using their original battery.
 \end{trivia}
 
-\subsection{Suicide batteries}
+\subsubsection{Suicide batteries}
 The infamous "suicide" nickname came from the effect of losing power. A CPS-B v21 without power lose its configuration and resets all its registers to "default" values that none of the games use. Capcom offered a battery replacement to resurrect boards "C" which had committed sepuku but eventually discontinued the service. 
 
 As the reader will have guessed, passionate fans found a way to bring these games back to life.
 
 \subsubsection{Phonenixing}
-The first method is called "phoenix". It is a tedious process which consist in dumping a game ROM and patch the m68k instructions to replace CPS-B registers accesses to use the "default values"\cite{csp1_phoenix}. 
+The first method is called "phoenix"-ing. It is a tedious process which consist in dumping a game ROM and patch the m68k instructions to replace CPS-B registers accesses to use the "default values"\cite{csp1_phoenix}. 
 
-The people phoenixing CPS-1 board are so good at it that they even change the splash screen of the game to feature a "Phoenix Edition" icon.
-
-\subsubsection{De-suiciding}
-The second method is even more impressive since it involves circuit surgery by re-uploading the configuration into the CPB-B, essentially de-suiciding them\cite{arcadeHackerCPS1Desuicide}.
+People phoenixing CPS-1 board have such intimate knowledge of the CP-System that they even changed the splash screen of the game to feature a "Phoenix Edition" icon.
 
 \nbimg{phoenix_screen.png}
+
+\subsubsection{De-suiciding}
+Eventually, passionate people figured out the process of accessing the CPS-B RAM. Boards can be brought back to life by re-uploading the proper configuration bytes which essentially de-suiciding them\cite{arcadeHackerCPS1Desuicide}.
+
+
 
 
 
@@ -2072,19 +2076,19 @@ To Capcom, the CPS-1 was a gamble that paid off hundredfold, allowing them to be
 
 To players, the games were a series of beautifully crafted titles which provided entertainment and empty pockets. The unforgettable experience was such that passionate people wrote emulators and even in some extreme cases, books to keep these memories alive. 
 
-To counterfeiters, the CP System was a problem. Capcom games were popular and generated a substantial amount of money. The demand for boards skyrocketed with the advent of Street Fighter II. 
+To counterfeiters, the CP-System was a problem. Capcom games were popular and generated a substantial amount of money. It is likely greed set even more once the demand skyrocketed with the advent of Street Fighter II. 
 
-Capcom engineers had designed security measures able to discourage attackers with a reasonable amount of determination. Perhaps the one flaw the CPS-1 can be faulted with is that it did not provision for the high level of success it enjoyed.
+Capcom engineers had designed security measures able to discourage attackers with a reasonable amount of determination. Perhaps the one flaw the CPS-1 can be faulted with is that it did not provision for the unprecedented level of popularity it enjoyed.
 
-The money in the balance armed the counterfeiters with an unreasonable amount of determination. As players lined up to spend time and beat Street Fighter 2, so did the pirates to defeat the copy-protection systems. Eventually they were able to figure out. 
+The money in the balance armed the counterfeiters with an unreasonable amount of tenacity. As players lined up to spend time and beat Street Fighter 2, so did the pirates to defeat the copy-protection systems. Eventually they were able to figure out. 
 
 
-Of all the security measures, it would have been fair to assume the custom ASICs would be an impenetrable fortress. Astonishingly, CPS-A and CPS-B replicas were manufactured under the name "COMCO"\cite{arcadeHackerCPS1}. It is unknown if an insider leaked the schematics or if someone made it their life mission to reverse-engineer these chips but it did happen.
+Of all the security measures, it would have been fair to assume the custom ASICs would be an impenetrable fortress. Astonishingly, CPS-A and CPS-B replicas were manufactured under the name "COMCO"\cite{arcadeHackerCPS1}. It is unknown if an insider leaked the schematics or if someone made it their life mission to reverse-engineer these chips to make it happen.
 
 As cracks appeared in its shield, Capcom did not give up on protecting its tiles. As it had proved itself able to evolve and compete in the arcades, it embraced the challenge to always remain one step ahead of bootlegers.
 
 \subsection{CPS-1.5 Kabuki}
-In 1992, Capcom released the CP System Dash (a.k.a CPS-1.5). Fully encased in a gray plastic box, it introduced a fourth satellite "Qboard" PCB to handle playback of positional three-dimensional Qsound audio. In total, five games would be produced until late 1993.
+In 1992, Capcom released the CP System Dash (a.k.a CPS-1.5). Fully encased in a gray plastic box, it introduced a fourth satellite "Qboard" PCB to handle playback of positional three-dimensional Qsound audio. Five games were produced until late 1993.
 
 \begin{figure}[H]
 { \setlength{\tabcolsep}{3.0pt}
@@ -2103,29 +2107,31 @@ In 1992, Capcom released the CP System Dash (a.k.a CPS-1.5). Fully encased in a 
 \end{figure}
 
 \label{kabuki}
-The CPS 1.5 is noteworthy for its improved copy-protection where the audio instructions are stored in encrypted ROM. The audio CPU is a special z80 dubbed Kabuki\cite{arcadeHackerKabuki} able to decrypt instructions on the fly.
+The CPS 1.5 is noteworthy for its improved copy-protection where the audio instructions are stored encrypted in the ROM. The audio CPU is a special z80 dubbed Kabuki\cite{arcadeHackerKabuki} able to decrypt instructions on the fly.
 
-The encryption scheme is symmetric with the private key being stored in the z80. It is not burned in the silicon but, alike the CPS-1 configuration, stored via RAM. To keep that key alive, the unused pin 28 we saw on page \pageref{z80_pinRFSH} is re-purposed from "DRAM refresh" to providing power. To this effect, it is connected to a second "suicide battery" (not the same as the CPS-Bs). 
+The encryption scheme is symmetric. A secret key is used to encrypt the ROM when it is built, and the same secret key must be used to decrypt it at runtime.
+
+The key is not burned in the z80's silicon but, alike the CPS-B v21 configuration, stored in an internal RAM. To keep that key alive, the unused pin 28 we saw on page \pageref{z80_pinRFSH} is re-purposed from "DRAM refresh" to providing power. The system gained a second "suicide battery" (not the same as the CPS-Bs) in the process. 
 
 
 
 
 
 \begin{trivia}
-The protection provided by CPS-1.5 held remarkably well over the years. It was only broken in the early 2000s\cite{mame_kabuki}.
+The protection provided by Kabuki held remarkably well over the years. It was only broken in the early 2000s\cite{mame_kabuki}.
 \end{trivia}
 
 \subsection{CPS-2}
 
 With significantly improved capabilities thanks to its increased ROM capacity and higher processor clocks the CPS-2 instantly became a smash-hit, in particular thanks to the Street Fighter Alpha series. 
 
-From 1993 to 2003, forty-two games would be published, the last one being "Hyper Street Fighter II: The Anniversary Edition".
+From 1993 to 2003, forty-two games were published. The first one was the successful "Super Street Fighter II" while the last one "Hyper Street Fighter II: The Anniversary Edition" paid homage to a series that defined the platform.
 
 In terms of copy-protection, Capcom once again cranked up security. Not only the platform features the Kabuki audio instruction encryption, it also features encrypted game logic. 
 
-Thanks to a custom CPU, ABI compatible with the 68000, instructions retrieved from the ROM can be decrypted on the fly. Alike other systems, the private key is stored in yet another battery-powered RAM.
+Thanks to a custom CPU, ABI compatible with the 68000, instructions are stored encrypted in ROM and decrypted on the fly. Alike Kabuki, the scheme uses a shared secret key that stored in yet another battery-powered RAM (the third one).
 
-The only part of the machine that remain non-encrypted is the OKI ROM containing audio samples,. The GFXROM data was not encrypted but the content was shuffled.
+The only part of the CPS-2 that remain stored in plain is the OKI ROM containing audio samples. The GFXROM data was not encrypted but the content was shuffled.
 
 \begin{trivia}
 This protection was remarkably strong and held for nearly 10 years. It only fell when the "CPS-2 Shock Group" attacked it in 2003\cite{cps2rebirth}.
