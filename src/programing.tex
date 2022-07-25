@@ -140,9 +140,9 @@ In a game like Street Fighter II, developers took the approach of not giving val
 
 
 
-When interrupted, the z80 read the byte in latch 1 and append it into a circular buffer. Interpretation happen in the non-interrupted thread. A byte value \icode{FE} means that the next byte is the ID of a music that should start playback. 
+When interrupted, the z80 read the byte in latch 1 and append it into a circular buffer. Interpretation happen in the "main" thread. A byte value \icode{FE} means that the next byte is the ID of a music that should start playback. 
 
-Otherwise the value is a sound ID to be played immediately on the OKI. This scheme allows for 256 music IDs and 254 samples IDs.
+Otherwise the value is a sound ID to be played immediately on the OKI. This scheme waste a single byte value to overhead. It allows for 256 music IDs and 254 samples IDs.
 
  \begin{figure}[H]
 \nbdraw{latches_interface}
@@ -151,19 +151,19 @@ Otherwise the value is a sound ID to be played immediately on the OKI. This sche
 
 Notice how the encoder, on the m68k side, injects \icode{0xFF} no-op bytes after each write to the latch and how the decoded ignore them.
 
-Note that in this configuration, SF2 only ever uses a single latch while the other is left unused.
+What about the other latch? Street Fighter II only ever uses the first one. The other one is left unused.
 
-\subsubsection{One Sound driver to rule them all}
+\subsubsection{One sound driver to rule them all}
 
-Given the genericity of the communication system described it would be a fair conclusion to assume all Capcom game used it.
+Given the genericity of the communication system described above it would be a fair to assume all Capcom games used it. That would be wrong.
 
-In fact, the "sound driver" kept on evolving, sometimes changing drastically even between two games made consecutively by the same team. 
+The "sound driver" kept on evolving, sometimes changing drastically even between two games made consecutively by the same team. 
 
-In Final Fight, a sound ID received for playback is directly forwarded to the OKI whereas, in Street Fighter II, a translation table is used. The ID received is an index into an array where are found the actual OKI ID along with the channel and volume to use.
+In Final Fight, a sound ID received for playback is directly forwarded to the OKI. In Street Fighter II, a translation table is used. The ID received is an index into an array where are found the actual OKI ID along with the channel and volume to use.
 
 The merits of a translation table may be explained by the size of Capcom team and the inability to do a "full build" easily at the time.
 
-If the sound team had to change the OKI layout, all IDS used by the m68k would be invalid. With a translation table, the sound team was able to make any change they wanted and keep their ID backward compatible.
+If the sound team had to change the OKI layout, all IDS used by the m68k would be invalid. With a translation table, the sound team was able to make any change they wanted and keep their sound and music IDs backward compatible.
 
 
 \subsection{Another Sound Driver}
