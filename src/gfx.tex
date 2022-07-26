@@ -6,19 +6,19 @@ Since the graphic pipeline of the CPS-1 is hard-coded in the silicon of the CPS-
 \caption*{The GFX System components}
 \end{figure}
 
-The only task is to convert graphic assets into GFXROM format. Conveniently, all assets use the same pixel format where four bytes encode eight pen values. However it would be an oversimplification to think that slicing PNG into tiles and placing them anywhere in the ROM is enough.
+It sound simple but there is more at hand than converting graphic assets to GFXROM format. Even though all types of assets use the same pixel format, observant readers will have noticed that palettes are not stored in GFXROM. Special care must be taken to save them and provide them later to the m68k along with a way to reference them.
 
-The major constraint to consider is that GFXROM have "hard-coded regions" where OBJ, STAR1, STAR2, SCR1, SCR2, and SCR3 must reside. If a tile is not where it should, the draw command is simply ignored.
+The other constraint to consider is the "hard-coded regions" of the GFXROM where OBJ, STAR1, STAR2, SCR1, SCR2, and SCR3 assets must reside. If a tile is not where it should, a draw command is simply ignored.
 
-On the Street Fighter II board we have studied so far, the \icode{STF29} PAL slice the 6MiB GFXROM in four areas. 
+All board use a different layout. The Street Fighter II board and its \icode{STF29} PAL slice the 6MiB GFXROM in four areas (OBJ, SCR1, SCR2, and SCR3) . 
 
-A board running Final Fight has a \icode{S224B} PAL which also uses four areas but with different offset and proportions over 2MiB. 
+A board running Final Fight uses a \icode{S224B} PAL which also carves the space in the same four area types but with different offset and proportions over a smaller 2MiB space. 
 
-A PAL programmed for Forgotten Worlds board, the \icode{LW621}, is more complex since it divide the GFXROM in six areas to also include STAR1 and STAR2 bytecode.
+The PAL found on Forgotten Worlds board, the \icode{LW621}, is more complex since it divide the GFXROM in five areas to also include interleaved STAR1 and STAR2 bytecode.
 
 
 \section{Tile format}
-All tiles are stored continuously in memory, using groups of four bytes encoding eight pens. Rows of pens are stored one after another. The dimension of a tile varies depending on the layers. OBJ and SCR2 uses the same 16x16 tiles which mean their tiles are 16*16 / 2 = 128 bytes. For the fine tuned SCR1 which uses 8x8, each tile takes 32 bytes. Finally the larger SCR3 uses 512 bytes for each of its 32x32 tiles.
+All tiles are stored continuously in memory, using groups of four bytes encoding eight pens. Rows of pens are stored one after another. The dimension of a tile varies depending on the layers. OBJ and SCR2 uses the same 16x16 tiles which mean their tiles are 16*16 / 2 = 128 bytes. For the fine tuned SCR1 which uses 8x8, each tile uses 32 bytes. Finally the larger SCR3 uses 512 bytes for each of its 32x32 tiles.
 
 \section{GFX Layout}
 The EPROMs are organized in groups of four chips and serialized. On a board like Street Fighter II, we find three groups of four. Inside each group, chips are interleaved every two bytes.
@@ -26,9 +26,7 @@ The EPROMs are organized in groups of four chips and serialized. On a board like
 \nbdraw{gfx_interleave}
 
 \section{Channels}\label{channels}\index{Channels!Practice}
-The channels mentions earlier are now visible. ROM \icode{01} and ROM \icode{02} are respectively on channel 1 and channel 2. Likewise, ROM \icode{03} and \icode{04} are channel pairs. The same division is applied to the rest of the ROMs with the same principle. 
-
-We can (hopefully) better see here how issuing the same address on two channels allow to retrieve the two first byte and so on.
+The channels mentions earlier are now visible. ROM \icode{01} and ROM \icode{02} are paired on channel 1 to provide 32-bit data. Likewise, ROM \icode{03} and \icode{04} are paired on channel 2. The same division is applied to the rest of the ROMs with the same principle. 
 
 \nbdraw{build_graph_gfx}
 

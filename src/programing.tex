@@ -178,22 +178,18 @@ The byte space is divided in two. If the MSB is set to one \icode{0x80} this is 
 
 This leaves "only" 126 sound values and 127 music values but it more than enough for the intended purpose. Volume is hard-coded and round-robin rotation is used to pick between channels 1 or 2 to serve a request. 
 
-To play well with channel selection, musicians are requested to use only channels 3 and 4 to embellish their YM2151 melodies. 
+% To play well with channel selection, musicians are requested to use only channels 3 and 4 to embellish their YM2151 melodies. 
 
 
 \section{Tracking wall-time}
-Keeping track of wall-time, the real-time experienced by players, is paramount to both CPUs. 
+The wall-time is the time experienced by players. Both CPUs must be able to measure it. The m68k must do so in order to sample inputs and run the game engine at the intended speed. The z80 is under the same constrain for the music where it must keep track of pause and notes durations. 
 
-The m68k must do so in order to sample inputs and run the game engine at the intended speed. The z80 is under the same constrain for the music where it must keep track of pause and notes durations. 
-
-For this purpose the counter maintained by the main thread as used. Only they have different granularity.
+Modern systems have Real Time Clock (RTC) chips to do this but the CP-System is devoid of it. The solution is to leverage the counters which are incremented each time the main thread is interrupted. Depending on the CPU these accumulators will have different granularity.
 
 The m68k tracks time in units of 16ms while the z80 can do the same in increment of 4ms.
 
 
 \section{Randomness}
-Pseudo-random series of number can be achieved using Maximum-Length LFSRs (Linear Feedback Shift Register) which, on the m68k, give 4,194,304 different values before repeating itself.
+Pseudo-random series of number can be achieved using Maximum-Length LFSRs (Linear Feedback Shift Register). On the m68k, a 32-bit registers will give 4,194,304 different values before repeating itself. On the z80, the 8-bit register will only provide 256 values.
 
-The only issue is to pick a seed to initialize the counter. Street Fighter 2 uses the frame counter while other title read the content of the CPU register during bootstrap.
-
-The latter method does not work well when working with emulators and should be avoided.
+The only tricky part is to pick a seed to initialize the register. Street Fighter 2 uses the frame counter while other titles read the content of the CPU register during bootstrap. The latter method does not work well when working with emulators (they usually initialize their registers to zero) and should be avoided.
