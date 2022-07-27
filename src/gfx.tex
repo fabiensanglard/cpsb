@@ -30,7 +30,7 @@ The channels mentions earlier are now visible. ROM \icode{01} and ROM \icode{02}
 
 \nbdraw{build_graph_gfx}
 
-Street Fighter II board build generates twelve roms. Each group stores 2 MiB. Group [1-4] start at 0x000000, group [10-13] at 0x000000, and ROMs [20-23] at 0x000000. Each chip goes in its number DIP slot (page YYY).
+Street Fighter II board build generates twelve roms. Each group stores 2 MiB. Group [1-4] start at 0x000000, group [10-13] at 0x200000, and ROMs [20-23] at 0x400000. Each chip goes in the matching numbered DIP slot (page \pageref{boardb_no_chips}).
 
 
 
@@ -50,7 +50,7 @@ A sprite was typically drawn twice, first as a concept art without details in or
 Even though it was no the norm, both iterations could be done by the same artist, especially if the topic was dear to their heart.
 
 \begin{q}{Akiman}
-I created Chun-Li’s graphics in just 1 month.
+I created all Chun-Li’s graphics in just 1 month.
 \end{q}
 
 However, it was often the case that the lead designer took care of the first iteration, while delegating the fine-tuning to OBJ artists. In the case of Final Fight (page \pageref{ff_design}), Satoru Yamashita animated Guy and Haggar but Akiman drew the key animations for both of them.
@@ -69,16 +69,16 @@ One day, Akiman brought us the rough sketches of a pro wrestler, sumo wrestler, 
 
 
 
-\subsection{Aspect ratio}
+\subsection{Grid paper concept art}
 The one constant between these iteration is that all work had to be done on non-square grid paper. In order to compensate for the non-square pixels of the CPS-1, artists had to draw with proportion that pre-stretched drawing vertically. 
 
 \begin{figure}[H]
-\img{ff_design.jpeg}
+\draw{ff_design}
 \caption*{Final Fight Guy's key frame by Akiman}
 \label{ff_design}
 \end{figure}
 
-The non-square pixels are visible in Guy's concept art. The "pixels" are grouped in elements 16 by 16, resulting in vertically stretched rectangles.
+The non-square pixels are visible in Guy's concept art. The "pixels" are grouped in elements 16 by 16, resulting in tall rectangles.
 
 
 
