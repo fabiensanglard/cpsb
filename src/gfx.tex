@@ -42,22 +42,19 @@ Street Fighter II board build generates twelve roms. Each group stores 2 MiB. Gr
 
 
 \section{Back then...}\index{Back Then!GFX}
-The creation of artwork for a game always started with pencil and paper before moving to digitizing. On a big title such as Street Fighter II, up to twenty artists worked in parallel to produces artwork.
+
+The artwork was the part of a game that required the most people. On a big title such as Street Fighter II, that task kept busy twenty artists out of a team of forty.
+
+Producing tilemap (background) assets for the SCROLL layers was junior artists responsibility. It required little supervision since the artwork had to be rectangular and the visual importance was not the highest.
+
+Producing assets for the OBJ layer on the other hand was much more elaborated. Four steps, outline drawing, allocation, detail led drawing, and finally dotting were involved.
+
+
 
 \subsection{Pen and Papers}
-A sprite was typically drawn twice, first as a concept art without details in order to captures the essence of a character pose as well as proportions and sense of movement. Once satisfactory, a second phase involved a more detailed drawing.
+The artistic direction was established by the planner of the game. Their goal was to produce concept arts and pose outlines in order to captures the essence of a character as well as establishing proportions and movements. After that, senior artists took over for fine tuning.
 
-Even though it was no the norm, both iterations could be done by the same artist, especially if the topic was dear to their heart.
-
-\begin{q}{Akiman}
-I created all Chun-Li’s graphics in just 1 month.
-\end{q}
-
-However, it was often the case that the lead designer took care of the first iteration, while delegating the fine-tuning to OBJ artists. In the case of Final Fight (page \pageref{ff_design}), Satoru Yamashita animated Guy and Haggar but Akiman drew the key animations for both of them.
-
-
-
-\begin{q}{Eri Nakamura}
+\begin{q}{Eri Nakamura\cite{sf2devinterview}}
 When I joined on Street Fighter II, Akiman had already done the rough drafts. 
 
 There were four of us as character leads - Satoru Yamashita , Yoshiaki Ohji, and Ikuo Nakayama in addition to myself. Satoru was the most skilled, so he would take Ryu and Ken. 
@@ -67,20 +64,113 @@ One day, Akiman brought us the rough sketches of a pro wrestler, sumo wrestler, 
 
 
 
+Even though it was no the norm, it could happen that the planner took care of every aspect of a character especially if the topic was dear to their heart.
+
+\begin{q}{Akiman\cite{gameMaestro4}}
+I created all Chun-Li’s graphics in just 1 month.
+\end{q}
+
+However, "chun-li" stories seems to have been rare occurrences.   In the case of Final Fight, Satoru Yamashita animated Guy and Haggar but Akiman drew the key animations for both of them.
 
 
-\subsection{Grid paper concept art}
-The one constant between these iteration is that all work had to be done on non-square grid paper. In order to compensate for the non-square pixels of the CPS-1, artists had to draw with proportion that pre-stretched drawing vertically. 
 
 \begin{figure}[H]
 \draw{ff_design}
-\caption*{Final Fight Guy's key frame by Akiman}
-\label{ff_design}
+\caption*{Final Fight Guy sprite outlines by Akiman}
 \end{figure}
 
-The non-square pixels are visible in Guy's concept art. The "pixels" are grouped in elements 16 by 16, resulting in tall rectangles.
 
 
+
+\subsection{Non-square grid paper}
+To draw both outline and detailed version of the sprites, artists used a special paper with a double grid system.
+
+There was a "light" grid which used non-square proportions to match the CP-system video aspect ratio of 10:7. Artists were able to draw normally without having to worry about distortion since rectangle elements would match the CPS-1 stretched pixels. 
+
+The paper featured a second "darker" grid which grouped elements 16 by 16 to match the OBJ tile dimension. This was an essential feature for the allocation step.
+
+
+
+
+
+\subsection{OBJ allocation}
+
+If breaking free of the rectangular sprites was a blessing for the artists, it was a problem for Capcom project managers. In an era where ROM chips were very expensive, a game was allocated a ROM budget at its beginning which it could not exceed.
+
+
+Before the CPS-1, remaining within the budget was a simple matter of a division. The number of sprites allowed to the art team was ROM size / rectangular sprite size. But the free form factor introduced a tracking problem.
+
+
+
+ \begin{figure}[H]
+\nbdraw{0x3300}
+\caption*{Dhalsim reconstructed sheet}
+\end{figure}
+
+The solution to the allocation problem came with papers and scissors.
+
+\begin{q}{Akira Nishitani, Planner \cite{sf2devinterview}}
+In order to make the best use of the capacity we had, we wrote the ROM’s capacity on a board, and cut and paste the pixel characters on the board. If there was space left on the board, then there was open capacity in the ROM. So, from there we started filling in the spaces, like a puzzle. 
+
+We saved making the ending for last, and by the time we got there we were all out of capacity. We were wondering what to do, when we found a board that had gone missing under a desk.
+
+We called it the "Mirac-ulous Memory."
+\end{q}
+
+
+
+ \begin{figure}[H]
+\img{rom_sheet_dhalsim.jpg}
+\caption*{Dhalsim released paper sheet}
+\end{figure}
+
+Only two of these sheets have ever been released, one mostly featuring Dhalsim\cite{ffdevinterview} and another one called the "Ryu sheet"\cite{htmcc}. Thanks to the imprint left in the GFXROM, all other spreadsheets can be reconstructed thank to our knowledge of the pixel format and layout. 
+
+
+
+For a game like Street Fighter II, a budget of 6MiB GFX was approved. With 4.6 MiB dedicated to sprites, 144 OBJ sheets were printed. That was a lot at the time and only warranted because the team had managed to score a huge hit with Final Fight on a tiny 2MiB budget\cite{gameMaestro4}. 
+
+
+
+
+ \begin{figure}[H]
+\nbdraw{0x4500}
+\caption*{Ryu reconstructed sheet}
+\end{figure}
+
+
+Comparing the released material with what actually shipped is the source of many discoveries and hypothesis. 
+
+The Dhalsim sheet sits at offset \icode{0x3300} in the GFXROM. It is a near perfect match with the paper version except for the portion starting at \icode{0x60}. One of the pose was dropped in favor of Chun-li animation "Hundred Rending Legs" which would indicate it was a later addition. 
+
+ \begin{figure}[H]
+\img{rom_sheet_ryu.jpg}
+\caption*{Ryu released paper sheet}
+\end{figure}
+
+Ryu's sheet \icode{0x4500} allows to guess even more about the production process. Large coherent sprites show that at the beginning of the production process multiple sheet were allocated on a per-character basis. Tile were layed out and kept together as much as possible to facilitate visual inspection.
+
+As the project progressed the team scrapped the bottom of the barrel and started to allocate space on a per-tile basic, sometimes spreading a character pose across multiple sheets like in Dhalsim sheet where can be found portions of Blanka.
+
+\subsection{The sheet system}
+Besides describing it, Capcom employees never elaborated on the sheet system. For which title and for how long it was used in total are questions that were never addressed.
+
+Thanks to the understanding of the GFXROM format, it is possible to peek back in time. The digital structure is an imprint of what the paper sheet looked like. These reconstructed sheet can provide a few answers.
+
+ \begin{figure}[H]
+\nbdraw{0x4500}
+\caption*{A Street Fighter II sheet}
+\end{figure}
+
+All games published on CPS-1 have sheet were sprites tiles are grouped to match an actual drawing, which imply usage of paper and scissors.
+
+However the first title for CPS-2, Super Street Fighter II is different. If the sheet of the twelve legacy contestant look the same (Ryu's sheet are the exact same as the one from Street Fighter II Champion Edition), XXX's sheet look like an automated allocator was used.
+
+Peeking inside other CPS-2 games confirm the same automation which indicates that the sheet system was likely abandoned when Capcom switched to the CPS-2 platform.
+ \begin{figure}[H]
+\nbdraw{0x4500}
+\caption*{Super Street Fighter II sheet (new character YYY)}
+\end{figure}
 
 \img{smc-70_ad.jpg}
 
@@ -188,64 +278,6 @@ I used a keyboard to draw all the graphics for Vampire and Street Fighter 2.
 
 
 
-\subsection{Tracking ROM space}
-
-If breaking free of the rectangular sprites was a blessing for the artists, it was a problem for Capcom project managers. In an era where ROM chips were very expensive, a game was allocated a ROM budget at its beginning which it could not exceed.
-
-
-Before the CPS-1, remaining within the budget was a simple matter of a division. The number of sprites allowed to the art team was ROM size / rectangular sprite size. But the free form factor introduced a tracking problem.
-
-
-
- \begin{figure}[H]
-\nbdraw{0x3300}
-\caption*{Dhalsim reconstructed sheet. Tiles are 16x16}
-\end{figure}
-
-The solution came with papers and scissors.
-
-\begin{q}{Akira Nishitani, SF2 Producer (Capcom)}
-In order to make the best use of the capacity we had, we wrote the ROM’s capacity on a board, and cut and paste the pixel characters on the board. If there was space left on the board, then there was open capacity in the ROM. So, from there we started filling in the spaces, like a puzzle. We saved making the ending for last, and by the time we got there we were all out of capacity. We were wondering what to do, when we found a board that had gone missing under a desk.
-
-We called it the "Mirac-ulous Memory."
-\end{q}
-
-
-
- \begin{figure}[H]
-\img{rom_sheet_dhalsim.jpg}
-\caption*{Dhalsim released paper sheet}
-\end{figure}
-
-Only two of these sheets have ever been released, one mostly featuring Dhalsim\cite{ffdevinterview} and another of referred to as Ryuy sheet\cite{htmcc}. Thanks to the imprint left in the GFXROM, all other spreadsheet can be reconstructed thank to our knowledge of the pixel format and layout. 
-
-
-
-For a game like Street Fighter II, a budget of 6MiB GFX was approved. With 4.6 MiB dedicated to sprites, 144 OBJ sheets were printer. That was a lot at the time and only warranted because the team had managed to score a huge hit with Final Fight on a tiny 2MiB budget. 
-
-
-
-
- \begin{figure}[H]
-\nbdraw{0x4500}
-\caption*{Ryu reconstructed sheet. Tiles are 16x16}
-\end{figure}
-
-
-Comparing the released material with what actually shipped is the source of many discoveries and hypothesis. 
-
-The Dhalsim sheet sits at offset \icode{0x3300} in the GFXROM. It is a near perfect match with the paper version except for the portion starting at \icode{0x60}. One of the pose was dropped in favor of Chun-li animation "Hundred Rending Legs" which would indicate it was a later addition. 
-
- \begin{figure}[H]
-\img{rom_sheet_ryu.jpg}
-\caption*{Ryu released paper sheet}
-\end{figure}
-
-Ryu's sheet \icode{0x4500} allows to guess even more about the production process. Large coherent sprites show that at the beginning of the production process multiple sheet were allocated on a per-character basis. Tile were layed out and kept together as much as possible to facilitate visual inspection.
-
-As the project progressed the team scrapped the bottom of the barrel and started to allocate space on a per-tile basic, sometimes spreading a character pose across multiple sheets like in Dhalsim sheet where can be found portions of Blanka.
-
-
 \subsection{Dotting}
 
 
@@ -349,12 +381,17 @@ The capacity of the ASICs to flip tiles horizontally was used extensively in Str
 
 \subsection{Team structure and Culture}
 
-Out of all the resources needed for a game, the GFX team was usually the most staffed. Out of 40 peoples working on Street Fighter II, 20 were artists working on character designs, sprites and backgrounds. All reported to Akiman\cite{sf2_oral_history}.
+The team producing a game had a strong hierarchy based on skills and seniority.
 
-There was a strong pyramidal hierarchy based on skills. 
-
-\begin{q}{Akiman\cite{akiman2003}}Planners at the top. Junior artists work on backgrounds, while more senior get to work on sprites.
+\begin{q}{Akiman\cite{akiman2003}}Planners at the top.\\
+Senior artists get to work on sprites. \\
+Junior artists work on backgrounds.
 \end{q}
+
+The structure was flat with no involvement of intermediate managers. Out of the twenty people doing artwork on Street Fighter II, all of them reported to a single person, Akiman\cite{sf2_oral_history}.
+
+
+
 
 As layered as they where, operations where not set in stone and employees could climb the ladder quickly. 
 
