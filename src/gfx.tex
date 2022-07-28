@@ -182,6 +182,9 @@ To digitize their drawings, Capcom employees used SMC-70 computers. Manufactured
 
 The main element of a SMC-70 features its keyboard and the core parts such as the z80 running at 4MHz, 64KiB RAM, and 64 KiB of VRAM. The rest is entirely configurable via daisy chained extenders. 
 
+The only limit to the daisy chain extension system is the capacity of the power supply which also must be located at the very back of the chain. 
+
+
 This architecture allowed Sony's machine capabilities to range from simple office work to a powerful video editing tool in its most extensive modification. 
 
 \begin{figure}[H]
@@ -189,8 +192,8 @@ This architecture allowed Sony's machine capabilities to range from simple offic
 \caption*{A SMC-70 extended with a SMI-7012. Power supply in the back.}
 \end{figure}
 
-\subsubsection{Noteworthy capabilities}
-The substantial list of extensions and peripherals, totaling nearly 40 pieces, conveys Sony's sense of innovation and malleability bread in its SMC-70. Improvements ranging from a simple a extra floppy-disk drive to a full CPU swap replacing the 8-bit z80 with a 16-bit Intel 8086.  
+\subsubsection{Sony, the big iron}
+On one side, the substantial list of extensions and peripherals, totaling nearly 40 pieces made by Sony, is a testimony to the company's commitment. One the other side, it also embodies a desire to be the "big iron" where everything is under control, certified, and others manufacturers are prevented from contributing.
 
 \begin{figure}[H]
 
@@ -220,94 +223,56 @@ The substantial list of extensions and peripherals, totaling nearly 40 pieces, c
 \end{figure}
 
 
-% 
-
-
-The only limit to the daisy chain extension system is the capacity of the power supply which also must be located at the very back of the chain. 
-
+\subsubsection{Noteworthy capabilities}
 The SMC-70 is notable for being the first computer to allow 3.5" floppy reader (also invented by Sony in 1981) and its ability to display kanji character via a ROM extension. 
 
-However it is really when it comes to graphic resolution that the machine stood out, allowing a whooping 16 colors in a mode likely intended for super-imposing bitmaps on TV signal.
+However it is really when it comes to graphic capabilities that the machine stood out. Four resolutions were available, ranging from low-res 320x200 using sixteen colors up to high-res 640x200 in two colors. 
 
- \begin{figure}[H]
- \center
-\begin{tabularx}{0.35\textwidth}{rrr} 
-  \textbf{Width} & \textbf{Height} & \textbf{Colors} \\               
-  \toprule    
-160& 100& 16 \\
-640& 200& 4 \\
-320& 200& 16 \\
-640& 400& 2 \\
-\toprule
-\end{tabularx}%
-\caption*{Sony SMC-70 resolutions}
-\end{figure}
+The 16 colors color mode was particularly interesting since it was a perfect match with the CPS-1 pen system.
 
 
 \subsection{Tiny Character Editor}
 
-The SMC-70 had no ability to use a scanner. The digitization process was entirely achieved by hand. To help them in their task, artists used a tool called TCE (Tiny Character Editor). Although no screenshot ever merged, Capcom employees gave a rough description of the rough tools they worked with.
+The SMC-70 had no ability to use a scanner. The digitization process was entirely achieved by hand. To help them in their task, artists used a tool called TCE (Tiny Character Editor). Although no screenshot ever merged, Capcom employees gave a rough description of the minimalist approach of their tool.
 
-\begin{q}{Koichi Yotsui (Strider producer)}
+\begin{q}{Koichi Yotsui (Strider planner)}
 You had a 16 pixel grid, a 16-color palette, and that was it.
 \end{q}
 
-The task at hand was to look at the detailed drawing, and decide which color from the palette would be used for this coordinate. The value was then set via TCE. 
 
-No mouse were available but users built a joystick. Akiman, used a play keyboard.
+\subsection{Dotting}
+For both SCROLLs and OBJs element, dotting was done on a tile basis. The artist task was to look at their detailed grilled paper drawing and decide, for each rectangular element in the tile, which color of the palette to use for it.
 
-\begin{q}{Akiman\cite{akiman}}
-I used a keyboard to draw all the graphics for Vampire and Street Fighter 2.
-\end{q}
+It was a tedious process which paradoxically also required a sense of esthetic and creativity to deal with the cases where a line crossed a pixel. Drop the pixel, include it plain, or attempt to anti-alias with a color in the palette were difficult choices to make.
+
+% The task at hand was to look at the detailed drawing, and decide which color from the palette would be used for this coordinate. The value was then set via TCE. 
+
+No mouse were available. Out of the box options were either a keyboard or a keypad. Some employees, satisfied with neither built themselves a joystick.
+
+
 \begin{figure}[H]
 \img{smc70_keypad.jpg}
 \caption*{A SMC-70 with a keypad. A likely doter setup.}
 \end{figure}
 
 
+At least, employees were free to use the technique that was the most effective to them.
 
+\begin{q}{Akiman\cite{akiman}}
+I used a keyboard to draw all the graphics for Vampire and Street Fighter 2.
+\end{q}
 
-
-
-
-% \subsection{Following the paper trails}
-
-
-
-
-
-
-
-
-\subsection{Dotting}
-
-
-With no scanners available, digitizing was done manually by looking at drawing made of grid paper and decide for each coordinate what color from the palette would be the most fitting. The daunting task was called "dotting", also known as in North America as "Pixel Art". 
-
-To dot, employees were free to use the technique that was the most effective to them.
 
 
 \begin{q}{Akiman\cite{ar20160404}}
-  As everything was in hexadecimal we used the 0-F keys and the arrows to make the sprites. There was this one guy who made a complete racket mashing away on his keyboard. He used to do overtime and didn't even sleep, so we'd all have no choice but to stay awake and keep working as well.
+  As everything was in hexadecimal we used the 0-F keys and the arrows to make the sprites. 
+
+  There was this one guy who made a complete racket mashing away on his keyboard. He used to do overtime and didn't even sleep, so we'd all have no choice but to stay awake and keep working as well.
 \end{q}
-
- \begin{figure}[H]
-\img{smc-70_capcom.png}
-\caption*{An actual SMC-70 "workstation" in Capcom studio}
-\end{figure}
-
-
-
-
-
-
-
 
 
 \subsection{Saving tiles}
-Artists invented many tricks to reuse tiles and avoid allocating tiles in the sheets. In Street Fighter 2, there was only enough GFXROM for eleven challengers. Ken is a patchwork and a palette swap on top of Ryu tiles base. It "weights" only 98,304 bytes.
-
-A remarkable achievement compared to characters such as Zanghief (622,592 bytes), Honda (491,520 bytes) or Ryu (442, 368 bytes). 
+Artists attempted to reuse tiles as much as possible to reduce the precious ROM space available. In Street Fighter 2, there was only enough GFXROM for eleven challengers. Ken is a patchwork and a palette swap on top of Ryu tiles base. It "weights" only 98,304 bytes.
 
 \begin{minipage}[t]{0.19\linewidth}
   \sdraw{1.0}{patch_ryu0}
@@ -329,21 +294,26 @@ A remarkable achievement compared to characters such as Zanghief (622,592 bytes)
   \sdraw{1.0}{patch_ryu4}
 \end{minipage}
 
+
+A remarkable achievement compared to characters such as Zanghief (622,592 bytes), Honda (491,520 bytes) or Ryu (442, 368 bytes). 
+
+
 Final Fight is even more impressive. Made on a 2MiB GFXROM budget, it featured a whooping 21 enemies and six bosses. While most bosses are originals, the minions are in fact made of only seven bases.
 
-% \begin{minipage}[t]{0.20\linewidth}
-% \simg{1.0}{enemy_goriber.png}
-% \end{minipage}
-% \hfill%
-% \begin{minipage}[t]{0.20\linewidth}
-% \simg{1.0}{enemy_billbull.png}
-% \end{minipage}
-% \hfill%
-% \begin{minipage}[t]{0.20\linewidth}
-% \simg{1.0}{enemy_wongwho.png}
-% \end{minipage}
+\begin{minipage}[t]{0.30\linewidth}
+\simg{1.0}{enemy_goriber.png}
+\end{minipage}
+\hfill%
+\begin{minipage}[t]{0.30\linewidth}
+\simg{1.0}{enemy_billbull.png}
+\end{minipage}
+\hfill%
+\begin{minipage}[t]{0.30\linewidth}
+\simg{1.0}{enemy_wongwho.png}
+\end{minipage}
 
 
+\vfill
 \begin{q}{Nishitani, Capcom – 1991 Retrospective Interview}
 Everyone on the development thought Final Fight was going to be allocated with a large memory capacity, but we were wrong.
 That's why the final boss Belger hops around like that: we didn't have enough memory to add more graphics for a walking pattern. 
@@ -351,7 +321,6 @@ That's why the final boss Belger hops around like that: we didn't have enough me
 However, making something cool with limited resources is like a puzzle to me, so I thought it was fun. 
 \end{q}
 
-DRAWING of billbull, wonwho and thirt HERE.
 
  \begin{figure}[H]
 \nbdraw{0x0100}  
