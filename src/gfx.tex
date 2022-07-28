@@ -153,23 +153,24 @@ Ryu's sheet \icode{0x4500} allows to guess even more about the production proces
 As the project progressed the team scrapped the bottom of the barrel and started to allocate space on a per-tile basic, sometimes spreading a character pose across multiple sheets like in Dhalsim sheet where can be found portions of Blanka.
 
 \subsection{The sheet system}
-Besides describing it, Capcom employees never elaborated on the sheet system. For which title and for how long it was used in total are questions that were never addressed.
+Besides sparsely describing it, Capcom employees never elaborated on the sheet system. For which title and for how long it was used in total are questions that were never explained.
 
 Thanks to the understanding of the GFXROM format, it is possible to peek back in time. The digital structure is an imprint of what the paper sheet looked like. These reconstructed sheet can provide a few answers.
 
  \begin{figure}[H]
-\nbdraw{0x4500}
-\caption*{A Street Fighter II sheet}
+\nbdraw{sfce0x0000}
+\caption*{A Street Fighter II Champion Edition sheet}
 \end{figure}
 
-All games published on CPS-1 have sheet were sprites tiles are grouped to match an actual drawing, which imply usage of paper and scissors.
+Examining the GFXROM structure of all games published on CPS-1 uniformly reveals tiles grouped to match actual drawing, which imply usage of paper and scissors.
 
-However the first title for CPS-2, Super Street Fighter II is different. If the sheet of the twelve legacy contestant look the same (Ryu's sheet are the exact same as the one from Street Fighter II Champion Edition), XXX's sheet look like an automated allocator was used.
+The GFXROM layout started to change with the first title using the CPS-2. In Super Street Fighter II, the sheets of the twelve legacy contestants are the same as the one used in Street Fighter II Champion Edition. However new character sheets look like they were created with an automated allocator.
 
-Peeking inside other CPS-2 games confirm the same automation which indicates that the sheet system was likely abandoned when Capcom switched to the CPS-2 platform.
+Likely a transition operated during the production of SSF2 and all games released after September 1993 used automated tools to allocated the OBJ layer tiles.
+
  \begin{figure}[H]
-\nbdraw{0x4500}
-\caption*{Super Street Fighter II sheet (new character YYY)}
+\nbdraw{ssf-0x9000}
+\caption*{Super Street Fighter II sheet (new character Cammy)}
 \end{figure}
 
 \img{smc-70_ad.jpg}
