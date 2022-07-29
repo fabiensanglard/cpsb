@@ -16,18 +16,18 @@ The difficult part is that both the sound effects and the music contribute to th
 
 \nbdraw{build_graph_sfx}
 
-Luckily, the structure of the OKI ROM facilitated the task since it features an index at the beginning which references all payloads. Leveraging it allows to have a first pass where audio samples are ingested by the build system to generate an incomplete OKI ROM. In a second pass, the music tracks are processed so the new samples are added to the index ROM and the payload appended.
+The structure of the OKI ROM facilitates the task since it features an index at the beginning which references all payloads. Leveraging it allows to have a first pass where audio samples are ingested by the build system to generate an incomplete OKI ROM. In a second pass, the music tracks are processed so the new samples are added to the index ROM and the payload appended.
 
 At the very top, \icode{ccps\_sfx} expect artists to provide sound samples contained in \icode{.wav} files, a format which is universally supported by audio tools. This stage generates a partial OKI ROM and a \icode{.h} header file to be injected in the control build graph so the m68k can request samples playback with a simple ID.
 
-The second stage involves \icode{ccps\_mus}, the music processor. It expects \icode{.vgm} (Video Game Music) as input. these contain raw 2151 instructions which are easy to convert. It outputs the final OKI ROM containing the sample used by the soundtrack and also a \icode{.c} file including bytecode containing YM2151 register values, timing, and OKI sample timing.
+The second stage involves \icode{ccps\_mus}, the music processor. It expects \icode{.vgm} (Video Game Music) as input. These contain raw 2151 instructions which are easy to convert. It outputs the final OKI ROM with the sample used by the soundtrack and also a \icode{.c} file including bytecode containing YM2151 register values, timing, and OKI sample timing.
 
-The last stage relies on the Small Device C Compiler (SDCC) toolchain. All artifacts generated in the two previous stages are used as input on top of the programmer \icode{.c} files and the bootstrap \icode{crt0.s} assembled by \icode{sdasz80} assembler. All resulting relocatable object files \icode{.rel} are linked together via ssdc's linker \icode{sdldz80}. 
+The last stage relies on the Small Device C Compiler (SDCC) toolchain. All artifacts generated in the two previous stages are used as input on top of the programmer \icode{.c} files and the bootstrap \icode{crt0.s} assembled by \icode{sdasz80} assembler. In this step, all resulting relocatable object files \icode{.rel} are linked together via ssdc's linker \icode{sdldz80}. 
 
 
-\begin{trivia}
-These are a lot of step but if you use \icode{ccps} build system, it is all taken care of with one keystroke resulting in two ROM sets ready to go.
-\end{trivia}
+% \begin{trivia}
+% These are a lot of step but if you use \icode{ccps} build system, it is all taken care of with one keystroke resulting in two ROM sets ready to go.
+% \end{trivia}
 
 
 
@@ -37,7 +37,8 @@ These are a lot of step but if you use \icode{ccps} build system, it is all take
 \section{Processing Sound Samples}
 A wav file is a simple container with a header describing the content followed by a payload. Once the sampling frequency, bit per sample, and number of channel is retrieved, the PCM can be accessed.
 
-Artists should not produce stereo wavs since the CPS-1 is mono. Moreover, game developers should decide if they wish to use the OKI in high quality (7575Hz) or low quality (6060Hz) and all assets should use that sampling rate. Finally, since ADPCM compressed 12-bit sample to 4-bit samples, artists should provide 16-bit PCMs.
+\subsection{Constraint}
+Artists should not produce stereo wavs since the CPS-1 is mono. Moreover, game developers should decide if they wish to use the OKI in high quality (7575Hz) or low quality (6060Hz) and all assets should use that sampling rate. Finally, since ADPCM compressed 12-bit sample to 4-bit samples, artists should provide 16-bit wavs.
 
 
 \subsection{ADPCM Compression}
@@ -47,19 +48,11 @@ Decompression is done in hardware by the OKI at runtime but the build system sti
 
 % The algorithm to convert PCM to "Dialogic ADPCM" is publicly available and extensively documented by OKI\cite{adpcm_specs}. It is as simple as the decompression algorithm visited in the hardware section on page \pageref{adpcm_decompression_label}.
 
-ADPCM encodes the difference between the previous sample and the sample to be generated. This is done via a 4-bit magnitude nibble. One bit of the magnitude gives the delta sign while the three others encode a delta which value depends on the state of the decoder's \icode{stepSize}.
+ADPCM encodes the difference between the previous sample and the sample to be generated. Each 16-bit sample is encoded into a 4-bit nibble\cite{adpcm_specs}.
 
 
 \lstinputlisting[style=CStyle]{src/code/adpcm_algo.c}
 
-
-The starting step index is \icode{0} which translate in the \icode{stepTable} as \icode{16}.
-
-\lstinputlisting[style=CStyle]{src/code/adpcm_compression1.c} 
-
-After each sample compression, the step transition table is looked up with the 3-bit value magnitude to see how to update the stepIndex.
-
-\lstinputlisting[style=CStyle]{src/code/adpcm_compression2.c} 
 
 Let's take the example of a stream of 16-bit PCM values received from a wav to be compressed to 4-bit ADPCM values.
 
@@ -86,14 +79,14 @@ The last 16-bit sample has a value of \icode{160} which becomes \icode{10} in 12
 The decompressor will output 56 (its last value) - 42 = 14. The step size index is updated via the transitionTable to 6 (previous value) + 6 = 12, which equals 50.
 
 % The result is stored in four nibble which fit in an array of two bytes. 
-Graphing PCM vs ADPCM shows that the decompressed stream "lags" behind upon abrupt changes but catches up aggressively. ADPCM first value is always near zero (+/-28) but it is not audible to players since most samples start with a faded-in anyway. 
+Graphing PCM vs ADPCM shows that the decompressed stream "lags" behind upon abrupt changes but catches up aggressively. ADPCM first value is always near zero (+/-28) but it is not audible to players since most samples start with a faded-in. 
 
 \nbdraw{adpcm_graphed}
 
 \section{Structure of the OKI ROM}
-The structure of the OKI is very simple. It must feature 127 * 6 bytes table at the beginning. Each entry points to a payload in the ROM. The payload of each entry must be ADPCM stream.
+The structure of the OKI is simple. It features 127 * 6 bytes table at its beginning. Each entry points to a payload in the ROM. The payload of each entry must be ADPCM stream.
 
-For some reason reason offset 0 in the table index should not be used.
+For some reason offset 0 in the table index must not be used.
 
 \lstinputlisting[style=CStyle]{src/code/okistruct.c}
 
@@ -101,7 +94,7 @@ Notice there is no metadata to indicate the bitrate. The "database" entry is a p
 
 \begin{figure}[H]
 \nbdraw{oki_rom}
-\caption*{OKI ROM layout. Source \red{TODO}}
+\caption*{OKI ROM layout\cite{MSM6295_datasheet}}
 \end{figure}
 
 
@@ -119,7 +112,7 @@ Notice there is no metadata to indicate the bitrate. The "database" entry is a p
 
 
 \section{Processing Musics}
-Making music with FM synthesis is an art which this book does not intend to butcher. The best way to go is to ask the musicians in te team to work with whatever tool they wish (the amazing DefleMask is highly recommended) and export their symphonies using VGM file format.
+Making music with FM synthesis is an art which this book does not intend to butcher. The best way to go is to ask the musicians in the team to work with whatever tool they wish (the amazing DefleMask is highly recommended) and export their symphonies using VGM file format.
 
 The VGM (Video Game Music) is a community effort originating from \icode{smspower.org} to create an audio file format able to support many legacy systems (SEGA consoles, MSX, Neo Geo, and PC) as well as Arcade hardware.
 
@@ -135,7 +128,7 @@ The build system can take care of compressing the PCM via ADPCM and resample fro
 
 
 \section{Programming the z80}
-Programming Zilog's CPU into a sound driver involves doing two things right, bootstrapping and behaving according to the memory map. Solving the memory map is the easier. To avoid page turning, the requirements are reproduced here.
+Programming Zilog's CPU into a sound driver involves doing two things right, bootstrapping and setup the memory map. Since the later is easier, it is discussed first. To avoid page turning, the requirements are reproduced here.
 
 \begin{figure}[H]
 {
@@ -161,33 +154,34 @@ Programming Zilog's CPU into a sound driver involves doing two things right, boo
 \end{figure}
 
 
-Using \icode{sdcc} is helping a lot here since it features an exclusive "placement" keyword have named \icode{\_\_at}.
+Using \icode{sdcc} is helping a lot here since it features an exclusive "placement" keyword \icode{\_\_at}.
 
 \lstinputlisting[style=CStyle]{src/code/z80/memory_map.c}
 
-With the registers covered, only remains placing the \icode{.text} and \icode{.data} at the right location in ROM. This can easily be done thanks to the awesome \icode{sdldz80} linker via a linker script.
+With the registers correctly mapped, what remains is to place the \icode{.text} and \icode{.data} at the right location in ROM. This can easily be done thanks to the awesome \icode{sdldz80} linker via a linker script.
 
 \lstinputlisting[]{src/code/z80/main.lk}
 
-As expected, the \icode{\_DATA} is placed at \icode{0xd000}. The \icode{\_CODE} however is placed not at zero but \icode{0x0200} for reason that will follow soon.
+As expected, the \icode{\_DATA} is placed at \icode{0xd000}. The \icode{\_CODE} however is placed not at \icode{0x0000} but \icode{0x0200} for reason that will follow soon.
 
 \begin{trivia}
 Trivia: Debugging a CPS-1 program can be a tedious task. A good starting point when encountering an issue is to read the linker \icode{.map} file which indicates where each symbol was placed.
 \end{trivia}
 
 \subsection{Bootstrapping}
-A z80 starts fetching and executing instructions from \icode{0x0000} so the bootstrap code \icode{crt0.s} is placed there via \icode{.org 0}.
+A z80 starts fetching and executing instructions from \icode{0x0000}. The bootstrap code \icode{crt0.s} is placed accordingly there via \icode{.org 0}.
 
 The code immediately jumps to \icode{0x100} in order to skip the interrupt handler. The z80 can work in interrupt modes 0, 1, or 2. Modes 0 and 2 are the most powerful and complex. They imply retrieving the id of the interrupting peripheral by reading a byte on the data bus. This mechanism allows support of multi-devices interruption. However in this case, it is overkill. The z80 uses Mode 1 and jumps to \icode{0x38} when interrupted.
 
 At \icode{0x100}, the stack pointer \icode{sp} is set to point at the end of \icode{RAM} (the z80 stack grows downward), the first interrupt is requested and a mystery \icode{gsinit} function is called.
 
-All the code in \icode{crt0.s} account for a few bytes, that is why the linker script placed \icode{\_CODE} at \icode{0x200}.
+All the code in \icode{crt0.s} (on page \pageref{z80_crt0}) accounts for a few hundred bytes. Which explains why we requested the linker script to place \icode{\_CODE} further at \icode{0x200}.
 
 In \icode{crt0.s} below, notice how C functions are prefixed with \icode{\_}.
 \pagebreak
-\lstinputlisting[style=Z80Style]{src/code/z80/crt0.s}
 
+\lstinputlisting[style=Z80Style]{src/code/z80/crt0.s}
+\label{z80_crt0}
 
 
 
@@ -198,20 +192,20 @@ In \icode{crt0.s} below, notice how C functions are prefixed with \icode{\_}.
 \subsection{z80 interrupt}
 In order to interact with the latches properly but also to be able to keep track of wall-time, the z80 needs to be interrupted regularly. Zilog's CPU does features a timer RFSH but it is intended for DRAM refresh (which the sound system does not feature anyway).
 
-There are two timers in the YM2151. Timer A is a 10-bit counter while Timer B is an 8-bit counter. For a YM2151 at 3,579Hz, the trigger formula is 64 * (1024 - value) / 3579.
+Instead the interrupts are triggered by the YM2151, thanks to its two internal timers. Timer A is a 10-bit counter while Timer B is an 8-bit counter. For a YM2151 at 3,579Hz, the trigger formula is 64 * (1024 - value) / 3579.
 
-Setting the Timer A to \icode{800} will result in an interrupt 64 * (1024 - 800) / 3579 = 4ms later. When the YM2151 counter reaches zero, it asserts a line connected to the z80 INT line which makes the CPU jumps to address \icode{0x38}.
+Setting the Timer A to \icode{800} will result in an interrupt 64 * (1024 - 800) / 3579 = 4ms later. When the YM2151 counter reaches zero, it asserts a line connected to the z80 \icode{INT} line which makes the CPU jumps to address \icode{0x38}.
 
 \lstinputlisting[style=CStyle]{src/code/z80/interrupts.c}
 
-Function \icode{schedInterrupt} writes msb 8-bit \icode{0xC0} and lsb \icode{0x00}. Notice how before writing to the YM2151 register the z80 makes sure the 2151 is not busy via \icode{waitYM2151()}.
+Function \icode{schedInterrupt} writes MSB 8-bit \icode{0xC0} and LSB \icode{0x00}. Notice how before writing to the YM2151 register the z80 makes sure the 2151 is not busy via \icode{waitYM2151()}.
 
 
 
 
 
 \subsection{Initializing variables}
-To finish bootstrapping, \icode{crt0} makes sure initialized C variables are initialized. The linker placed all values requiring initialization in a \icode{\_GSINIT} segment. By wrapping it with markers \icode{\_INITIALIZER} (src) and \icode{\_INITIALIZED} (dst), they can be copied.
+To finish bootstrapping, \icode{crt0} makes sure initialized C variables values are set. The linker placed all values requiring initialization in a \icode{\_GSINIT} segment. By wrapping it with markers \icode{\_INITIALIZER} (src) and \icode{\_INITIALIZED} (dst), they can be copied.
 
 \lstinputlisting[style=Z80Style]{src/code/z80/initVar.s}
 
@@ -224,7 +218,7 @@ Copying is done with \icode{ldir} instruction using the linker macros, \icode{s\
 
 
 \subsection{z80 Sound Driver}
-A scheme using a stream may yield more power to the sound driver but for the safe of readability a simpler approach is used here.
+A protocol using a stream (like Street Fighter 2 driver) yield more power but for the sake of readability a simpler approach is used here.
 
 
 

@@ -160,6 +160,8 @@
    showstringspaces=false,
    aboveskip=12pt,
    belowskip=0pt,
+   % Make some parts appear in red.
+   moredelim=**[is][\color{red}]{@}{@},
 }
 
 \definecolor{mGreen}{rgb}{0,0.6,0}
@@ -216,8 +218,8 @@
     showstringspaces=false,
     showtabs=false,                  
     tabsize=1,
-    language=C,
-    morekeywords={call, ld, or, jr,ldr, str,ldir}
+    language=[x86masm]Assembler,
+    morekeywords={call, ld, or, jr,ldr, str,ldir, EI, IM, .area}
 }
 
 % KANJIS!

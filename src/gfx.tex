@@ -272,7 +272,7 @@ I used a keyboard to draw all the graphics for Vampire and Street Fighter 2.
 
 
 \subsection{Saving tiles}
-Artists attempted to reuse tiles as much as possible to reduce the precious ROM space available. In Street Fighter 2, there was only enough GFXROM for eleven challengers. Ken is a patchwork and a palette swap on top of Ryu tiles base. It "weights" only 98,304 bytes.
+Artists attempted to reuse tiles as much as possible to reduce the precious ROM space available. In Street Fighter 2, there was only enough GFXROM for eleven challengers. Ken is a patchwork and a palette swap on top of Ryu tiles base. It "weights" only 98,304 bytes. A remarkable achievement compared to characters such as Zanghief (622,592 bytes), Honda (491,520 bytes) or Ryu (442, 368 bytes).
 
 \begin{minipage}[t]{0.19\linewidth}
   \sdraw{1.0}{patch_ryu0}
@@ -295,25 +295,14 @@ Artists attempted to reuse tiles as much as possible to reduce the precious ROM 
 \end{minipage}
 
 
-A remarkable achievement compared to characters such as Zanghief (622,592 bytes), Honda (491,520 bytes) or Ryu (442, 368 bytes). 
+Made with 2MiB GFXROM, Final Fight is more impressive with a 21 enemies and 6 bosses. The minions are made of seven bases, diversified with patches and palettes.
+
+\begin{figure}[H]
+\nbdraw{ff_template}
+\caption*{G. Oriber, Bill Bull, and Wong Who from Final Fight}
+\end{figure}
 
 
-Final Fight is even more impressive. Made on a 2MiB GFXROM budget, it featured a whooping 21 enemies and six bosses. While most bosses are originals, the minions are in fact made of only seven bases.
-
-\begin{minipage}[t]{0.30\linewidth}
-\simg{1.0}{enemy_goriber.png}
-\end{minipage}
-\hfill%
-\begin{minipage}[t]{0.30\linewidth}
-\simg{1.0}{enemy_billbull.png}
-\end{minipage}
-\hfill%
-\begin{minipage}[t]{0.30\linewidth}
-\simg{1.0}{enemy_wongwho.png}
-\end{minipage}
-
-
-\vfill
 \begin{q}{Nishitani, Capcom – 1991 Retrospective Interview}
 Everyone on the development thought Final Fight was going to be allocated with a large memory capacity, but we were wrong.
 That's why the final boss Belger hops around like that: we didn't have enough memory to add more graphics for a walking pattern. 
@@ -341,7 +330,7 @@ Ryu and Ken use the same seven first colors of their palette to facilitate the p
 \caption*{Sagat's sheet}
 \end{figure}
 
-Sagat laughing animation is double optimized. The sequence is made of two poses where only the bust is replaced while the legs remain the same. Moreover, the left leg is missing. It is reconstructed at runtime using an horizontal mirror of the right leg found at \icode{0xB9}.
+Sagat's laughing animation is double optimized. The sequence is made of two poses where only the bust is replaced while the legs remain the same. Moreover, the left leg is missing. It is reconstructed at runtime using an horizontal mirror of the right leg found at \icode{0xB9}.
 
 \begin{trivia}
 The capacity of the ASICs to flip tiles horizontally was used extensively in Street Fighter II when challengers facing left or right. Not really an issue for symmetrical characters, except for Sagat who' eye patch changes side when he turns.
@@ -363,9 +352,7 @@ The structure was flat with no involvement of intermediate managers. Out of the 
 
 
 
-As layered as they where, operations where not set in stone and employees could climb the ladder quickly. 
-
-Akiman was hired on "Dyn Side Arms" as a SCROLL artist. Two years later, he was a Planner on Forgotten Worlds and went on to work on Final Fight and Street Fighter 2.
+As layered as they where, operations where not set in stone and employees could climb the ladder quickly. Akiman was hired on "Dyn Side Arms" as a SCROLL artist in 1986, at the bottom of the artist ladder. Two years later, he was a Planner on Forgotten Worlds and went on to work on Final Fight and Street Fighter 2 in the same capacity.
 
 \subsubsection{Work Ethic}
 
@@ -384,7 +371,7 @@ A strong working culture was established from the very top.
 \subsubsection{Poaching}
 
 
-Retaining talent was a top priority. The credit screen of Street Fighter II illustrates Capcom cautions. Artists were only credited by their nicknames.
+Retaining talent was a top priority. The credit screen of Street Fighter II illustrates Capcom cautiousness. Artists were only credited by their nicknames.
 
  \begin{figure}[H]
 \img{sf2-credit.png}
@@ -392,7 +379,7 @@ Retaining talent was a top priority. The credit screen of Street Fighter II illu
 \end{figure}
 
 \begin{trivia}
-The most recognition available was a specialty next to a nickname. Some "credit screens" feature \textbf{OBJ}ects artists and \textbf{SCR}oll artists assessing seniority.
+The most recognition available was a specialty next to a nickname. Some "credit screens" feature \textbf{OBJ}ects artists and \textbf{SCR}oll artists.
 \end{trivia}
 
 % \begin{trivia}
@@ -403,7 +390,7 @@ The most recognition available was a specialty next to a nickname. Some "credit 
 
 
 
-Despite its precaution, Capcom lost numerous employees to SNK over the years. Among them was Takashi Nishiyama who made Street Fighter 1 and then went on to direct Fatal Fury' The King Of Fighters\cite{YoshikiOkamotoTakashiNishiyama}.
+Despite its precautions, Capcom lost numerous employees over the years. Among them was Takashi Nishiyama who made Street Fighter 1 and then went on to direct Fatal Fury' The King Of Fighters for Capcom arch-rival, SNK\cite{YoshikiOkamotoTakashiNishiyama},.
  
 
 % In its early years, Capcom organized its pipeline to produce multiple games in parallel. Three teams, named first, 2nd and 3rd Planning Rooms worked side by side. 
@@ -438,7 +425,7 @@ Originally called M. Tyson, the boxer was renamed to "Balrog" for the US release
 % \caption*{Original characters}
 % \end{figure}
 
-For the backgrounds, Hollywood came to the rescue.
+For the backgrounds, Hollywood and VHS cassettes came to the rescue.
 
 \begin{q}{Akiman\cite{ffdevinterview}}
 I remember stitching together a few movies to make a presentation. "Streets of Fire" and Charles Bronson’s "Hard Times" were the ones I used back then. Basically movies about fighting. 
@@ -462,7 +449,7 @@ Coincidentally, the Japanese title of "Hard Times" was "The Street Fighter".
 \section{Shapes and Sprites}
 This historical detour was important in order to understand the sheet system. With this knowledge we can review the last GFX ROM requirements involving OBJs.  
 
-On this layer, tiles can be used either directly or in groups which mandate distinct layout strategies.
+On this layer, tiles can be used either directly or in groups which mandate distinct layout in GFXROM.
 
 \begin{figure}[H]
 \img{ken_stage_design1.png}
@@ -494,12 +481,12 @@ Another limitation (or advantage depending how you look at it) is that a single 
 
 \subsection{Shape}
 
-A much more efficient and flexible way is to use a Shape where tiles location is arbitrary. It takes several draw calls to draw (tiles have to be specified one by one) but they can be located anywhere in a GFXROM.
+A much more efficient and flexible way is to use a Shape where tiles layout can is allowed to be arbitrary. It takes several draw calls to draw (tiles have to be specified one by one) but they can be located anywhere in a GFXROM.
 
 Shapes have the triple advantage of saving storage space, narrow down tile count during rendition to the minimum, and allow per tile palette. The example of Honda shows that only 41 tiles are required. It would have taken 60 tiles if a Sprite had been used.
 
 \begin{trivia}
-In Street Fighter II artists limited themselves to one palette per character because the OBJ layer was used for multiple things suchs as decoration and GUI. This was purely a design decision, they could have as well gone with 16 palettes per characters since they are draw with shapes instead of sprites commands. 
+In Street Fighter II artists limited themselves to one palette per character because the OBJ layer was used for multiple things such as decoration and GUI. This was purely a design decision, they could have as well gone with 16 palettes per characters since they are drawn with shapes instead of sprites commands. 
 \end{trivia}
 
  \begin{figure}[H]
@@ -513,17 +500,13 @@ To allow sprite draw calls, the build system must allocate images depending on t
 
 Capcom games use almost exclusively shapes but the paper sheet system mandated to maintain some visual coherency so humans could keep tracks. Modern tools don't have this problem. 
 
-The Honda shape on the sheet looks like mashed potatoes but using automatic allocation much more powerful system.
-
-\begin{trivia}
-By looking at the sheet from later titles, it was inferred that Capcom abandoned the sheet system with the advent of the CPS-2. Likely using a fully computerized toolchain devoid of paper and scissors, sheets have no spacial coherency, and they look like mashed potatoes.
-\end{trivia}
+On sheet page \pageref{honda_sheet} is a Honda sheet featuring the same artwork twice. It is features first as a  Sprite, at \icode{0x00} where it appears like a rectangle. It appears a second time as a Shape. Thanks to the automatic allocator in \icode{ccps}, tiles are placed as they were encountered when reading the asset. It looks like mashed potatoes but use less space.
 
 \begin{figure}[H]
 \nbdraw{honda_sheet}
-\caption*{A sheet with two version of Honda, Shape and Sprite}
+\caption*{A sheet, generated with \icode{ccps}, with a Sprite Honda and a Shape Honda}
 \end{figure}
-
+\label{honda_sheet}
 
 % On the contrary, a shape does not have to follow any constraint.
 

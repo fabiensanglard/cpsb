@@ -7,22 +7,22 @@ void interrupt () {
     latch = REG_LATCH1;
 }
 
-// TODO Desc variable
+// Incremtend by the main() function.
 int8_t  musCounter = 0;
 
-// TODO Desc variable
-int8_t  lastLatch;
+// Incremented by the interrupt() function.
+volatile int8_t  lastLatch;
 
 
 void main () {
   while(true) {
-  	musCounter++;
+    musCounter++;
     
     // Only tick after interrupt ticks
     while (musCounter < intCounter) {
     }
 
-    updateMusic();	
+    updateMusic(); // Feed the YM2151 or skip for pause.
 	
     if (latch == 0xFF) continue;
     if (latch == lastLatch) continue;
@@ -33,8 +33,8 @@ void main () {
       REG_OKI = 0x8  | latch;
       // 0x10 = Channel 1, 0x00 = Max volume.
       REG_OKI = 0x10 | 0x00; 
-     } else {
-       setupMusicPlayback(latch & 0x70);
-     }
+    } else {
+      setupMusicPlayback(latch & 0x70);
+    }
   }
 } 
