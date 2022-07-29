@@ -18,7 +18,7 @@ next_byte_code:
        REG_OKI = 0x8 | next();
        REG_OKI = next();
        goto next_byte_code;
-    case 0: // End of song
+    case END_SONG: // End of song
        stopMusic(); break;   
   }
 }
