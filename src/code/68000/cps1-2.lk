@@ -4,35 +4,35 @@ SECTIONS {
     *(.text)
     _etext = . ; 
     . = ALIGN(4);
-  } > rom
+  } @>@ rom
 
   .data : {
     _data = . ;     // Start of .data marker
     *(.data)
     _edata = . ;    // End  of .data marker
     . = ALIGN(4);
-  } > rom AT> ram   // LMA = rom but VMA = ram
+  } @>@ rom @AT>@ ram   // LMA = rom but VMA = ram
 
   .rodata : {
     *(.rodata)
     *(.rodata.*)
     . = ALIGN(4);
-  } > rom
+  } @>@ rom
 
   .gfx_data : {
-  } > gfx_ram
+  } @>@ gfx_ram
 
   .cpsa_reg : {
-  } > cpsa_reg
+  } @>@ cpsa_reg
 
   .cpsb_reg : {
-  } > cpsb_reg
+  } @>@ cpsb_reg
 
   .bss : {
     _bss = .;       // Start of .bss marker
     *(.bss)
     _ebss = .;      // End   of .bss marker
     . = ALIGN(4);
-  } > ram
+  } @>@ ram
   ...
 }

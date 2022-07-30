@@ -1,5 +1,5 @@
 \chapter{Control System}
-The control system is the simplest ROM to build since it involves only compiling code and the hardest to get right because of the complexity of its interaction. 
+The control system is the simplest ROM to build since it involves only compiling code and the hardest to get right because of the complexity of its dependencies and the components it needs to communicate with. 
 
 \begin{figure}[H]
 \sdraw{1.0}{control_arch}
@@ -8,9 +8,9 @@ The control system is the simplest ROM to build since it involves only compiling
 
 While the latch toward the Sound system is a small API surface, the GFX API is huge. The interface to the Graphic System is bigger both in breadth (it features 64 registers) and depth (the expected GFXRAM data layout is non-trivial).
 
-Luckily, the 68000 is supported by the  GNU Compiler Collection (GCC). It features a much more powerful linker script system than \icode{sdcc} which helps considerably to solve the memory mapping requirements.
+To our advantage, the Motorola 68000 is a target supported by the GNU Compiler Collection (GCC). This suite features a much more powerful linker script system than \icode{sdcc} which helps considerably to solve the memory mapping requirements.
 
-Nothing is particularly difficult to understand in this build graph. GCC suite is responsible for the entire pipeline with \icode{gcc} compiling C files to obj, \icode{as} assembling S files to obj, and \icode{ld} linking it all together. 
+All stages of the build graph rely on a GNU GCC provided tool. Compiling of \icode{.c} code to \icode{.obj} is done via \icode{gcc} compiler. Assembling of \icode{.s} files to \icode{.obj} files is taken care of by \icode{as} assembler . Finally, the \icode{ld} linker combines all \icode{.obj} together into raw instructions. 
 
 
 \nbdraw{build_graph_ctrl}
@@ -22,9 +22,9 @@ At the end of the process, the logical 68000 ROM is split and interleaved in chi
  Alike for the z80, bootrapping is solved with a small assembler program named \icode{crt0.s}.
 
 \section{Bootstrapping the 68000}
-A 68000 does not have a set booting address. Instead, it consults a 64 32-bit integer array called the "vector table". Located at \icode{0x000000}, this is where the CPU find the values to initialize its registers such as the stack pointer (offset \icode{0}) and instruction pointer (offset \icode{1}).
+A 68000 does not have a set booting address. Instead, it reads an array of 64 32-bit integers alled the "vector table". Located at \icode{0x000000}, this is where the CPU find the values to initialize its registers such as the stack pointer (offset \icode{0}) and instruction pointer (offset \icode{1}).
 
-\lstinputlisting[language={[Motorola68k]Assembler}]{src/code/68000/crt0.s}
+\lstinputlisting[style=m68kStyle]{src/code/68000/crt0.s}
 
 All other slots except for one (offset \icode{26}) point to a no-nop routine.
 
@@ -32,17 +32,17 @@ All other slots except for one (offset \icode{26}) point to a no-nop routine.
 
 
 \section{Auto-Interrupt}
-The 68000 has multiple interrupt modes. In its most complex form, IPL0, IPL1, and IPL2 encode a level of interrupt and the interrupt ID is retrieved via an external interrupt controller. This would be over-kill for the talks at hand.
+The 68000 has multiple interrupt modes. In its most complex form, \icode{IPL0}, \icode{IPL1}, and \icode{IPL2} encode a level of interrupt and the interrupt ID is retrieved via an external interrupt controller. This would be over-kill for the talks at hand.
 
-A simpler mode, auto-vector, makes the CPU jump directly based on the three IPL lines state. Three lines gives a value [0,7] which is used to looked up the "vector table" starting at offset 24.
+A simpler mode, auto-vector, makes the CPU jump directly based on the three IPL lines state. Three lines are treated as bit giving a value in [0,7] which is used to looked up the "vector table" starting at offset \icode{24}.
 
 Since IPL1 is connected to the CPS-A INT lines, the VSYnc handler function is placed at offset \icode{24 + 2 = 26}.
 
-\lstinputlisting[language={[Motorola68k]Assembler}]{src/code/68000/crt1.s}
+\lstinputlisting[style=m68kStyle]{src/code/68000/crt1.s}
 
 The last piece is the \icode{\_boot} function, which setups auto-vector and jump to \icode{main}.
 
-\lstinputlisting[language={[Motorola68k]Assembler}]{src/code/68000/crt2.s}
+\lstinputlisting[style=m68kStyle]{src/code/68000/crt2.s}
 
 
 
@@ -54,19 +54,18 @@ Alike for the Sound System and its z80 memory space, we need to make sure the so
 
 The compiler in the GNU Compiler Collection, \icode{gcc} does not have a placement keyword \icode{\_at} but even if it had been available, it would not have been enough to map large portion such as the 196 KiB of GFXRAM.
 
-For what \icode{gcc} lacks, we can compensate thanks to the power of \icode{ld}'s linker script system. The idea is to use a two step method where:
-\begin{itemize}
-\item First, Define memory regions thanks to the \icode{MEMORY} keyboard.
-\item Second Create segments where code and data are stored based on access properties.
-\item Third, Connect regions and segments.
-\end{itemize}
+We can compensate for the lack of \icode{\_\_at} thanks to the power of \icode{ld}'s linker script system. The idea is to use a tow steps method where:
+\begin{enumerate}
+\item Define memory regions in the script thanks to the \icode{MEMORY} keyword. Create segments where code/data are stored in regions based on read/write access types.
+\item Connect regions and segments in the C code.
+\end{enumerate}
 
 
 % As a reminded, here is the desired memory mapping.
 \pagebreak
 
 \subsection{Goal}
-To avoid flipping pages, here is the memory map studied on page XXX.
+To avoid flipping pages, here is the memory map studied on page \pageref{m68k_mm}.
 
 \begin{tabularx}{\textwidth}{rrrX}
 \toprule    
@@ -96,7 +95,7 @@ To avoid flipping pages, here is the memory map studied on page XXX.
 \lstinputlisting[]{src/code/68000/cps1.lk}
 
 \begin{trivia}
-Notice how powerful the linker script is compared to \icode{sdcc}. A directive, \icode{OUTPUT\_FORMAT (" binary ")} allows to directly output raw binary without using container like \icode{elf}. This avoid the extra conversion step from elf to binary using \icode{objcopy}.
+Notice how powerful the linker script is compared to \icode{sdcc}. A directive, \icode{OUTPUT\_FORMAT (" binary ")} allows to directly output raw binary without using a container like \icode{elf}. This avoid the conversion step from elf to binary using \icode{objcopy}.
 \end{trivia}
 
 
@@ -126,18 +125,15 @@ With these elements, zeroing the bss and populating .data with initial values is
 
 \pagebreak
 \section{Verifying RAM}
-Capcom games bootstrap does more than bringing up the CPUs. They also verify the health of hardware components. These screens are rarely, if ever, seen by players since they are visible only once when the cabinet is turned on. During normal operations, that would be once a day.
+Capcom games bootstrap does more than bringing up the CPUs. They also verify the health of hardware components. These screens are rarely, if ever, seen by players since they are visible only once when the cabinet is turned on. During normal operations, that would be once a day when nobody is there.
 
-All CPS-1 games display a slightly different set of text. However all of them end up checking the m68k RAM and the GFXRAM. 
+All CPS-1 games display a slightly different set of text. However all of them check for faulty RAM access by the Control system. By checking the communication lines, the cabinet prevented wild bug hunt where a system would fault because it received corrupted messages. 
 
-Faulty RAM could create issues further down the pipeline. A cabinet would then expose faults that could be mis-attributed to other components. By allowing to quickly rules out a whole class of errors, the startup tests sped up debugging and repairing boards.
+By allowing to quickly rules out a whole class of errors, the startup tests sped up debugging and brought down repairing costs.
 
-The technique used is simple but has its limitation. For all byte in each areas of the RAM and GFXRAM, try to write a value, then try to read it back. If they differ, the GFXRAM is faulty and an error message is displayed. 
+The technique used is simple. For all byte in each areas of the RAM and GFXRAM, try to write a value, then try to read it back. If they differ, the GFXRAM is faulty and an error message is displayed. 
 
-\begin{trivia}
-No way to checksum the GFXROM or the Sound System. The GFXROM is not mapped and the latch system is one way, making it impossible for the z80 to surface problems.
-\end{trivia}
-
+The limit of this technique is that only what is visible by the Control system can be verified. There is no way to checksum the GFXROM. While the z80 can access most of the Sound System ROM (except for the OKI ROM), it could perform checks but would have no way to surface errors since the latches can only be written from the m68k side.
 \vfill
 \begin{figure}[H]
 \nbimg{boot_ghouls.png}

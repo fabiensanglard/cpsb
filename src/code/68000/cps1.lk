@@ -1,6 +1,7 @@
 OUTPUT_FORMAT("binary")
 OUTPUT_ARCH(m68k)
-MEMORY {
+@MEMORY@ {
+  /* Define memory regions */
   rom (rx)    : ORIGIN = 0x000000, LENGTH = 0x200000
   jamma_p(rw) : ORIGIN = 0x800000, LENGTH = 0x8
   jamma_d(rw) : ORIGIN = 0x800018, LENGTH = 0x8

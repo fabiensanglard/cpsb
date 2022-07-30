@@ -328,32 +328,52 @@ The success was such that the series accounted for 60\% of the Japanese market P
 
 
 
-\subsubsection{Tech Specs}
+\subsubsection{What Capcom used}
 Because so many models were released, it is hard to tell for sure which PC-98 was used for a particular game. What can be done is to list the models for each years CPS-1 games were released in order to get a rough idea.
 
+\begin{figure}[H]
+\nbdraw{pc98lines}
+\caption*{A selection of PC-98 from 1985 to 1992}
+\end{figure}
 
-\draw{pc98lines}
+It is likely musicians working on CPS-1 title were provided with computers from the Main series. Around that time, it would have likely been an computer based on a Intel 386 CPU.
 
-\subsubsection{C-bus and audio interface}
 
-Despite their name, NEC's machine had nothing to do with the IBM PC. American firms actually had a hard time penetrating Japan market because of their lack of Kana and Kanji support.
+\subsubsection{Proprietary technology}
 
-From a tech specs perspective, the PC-98 uses its own 16-bit C-bus instead of the ISA bus; BIOS, I/O port addressing, memory management and graphics output are also different.
+Despite their name, NEC's machine had nothing to do with the IBM PC. Due to its operating system, MS-DOS, lack of support for Japanese glyphs, Big Blue’s machines never managed to break into the
+Japanese market. NEC's PC were name after what they were, \textbf{P}ersonnal \textbf{C}omputers.
 
-\img{roland_cbus2x.png}
+
+\subsubsection{C-Bus}
+The PC-98 uses its own 16-bit C-bus instead of the IBM's ISA bus. BIOS, I/O port addressing, memory management and graphics output are also different. This architecture was both a moat that protected NEC from clone manufacturers and a dungeon that prevented its machine from peripherals built for IBM PCs.
+
+
+It was an extra effort for manufactures to create c-bus version of their card bu companies such as Roland and Creative did release some of their products for PC-98.
+
+\begin{figure}[H]
+
+\nbimg{roland_cbus2x.png}
+\caption*{A c-bus Roland MIDI card for PC98II}
+\end{figure}
+
+
 
 \subsubsection{Video chip}
-NEC was immensely succesful.
+Besides its proprietary bus, PC-98 were noteworthy for their, at the time, powerful graphic system.
 
-Due to the language barrier, Big Blue's machines never managed to break into the Japanese market.
+The heart of it was the High-Performance Graphics Display Controller 7220, more commonly as $\upmu$PD7220. The PC-98 used two of them, both running 2.5MHz. One handles 8KB VRAM for text while the other acts as a co-processor managing a 96KB VRAM framebuffer.
 
-The PC-98s supported kanjis and had their own C-Bus, BIOS, I/O port addressing, memory management, and graphics system. 
+The tandem was one of the first GPU, presenting primitives to draw lines, circles, arcs, and character graphics. In its highest resolution mode the PC-98 reached an impressive 640×400 with 8 colors. Allowing Latin alphabetic, numeric and most importantly katakana characters. An optional ROM board added 3,000 kanji glyphs to the repertory.   
+
+\subsubsection{The end of PC-98}
 
 Although having specs far inferior to the Fujitsu FM Towns and Sharp X68000, NEC enjoyed tremendous success, selling 18 millions units from 1982 to 1999.
 
 
+A list accounting for games only still accounts for 1,228 titles. Proof of the machine status as a game developers favorite.
 
-
+NEC's domination only started to wade with DOS/V, a special version of Microsoft's MS-DOS supporting Japanese characters, came out at the end of 1990.
 
 
 \begin{trivia}
@@ -364,14 +384,4 @@ Chun-Li Spinning Bird Kick line was spoken by Eri Nakamura, the graphic designer
 
 For Ryu and Ken, who share the same voice, the graphic designer in charge of Guile lent his voice for the Hadoken and Shoryuken while the one in charge of Boxer did the Tatsumaki Senpukyaku.  
 \end{q}
-\end{trivia}
-
-\subsubsection{The end of PC-98}
-List of games only accounts for 1,228 titles. Despite inferio hardware capabilities compared to Fujitsu's FM Tower or Sharp's X68000 steady stream of games and huge share of the market. Game developers favorite.
-
-NEC's domination only started to wade with DOS/V, a special version of Microsoft's MS-DOS supporting Japanese characters, came out at the end of 1990.
-
-
-\begin{trivia}
-Talk about music playing faster here.
 \end{trivia}
