@@ -400,9 +400,7 @@ Thanks to the PAL chips enabling/disabling components, the 68000 memory space is
 
 \subsection{Putting it all together}
 
-The details of the 68000 operations will be studied in-depth in the next chapters but we can already guess how the CPU operates based on what it has access to.
-
-As the m68k boots, it starts to retrieve instructions from it ROM. For regular operations such as store/load, and also to keep track of its call stack, it uses its work RAM. 
+The details of the 68000 operations will be studied in-depth in the next chapters but we can already guess how the CPU operates based on what it has access to. As the m68k boots, it starts to retrieve instructions from it ROM. For regular operations such as store/load, and also to keep track of its call stack, it uses its work RAM. 
 
 The game engine starts and reads the configuration set by the arcade operators via the DIP switches. While the game runs, the CPU continuously polls the JAMMA registers.
 
