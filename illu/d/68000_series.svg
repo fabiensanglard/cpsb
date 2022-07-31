@@ -29,7 +29,7 @@
      fit-margin-bottom="0"
      inkscape:zoom="2.1417558"
      inkscape:cx="116.96011"
-     inkscape:cy="295.08499"
+     inkscape:cy="295.085"
      inkscape:window-width="3840"
      inkscape:window-height="2036"
      inkscape:window-x="-12"
@@ -591,6 +591,17 @@
          x="84.955711"
          y="110.66654"
          id="tspan117895-9-3">16 MHz</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.52778px;line-height:1.25;font-family:Novarese;-inkscape-font-specification:Novarese;stroke-width:0.264583"
+       x="75.104301"
+       y="21.351706"
+       id="text111371-4-79-0"><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52778px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#ff0000;fill-opacity:1;stroke-width:0.264583"
+         x="75.104301"
+         y="21.351706"
+         id="tspan117895-9-3-5">10 MHz</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:3.52778px;line-height:1.25;font-family:Novarese;-inkscape-font-specification:Novarese;stroke-width:0.264583"
