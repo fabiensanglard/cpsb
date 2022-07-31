@@ -73,7 +73,7 @@ To avoid flipping pages, here is the memory map studied on page \pageref{m68k_mm
   \toprule    
   \texttt{0x000000} & \texttt{0x3FFFFF} & 3 MiB & ROM \\
   \toprule    
-  \texttt{0x800000} & \texttt{0x800007} & 8 B & JAMMA players inputs \\
+  \texttt{0x800000} & \texttt{0x800007} & 8 B & JAMMA Players Inputs \\
   \texttt{0x800018} & \texttt{0x80001F} & 8 B & JAMMA Dip Switches \\
   \texttt{0x800030} & \texttt{0x800037} & 8 B & JAMMA Coin sensors \\
   \texttt{0x800176} & \texttt{0x800177} & 1 B & Kick harness \\
@@ -176,47 +176,45 @@ The limit of this technique is that only what is visible by the Control system c
 
 
 \section{Ruling them all}
-\label{this}
-This is now \pageref{this} page in the "Book of CP-System". With each chapter peeling away a layer of complexity, we have finally reached the heart of the game. 
-
+With each chapter peeling away a layer of complexity, we have finally reached the heart. 
 The function \icode{main} is where developers will have their game engine convert player inputs into visual and audio outputs.
 
-The architecture is much alike the z80 sound system where two "threads" run in lockstep. Function \icode{VSync} is awakened roughly every 16ms. Its job is to read inputs and save them locally, read latch buffer and write them to the latch, and more importantly, flip the GFXRAM double buffered descriptors. 
+The architecture is much alike the z80 sound system where two "threads" run in lockstep. Function \icode{VSync} is awakened every 16ms. Its job is to read inputs and save them locally, read sound/music requests and write them to the latch, and more importantly, flip the GFXRAM double buffered SCROLL and OBJ descriptors. 
 
 \begin{trivia}
-The \icode{frameCounter} variable not only allow to pace the main thread so a new frame is only hosted every 16ms instead of rendering as fast as possible, it is also useful too keep track of wall-time to render animation and game logic properly.
+The \icode{frameCounter} variable paces the main thread so a new frame is only hosted every 16ms instead of rendering as fast as possible. It is also useful to keep track of wall-time to render animation and game logic properly.
 \end{trivia}
 
 
 \subsection{Commanding sound}
-By now it will be abundantly clear that requesting a sound or a music playback is only about writing to a latch and forget about it. 
+Requesting a sound or a music playback is only about writing to a latch and forget about it. However special care is necessary if the engine requests multiple sounds during a same frame. If this were to happen the value in the latch could be overwritten before the z80 picked it up.
+The solution is to implement a system of queue where only one value is requested by frame. 
 
-Special care has to occur if the engine may request multiple sound during a same frame. If this were to happen the value in the latch could be overwritten before the z80 picked it up.
+% However for the simplification and brevity requirement of this book, no queue is used in the following code.
 
-The solution is to implement a system of queue where only one value is requested by frame.
-
-However for the simplification and brevity requirement of this book, no queue is used in the following code.
+Functions VSync and main run in lock-steps via two counters. Main only runs after a sync has occured. Sync is always one step ahead of main function.
 
 \lstinputlisting[style=CStyle]{src/code/68000/vsync.c} 
 
 \subsection{Main}
 \lstinputlisting[style=CStyle]{src/code/68000/main.c} 
 
+
 How \icode{hostframe} is implemented is completely at the programmer's discretion. Capcom games used a common kernel framework made of tasks. Since there is no source of interrupt beside \icode{vsync} they implemented a collaborative multi-tasking system where the stack and registers are stored/loaded as each task is executed.
 
-To lean more about the Capcom kernel and how Street Fighter II uses it to multi-task A.I bytecode and moving fireballs make sure to checkout Street Fighter II Paladium source code\cite{sf2platinium}.
+To learn about the kernel and how it is used to run multi-task A.I bytecode and moving fireballs, checkout Street Fighter II Paladium source code\cite{sf2platinium}.
 
 \subsection{Retrieving inputs}
 Besides joystick and buttons, the engine must recover inputs such as the dip settings, P1Start, P2Start, and most importantly detect coins being inserted.
 
 \begin{trivia}
-Arcades operator could configure the difficulty of a game via DIP switches. In a game like Street Fighter 2, eight configuration go from the easiest where 1 coin grants 6 credits to the hardest where four coins grant a single credit. There is even a "Free Play" mode which no amount of begging could convince operators to enable\cite{sf2manual}.
+Arcades operator could configure the difficulty of a game via DIP switches. In Street Fighter 2, eight configurations go from the easiest where 1 coin grants six credits to the hardest where four coins grant a single credit. There is even a "Free Play" mode which no amount of begging could convince operators to enable\cite{sf2manual}.
 \end{trivia}
 
-The three DIP switches are called A, B, and C. As featured on page \pageref{fig:boarda} each DIP has 8 switches responsible for flipping a bit in a byte. Recovering the configuration is as simple as reading a byte from the memory map.
+The three DIP switches are called A, B, and C. As visible on page \pageref{fig:boarda} each DIP has 8 switches responsible for flipping a bit in a byte. Recovering the configuration is as simple as reading a byte from the memory map.
 
 \begin{trivia}
-In Street Fighter 2, DIP B is used to configure the difficulty level of the game ranging from 0 to 8 (4=default). Based on this value A.I selects "better" bytecode\cite{sf2aiengine} script. The A.I still cheat in all of them by skipping "charging"\cite{sf2aiengine}.
+In Street Fighter 2, DIP B is used to configure the difficulty level of the game ranging from 0 to 8 (4=default). Based on this value the A.I selects appropriates set of bytecode\cite{sf2aiengine} script. Even in easy mode, the A.I cheats by skipping "charging"\cite{sf2aiengine}.
 \end{trivia}
 
 
@@ -225,38 +223,38 @@ In Street Fighter 2, DIP B is used to configure the difficulty level of the game
  % \begin{figure}[H]
 \begin{tabularx}{\textwidth}{Xllr}
   \toprule    
-  \textbf{Label } & \textbf{ Map Zone }  & \textbf{Address } & \textbf{Mask } \\               
+  \textbf{Label } & \textbf{ Memory Area }  & \textbf{Address } & \textbf{Mask } \\               
   \toprule   
   
-    \texttt{P1\_KEY\_3} & JAMMAp &    \texttt{0x800000} &  \texttt{0b01000000}    \\ 
-      \texttt{P1\_KEY\_2} & JAMMAp &  \texttt{0x800000} &  \texttt{0b00100000}    \\  	
-    \texttt{P1\_KEY\_1} & JAMMAp &    \texttt{0x800000} &  \texttt{0b00010000}    \\     
-  \texttt{P\_UP}    & JAMMAp &        \texttt{0x800000} &  \texttt{0b00001000}    \\     
-  \texttt{P1\_DOWN} & JAMMAp &  \texttt{0x800000} &  \texttt{0b00000100}    \\     
-  \texttt{P1\_LEFT} & JAMMAp &  \texttt{0x800000} &  \texttt{0b00000010}    \\     
-  \texttt{P1\_RIGHT} & JAMMAp &  \texttt{0x800000} &  \texttt{0b00000001}    \\     
+    \texttt{P1\_KEY\_3} & JAMMA Players Inputs &    \texttt{0x800000} &  \texttt{0b01000000}    \\ 
+      \texttt{P1\_KEY\_2} & JAMMA Players Inputs &  \texttt{0x800000} &  \texttt{0b00100000}    \\  	
+    \texttt{P1\_KEY\_1} & JAMMA Players Inputs &    \texttt{0x800000} &  \texttt{0b00010000}    \\     
+  \texttt{P\_UP}    & JAMMA Players Inputs &        \texttt{0x800000} &  \texttt{0b00001000}    \\     
+  \texttt{P1\_DOWN} & JAMMA Players Inputs &  \texttt{0x800000} &  \texttt{0b00000100}    \\     
+  \texttt{P1\_LEFT} & JAMMA Players Inputs &  \texttt{0x800000} &  \texttt{0b00000010}    \\     
+  \texttt{P1\_RIGHT} & JAMMA Players Inputs &  \texttt{0x800000} &  \texttt{0b00000001}    \\     
  
   \toprule   
-    \texttt{P2\_KEY\_3} & JAMMAp &  \texttt{0x800001}    &  \texttt{0b01000000}    \\     
-  \texttt{P2\_KEY\_2} & JAMMAp &  \texttt{0x800001}    &    \texttt{0b00100000}    \\     
-  \texttt{P2\_KEY\_1} & JAMMAp &  \texttt{0x800001}    &    \texttt{0b00010000}    \\    
-  \texttt{P2\_UP}    & JAMMAp &  \texttt{0x800001}    &     \texttt{0b00001000}    \\     
-  \texttt{P2\_DOWN} & JAMMAp &  \texttt{0x800001}    &      \texttt{0b00000100}    \\     
-  \texttt{P2\_LEFT} & JAMMAp &  \texttt{0x800001}    &      \texttt{0b00000010}    \\     
-  \texttt{P2\_RIGHT} & JAMMAp &  \texttt{0x800001}    &     \texttt{0b00000001}    \\     
+    \texttt{P2\_KEY\_3} & JAMMA Players Inputs &  \texttt{0x800001}    &  \texttt{0b01000000}    \\     
+  \texttt{P2\_KEY\_2} & JAMMA Players Inputs &  \texttt{0x800001}    &    \texttt{0b00100000}    \\     
+  \texttt{P2\_KEY\_1} & JAMMA Players Inputs &  \texttt{0x800001}    &    \texttt{0b00010000}    \\    
+  \texttt{P2\_UP}    & JAMMA Players Inputs &  \texttt{0x800001}    &     \texttt{0b00001000}    \\     
+  \texttt{P2\_DOWN} & JAMMA Players Inputs &  \texttt{0x800001}    &      \texttt{0b00000100}    \\     
+  \texttt{P2\_LEFT} & JAMMA Players Inputs &  \texttt{0x800001}    &      \texttt{0b00000010}    \\     
+  \texttt{P2\_RIGHT} & JAMMA Players Inputs &  \texttt{0x800001}    &     \texttt{0b00000001}    \\     
 
   \toprule   
-  \texttt{SERVICE} & JAMMAc &  \texttt{0x800018}       &     \texttt{0b01000000}    \\ 
-   \texttt{P2\_START} & JAMMAc &  \texttt{0x800018}   &      \texttt{0b00100000}    \\ 
-   \texttt{P1\_START} & JAMMAc &  \texttt{0x800018}   &      \texttt{0b00010000}    \\   
-     \texttt{COIN2\_P2} & JAMMAc &  \texttt{0x800018}    &   \texttt{0b00000010}    \\  
-   \texttt{COIN\_P1} & JAMMAc &  \texttt{0x800018}       &   \texttt{0b00000001}    \\      
+  \texttt{SERVICE} & JAMMA Coins &  \texttt{0x800018}       &     \texttt{0b01000000}    \\ 
+   \texttt{P2\_START} & JAMMA Coins &  \texttt{0x800018}   &      \texttt{0b00100000}    \\ 
+   \texttt{P1\_START} & JAMMA Coins &  \texttt{0x800018}   &      \texttt{0b00010000}    \\   
+     \texttt{COIN2\_P2} & JAMMA Coins &  \texttt{0x800018}    &   \texttt{0b00000010}    \\  
+   \texttt{COIN\_P1} & JAMMA Coins &  \texttt{0x800018}       &   \texttt{0b00000001}    \\      
      
 
     \toprule   
-    \texttt{DIP1} & JAMMAd &  \texttt{0x80001A}    &  \texttt{0bXXXXXXXX}    \\      
-    \texttt{DIP2} & JAMMAd &  \texttt{0x80001C}    &  \texttt{0bXXXXXXXX}    \\      
-    \texttt{DIP2} & JAMMAd &  \texttt{0x80001E}    &  \texttt{0bXXXXXXXX}    \\      
+    \texttt{DIP1} & JAMMA DIPs &  \texttt{0x80001A}    &  \texttt{0bXXXXXXXX}    \\      
+    \texttt{DIP2} & JAMMA DIPs &  \texttt{0x80001C}    &  \texttt{0bXXXXXXXX}    \\      
+    \texttt{DIP2} & JAMMA DIPs &  \texttt{0x80001E}    &  \texttt{0bXXXXXXXX}    \\      
   \toprule   
 \end{tabularx}
 % \caption*{Input bit layouts}
@@ -266,30 +264,32 @@ In Street Fighter 2, DIP B is used to configure the difficulty level of the game
 Requesting tiles to be drawn consist in first describing the layout in GFXRAM, then setting the palettes, and finally writing to the CPS-A and CPS-B registers to tell them at what offset the data is.
 
 \subsubsection{Double buffering}
-When a frame is rasterized, neither the data in the GFXRAM nor the registers values can be changed. Otherwise it would result in inconsistent images. Changes should only occur during the VBLANKing which is signaled to the 68000 via the \icode{VSync} function.
+When a frame is being drawn, neither the data in the GFXRAM nor the CPS-A/CPS-B registers values should be changed. Raster effects are not possible since HSYNC is not forwarded to the 68000. Changes should only occur during the VBLANKing which is signaled via the \icode{VSync} function.
 
-The proper way to avoid visual artifacts is to use a double buffer in the GFXRAM where the currently used data is not written until the next VSYNC. Meanwhile the next frame is being prepared in the other buffer. 
-
-On \icode{VSync} the CPS-A and CPS-B registers are written to point them to the next frame data.
+The proper way to avoid visual artifacts is to double buffer the SCROLL/OBJ descriptors in the GFXRAM. While one buffer is used for rasterization until the next VSYNC, the next frame is prepared in the other buffer. On \icode{VSync} the CPS-A and CPS-B registers are written to effectively swap the buffers.
 
 \subsubsection{CPS-A and CPS-B registers}
-The CPS-A registers are always at the same offset in the map and always use the same layout. 
+The CPS-A registers are always at the same offset in the 68000 memory map but they don't always use the same layout. 
 
-Depending on the board being targeted, registers of the CPS-B will move and their internal layout will change. A convenient way to deal with this is to use MACROs and have the build system define all these values.
+Depending on the board being targeted, registers of the CPS-B will move and their internal layout will change. A convenient way to deal with this is to use MACROs and have the build system enable the appropriate ones.
 
-Note that all registers are 16-bit wide to accommodate the 68000 writing to them. As shown in the summary table, a register offset is always located on an even address.
+Note that all registers are 16-bit wide to accommodate the 68000 operating on them. As shown in the summary table, a register offset is always located on an even address.
+
+\subsubsection{CPS-A Usage}
+
+The CPS-A is controlled via 18 registers.
 
  \begin{figure}[H]
 \begin{tabularx}{\textwidth}{llX}
   \toprule    
   \textbf{Name } & \textbf{ Offset }  & \textbf{Desc }  \\     
   \toprule   
-  \texttt{OBJ base}  &  \texttt{0x00} & Sprite and Shape descriptors   \\   
-\texttt{SCR1 base} &  \texttt{0x02}  & SCROLL1 descriptors   \\         
-\texttt{SCR2 base} &  \texttt{0x04}  & SCROLL2 descriptors   \\     
-\texttt{SCR3 base}&  \texttt{0x06}   & SCROLL3 descriptors  \\     
-\texttt{ROWSCROLL base} &  \texttt{0x08}  & 256 rowscroll values   \\     
-\texttt{Palette base} &  \texttt{0x0A}  & Palettes location   \\   
+  \texttt{OBJ base}  &  \texttt{0x00} & OBJ GFXRAM absolute address   \\   
+\texttt{SCROLL1 base} &  \texttt{0x02}  & SCROLL1 GFXRAM absolute address   \\         
+\texttt{SCROLL2 base} &  \texttt{0x04}  & SCROLL2 GFXRAM absolute address   \\     
+\texttt{SCROLL3 base}&  \texttt{0x06}   & SCROLL3 GFXRAM absolute address  \\     
+\texttt{Rowscroll base} &  \texttt{0x08}  & Rowscroll GFXRAM absolute address \\     
+\texttt{Palette base} &  \texttt{0x0A}  & Palettes GFXRAM absolute address  \\   
   \toprule   
 \texttt{Scroll 1 X} &  \texttt{0x0C}  & SCROLL1 Offset X  \\ 
 \texttt{Scroll 1 Y} &  \texttt{0x0E}  & SCROLL1 Offset Y    \\   
@@ -303,18 +303,47 @@ Note that all registers are 16-bit wide to accommodate the 68000 writing to them
 \texttt{Star2    X} &  \texttt{0x1C}  & STAR2   Offset X    \\  
 \texttt{Star2    Y} &  \texttt{0x1E}  & STAR2   Offset Y    \\  
   \toprule   
-\texttt{ROWSCROLL\_OFFSETS} &  \texttt{0x20}  & Offsets into ROWSCROLL base\\
+\texttt{Rowscroll Offsets} &  \texttt{0x20}  & Offsets into Rowscroll base\\
 \texttt{Video Control} &  \texttt{0x22}  & flip screen, rowscroll enable\\
   \toprule   
 \end{tabularx}
 \caption*{CPS-A registers}
 \end{figure}
 
-The bases tell the CPS-A where it should expected data in GFXRAM. Registers are 16-bit but address must be 24-bit so values are \icode{<< 8}. 
+The base registers tell the CPS-A where it should expected data in GFXRAM. Registers are 16-bit but address must be 24-bit so values are expended \icode{<< 8} upon reception. 
 
-Scroll offsets are exactly that with coordinates origin in the upper left.
+All SCROLL offsets use a coordinates system with origin in the upper left of the screen.
 
-Rowscrolling of SRC1 layer is achieved by two registers. Rowscroll base points to an array of 16-bit values. Rowscroll offset is an offset inside the base. This is elaborated on in the rowscroll section.
+\subsubsection{Row Scrolling}
+Rowscrolling allows to offset each visible row via a discrete X amounts. In Street Fighter II, Honda's dohyō ( the space in which a sumo wrestling bout occurs) perspective is achieved via linear offset differences. The more perspective needed, the more accentuated is the offset slope. 
+
+\begin{figure}[H]
+\nbimg{ring_skew_none.png}
+\caption*{Fighters at the center of the dohyō.}
+ \end{figure}%
+
+\begin{figure}[H]
+\nbimg{ring_skew_left.png}
+\caption*{Fighters move to the left of the dohyō.}
+ \end{figure}%
+
+\begin{figure}[H]
+\nbimg{ring_skew_right.png}
+\caption*{Fighters move to the right of the dohyō.}
+ \end{figure}%
+
+To scroll each row, the CPS-A reads 256 values. That is 224 (each visible lines) + 16 (one tile height above) + 16 (one tile heigh below) = 256 values to render a frame.
+
+Each unsigned 16-bit offset value is expected in an array located in GFXRAM and pointed to via the CPS-A register \icode{ROWSCROLL\_BASE}.
+
+The \icode{ROWSCROLL\_OFFSET} instructs the CPS-A to use values not starting at \icode{ROWSCROLL\_BASE} but at \icode{ROWSCROLL\_BASE} + \icode{ROWSCROLL\_OFFSET}. 
+
+\begin{figure}[H]
+\nbdraw{rowscroll}
+ \caption*{CPS-A rowscroll data access}%
+ \end{figure}%
+
+% Rowscrolling of SCROLL1 layer is achieved by two registers. Rowscroll base points to an array of 16-bit values. Rowscroll offset is an offset inside the base. How to combine them is elaborated on in the rowscroll section.
 
 
 \paragraph{Video Control} This register enable/disable misc attributes.
@@ -322,8 +351,8 @@ Rowscrolling of SRC1 layer is achieved by two registers. Rowscroll base points t
 \lstinputlisting[style=CStyle]{src/code/68000/videocontrol.c} 
 
 
-
-All CPS-B registers location change based on the version.
+\subsubsection{CPS-B Usage}
+The CPS-B features only seven registers but their location change based on the version of the chip.
 
  \begin{figure}[H]
 \begin{tabularx}{\textwidth}{llX}
@@ -341,11 +370,11 @@ All CPS-B registers location change based on the version.
 \caption*{CPS-B registers *for Street Fighter 2	(CPS-B 11)}
 \end{figure}
 
-\paragraph{Palette control}This register is used to upload palettes pages. A page is a group of 32 palettes belonging to a same layer.
+\paragraph{Palette control}This register is used to request upload palettes pages. A page is a group of 32 palettes belonging to a same layer.
 
 \lstinputlisting[style=CStyle]{src/code/68000/palettecontrol.c} 
 
-Palette upload does not happen immediately. Instead the CPS-A wait until the next VBLANK.
+Palette upload does not happen immediately. Instead the CPS-A wait until the next VBLANK and starts reading at the address provided via the PALETTE base register.
 
 The graphic chip does not use a fixed base + offset to lookup a Palette page. e.g: If \icode{SCR1} palette is not marked for upload, \icode{SCR2} palette is expected immediately after \icode{OBJ} palette.
 
@@ -381,12 +410,12 @@ The layer located first behind the OBJ layer has the super power of being able t
 
 
 
-\subsubsection{Drawing Shapes and Sprites}
-To drawing sprites and shapes, descriptors must be written to the GFX RAM. Each entry takes 8 bytes
+\subsubsection{Drawing OBJs}
+To drawing sprites and shapes, descriptors must be written to the GFX RAM. Each entry takes four 16-bit WORDS (8 bytes).
 
 \lstinputlisting[style=CStyle]{src/code/68000/sprites.c} 
 
-The attribute two bytes have a special layout.
+The attribute WORD has a special layout.
 
 \lstinputlisting[style=CStyle]{src/code/68000/sprites2.c} 
 
@@ -402,15 +431,15 @@ Developers do not have to worry about the \icode{STF29} or GFX partitioning. The
 
 \subsubsection{Drawing SCROLLs}
 
-Rendering tilemap is much alike rendering OBJs. Descriptors must be written to the GFX RAM. Each entry is two bytes wide.
+Rendering tilemap is much alike rendering OBJs. Descriptors must be written to the GFX RAM. Each entry is two 16-bit WORDs wide (four bytes).
 
 \lstinputlisting[style=CStyle]{src/code/68000/scrolls.c} 
 
-The attribute byte is a bit field where we find in particular the palette ID, the group ID which references the priority mask, and the usual flippers.
+The attribute WORD is a bit field where we find in particular the palette ID, the group ID which references the priority mask, and the usual flippers.
 
 \lstinputlisting[style=CStyle]{src/code/68000/scrolls2.c} 
 
-All SCROLLs have different size and tile size. But they all features 64x64 (4,096) entries. The CPS-A expects no more and no less. 
+All SCROLLs have different size and tile size. But they all features 64x64 (4,096) entries. 
  \begin{figure}[H]
 \begin{tabularx}{\textwidth}{Xrrr}
   \toprule    
@@ -426,48 +455,15 @@ All SCROLLs have different size and tile size. But they all features 64x64 (4,09
 \caption*{SCROLLS tile size and dimensions}
 \end{figure}
 
-% \begin{trivia}
-As alluded in the hardware chapter,a  full back screen can be rendered without using a single scroll or OBJs.
-
-Enabling the STAR1 layer without requesting any stars via the bytecode does the trick. It only works if the CPS-B on the board support STARfield (few do). Street Fighter II Champion Edition, a game using no STARfield, features a STARfield capable CPS-B vXX which is used in the popup logo scene.
-% \end{trivia}
+A full back screen can be rendered without using a single scroll or OBJs. Enabling the STAR1 layer without requesting any stars via the bytecode does the trick. It only works if the CPS-B on the board support STARfield (few do). Street Fighter II Champion Edition, a game using no STARfield, features a STARfield capable CPS-B v21 which is used in the popup logo scene precisely to draw the black background.
 
 
 
-\subsubsection{Row Scroll}
-Rowscrolling allows to offset each visible row via a discrete X amounts. In Street Fighter II, Honda's dohyō ( the space in which a sumo wrestling bout occurs) perspective is achieved via linear offset differences. The more perspective needed, the more accentuated is the offset slope. 
 
-\begin{figure}[H]
-\nbimg{ring_skew_none.png}
-\caption*{Fighters at the center of the dohyō.}
- \end{figure}%
-
-\begin{figure}[H]
-\nbimg{ring_skew_left.png}
-\caption*{Fighters move to the left of the dohyō.}
- \end{figure}%
-
-\begin{figure}[H]
-\nbimg{ring_skew_right.png}
-\caption*{Fighters move to the right of the dohyō.}
- \end{figure}%
-
-To scroll each row, the CPS-A reads 256 values. That is 224 (each visible lines) + 16 (one tile height above) + 16 (one tile heigh below) = 256 values to render a frame.
-
-Each unsigned 16-bit offset value is expected in an array located in GFXRAM and pointed to via the CPS-A register \icode{ROWSCROLL\_BASE}.
-
-The \icode{ROWSCROLL\_OFFSET} instructs the CPS-A to use values not starting at \icode{ROWSCROLL\_BASE} but at \icode{ROWSCROLL\_BASE} + \icode{ROWSCROLL\_OFFSET}. 
-
-\begin{figure}[H]
-\nbdraw{rowscroll}
- \caption*{CPS-A rowscroll data access}%
- \end{figure}%
 
 A convenient trick is to allocate a rowscroll array of size 1024 with one entry for the full height of \icode{SCROLL2} and generate all the rowscroll offsets. If \icode{SCROLL2} is scrolled vertically, the engine only needs to manipulate \icode{ROWSCROLL\_OFFSET} and no new values are to be generated.
 
 \lstinputlisting[style=CStyle]{src/code/68000/rowscroll.c} 
-
-Trivia: No connection to HSYNC, this is fully hard-coded.
 
 \subsubsection{Real-life example}
 

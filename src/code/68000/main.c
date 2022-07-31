@@ -1,11 +1,13 @@
+volatile int lastFrameCounter = 0;
+
 void hostFrame() {
-  frameCounter++;
-  ... // Game engine render one visual frame.
+  ... // Game engine render one visual and audio frame.
 }
 
 void main() {
   while(true) {
     if (frameCounter < vsyncCounter) continue;
-    hostFrame();
+    hostFrame(); // Run 16ms of gameplay
+    frameCounter++;
   }
 }
