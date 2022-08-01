@@ -19,7 +19,7 @@ All stages of the build graph rely on a GNU GCC provided tool. Compiling of \ico
 
 At the end of the process, the logical 68000 ROM is split and interleaved in chip sized ROMs according to what was described in the hardware chapter.
 
- Alike for the z80, bootrapping is solved with a small assembler program named \icode{crt0.s}.
+ Alike for the z80, bootstrapping is solved with a small assembler program named \icode{crt0.s}.
 
 \section{Bootstrapping the 68000}
 A 68000 does not have a set booting address. Instead, it reads an array of 64 32-bit integers alled the "vector table". Located at \icode{0x000000}, this is where the CPU find the values to initialize its registers such as the stack pointer (offset \icode{0}) and instruction pointer (offset \icode{1}).
@@ -333,7 +333,7 @@ Rowscrolling allows to offset each visible row via a discrete X amounts. In Stre
 \caption*{Fighters move to the right of the dohyō.}
  \end{figure}%
 
-To scroll each row, the CPS-A reads 256 values. That is 224 (each visible lines) + 16 (one tile height above) + 16 (one tile heigh below) = 256 values to render a frame.
+To scroll each row, the CPS-A reads 256 values. That is 224 (each visible lines) + 16 (one tile height above) + 16 (one tile height below) = 256 values to render a frame.
 
 Each unsigned 16-bit offset value is expected in an array located in GFXRAM and pointed to via the CPS-A register \icode{ROWSCROLL\_BASE}.
 
@@ -495,12 +495,12 @@ Note that rowscroll offsets are unsigned and always indicate an amount to move t
 
 \pagebreak
 
-\section{Back then...}\index{Back Then!Programming}
+\section{Back in the days}\index{Back in the days!Programming}
 The system used by Capcom to program the CP-System remained unknown for many years. Only the nickname of Hiroaki Kondo, a composer/sound programmer often credited as "X68K", rumored a computer manufactured by Sharp. 
 
 In 2018,  Akiman confirmed\cite{x68000usage1}\cite{x68000usage2} that Capcom's SDK, named CAT-1, was launched during the making of Street Fighter II and ran on a Sharp X68000.
 
-\subsubsection{SHARP X68000}\index{Computers!SHARP X68000}
+\subsection{SHARP X68000}\index{Computers!SHARP X68000}
 
 Unheard of in the rest of the world, the X68000 is a celebrity in Japan where it is called "god computer". 
 Released in 1987, the first machine in the series was as beautiful and powerful as it was expensive (¥369,000, roughly \$3000 in 1987, equivalent to \$7,600 in 2022).
@@ -531,7 +531,7 @@ The most convenient ports for the keyboard, mouse, and joystick are conveniently
 
 The two 5.25 floppy have elegant motorized "soft" ejection systems.
 
-The three leds in the upper right indicates the state of the machine. If \icode{POWER} is self-explanatory, \icode{HIGH RESO} indicates whether the video output is using 15KHz, 24KHz, or 31kHz whereas \icode{TIMER} indicates if a self-powering is scheduled. 
+The three LEDs in the upper right indicates the state of the machine. If \icode{POWER} is self-explanatory, \icode{HIGH RESO} indicates whether the video output is using 15KHz, 24KHz, or 31kHz whereas \icode{TIMER} indicates if a self-powering is scheduled. 
 
 In later revisions, \icode{HIGH RESO} was replaced with \icode{HD BUSY} to indicate HDD state.
 
@@ -578,7 +578,7 @@ For everything else, the X68000 features two \icode{extension slots} to welcome 
 
 
 
-\subsubsection{Tech specs}  
+\subsection{X68000 Tech specs}  
 Inside its gorgeous "Manhattan" case, the machine packed an unparalleled amount of horse power. Even a machine such as the Amiga 500, released the same year and praised in Europe and USA for its prowess, pales in comparison to the X68000. 
 
 
@@ -611,7 +611,7 @@ If both music and sound capabilities were outstanding, it is in the graphics dep
 
 The 1056 KiB of VRAM are divided into three segments feeding four planes. 512 KiB are dedicated to the Text plane, 512 KiB are for the Bitmap plane and the rest, 32 KiB, are for the joined use of the Background plane and Sprite plane. Each plane can be configured to host various resolution and layers.
 
-\subsubsection{Video prowess}
+\subsection{Video prowess}
 
 The \textbf{Bitmap Plane} is particularly well suited to plot pixels and render images. Its direct 16bpp color mode was ideal for raytracing application (a M68881 math coprocessor could be added to reduce rendering time). 
 
@@ -668,7 +668,7 @@ Video-games were obviously a strength of the machine thanks to its Background an
 
 
 
-\subsubsection{OS}
+\subsection{OS}
 Developed by Hudson Soft, the operating system named Human68k is strongly inspired by Microsoft's MS-DOS . 
 
 All English name commands such as \icode{DIR} are present. In fact, Human68k manual is nearly identical to IBM DOS 4.0J manual\cite{human68k_manual}. The system even uses a \icode{CONFIG.SYS} file to boot.
@@ -688,7 +688,7 @@ Several windows based GUI running on top of Human68k were released over the year
 
 
 
-\subsubsection{A Development machine?}
+\subsection{A Development machine?}
 The similarities between the X68000 and the CPS-1 are many. A quick glance over the specs could easily lead to conclude that a small layer of emulation is all a X68000 need to run CPS-1 games, making it a perfect development machine.
 
 Since developers never elaborated to which extends SHARP's machine were used to make games, we can only make an educated guess.
@@ -701,15 +701,15 @@ The sprite system is also, at first sight, weaker since the number of tile displ
 
 Lastly, there is the issue of storage and loading time from the floppy drives, a notoriously slow medium. To solve this issue, X68000 developers often resulted to loading all assets to RAM between levels, which increased the RAM requirements of a title.
 
-\subsubsection{32 KiB VRAM wall}
+\subsection{32 KiB VRAM wall}
 
-The real issue for all Capcom ports was the amount of VRAM availale to the sprite and tilemap systems. Where a CPS-1 game ships with a minimum of 2MiB ROM storing the GFX assets, the X68000 can only uses 32KiB out of the 1MiB of VRAM for the same purpose. 
+The real issue for all Capcom ports was the amount of VRAM available to the sprite and tilemap systems. Where a CPS-1 game ships with a minimum of 2MiB ROM storing the GFX assets, the X68000 can only uses 32KiB out of the 1MiB of VRAM for the same purpose. 
 
-This small amount effectively keepcap the idea of using both the Sprite and Tilemap system simulataneously since one of them would starve for tiles. 
+This small amount effectively keep-capped the idea of using both the Sprite and Tilemap system simultaneously since one of them would starve for tiles. 
 
-\subsubsection{Learning from X68000 ports}
+\subsection{Learning from X68000 ports}
 
-The limited amount of VRAM prevented the X68000 from being a CPS-1 emulator and likely relegated it to autor/test 68000 ASM, run a port of TCE for GFX integration, and allocate/compile the GFXROM for CPS-2 games. 
+The limited amount of VRAM prevented the X68000 from being a CPS-1 emulator and likely relegated it to author/test 68000 ASM, run a port of TCE for GFX integration, and allocate/compile the GFXROM for CPS-2 games. 
 
 This theory is further reinforced by the study of five games ports by Capcom.
 
@@ -736,7 +736,7 @@ Thanks to the awesome XM6 Pro-68k, we can study the GFX composition\cite{x68k_ga
 \nbimg{gg_manual.jpg}
 
 
-\subsubsection{Ports Analysis: Ghouls 'n Ghosts (1994)}
+\subsection{Ports Analysis: Ghouls 'n Ghosts (1994)}
 Ghouls 'n Ghosts was released in 1994, six years after its arcade release. It is noteworthy for its low RAM requirements of 2MiB RAM and its resolution of 512x512 which is higher than the 384x224 arcade cabinet. 
 
 It is considered a "Perfect port" because of its GFX faithfulness to the CPS-1 version even though its graphic renderer is completely different. Tilemaps are not used at all since the background lives in two software rendered 512x512 Graphic layers using a shared 8-bit indexed colors palette. 
@@ -787,11 +787,11 @@ There is no DMA support toward the VRAM so every single pixel except for the Spr
 
 \pagebreak
 
-\subsubsection{Ports Analysis: Final Fight (1992)}
+\subsection{Ports Analysis: Final Fight (1992)}
 
 Final Fight was released in 1992, three years after its arcade release. Alike, Ghouls'n Ghosts the arcade version used 2MiB of GFXROM and managed to ship on two 5.25-inch 1.2 MiB floppies.
 
-The graphic renders uses the same technique as Ghouls 'n Ghosts where the tilemaps are not used in order to feed the Sprite layer. Two bitmap layers along with a Text layer are rendered in software for a graphic result faithful to the orignal version.
+The graphic renders uses the same technique as Ghouls 'n Ghosts where the tilemaps are not used in order to feed the Sprite layer. Two bitmap layers along with a Text layer are rendered in software for a graphic result faithful to the original version.
 
 The port is not "perfect" since the number of opponents on screen was restricted to 5 which is less than the arcade version where up to 8 enemies where visible. In all likelihood, this was done to lower the 32 KiB VRAM stress.
 
@@ -805,7 +805,7 @@ The trick describe on page \pageref{finalfight_trick} where part of the stair ca
 
 In the other levels, this blending mode is not used so the Bitmap layers go back to using 8bpp for a total of 256 colors available.
 
-Thanks to the X68000's 2151, musics are close to the arcade version, except for the lack of embelishment from the OKI6295. To address this shortcoming, the game supports MIDI audio playback if a MIDI capable device is connected.
+Thanks to the X68000's 2151, musics are close to the arcade version, except for the lack of embellishment from the OKI6295. To address this shortcoming, the game supports MIDI audio playback if a MIDI capable device is connected.
 
 \vspace{-4ex}
 \begin{minipage}[t]{0.49\linewidth}
@@ -838,14 +838,14 @@ Thanks to the X68000's 2151, musics are close to the arcade version, except for 
 
 
 \pagebreak
-\subsubsection{Ports Analysis: Street Fighter II Champion Edition (1993)}
-Street Fighter II Champion Edition was released only a few after the arcade version, Capcom likely being motivated by the collosal success of the series.
+\subsection{Ports Analysis: Street Fighter II Champion Edition (1993)}
+Street Fighter II Champion Edition was released only a few after the arcade version, Capcom likely being motivated by the colossal success of the series.
 
-The volume of assets forced the title into being shipped over four 5.25-inch 1.2 MiB floppies. The game manages to run with 2 MiB or RAM but suffers numerous loading, including between opponents. However, on a machine with 4MiB the game engine loads all floppies to RAM to provide a loadingless experience in-game.
+The volume of assets forced the title into being shipped over four 5.25-inch 1.2 MiB floppies. The game manages to run with 2 MiB or RAM but suffers numerous loading, including between opponents. However, on a machine with 4MiB the game engine loads all floppies to RAM to provide a loading-less experience in-game.
 
 In terms of GFX rendering, we find, again, software rendered layers. The floor however and its per-line parallax is not done via software. The X68000 is notified of HSYNC events from the video system and the hardware scroll is adjusted accordingly. This technique allows to render Page 0 once for all and never touch it.
 
-When fighting occurs in Thailland, Text layer is used to render decorative Sprite such as the statue. It is likely that the 32 KiB was once again not big enough to contain the sprites for both opponents and decorations.
+When fighting occurs in Thailand, Text layer is used to render decorative Sprite such as the statue. It is likely that the 32 KiB was once again not big enough to contain the sprites for both opponents and decorations.
 
 \begin{figure}[H]
 \img{x68k_sf2ce_scrw.png}
@@ -857,7 +857,7 @@ When fighting occurs in Thailland, Text layer is used to render decorative Sprit
 
 Notice the noise in the Graphic layers, the bottom part in Page 0 and the top part in Page 1. 
 
-The programmers used every venues willing to welcome assetes in order to avoid loading from the floppy drives. The parts of the pages not used for composition are used to "cache" background tiles. When the CPU renders, it transfers VRAM to VRAM (sadly without DMA).
+The programmers used every venues willing to stores bytes in order to avoid loading from the floppy drives. The parts of the pages not used for composition are used to "cache" background tiles. When the CPU renders, it transfers VRAM to VRAM (sadly without DMA).
 
 \vspace{-4ex}
 \begin{minipage}[t]{0.49\linewidth}
@@ -892,7 +892,7 @@ The programmers used every venues willing to welcome assetes in order to avoid l
 
 Investigating further into Street Fighter 2: Champion Edition confirms the colossal work that went into converting a CPS-1 title to X68000. 
 
-\subsubsection{Per level renderer}
+\subsection{Per level renderer}
 Where in Final Fight, the background color space was modified on a per-level basis, here each level uses a different rendering strategy to replicate the arcade peculiarities as well as possible.
 
 When fighting occurs in China, the Text layer is not used for Sprite decoration anymore. Instead it is dedicated to the sky and its animation. Two rows of clouds, accounting for two "frames" animation are drawn once and the hardware offset is leveraged to render the animation. This was likely done because of the high fillrate required to update this whole layer.
@@ -938,7 +938,7 @@ If we look further, we see that Page 1 is used for the street even though no par
 
 
 
-\subsubsection{Rise and Fall}
+\subsection{Rise and Fall}
  SHARP kept on improving the series with better CPU (68030), more RAM (up to 12MiB) and even HDD (up to 80 MiB). Peripheral manufacturers embraced the computer with extensions cards covering anything one can thing off. 
 
 
@@ -979,5 +979,5 @@ The success was such that a magazine dedicated to the x68000, Oh!X, was publishe
   \draw{OhX_1990-10}
 \end{minipage}%
 
-Often featuring a raytraced cover to boast the graphic capabilities of the SHARP marvels, each publication came loaded with softwares, originally on one, then two, and later three 5.25" floppy disks \cite{ohXarticle}!
+Often featuring a raytraced cover to boast the graphic capabilities of the SHARP marvels, each publication came loaded with software, originally on one, then two, and later three 5.25" floppy disks \cite{ohXarticle}!
 \end{trivia}

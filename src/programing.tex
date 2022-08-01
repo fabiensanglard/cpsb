@@ -132,7 +132,7 @@ This introduces an ultimate problem. It is not possible for the m68k CPU to send
 
 
 
-\subsection{Back then...}
+\subsection{Back in the days}\index{Back in the days!General}
 The system and conventions we just described allows to exchange data reliably but it does not give a semantic to the values in the latches. 
 
 A developer is free to give any meaning to the latches since it control both the writer and the reader. Maybe you can even take a second to think how you would design this interface if you had to before we study how Capcom did it.
@@ -156,7 +156,7 @@ What about the other latch? Street Fighter II only ever uses the first one. The 
 
 \subsubsection{One sound driver to rule them all}
 
-Given the genericity of the communication system described above it would be a fair to assume all Capcom games used it. That would be wrong.
+Given the capabilities the communication system described above, it would be fair to assume all Capcom games used it. That would be wrong.
 
 The "sound driver" kept on evolving, sometimes changing drastically even between two games made consecutively by the same team. 
 
@@ -183,7 +183,7 @@ This leaves "only" 126 sound values and 127 music values but it more than enough
 
 
 \section{Tracking wall-time}
-The wall-time is the time experienced by players. Both CPUs must be able to measure it. The m68k must do so in order to sample inputs and run the game engine at the intended speed. The z80 is under the same constrain for the music where it must keep track of pause and notes durations. 
+The wall-time is the time experienced by players. Both CPUs must be able to measure it. The m68k must do so in order to sample inputs and run the game engine at the intended speed. The z80 is under the same constrain for the music where it must keep track of pause and notes duration. 
 
 Modern systems have Real Time Clock (RTC) chips to do this but the CP-System is devoid of it. The solution is to leverage the counters which are incremented each time the main thread is interrupted. Depending on the CPU these accumulators will have different granularity.
 

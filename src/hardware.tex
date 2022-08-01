@@ -235,7 +235,8 @@ The control system and its m68k is in charge of coordinating inputs (joystick, b
 The audio system runs almost totally in isolation. It is connected to control via two 8-bit latches which the z80 actively polls to retrieve commands related to music and sound effects. Notice how these latches bridge different data bus width since control has 16 data lines while the audio system's uses 8 data lines.
 
 The graphic system needs more communications and exposes not only its CPS-A and CPS-B registers but also the GFX RAM where the screen layout is described. The m68k and the CPS-A use the same bus to access the GFXRAM so the demarcation is not as clean as with the audio system which result in a bit of bus contention.  
-
+\index{Colors!Pen}
+\index{Colors!Ink}
 The video system produces a stream of palette addresses (pen). Combined with the palette SRAM (ink) and the DAC, it outputs a signal towards JAMMA.
 It is heavy duty in order to keep up with the 59.64Hz refresh rate inflicted on the display.
 
@@ -600,7 +601,7 @@ If the choice of the Yamaha music chips left little ambiguity to the hardware de
 
 First off all, the sampling rate expected in ROM is directly correlated to the clock rate of the MSM6295. Second of all, the OKI can operate in two modes via its \icode{SS} pin. In high quality (H), the divisor is 132 and in low quality (L) the divisor is 165.
 
-Clockable between [1MHz-5MHz] with two modes, the goals was to maximize quality while minimizing required storage. The table shows that the best quality (37kHz) only allowed to store 13 seconds of samples while the worse (6060Hz) gave 86 seconds.
+Running within [1MHz-5MHz] in two modes, the goals was to maximize quality while minimizing required storage. The table shows that the best quality (37kHz) only allowed to store 13 seconds of samples while the worse (6060Hz) gave 86 seconds.
 \begin{figure}[H]
 {
 \setlength\cmidrulewidth{\heavyrulewidth} % Make cmidrule = 
@@ -876,7 +877,7 @@ Increasing horizontal resolution is just about improving the analog signal. This
 
 
 
-\subsection{Colors}
+\subsection{Colors} \index{Colors!Space}
 With a resolution and a refresh rate, the last characteristic of the video system to decide on was the color depth. 
 
 The CPS-1 uses 16 bits to encode colors with 4 bits per RGB components for a total of 12 bits allowing 4,096 colors. 
@@ -1143,7 +1144,7 @@ SCROLL1 uses tiles of dimensions 8x8 resulting in a total dimensions of 512x512.
 % A tile is 16 lines of 8 bytes = 128 bytes.
 
 % A tile is 32 lines of 16 bytes = 5123 bytes.
-
+\index{Colors!Palette page}
 Each tilemaps has a maximum capacity of 32 palettes (called a palette page) which any tile can use freely. SCROLLS can be offset by any X or Y value, appear in any order and be used for any purpose.
 
 
@@ -1371,7 +1372,7 @@ A sprite circuit can be implemented using the same logic as a tilemap. It is a s
 
 Every HSYNC, the GFXRAM is read to know if a sprite appears on the next scanline. If it does, the circuit makes sure it intercept tilemap pens to issue sprite pens instead. 
 
-It is an approach that comes with two drawbacks. Fisrt, it requires one circuit per sprite which is expensive. Second, the one-to-one complexity make it impossible to scale to more than a few units. Nonetheless, this is the solution used by machines such as the Commodore 64 which advertised their circuitry as "hardware sprites".\index{Sprites Multiplexing!C64}
+It is an approach that comes with two drawbacks. First, it requires one circuit per sprite which is expensive. Second, the one-to-one complexity make it impossible to scale to more than a few units. Nonetheless, this is the solution used by machines such as the Commodore 64 which advertised their circuitry as "hardware sprites".\index{Sprites Multiplexing!C64}
 
 
 As limiting as it sounds there is a bit of flexibility thanks to a technique known as multiplexing. A C64 has 8 sprites "units" but that does not mean it can only draw eight sprites on the whole screen. It only means it can only draw eight sprites on the same scanline.
@@ -1404,7 +1405,7 @@ By using two linebuffers alternatively, the GFX increases its latency but also f
 
 This choice, made by SNK for its Neo-Geo, allowed gorgeous titles such as "Metal Slug" to be build entirely with sprites without using tilemaps. 
 
-This system is so powerful that the entire Neo-Geo rendering pipelien revolves around its double line buffer system. It need no tilemap system.
+This system is so powerful that the entire Neo-Geo rendering pipeline revolves around its double line buffer system. It need no tilemap system.
 
 % The counterpart of this architecture is not only the price of a second line buffer but also an humongous amount of GFX ROM to store the assets which drive up game price tag significantly. 
 
@@ -1485,7 +1486,7 @@ Street Fighter II embodies the power of the tile system. Combining them creates 
 
 % made of 4-bit color index where 0 is always considered transparent. Sprite tile arrangement is described along with SCROLL tiles in the GFXRAM. 
 
-Chunli guard pose, 25 tiles (3,200 bytes). Zanghief standing, 34 tiles (4,352 bytes). 
+Chunli guard pose, 25 tiles (3,200 bytes). Zangief standing, 34 tiles (4,352 bytes). 
 
 \begin{minipage}[t]{0.3\linewidth}
   \sdraw{1.0}{ryu}
@@ -1514,7 +1515,7 @@ Tiles in the OBJ layer have attributes allowing them to be rendered horizontally
   \nbdraw{damnd2}
 \end{minipage}
 
- When Final Fight min-boss, Damned, does a back-flip in level 1, no rotation is performed. Two sets of tiles are used and X flip/Y flipped to generate two extra mirrored sets. The effect works with four poses, thanks to fast movement and players's brain interpolation.
+ When Final Fight min-boss, Damned, does a back-flip in level 1, no rotation is performed. Two sets of tiles are used and X flip/Y flipped to generate two extra mirrored sets. The effect works with four poses, thanks to fast movement and players' brain interpolation.
 
  % The system has an advertised capacity of 256 sprite tile per frame \red{(Source?)}.
 
@@ -2049,7 +2050,7 @@ These battery worked remarkably well since, thirty years later, one can find boa
 \end{trivia}
 
 \subsubsection{Suicide batteries}
-The infamous "suicide" nickname came from the effect of losing power. A CPS-B v21 without power lose its configuration and resets all its registers to "default" values that none of the games use. Capcom offered a battery replacement to resurrect boards "C" which had committed sepuku but eventually discontinued the service. 
+The infamous "suicide" nickname came from the effect of losing power. A CPS-B v21 without power lose its configuration and resets all its registers to "default" values that none of the games use. Capcom offered a battery replacement to resurrect boards "C" which had committed seppuku but eventually discontinued the service. 
 
 As the reader will have guessed, passionate fans found a way to bring these games back to life.
 

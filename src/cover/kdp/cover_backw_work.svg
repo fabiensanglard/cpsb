@@ -7,7 +7,7 @@
    viewBox="0 0 190.5 234.95001"
    version="1.1"
    id="svg5"
-   inkscape:version="1.1.2 (08b2f3d93c, 2022-04-05)"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
    sodipodi:docname="cover_backw_work.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -27,8 +27,8 @@
      units="in"
      width="7.5in"
      inkscape:zoom="0.96898578"
-     inkscape:cx="514.45543"
-     inkscape:cy="312.18208"
+     inkscape:cx="370.49047"
+     inkscape:cy="407.12672"
      inkscape:window-width="1280"
      inkscape:window-height="736"
      inkscape:window-x="0"
@@ -232,7 +232,7 @@
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.3333px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#000000;fill-opacity:1"
          id="flowPara1475" /><flowPara
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.3333px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#000000;fill-opacity:1"
-         id="flowPara55959"></flowPara><flowPara
+         id="flowPara55959" /><flowPara
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.3333px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#000000;fill-opacity:1"
          id="flowPara2254">In these locations, players of all ages and origins gathered to take their passion to a level no consumer grade hardware could.</flowPara><flowPara
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.3333px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#000000;fill-opacity:1"
@@ -246,7 +246,7 @@
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.3333px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#000000;fill-opacity:1"
          id="flowPara2759" /><flowPara
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.3333px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#000000;fill-opacity:1"
-         id="flowPara56815"></flowPara><flowPara
+         id="flowPara56815" /><flowPara
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.3333px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#000000;fill-opacity:1"
          id="flowPara4638">The arcades of the early 90s were a highly competitive environment where publishers only had a fraction of a second to catch a player' attention and their quarters. It is during that time that a young company named Capcom  managed to elevate itself above the competition and turn itself into an icon.</flowPara><flowPara
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.3333px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#000000;fill-opacity:1"
@@ -256,9 +256,9 @@
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.3333px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#000000;fill-opacity:1"
          id="flowPara3777" /><flowPara
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.3333px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#000000;fill-opacity:1"
-         id="flowPara59217"></flowPara><flowPara
+         id="flowPara59217" /><flowPara
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.3333px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#000000;fill-opacity:1"
-         id="flowPara12666">This book is an engineering love letter to the platform that allowed this metamorphosis. If you have always wanted to learn about the machine behind the legendary titles such as Street Fighter II, Ghouls 'n Ghosts, or Final Fight, the &quot;Book of CP-S&quot; is for you. </flowPara><flowPara
+         id="flowPara12666">This book is an engineering love letter to the platform that allowed this metamorphosis. If you have always wanted to learn about the machine behind the legendary CPS-1 titles such as Street Fighter II, Ghouls 'n Ghosts, or Final Fight, the &quot;Book of CP-System&quot; is for you. </flowPara><flowPara
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.3333px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#000000;fill-opacity:1"
          id="flowPara44550" /><flowPara
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.3333px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#000000;fill-opacity:1"
@@ -266,9 +266,9 @@
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.3333px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#000000;fill-opacity:1"
          id="flowPara4905" /><flowPara
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.3333px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#000000;fill-opacity:1"
-         id="flowPara60723"></flowPara><flowPara
+         id="flowPara60723" /><flowPara
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.3333px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#000000;fill-opacity:1"
-         id="flowPara12668">Inside, you will find the hardware of the CP-S described and explained in excruciating details.  The software is also covered with a fully detailed pipeline, allowing to turn code and assets into EPROMs.</flowPara><flowPara
+         id="flowPara12668">Inside, you will find the hardware of the CPS-1 described and explained in excruciating details.  The software is also covered with a fully detailed pipeline, allowing to turn code and assets into EPROMs.</flowPara><flowPara
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.3333px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#000000;fill-opacity:1"
          id="flowPara47186" /><flowPara
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.3333px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#000000;fill-opacity:1"
@@ -276,7 +276,7 @@
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.3333px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#000000;fill-opacity:1"
          id="flowPara5823" /><flowPara
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.3333px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#000000;fill-opacity:1"
-         id="flowPara61545"></flowPara><flowPara
+         id="flowPara61545" /><flowPara
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.3333px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#000000;fill-opacity:1"
          id="flowPara12670">Jump in and discover a world of one hundred explanatory illustrations, sprinkled with typos and broken English to remind you this isn't just a dream! </flowPara><flowPara
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.3333px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#000000;fill-opacity:1"
