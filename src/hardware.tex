@@ -1,5 +1,5 @@
 \chapter{Hardware}
-
+\index{CP-System!CPS-1}
 The project that would later be dubbed by the press "superchip"\cite{tgm198906} started between 1985 and 1986. It was a massive investment that would require two years and five millions dollars\cite{becareful} (the equivalent of \$12 millions dollars in 2022).
 
 The significant time and funds investment left not ambiguities in the mind of Capcom executives. Success would be to dictate the life or death of the company.
@@ -284,7 +284,7 @@ Arbitration to allow peripherals to master the bus is done with Bus Request (\ic
 
 The interrupt system is made of a generous three pins \icode{IPL0}, \icode{IPL1}, \icode{IPL2}, and \icode{VPA}. While other CPUs like the x86s or Zilog's z80 have a single interrupt line, the multiple \icode{IPL} allow to code interrupt number directly via the pins without need for an interrupt controller. How this is leveraged will be explained in the programming section.
 
-
+\index{Interrupts!68000}
 System control is done via Error (\icode{BERR}), Reset (\icode{RST}), and Halt (\icode{HALT}). 
 
 Finally, processor status is given by \icode{FC0}, \icode{FC1}, \icode{FC2} and Peripheral control is done via sync (\icode{E}) and valid sig (\icode{VMA}).
@@ -456,6 +456,7 @@ In fact, the \icode{BUSRQ} and \icode{BUSAK} pins are not even connected.  Becau
 
 
 Other pins are \icode{INT} Interrupt line, \icode{NMI} Non Maskable Interrupt, \icode{RESET} Restart CPU, \icode{HALT} Waiting for interrupt, \icode{M1} Fetching next instruction.
+\index{Interrupts!z80}
 
 \label{z80_pinRFSH}
 The \icode{RFSH} pin (ReFreSH signal) tics at regular intervals to trigger DRAM refreshes. The sound system uses only SRAM so it is not used although this pin was re-purposed in a creative way for CP-S 1.5 "Kabuki" (page \pageref{kabuki}).
@@ -865,6 +866,7 @@ Later I protested again to which my boss replied it was a calculation error.
 
 \pagebreak
 \begin{trivia}
+\index{Games!R-Type}
 The designers of R-Type in 1987 played on CRT tolerance in order to craft a video system with increased vertical resolution. 
 
 They chose the VSYNC to pulse at 55Hz. This gave them extra time between frames so they had to sacrifice fewer lines to VBLANK. They reinvested this saving into more vertical lines to reach 256.
@@ -1369,7 +1371,7 @@ A sprite circuit can be implemented using the same logic as a tilemap. It is a s
 
 Every HSYNC, the GFXRAM is read to know if a sprite appears on the next scanline. If it does, the circuit makes sure it intercept tilemap pens to issue sprite pens instead. 
 
-It is an approach that comes with two drawbacks. Fisrt, it requires one circuit per sprite which is expensive. Second, the one-to-one complexity make it impossible to scale to more than a few units. Nonetheless, this is the solution used by machines such as the Commodore 64 which advertised their circuitry as "hardware sprites".
+It is an approach that comes with two drawbacks. Fisrt, it requires one circuit per sprite which is expensive. Second, the one-to-one complexity make it impossible to scale to more than a few units. Nonetheless, this is the solution used by machines such as the Commodore 64 which advertised their circuitry as "hardware sprites".\index{Sprites Multiplexing!C64}
 
 
 As limiting as it sounds there is a bit of flexibility thanks to a technique known as multiplexing. A C64 has 8 sprites "units" but that does not mean it can only draw eight sprites on the whole screen. It only means it can only draw eight sprites on the same scanline.
@@ -1377,7 +1379,7 @@ As limiting as it sounds there is a bit of flexibility thanks to a technique kno
 As the CRT progresses down the screen, a sprite unit used above can be reused to draw sprites located lower on the screen. By changing the configuration during HBLANK, many more than eight sprites can be drawn. This trick was extensively in games to reach well over 100 on screen.
 
 
-Likewise, by using built-in multiplexing, the Commodore Amiga placed an horizontal limit of 8 pixels for its sprites width but allowed unlimited height.
+Likewise, by using built-in multiplexing, the Commodore Amiga placed an horizontal limit of 8 pixels for its sprites width but allowed unlimited height.\index{Sprites Multiplexing!Amiga}
 
 \subsubsection{Line buffer}
 To scale better and increase the number of sprites supported, hardware designers introduced the concept of line buffers. 
@@ -2086,6 +2088,7 @@ Of all the security measures, it would have been fair to assume the custom ASICs
 As cracks appeared in its shield, Capcom did not give up on protecting its tiles. As it had proved itself able to evolve and compete in the arcades, it embraced the challenge to always remain one step ahead of bootlegers.
 
 \subsection{CPS-1.5 Kabuki}
+\index{CP-System!CPS-1.5 Kabuki}
 In 1992, Capcom released the CP System Dash (a.k.a CPS-1.5). Fully encased in a gray plastic box, it introduced a fourth satellite "Qboard" PCB to handle playback of positional three-dimensional Qsound audio. Five games were produced until late 1993.
 
 \begin{figure}[H]
@@ -2120,7 +2123,7 @@ The protection provided by Kabuki held remarkably well over the years. It was on
 \end{trivia}
 
 \subsection{CPS-2}
-
+\index{CP-System!CPS-2}
 With significantly improved capabilities thanks to its increased ROM capacity and higher processor clocks the CPS-2 instantly became a smash-hit, in particular thanks to the Street Fighter Alpha series. 
 
 From 1993 to 2003, forty-two games were published. The first one was the successful "Super Street Fighter II" while the last one "Hyper Street Fighter II: The Anniversary Edition" paid homage to a series that defined the platform.

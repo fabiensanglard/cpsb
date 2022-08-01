@@ -32,6 +32,7 @@ All other slots except for one (offset \icode{26}) point to a no-nop routine.
 
 
 \section{Auto-Interrupt}
+\index{Interrupts!Programming 68000}
 The 68000 has multiple interrupt modes. In its most complex form, \icode{IPL0}, \icode{IPL1}, and \icode{IPL2} encode a level of interrupt and the interrupt ID is retrieved via an external interrupt controller. This would be over-kill for the talks at hand.
 
 A simpler mode, auto-vector, makes the CPU jump directly based on the three IPL lines state. Three lines are treated as bit giving a value in [0,7] which is used to looked up the "vector table" starting at offset \icode{24}.
@@ -696,7 +697,7 @@ The first element of response are the hardware components of the X68000. If the 
 
 The sound chip is an OKI but it is "only" a MSM6258. Although it works alike the MSM6296 with ADPCM, it features only one channel which severely impact how rich the sound effects and music systems can be.
 
-The sprite system is also, at first sight, weaker since the number of tile displayable is half the capacity of the CPS-1 (128 instead of 256). However that is an issue easily circumvented thanks to techniques such as Sprite doubler by Koichi Yoshida\cite{x68000spritedoubler} relying on raster effect.
+The sprite system is also, at first sight, weaker since the number of tile displayable is half the capacity of the CPS-1 (128 instead of 256). However that is an issue easily circumvented thanks to multiplexing techniques such as Sprite doubler by Koichi Yoshida\cite{x68000spritedoubler} relying on raster effect.\index{Sprites Multiplexing!X68000}
 
 Lastly, there is the issue of storage and loading time from the floppy drives, a notoriously slow medium. To solve this issue, X68000 developers often resulted to loading all assets to RAM between levels, which increased the RAM requirements of a title.
 

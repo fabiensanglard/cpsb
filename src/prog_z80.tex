@@ -190,6 +190,7 @@ In \icode{crt0.s} below, notice how C functions are prefixed with \icode{\_}.
 
 
 \subsection{z80 interrupt}
+\index{Interrupts!Programming z80}
 In order to interact with the latches properly but also to be able to keep track of wall-time, the z80 needs to be interrupted regularly. Zilog's CPU does features a timer RFSH but it is intended for DRAM refresh (which the sound system does not feature anyway).
 
 Instead the interrupts are triggered by the YM2151, thanks to its two internal timers. Timer A is a 10-bit counter while Timer B is an 8-bit counter. For a YM2151 at 3,579Hz, the trigger formula is 64 * (1024 - value) / 3579.

@@ -105,7 +105,8 @@ Try to think of a design yourself with the following constraints. There are two 
 How can you make these two CPUs talk to each other reliably, making sure the stream of commands features no duplicates and no drops?
 
 \subsection{Interrupts}
-
+\index{Interrupts!z80}
+\index{Interrupts!68000}
 Both the z80 and the m68k have interrupt systems. These are used to solve many problems and in particular the issue of communicating over the latches.
 
 Since the reader (z80) runs slower than the writer (m68k) it is possible for a latch value to be overwritten (write twice) before it is read. 
