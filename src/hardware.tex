@@ -396,7 +396,7 @@ Thanks to the PAL chips enabling/disabling components, the 68000 memory space is
   \texttt{0xFF0000} & \texttt{0xFFFFFF} & 64 KiB & Work RAM \\
   % \toprule    
 \end{tabularx}%
-}\caption*{Control system memory map.}
+}\caption*{Control system memory map}
 \end{figure} \label{m68k_mm}
 
 \subsection{Putting it all together}
@@ -503,7 +503,7 @@ Hopefully this awful bank switch control
   \texttt{0xF00A} & \texttt{0xF00A} & 1 B& Sound commands (latch 2)\\
   \toprule    
 \end{tabularx}%
-}\caption*{Audio memory map.}
+}\caption*{Audio memory map}
 \end{figure}
 
 
@@ -638,7 +638,7 @@ Whether it is recorded or played, PCM is a series of value directly representing
 
 \begin{figure}[H]
 \nbdraw{speaker}
-\caption*{A speaker cone moves proportionally to the PCM values.}
+\caption*{A speaker cone moves proportionally to the PCM values}
 \end{figure}
 
 
@@ -735,7 +735,7 @@ The only guarantees are that the electron from a canon color always land in a ph
 
 \begin{figure}[H]
 \draw{triad_slots}
-\caption*{A scanline of electron hits wherever.}
+\caption*{A scanline of electron hits wherever}
 \end{figure}
 
 Smaller slots can render the horizontal analog signals with better fidelity.
@@ -753,7 +753,7 @@ The RGB signals describe lines to be drawn but to render an image properly the C
 
 \begin{figure}[H]
 \simg{0.9}{desync.jpg}
-\caption*{A desynced CRT. Lines are correct but not located where they should be.}
+\caption*{A desynced CRT. Lines are correct but not located where they should be}
 \end{figure}
 
 
@@ -797,7 +797,7 @@ Since this space is not used for another field, the resulting effect is black ho
 
 \begin{figure}[H]
 \img{sf2_4_3_interlaced.png}
-\caption*{Non-interlaced scanning show a black space between lines.}
+\caption*{Non-interlaced scanning show a black space between lines}
 \end{figure}
 
 
@@ -891,7 +891,7 @@ The CPS-1 uses 16 bits to encode colors with 4 bits per RGB components for a tot
 \begin{minipage}[t]{0.49\linewidth}
   \simg{1.0}{dark_4bit.png}
 \end{minipage}
-\caption*{CPS-1's 12-bit per color cube.}
+\caption*{CPS-1's 12-bit per color cube}
 \end{figure}
   
 The four remaining bits express brightness to allow 16 shades of a base color. In total, 65,536 different colors are available to artists.
@@ -927,7 +927,7 @@ The sheer amount of black in the drawings show the extend of the overhead associ
 
 \begin{figure}[H]
 \nbdraw{sf2_withoverscan}
-\caption*{Same concept but closer to what happen in CRT screen space.}
+\caption*{Same concept but closer to what happen in CRT screen space}
 \end{figure}
 
 
@@ -1043,16 +1043,12 @@ Solving these problems of timing and latency well is what made the CPS-1 stand o
 
 \begin{figure}[H]
 \sdraw{0.7}{ppus}
-\caption*{Architecture of the CPS-1 Graphic System.}
+\caption*{Architecture of the CPS-1 Graphic System}
 \end{figure}
 
 
 \subsection{CPS-A and CPS-B: The ASICs powerhouse}\index{Processors!CPS-A}\index{Processors!CPS-B}
 To make their dream machine become a reality, Capcom did not rely on another company's product. They crafted their own ASICs (Application-Specific Integrated Circuit), tailored to their needs, the CPS-A (the head) and CPS-B (the legs).
-
-
-% The architecture summary shows the heart of GFX is made of not one but two chips called the CPS-A and the CPS-B. 
-
 
 
 
@@ -1090,7 +1086,7 @@ A naive design would work at the same speed as the video system (8MHz). For each
 
  \begin{figure}[H]%
  \nbimg{DL-0311.png}%
- \caption*{CPS-A die. Notice the real estate dedicated to GFXRAM caching.}%
+ \caption*{CPS-A die. Notice the real estate dedicated to GFXRAM caching}%
  \end{figure}%
 
  Even thought the machine uses the fastest type of memory (SRAM), its response time does not permit that many roundtrips. A problem solved via caching, streaming, channeling and an humongous (at that time) 32-bit GFXROM/CPS-B local data bus. 
@@ -1134,7 +1130,7 @@ The CPS-1 features three tilemap layers named SCROLL1, SCROLL2, and SCROLL3. The
 \vfill
 \begin{figure}[!b]
 \img{color-00003208.png}
- \caption*{Street Fighter 2.}%
+ \caption*{Street Fighter 2}%
  \end{figure}%
 \pagebreak
 
@@ -1157,7 +1153,7 @@ Color codes used in this section are \fcolorbox{black}{red}{\vphantom{W}\hphanto
 \vfill
 \begin{figure}[!b]
 \img{rgb-00003208.png}
- \caption*{Street Fighter 2 ... with layers!}%
+ \caption*{Street Fighter 2 layers}%
  \end{figure}%
 \pagebreak
 
@@ -1209,7 +1205,7 @@ Layers color codes, \fcolorbox{black}{red}{\vphantom{W}\hphantom{H}} SCROLL1, \f
 \vfill
 \begin{figure}[!b]
 \img{rgb_short_forgottn-00000450.png}
- \caption*{Forgotten Worlds.}%
+ \caption*{Forgotten Worlds}%
  \end{figure}%
 \pagebreak
 
@@ -1239,7 +1235,7 @@ As they are going up the stairs, observe in "back to front" order the following 
 \vfill
 \begin{figure}[!b]
 \img{ff_color-00007375.png}
- \caption*{Final Fight.}%
+ \caption*{Final Fight}%
  \end{figure}%
 \pagebreak
 
@@ -1268,7 +1264,7 @@ Refer to the CPS-B register API on pXXX for more information on tagging and mask
 \vfill
 \begin{figure}[!b]
 \img{ff_rgb-00007375.png}
- \caption*{Final Fight with SROLL2 layer grid.}%
+ \caption*{Final Fight with SROLL2 layer grid}%
  \end{figure}%
 \pagebreak
 
@@ -1288,7 +1284,7 @@ I knew we had raster scrolling so I talked with the programmers and we gave it a
 \vfill
 \begin{figure}[!b]
 \draw{ryu_rowscroll}
- \caption*{Street Fighter 2, Ryu's floor is rowscrolled.}%
+ \caption*{Street Fighter 2, Ryu's floor is rowscrolled}%
  \end{figure}%
 \pagebreak
 
@@ -1309,7 +1305,7 @@ Ultimately, the balance of these two features found itself reversed when rowscro
 \begin{figure}[!b]
 \draw{honda_rowscroll}
 % color-00016530.png}
- \caption*{Street Fighter 2, Honda's level is triple rowscrolled.}%
+ \caption*{Street Fighter 2, Honda's level is triple rowscrolled}%
  \end{figure}%
 \pagebreak
 
@@ -1338,7 +1334,7 @@ In Ghouls 'n Ghosts first level, on top of hordes of zombies, a Red Arremer, and
 \vfill
 \begin{figure}[!b]
 \img{rgb_ghouls-00009167.png}
- \caption*{Ghouls 'n Ghosts with GUI.}%
+ \caption*{Ghouls 'n Ghosts with GUI}%
  \end{figure}%
 \pagebreak
 
@@ -1355,7 +1351,7 @@ In another resourceful trick seen in the intro Carrier Air Wing, pixel plotting 
 \vfill
 \begin{figure}[!b]
 \img{rgb_ghouls-00009168.png}
- \caption*{Ghouls 'n Ghosts when rain falls.}%
+ \caption*{Ghouls 'n Ghosts when rain falls}%
  \end{figure}%
 \pagebreak
 
@@ -1440,7 +1436,7 @@ A three frames sequence is enough to illustrate the issue. On frame 1, the scrol
 
 \begin{figure}[H]
 \nbdraw{latency1}
- \caption*{Frame 1.}%
+ \caption*{Frame 1}%
  \end{figure}%
 
 Next, the scrolls of frame 2 are displayed but along with the spritebuffer from frame 1.
@@ -1448,14 +1444,14 @@ Next, the scrolls of frame 2 are displayed but along with the spritebuffer from 
 
 \begin{figure}[H]
 \nbdraw{latency2}
- \caption*{Frame 2.}%
+ \caption*{Frame 2}%
  \end{figure}%
 
 Finally, the scrolls of frame 3 are displayed but along with the spritebuffer from frame 2. The desycing can only be compensated in software.
 
 \begin{figure}[H]
 \nbdraw{latency3}
- \caption*{Frame 3.}%
+ \caption*{Frame 3}%
  \end{figure}%
 
 
@@ -1743,7 +1739,7 @@ Phew!
 
 \begin{figure}[H]
 \img{sf2_title_warrier.png}
- \caption*{A recreation of problem. Ouch!}%
+ \caption*{A recreation of problem}%
  \end{figure}%
 
 
@@ -1768,7 +1764,7 @@ Akiman found that in one of Guile's pose, his calve met these criteria with a si
 
 \begin{figure}[H]
 \nbdraw{guileCalve}
-\caption*{Guile's calve saves the day.}%
+\caption*{Guile's calve saves the day}%
  \end{figure}%
 
 Using Guile's calve as a pencil, but with the title's palette, three tiles are drawn over the 'l' to split it into an 'i'.
@@ -1793,7 +1789,7 @@ Using Guile's calve as a pencil, but with the title's palette, three tiles are d
 
 \begin{figure}[H]
 \img{sf2_title.png}
- \caption*{Once you see it, you can't unsee it.}%
+ \caption*{Once you see it, you can't unsee it}%
  \end{figure}%
 
 % Sometimes, in order to ship, you need to be pragmatic.
@@ -1812,7 +1808,7 @@ The two graphics chips closely work together by sharing custody of the GFX ROM a
 
 \begin{figure}[H]
 \nbdraw{shared_custody}
-\caption*{CPS-A (address) and CPS-B (data) GFX ROM/VRAM lines.}
+\caption*{CPS-A (address) and CPS-B (data) GFX ROM/VRAM lines}
 \end{figure}
 
 Besides deciding source and destination of data, the CPS-A also generates LI: (Line increment) and FI: (Frame increment) towards the CPS-B where they are turned into HSYNC and VSYNC for the CRT.
@@ -1907,7 +1903,7 @@ Capcom's response was a two-way verification where the hardware that could be ac
 
 \begin{figure}[H]
 \nbimg{copy_protection.png}
-\caption*{Capcom's disclaimer when a CPS-1 game boots.}
+\caption*{Capcom's disclaimer when a CPS-1 game boots}
 \end{figure}
 
 \subsection{The ever changing CPS-B}
@@ -1950,7 +1946,7 @@ To this effect, twenty-five versions the CPS-B exist\cite{mame_cps1_video} somet
 \href{}{Street Fighter II: The World Warrior } & \texttt{910411}& \texttt{CPS-B-15} & 1991 \\  %sf2ef
 \toprule    
 \end{tabularx}%
-}\caption*{A selection of the many Capcom CPS-1 games revisions.}
+}\caption*{A selection of the many Capcom CPS-1 games revisions}
 \end{figure}
 
 In the early days of the CP-System, the CPS-B chips changed frequently. The table above only contains a few of the many PCB revisions. There is a correlation between the number of revisions and how successful a game was. Street Fighter 2 was revised 34 times, while Final Fight received 13 "refreshes".
@@ -1982,7 +1978,7 @@ Mega Man the Power Battle & \texttt{CPS-B-21}  & 1995 \\
 
 \toprule    
 \end{tabularx}%
-}\caption*{After 1991, all CPS-1 games used CPS-B v21.}
+}\caption*{After 1991, all CPS-1 games used CPS-B v21}
 \end{figure}
 
 
@@ -2059,7 +2055,11 @@ The first method is called "phoenix"-ing. It is a tedious process which consist 
 
 People phoenixing CPS-1 board have such intimate knowledge of the CP-System that they even changed the splash screen of the game to feature a "Phoenix Edition" icon.
 
+\begin{figure}[H]
 \nbimg{phoenix_screen.png}
+\caption*{A phoenixed game boot splash screen}
+\end{figure}
+
 
 \subsubsection{De-suiciding}
 Eventually, passionate people figured out the process of accessing the CPS-B RAM. Boards can be brought back to life by re-uploading the proper configuration bytes which essentially de-suiciding them\cite{arcadeHackerCPS1Desuicide}.
@@ -2105,7 +2105,7 @@ In 1992, Capcom released the CP System Dash (a.k.a CPS-1.5). Fully encased in a 
 \href{}{Muscle Bomber Duo: Ultimate Team Battle} & 6 MiB & 1993 \\ 
   \toprule    
 \end{tabularx}%
-}\caption*{Capcom CPS-1.5 based arcades games.}
+}\caption*{Capcom CPS-1.5 based arcades games}
 \end{figure}
 
 \label{kabuki}
