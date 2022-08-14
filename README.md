@@ -1,13 +1,13 @@
 # The Book of CPS-1
 
-A study of the revolutionary hardware used by Capcom from 1989 to 1995 to release breath-taking games such as Street Fighter II, Final Fight, and 
+A study of the revolutionary hardware used by Capcom from 1989 to 1995 to release breath-taking arcade games such as Street Fighter II, Final Fight, and 
 Ghouls 'n Ghosts.
 
 The source code is open-source but I retain ownership of all drawings. They are only provided here so the project can be compiled.
 
 ## How to build (MacOS X)
 
-- Install fonts (in `cover` folder)
+- Install fonts (in `src/fonts` folder)
 - Get MacTeX.
 - Install golang (https://golang.org/doc/install)
 - Install Inkscape > v1.0
@@ -25,7 +25,7 @@ go run build.go release
 
 - Setup env
 ```
-unzip cover/font.zip -d ~/.fonts
+cp src/fonts ~/.fonts
 fc-cache -f -v
 sudo apt-get update
 sudo apt install -y golang-go
