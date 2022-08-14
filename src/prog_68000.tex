@@ -689,35 +689,33 @@ Several windows based GUI running on top of Human68k were released over the year
 
 
 \subsection{A Development machine?}
-The similarities between the X68000 and the CPS-1 are many. A quick glance over the specs could easily lead to conclude that a small layer of emulation is all a X68000 need to run CPS-1 games, making it a perfect development machine.
+The similarities between the X68000 and the CPS-1 are many. A quick glance over the specs could easily lead to conclude that a small layer of emulation is all a X68000 needed to run CPS-1 games, making it a perfect development machine. 
 
-Since developers never elaborated to which extends SHARP's machine were used to make games, we can only make an educated guess.
+Since developers never elaborated to which extends SHARP's machine were involved, we can only make an educated guess. A beginning of answer come from the hardware components while Capcom produced software leaves no ambiguities.
 
-The first element of response are the hardware components of the X68000. If the Motorola 680000 CPU and the Yahama 2151 are identical, the rest diverge rather significantly.
+\subsubsection{Hardware response}
+If the Motorola 680000 CPU and the YM2151 present in both machines are identical, the rest diverge from slightly to significantly.
 
 The sound chip is an OKI but it is "only" a MSM6258. Although it works alike the MSM6296 with ADPCM, it features only one channel which severely impact how rich the sound effects and music systems can be.
 
-The sprite system is also, at first sight, weaker since the number of tile displayable is half the capacity of the CPS-1 (128 instead of 256). However that is an issue easily circumvented thanks to multiplexing techniques such as Sprite doubler by Koichi Yoshida\cite{x68000spritedoubler} relying on raster effect.\index{Sprites Multiplexing!X68000}
+The sprite system is, at first sight, weaker than the CPS-1 since the number of tiles displayable is half the capacity (128 instead of 256). However thanks to its HSYNC awareness it ends up being a non-issue. The X68000 access to raster effect allowed multiplexing technique such as the Sprite Doubler by Koichi Yoshida\cite{x68000spritedoubler}.\index{Sprites Multiplexing!X68000}
 
-Lastly, there is the issue of storage and loading time from the floppy drives, a notoriously slow medium. To solve this issue, X68000 developers often resulted to loading all assets to RAM between levels, which increased the RAM requirements of a title.
+Lastly, the X68000 floppy storage and its associated slow loading time compared to the CPS-1 ROM. To solve this issue, developers three as much RAM as available, going as far as loading the full content of the floppy at started if the capacity of the X68000 allowed it.
 
-\subsection{32 KiB VRAM wall}
 
-The real issue for all Capcom ports was the amount of VRAM available to the sprite and tilemap systems. Where a CPS-1 game ships with a minimum of 2MiB ROM storing the GFX assets, the X68000 can only uses 32KiB out of the 1MiB of VRAM for the same purpose. 
 
-This small amount effectively keep-capped the idea of using both the Sprite and Tilemap system simultaneously since one of them would starve for tiles. 
+\subsubsection{The 32 KiB VRAM wall}
 
-\subsection{Learning from X68000 ports}
+The real issue, an perhaps the only weakness of the God Computer is the minuscule amount of VRAM dedicated to feed the Sprite and Tilemap layers. Out of 1MiB, only 32KiB is available to them which results in asset starvation. This limitation knee-capped any potential of using both at the same time. Had SHARP made the decision to have its VRAM shared among layers it would have been a totally different story.
 
-The limited amount of VRAM prevented the X68000 from being a CPS-1 emulator and likely relegated it to author/test 68000 ASM, run a port of TCE for GFX integration, and allocate/compile the GFXROM for CPS-2 games. 
+\subsubsection{Software response}
 
-This theory is further reinforced by the study of five games ports by Capcom.
-
+A most definitive answer to the viability of the X68000 as a god development station comes from Capcom ports of its arcade games.
 \begin{figure}[H]
 
 \begin{tabularx}{\textwidth}{lrY}
   \toprule    
-  \textbf{Game } & \textbf{ Year released}  & \textbf{Requirements } \\               
+  \textbf{Game } & \textbf{Year}  & \textbf{RAM Requirements } \\               
   \toprule   
   Strider & \texttt{1992} &  2 MiB \\
   Final Fight & \texttt{1992} &  2 MiB \\
@@ -729,19 +727,20 @@ This theory is further reinforced by the study of five games ports by Capcom.
 \caption*{X68000 Ports of CPS-1 games by Capcom}
 \end{figure}
 
-None of these titles exhibit the common pattern of an emulation layer. On the contrary, the architecture of the GFX rendere is tailor each time, sometimes even differing between levels of a same title. 
+The XM6 Pro-68k emulator and a methodology shared by Upsilandre\cite{x68k_games_analysis} (detailed in the next pages) showed that the GFX rendering architecture of these titles exhibit no pattern of an emulation layer. Each GFX renderer is tailor made to rely heavily on the CPU. 
 
-Thanks to the awesome XM6 Pro-68k, we can study the GFX composition\cite{x68k_games_analysis} and see how rendering was often done in software which stresses the 68000. Accordingly, the manual of Ghouls 'n Ghosts recommends a 16MHz CPU and warns about slowdown with a machine using a 10MHz 68000.
+The stress on the 68000 is confirmed by Ghouls 'n Ghosts manual which recommends a 16MHz CPU and warns about slowdown with a machine using a 10MHz 68000. These leave little doubt in the limited usage of the X68000 to write and test assembly, run TCE, and allocate/compile the GFXROM for CPS-2 games.
 
 \nbimg{gg_manual.jpg}
 
 
 \subsection{Ports Analysis: Ghouls 'n Ghosts (1994)}
-Ghouls 'n Ghosts was released in 1994, six years after its arcade release. It is noteworthy for its low RAM requirements of 2MiB RAM and its resolution of 512x512 which is higher than the 384x224 arcade cabinet. 
+Ghouls 'n Ghosts was released in 1994, six years after the arcade version. It is noteworthy for its low RAM requirements of 2MiB RAM and its resolution of 512x512.
+% which is higher than the 384x224 arcade cabinet. 
 
-It is considered a "Perfect port" because of its GFX faithfulness to the CPS-1 version even though its graphic renderer is completely different. Tilemaps are not used at all since the background lives in two software rendered 512x512 Graphic layers using a shared 8-bit indexed colors palette. 
+It is considered a "Perfect port" because of its GFX faithfulness to the CPS-1 version. All the enemies, levels and weapons are there, rendered with the correct rich colors. 
 
-The Text layer is also fully software rendered. Because it is used in 16 colors mode, plotting pixels is expensive. The cost and low colors makes it a good fit for the GUI where few items and few colors are used.
+The Tilemaps layer is not used at all since the background lives in two software rendered 512x512 Graphic layers using a shared 8-bit indexed colors palette. The Text layer is also fully software rendered in 1024x1024 16 colors despite the CPU cost of plotting pixels in that mode. The cost and low number of colors makes it a good fit for rendering the GUI elements.
 
 \begin{figure}[H]
 \img{x68k_gg_scrw.png}
@@ -749,11 +748,11 @@ The Text layer is also fully software rendered. Because it is used in 16 colors 
 \end{figure}
 
 
-Notice the vertical "cut" in the right of Graphic plane Pages 0 and 1. This artifact reveals the usage of hardware scrolling and its wraparound. This allows the CPU to render only new portion of the scrolling. 
+Notice the vertical "cut" in the right of Graphic plane Pages 0 and 1. This artifact reveals the wraparound resulting from hardware scrolling these two layers. This technique allows the CPU to render only new portion of the background. 
 
-The rain effect is replicated as seen on page X by alternating the offset in the Text layer. The sprite layer must overlap exactly with Page 0 when the wind animates the grass.
+The sprites are rendered using the Sprite layer but notice how grass is also there. If rendering the wind blowing was only about swapping tile ID on CPS-1, the X68000 could not software render that much in the Graphic planes. Hence the grass in the sprites
 
-There is no DMA support toward the VRAM so every single pixel except for the Sprite layer, is plotted by the CPU. Thank to hardware scrolling, the cost of rendering a whole screen is amortized over several frames which allows to reach a descent framerate.
+The rain effect is replicated as seen on page \pageref{gg_rain} via the Text layer start offset. Note there is no DMA to/from the VRAM so every single pixel except for the Sprite layer is plotted by the CPU. Thanks to hardware scrolling, that cost of is amortized.
 
 \vspace{-4ex}
 \begin{minipage}[t]{0.49\linewidth}
@@ -789,7 +788,7 @@ There is no DMA support toward the VRAM so every single pixel except for the Spr
 
 \subsection{Ports Analysis: Final Fight (1992)}
 
-Final Fight was released in 1992, three years after its arcade release. Alike, Ghouls'n Ghosts the arcade version used 2MiB of GFXROM and managed to ship on two 5.25-inch 1.2 MiB floppies.
+Final Fight was released in 1992, three years after the arcade version. Alike, Ghouls'n Ghosts the arcade version used 2MiB of GFXROM and managed to ship on two 5.25-inch 1.2 MiB floppies.
 
 The graphic renders uses the same technique as Ghouls 'n Ghosts where the tilemaps are not used in order to feed the Sprite layer. Two bitmap layers along with a Text layer are rendered in software for a graphic result faithful to the original version.
 
