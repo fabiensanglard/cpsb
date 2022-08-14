@@ -750,7 +750,7 @@ The Tilemaps layer is not used at all since the background lives in two software
 
 Notice the vertical "cut" in the right of Graphic plane Pages 0 and 1. This artifact reveals the wraparound resulting from hardware scrolling these two layers. This technique allows the CPU to render only new portion of the background. 
 
-The sprites are rendered using the Sprite layer but notice how grass is also there. If rendering the wind blowing was only about swapping tile ID on CPS-1, the X68000 could not software render that much in the Graphic planes. Hence the grass in the sprites
+The sprites are rendered using the Sprite layer. While rendering the wind blowing in the grass was only about swapping tile ID on CPS-1, the X68000 could not plot that many pixels in the Graphic planes. The solution was to render the blades as sprites.
 
 The rain effect is replicated as seen on page \pageref{gg_rain} via the Text layer start offset. Note there is no DMA to/from the VRAM so every single pixel except for the Sprite layer is plotted by the CPU. Thanks to hardware scrolling, that cost of is amortized.
 
