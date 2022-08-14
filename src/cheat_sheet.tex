@@ -4,10 +4,13 @@ It is dangerous to go alone. Many chips are studied in the hardware chapter. Cou
 Take this.
 
 \begin{figure}[H]
+
 \begin{minipage}[t]{0.49\linewidth}
-{ 
+{
+ 
 \setlength{\tabcolsep}{3.0pt}
 \setlength\cmidrulewidth{\heavyrulewidth} % Make cmidrule = 
+\makebox[\linewidth]{ % To center the tabular
 \begin{tabular}{rrr}
 
   & \multicolumn{2}{c}{Capacity} \\
@@ -37,12 +40,15 @@ Take this.
   \toprule    
 \end{tabular}%
 }
+}
 \end{minipage}%
 % \hfill%
 \begin{minipage}[t]{0.49\linewidth}
 { 
+\centering
 \setlength{\tabcolsep}{3.0pt}
 \setlength\cmidrulewidth{\heavyrulewidth} % Make cmidrule = 
+\makebox[\linewidth]{ % To center the tabular
 \begin{tabular}{rrr}
 
   & \multicolumn{2}{c}{Capacity} \\
@@ -70,6 +76,7 @@ Take this.
 32          &    \texttt{ 4,194,304} &      \texttt{ 4,294,967,296} \\
   \toprule    
 \end{tabular}%
+}
 }
 \end{minipage}
 \caption*{Pins capacity truth table.}
