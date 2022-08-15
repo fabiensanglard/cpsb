@@ -749,10 +749,10 @@ Smaller slots can render the horizontal analog signals with better fidelity.
 
 
 \subsection{Syncing}
-The RGB signals describe lines to be drawn but to render an image properly the CRT needs to know where to draw them. The control signal allows the CRT to synchronize the cannon orientation with the lines color signal so they are rasterized where they should. Without syncing, the image appears distorted. 
+The RGB signals describe lines to be drawn but the CRT needs to know where to draw them. The control signals allows to synchronize the cannon orientation with the lines color signal so they are rasterized where they should. Without syncing, the image appears distorted. 
 
 \begin{figure}[H]
-\sdraw{0.9}{desync}
+\sdraw{0.93}{desync}
 \caption*{A desynced CRT. Lines are correct but not located where they should be}
 \end{figure}
 
@@ -760,13 +760,13 @@ The RGB signals describe lines to be drawn but to render an image properly the C
 
 
 
-The horizontal syncing is done via a HSYNC signal and the vertical syncing is done via a VSYNC signal. These signals are detected by the CRT to position the gun properly with regards to the origins sets in the upper left.
+% The horizontal syncing is done via a HSYNC signal and the vertical syncing is done via a VSYNC signal. These are detected by the CRT to position the gun properly.
 
-VSYNC tells the CRT that it should reset the gun's vertical position to 0 at the top of the screen. This motion from bottom to top is called vertical retrace. During the retrace the gun must stop shooting electrons. This is achieved by requesting a black color on the RGB signal. This "blanking" of the RGB lines happens a little bit before and after VSYNC. The total time not drawing anything is called VBLANK.
+VSYNC signal tells the CRT that it should reset the gun's vertical position to 0 at the top of the screen. This motion from bottom to top is called vertical retrace. During the retrace the gun must stop shooting electrons. This is achieved by requesting a black color on the RGB signal. This "blanking" of the RGB lines happens a little bit before and after VSYNC. The total time not drawing anything is called VBLANK.
 
-HSYNC tells the CRT that a line has been drawn and the gun horizontal position should be reset to the left of the screen. This motion is called horizontal retrace. Alike the VBLANK, there is a HBLANK timespan.
+HSYNC signal tells the CRT that a line has been drawn and the gun horizontal position should be reset to the left of the screen. This motion is called horizontal retrace. Alike the VBLANK, there is a HBLANK timespan. 
 
-By detecting VSYNC and HSYNC, the CRT can "synchronize" the signal with the guns and draw the line at the right location on screen.
+% By detecting VSYNC and HSYNC, the CRT can "synchronize" the signal with the guns and draw the line at the right location on screen.
 
 
 
