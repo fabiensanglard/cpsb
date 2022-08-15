@@ -1344,7 +1344,11 @@ To add rainfall, developers leveraged temporal blending on the same layer as the
 
 Every five frames the GUI is not drawn. Instead a full screen of rain tiles is rendered, resulting in a convincing effect. In many games, temporal blending is used to fake translucency. 
 
-In another resourceful trick seen in the intro Carrier Air Wing, pixel plotting was faked. The fizzledade effect of the jet stream is in fact made of pre-rendered tiles.
+\subsubsection{Plotting pixels}
+
+The introduction sequence of the shoot'em up Carrier Air Wing (page \pageref{caw_color} and \pageref{caw_rgb}) is even more impressive. As a F-14 Tomcat takes off from its carrier, the jet leaves in its trail an exhaust that expands smootly one pixel line at a time. The gaze then proceed to disperse with a fizzelfade effect to let the title logo appear. 
+
+All the elements in this sequence seem to indicate that pixels are plotted by the CPU writing into a framebuffer but all sprites on the OBJ layer (\fcolorbox{black}{black}{\vphantom{W}\hphantom{H}}) are prerendered tiles. The tile repeat pattern is visible on the fourth color coded screenshot.
 
 
  
@@ -1356,7 +1360,7 @@ In another resourceful trick seen in the intro Carrier Air Wing, pixel plotting 
  \end{figure}%
 \pagebreak
 
-\img{fizzlefade-0-color.png}
+\img{fizzlefade-0-color.png} \label{caw_color}
 
 \img{fizzlefade-1-color.png}
 
@@ -1369,7 +1373,7 @@ In another resourceful trick seen in the intro Carrier Air Wing, pixel plotting 
 \pagebreak
 
 
-\img{fizzlefade-0-rgb.png}
+\img{fizzlefade-0-rgb.png} \label{caw_rgb}
 
 \img{fizzlefade-1-rgb.png}
 
