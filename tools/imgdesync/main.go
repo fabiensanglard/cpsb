@@ -37,7 +37,7 @@ func main() {
 	xOffsetBase := 20
 	for y := 0; y < src.Bounds().Max.Y-yOffsetSrc; y++ {
 		xOffsetDst := xOffsetBase
-		xOffsetDst += rand.Intn(20) // 0-10
+		xOffsetDst += rand.Intn(10) // 0-10
 		xOffsetDst += int(math.Cos(float64(y)/10.0) * 5)
 		for x := 0; x < src.Bounds().Max.X; x++ {
 			if x < xOffsetDst {

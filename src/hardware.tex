@@ -1338,17 +1338,13 @@ In Ghouls 'n Ghosts first level, on top of hordes of zombies, a Red Arremer, and
  \end{figure}%
 \pagebreak
 
-To add rainfall, developers leveraged temporal blending on the same layer as the GUI.\label{gg_rain}
- % (\fcolorbox{black}{red}{\vphantom{W}\hphantom{H}} SCROLL1). 
-
-
-Every five frames the GUI is not drawn. Instead a full screen of rain tiles is rendered, resulting in a convincing effect. In many games, temporal blending is used to fake translucency. 
+To add rainfall, developers leveraged temporal blending on the same layer as the GUI.\label{gg_rain} Every five frames the GUI is not drawn. Instead a full screen of rain tiles is rendered, resulting in a convincing effect. Temporal blending is often used to fake translucency. 
 
 \subsubsection{Plotting pixels}
 
-The introduction sequence of the shoot'em up Carrier Air Wing (page \pageref{caw_color} and \pageref{caw_rgb}) is even more impressive. As a F-14 Tomcat takes off from its carrier, the jet leaves in its trail an exhaust that expands smootly one pixel line at a time. The gaze then proceed to disperse with a fizzelfade effect to let the title logo appear. 
+The introduction sequence of the shoot'em up Carrier Air Wing (page \pageref{caw_color} and \pageref{caw_rgb}) is even more impressive. As a F-14 Tomcat takes off from its carrier, the jet leaves in its trail an exhaust that expands vertically one pixel line at a time. The gaze then disperses with a fizzlefade effect. 
 
-All the elements in this sequence seem to indicate that pixels are plotted by the CPU writing into a framebuffer but all sprites on the OBJ layer (\fcolorbox{black}{black}{\vphantom{W}\hphantom{H}}) are prerendered tiles. The tile repeat pattern is visible on the fourth color coded screenshot.
+It seems like pixels are plotted into a framebuffer but both effects are rendered via the OBJ layer (\fcolorbox{black}{black}{\vphantom{W}\hphantom{H}}). Exhaust expansion if done with 16 pre-rendered tile (each covering more vertical lines) while the fizzlefade is achieved with titles featuring an increasing density of transparent pens. The fizzle repeating pattern is visible on the fourth color coded screenshot.
 
 
  
