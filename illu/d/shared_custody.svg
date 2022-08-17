@@ -7,7 +7,7 @@
    viewBox="0 0 274.94607 129.93645"
    version="1.1"
    id="svg52696"
-   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
    sodipodi:docname="shared_custody.svg"
    inkscape:export-filename="/Users/sanglardf/sf2b/shared_custody.png"
    inkscape:export-xdpi="96"
@@ -28,13 +28,13 @@
      showgrid="false"
      inkscape:snap-global="false"
      inkscape:zoom="0.59535257"
-     inkscape:cx="634.07806"
+     inkscape:cx="634.91789"
      inkscape:cy="220.87752"
-     inkscape:window-width="1536"
-     inkscape:window-height="907"
+     inkscape:window-width="1280"
+     inkscape:window-height="736"
      inkscape:window-x="0"
-     inkscape:window-y="25"
-     inkscape:window-maximized="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -326,7 +326,7 @@
          id="tspan12646-6"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
          x="153.289"
-         y="95.957802">4-bit</tspan></text>
+         y="95.957802">8-bit</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
@@ -337,7 +337,7 @@
          id="tspan12646-3"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
          x="153.289"
-         y="78.674126">9-bit</tspan></text>
+         y="78.674126">8-bit</tspan></text>
     <path
        sodipodi:type="star"
        style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:30.2362;stroke-miterlimit:4;stroke-dasharray:none"
@@ -400,7 +400,7 @@
          id="tspan12646-6-3"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
          x="153.289"
-         y="129.52426">4-bit</tspan></text>
+         y="129.52426">8-bit</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
@@ -411,7 +411,7 @@
          id="tspan12646-3-4"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
          x="153.289"
-         y="112.24059">9-bit</tspan></text>
+         y="112.24059">8-bit</tspan></text>
     <path
        sodipodi:type="star"
        style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:30.2362;stroke-miterlimit:4;stroke-dasharray:none"
@@ -654,7 +654,7 @@
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';text-align:center;text-anchor:middle;stroke-width:0.264583"
          x="103.88092"
-         y="56.165081"
+         y="56.137825"
          id="tspan62269-6">ROM</tspan></text>
     <text
        xml:space="preserve"
