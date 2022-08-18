@@ -7,7 +7,7 @@
    viewBox="0 0 238.16531 168.62541"
    version="1.1"
    id="svg5"
-   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
    sodipodi:docname="sf2_withoverscan_zero.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -25,12 +25,12 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="1.0713837"
-     inkscape:cx="502.62105"
-     inkscape:cy="281.87847"
-     inkscape:window-width="1920"
-     inkscape:window-height="1010"
-     inkscape:window-x="-6"
-     inkscape:window-y="-6"
+     inkscape:cx="503.08774"
+     inkscape:cy="281.41179"
+     inkscape:window-width="1280"
+     inkscape:window-height="736"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
      inkscape:snap-global="false"
@@ -83,11 +83,11 @@
          x="160.5184"
          y="147.63547">VSYNC</tspan></text>
     <path
-       style="fill:#0500ff;fill-opacity:1;stroke:#0100ff;stroke-width:0.465;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#00ff00;fill-opacity:1;stroke:#00ff00;stroke-width:0.465;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M 183.62391,0.56997832 V 158.42868"
        id="path7339" />
     <rect
-       style="fill:#ffffff;fill-opacity:1;stroke:#0004ff;stroke-width:0.565;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#ffffff;fill-opacity:1;stroke:#00ff00;stroke-width:0.565;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect1106-3"
        width="24.580729"
        height="7.080307"
@@ -107,7 +107,7 @@
          y="55.817451">HSYNCs</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:0.465;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 0.18657563,-3.1259962 210.05456437,0"
+       d="M 0.18657563,-3.1259962 H 210.24114"
        id="path13002"
        sodipodi:nodetypes="cc" />
     <path
@@ -117,7 +117,7 @@
        sodipodi:nodetypes="cc" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.465;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 215.49213,0.26346278 0,158.21517722"
+       d="M 215.49213,0.26346278 V 158.47864"
        id="path13002-5"
        sodipodi:nodetypes="cc" />
     <path
