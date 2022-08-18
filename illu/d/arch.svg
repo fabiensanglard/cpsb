@@ -7,7 +7,7 @@
    viewBox="0 0 205.03915 285.14173"
    version="1.1"
    id="svg5"
-   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
    sodipodi:docname="arch.svg"
    inkscape:export-filename="/Users/sanglardf/sf2b/arch.png"
    inkscape:export-xdpi="96"
@@ -27,13 +27,13 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:snap-global="false"
-     inkscape:zoom="2.8284271"
-     inkscape:cx="433.27968"
-     inkscape:cy="868.68068"
-     inkscape:window-width="3840"
-     inkscape:window-height="2036"
-     inkscape:window-x="-12"
-     inkscape:window-y="-12"
+     inkscape:zoom="0.76442109"
+     inkscape:cx="520.65544"
+     inkscape:cy="106.61663"
+     inkscape:window-width="1280"
+     inkscape:window-height="736"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
      showguides="false"
@@ -331,7 +331,7 @@
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.76111px;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
          x="121.653"
-         y="221.4478"
+         y="221.42781"
          id="tspan28034-1">BUS</tspan></text>
     <rect
        style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.634526;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
@@ -411,7 +411,7 @@
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.76111px;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
          x="130.0601"
          y="49.198803"
-         id="tspan28034-1-1-8-2">4-bit</tspan></text>
+         id="tspan28034-1-1-8-2">8-bit</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:7.76111px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
@@ -444,7 +444,7 @@
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.76111px;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
          x="129.66179"
          y="59.144138"
-         id="tspan28034-1-1-8-2-9">4-bit</tspan></text>
+         id="tspan28034-1-1-8-2-9">8-bit</tspan></text>
     <rect
        style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.42799;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect27554"
@@ -672,7 +672,7 @@
            sodipodi:role="line"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;stroke-width:0.264583"
            x="122.38554"
-           y="269.44632"
+           y="269.42816"
            id="tspan21133-6">(JAMMA)</tspan></text>
     </g>
     <text
@@ -700,7 +700,7 @@
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;font-family:Roboto;-inkscape-font-specification:Roboto;stroke-width:0.264583"
          x="78.746262"
-         y="226.95099"
+         y="226.68759"
          id="tspan8066" /></text>
     <path
        style="opacity:1;fill:none;stroke:#000000;stroke-width:1.32402;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.32402, 1.32402;stroke-dashoffset:0;stroke-opacity:1"
@@ -903,7 +903,7 @@
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.29167px;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;stroke-width:0.264583"
          x="155.40648"
-         y="236.12471"
+         y="235.914"
          id="tspan39829">MSM6295</tspan></text>
     <text
        xml:space="preserve"
@@ -941,7 +941,7 @@
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;stroke-width:0.264583"
          x="84.973358"
-         y="245.80284"
+         y="245.59213"
          id="tspan39307" /></text>
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.581001;stroke-miterlimit:4;stroke-dasharray:none"
@@ -973,7 +973,7 @@
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;stroke-width:0.264583"
          x="30.875782"
-         y="238.8224"
+         y="239.01857"
          id="tspan39307-6">YM3012</tspan></text>
     <text
        xml:space="preserve"
@@ -989,7 +989,7 @@
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;stroke-width:0.264583"
          x="38.883476"
-         y="281.05594"
+         y="281.25211"
          id="tspan39307-6-2">Processors</tspan></text>
     <rect
        style="fill:#898989;fill-opacity:1;stroke:#000000;stroke-width:0.581001;stroke-miterlimit:4;stroke-dasharray:none"
@@ -1013,7 +1013,7 @@
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;stroke-width:0.264583"
          x="92.43119"
-         y="280.8913"
+         y="281.08746"
          id="tspan39307-6-2-2">RAM</tspan></text>
     <text
        xml:space="preserve"
@@ -1142,7 +1142,7 @@
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:Roboto;-inkscape-font-specification:Roboto;stroke-width:0.264583"
          x="146.31783"
-         y="206.61337"
+         y="206.59883"
          id="tspan15848">- Music</tspan></text>
     <text
        xml:space="preserve"
@@ -1182,7 +1182,7 @@
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;stroke-width:0.264583"
          x="146.76202"
-         y="280.8913"
+         y="281.08746"
          id="tspan39307-6-2-0">ROM</tspan></text>
     <rect
        style="fill:#b0716e;fill-opacity:1;stroke:#000000;stroke-width:0.581001;stroke-miterlimit:4;stroke-dasharray:none"
@@ -1206,7 +1206,7 @@
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;stroke-width:0.264583"
          x="197.58055"
-         y="281.11084"
+         y="281.30701"
          id="tspan39307-6-2-6">Jamma</tspan></text>
   </g>
 </svg>

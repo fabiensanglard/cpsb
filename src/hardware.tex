@@ -909,9 +909,6 @@ A summary drawing exposes all timing and regions as well as the significant part
 \nbdraw{sf2_withoverscan_zero}
 
 
-% \begin{trivia}
-% The horizontal blank between the end of a scanline and hsync is called the "front porch". The blank section between hsync and the start of the next scanline is called the "back porch".
-% \end{trivia}
 
 Keep in mind that HSYNC happens 262 times (blue vertical line) but VSYNC occurs only once. The dashed horizontal red line in the previous drawing is only here to represent where the electron gun reset to the top of the screen.
 
@@ -1667,7 +1664,7 @@ Decoration in Street Fighter 2 were the object of much consideration. The stone 
 
 The lack of OBJ scaling and rotation was a problem for developers of Street Fighter 2 where the intro needed precisely these two operations. 
 
-To fake it, two logos are used, a small (beginning) and a large one (final). Tiles move on a circular pattern revolving around the center of the shape. The small to large substitution happens at the end of the first revolution.
+To fake it, two logos are used, a small one made of 33 tiles and a large one made of 112 tiles. Tiles move on a circular pattern revolving around the center of the shape. The small to large substitution happens at the end of the first revolution.
 
 Once again, Capcom banked on fast movement, brain interpolation and maybe forgiveness due to a damn good game.
 
@@ -1683,7 +1680,7 @@ Once again, Capcom banked on fast movement, brain interpolation and maybe forgiv
 
 
 \subsubsection{The World Warrier}
-The OBJ system was used in a creative way by Akiman, the lead designer on Street Fighter 2 at the time, to solve a show-stopper bug.
+The OBJ system was used in a creative way by Akiman, the artist planner on Street Fighter 2 at the time, to solve a show-stopper bug.
 
 \begin{q}{Akiman, Lead graphic design on SF2}
 Just three days before the deadline, I discovered something horrible. 
@@ -1697,7 +1694,7 @@ Looking inside the GFXROM, one can find the 16 tiles making the "World Warrier".
 
 \begin{figure}[H]
 \nbdraw{worldwarrier_tile}
- \caption*{The 16 OBJ tiles making the title, with a typo.}%
+ \caption*{The 16 OBJ tiles making the title, with a typo}%
  \end{figure}%
 
 \begin{q}{Akiman, Lead graphic design on SF2}
@@ -1714,16 +1711,16 @@ Phew!
 
 \begin{figure}[H]
 \img{sf2_title_warrier.png}
- \caption*{A recreation of problem}%
+ \caption*{A recreation of the problem}%
  \end{figure}%
 
 
 
-How in the wORld, do you make an 'i' looks like an 'o'? It turns out that Akiman was lucky in the mistake he had made since the letters he needed, 'o' and 'r', can be found in the word "World".
+How in the wORld, do you make an 'e' looks like an 'o'? It turns out that Akiman was lucky in the mistake he had made since the letters he needed, 'o' and 'r', can be found in the word "World".
 
 Akiman leveraged what was available and changed the 68000 draw calls to drop the three last tiles and instead draw again tiles \icode{0x6} and \icode{0x7} at the end.
 
-It only partially solved the problem since the spit 'W' looked like an 'l' which made the title read "The World Warrlor". 
+It only partially solved the problem since the split 'W' looked like an 'l' which made the title read "The World Warrlor". 
 
 \begin{figure}[H]
 \nbdraw{world_warrWor}
@@ -1731,18 +1728,18 @@ It only partially solved the problem since the spit 'W' looked like an 'l' which
  \end{figure}%
 
 
-The problem was displaced from turning an 'i' into an 'o', to turning an 'l' into and 'i'. That would have been simple if the CPU could have written in the VRAM but as we have seen these chips are not mapped in the m68k address space.
+The problem was displaced from turning an 'e' into an 'o', to turning an 'l' into and 'i'. That would have been simple if the CPU could have written in the VRAM but as we have seen these chips are not mapped in the m68k address space.
 
-There is an expensive way to fake pixel plotting. The idea is to find a tile almost fully transparent (\icode{0xF}) but with only a single pen value set in its. 
+There is an expensive way to fake pixel plotting. The idea is to find a tile almost fully transparent (\icode{0xF}) but with only a single pen value set in it. 
 
-Akiman found that in one of Guile's pose, his calve met these criteria with a simple pen value in its lower left.
+Akiman found that in one of Guile's pose, his calf met these criteria with a simple pen value in its lower left.
 
 \begin{figure}[H]
 \nbdraw{guileCalve}
-\caption*{Guile's calve saves the day}%
+\caption*{Guile's calf saves the day}%
  \end{figure}%
 
-Using Guile's calve as a pencil, but with the title's palette, three tiles are drawn over the 'l' to split it into an 'i'.
+Using Guile's calf as a pencil, but with the title's palette, three tiles are drawn over the 'l' to split it into an 'i'.
 
 \begin{figure}[H]
 \nbdraw{palette_guile}
@@ -1755,7 +1752,7 @@ Using Guile's calve as a pencil, but with the title's palette, three tiles are d
  \end{figure}%
 
 
- In an extraordinary coincidence, the pen corresponding colors were a match.
+ In an troubling coincidence, the pen corresponding colors were a match.
 
 \begin{figure}[H]
 \nbdraw{world_warrior_title}
@@ -1807,7 +1804,7 @@ To keep up with the bandwidth requirements, the VRAM and GFX ROM systems are spe
 \subsubsection{VRAM}
 The VRAM system is physically split via two independents blocks A and B to facilitate sprite buffer double buffering. This component also benefit from exceptionally powerful chip compared to the rest of the machine.
 
-A quick glance at the \icode{HM53461P} shows the usual \icode{+5V}, \icode{GND}, \icode{CLK}, and address/data pins. However \icode{SD} pins are visible, indicating this chip does more than the one we have seen so far.
+A quick glance at the \icode{HM53461P} shows the usual \icode{+5V}, \icode{GND}, \icode{CLK}, and address/data pins. However \icode{SD0}, \icode{SD1}, \icode{SD2}, and \icode{SD3} indicate this chip does more than the one we have seen so far.
 
 \sdraw{0.55}{HM53461P-10}
 
@@ -1839,7 +1836,7 @@ To keep up with the much higher storage requirements, the GFX ROM system is not 
 
 While other chips on the board-B are \icode{27C010} and \icode{27C512}, the GFXROM is made of \icode{MB834200B} (256 Ki x 16-bit). This type of ROM have a much higher capacity but also a slower access time (150ns). 
 
-It is likely the dual-channel architecture is the result of a desire to use inexpensive components to keep the price down.
+It is likely the dual-channel architecture is the result of a combined desire to use inexpensive components to keep the price down while maintaining high performance.
 
 
 \sdraw{0.7}{MB834200B-15}
@@ -1852,7 +1849,7 @@ On the Street Fighter II board, twelves \icode{ MB834200B-15} are combined for a
 
 \section{Copy protection system}
 
-Upon release, Capcom then CEO Kenzo Tsujimoto, was confident the CPS-1 would significantly reduce piracy even going as far as labeling it "impossible to copy".
+Upon release, Capcom CEO Kenzo Tsujimoto was confident the CPS-1 would significantly reduce piracy even going as far as labeling it "impossible to copy".
 
 \begin{q}{Kenzo Tsujimoto, Capcom CEO\cite{gamest38}}
     
@@ -1874,7 +1871,7 @@ The CPS-1 answer was to use custom components that would not be readily availabl
 
 \textbf{Software piracy} involved operators purchasing an authentic game to get the PCBs but then copying ROMs and get newer games for free. 
 
-Capcom's response was a two-way verification where the hardware that could be actively used by the software to check the board authenticity backed by "passive" mechanisms that allowed the hardware to check the software behavior.
+Capcom's response was a two-way verification where the hardware could be actively used by the software to check the board authenticity backed by "passive" mechanisms that allowed the hardware to check the software behavior.
 
 \begin{figure}[H]
 \nbimg{copy_protection.png}
@@ -1882,7 +1879,7 @@ Capcom's response was a two-way verification where the hardware that could be ac
 \end{figure}
 
 \subsection{The ever changing CPS-B}
-The heart of the protection system is the CPS-B. The idea is to make it behaves differently depending on the game it is supposed to run.
+The heart of the protection system is the CPS-B. The core idea is to make it behaves differently depending on the game it is supposed to run.
 
 To this effect, twenty-five versions the CPS-B exist\cite{mame_cps1_video} sometimes differing between revision of the same game\cite{cpsBNumbers}.
 
@@ -1958,24 +1955,24 @@ Mega Man the Power Battle & \texttt{CPS-B-21}  & 1995 \\
 
 
 \subsection{ID check}
-The simplest copy protection available is the chip ID check. By polling a register, the m68k prompts the CPS-B to return its version number. A simple version matches let the code know if its belongs to the right PCB. 
+The simplest copy protection available is the chip ID check. By polling a register, the m68k prompts the CPS-B to return its version number. A version matches let the code know if its belongs to the right PCB and reset the CPU if it doesn't. 
 
-To make instructions patching of the 68000 ROMs more difficult, calls to verify the chip id are placed in several location in the code. That did not prevent people from trying anyway\cite{strider_conversion}!
+To make instructions patching of the 68000 ROMs more difficult, calls to verify the chip ID are placed in several location in the code. Motivated programmer tried anyway\cite{strider_conversion}!
 
 \subsection{Multiplication check}
-Starting with CPS-B v21, a slightly more robust feature gave the CPS-B the ability to perform multiplications. Two registers are written and a third one can be read. The 68000 code is expected to check that the returned multiplication result is the expected value.
+Starting with CPS-B v21, a slightly more robust feature gave the CPS-B the ability to perform multiplications. Two registers are written and a third one can be read. The 68000 code checks that the returned multiplication result is the expected value.
 
 \subsection{Moving registers}
-The CPS-Bs registers move between revisions. They 68000 memory map of the CPS-B registers does not change, but the offset inside that mapping is altered. Accessing the scroll control, scroll priority, and palette upload registers is done using a different offset for each game.
+The CPS-B registers move between revisions. The offset and range the CPS-B mapping does not change, but the offset of each register inside that mapping are different. Accessing the scroll control, scroll priority, and palette upload registers is done slightly differently for each game.
 
-Additionally, the meaning of each bit inside each register is altered between version.
+Additionally, the meaning of each bit field inside each register is altered between version.
 
 
 
 \subsection{Unexpected behavior detection}
 Protection described so far involved an active software and a passive hardware. The hardware can also actively monitor the software by leveraging the moving registers policy. If the CPS-B detects incoherent values written to the wrong registers, it sets and lock all palettes of all layers to black. 
 
-The game still runs in the background and the audio is also behaving properly but the screen doesn't display anything. The only way to recover is to reboot the machine\cite{petitSecurity}.
+The game still runs in the background and the audio is playing but the screen doesn't display anything. The only way to recover is to reboot the machine\cite{petitSecurity}... only for the screen to turn black again.
 
 
 
@@ -2012,7 +2009,7 @@ Up to 1991, the behavior of a CPS-B was hard-coded in its silicon at the factory
 
 It was not only expensive to have to revise the hardware circuits for each game, it was also a logistic difficulty to provision enough chips for a success and not be stuck with inventory on an unappreciated game. To solve this issue, Capcom revisted the CPS-B chip one last time and made it configurable via software.
 
-The whole behavior is encoded in a small internal 18 bytes area using not ROM but a RAM. To keep these bytes alive, the CPS-B v21 must be supplied with current at all time\cite{petitSecurity}.
+The whole behavior is encoded in a small internal 18 bytes area using not ROM but RAM. To keep these bytes alive, the CPS-B v21 must be supplied with current at all time\cite{petitSecurity}.
 
 The configuration RAM was designed to survive when the cabinet was turned off thanks to a battery located  on the soldering side of Board C and connected to the CPS-B. The chip was even designed to survive having no battery for a few minutes to allow battery replacement.
 
@@ -2021,14 +2018,14 @@ These battery worked remarkably well since, thirty years later, one can find boa
 \end{trivia}
 
 \subsubsection{Suicide batteries}
-The infamous "suicide" nickname came from the effect of losing power. A CPS-B v21 without power lose its configuration and resets all its registers to "default" values that none of the games use. Capcom offered a battery replacement to resurrect boards "C" which had committed seppuku but eventually discontinued the service. 
+The infamous "suicide" nickname came from the effect of losing power. A CPS-B v21 without power lose its configuration and resets all its registers to "default" values that none of the games use. Capcom offered a battery replacement service to resurrect boards "C" which had committed seppuku but eventually discontinued it. 
 
 As the reader will have guessed, passionate fans found a way to bring these games back to life.
 
 \subsubsection{Phonenixing}
 The first method is called "phoenix"-ing. It is a tedious process which consist in dumping a game ROM and patch the m68k instructions to replace CPS-B registers accesses to use the "default values"\cite{csp1_phoenix}. 
 
-People phoenixing CPS-1 board have such intimate knowledge of the CP-System that they even changed the splash screen of the game to feature a "Phoenix Edition" icon.
+People phoenixing CPS-1 board have such intimate knowledge of the CP-System that they even changed the game to display a "Phoenix Edition" splash upon startup.
 
 \begin{figure}[H]
 \nbimg{phoenix_screen.png}
@@ -2037,7 +2034,7 @@ People phoenixing CPS-1 board have such intimate knowledge of the CP-System that
 
 
 \subsubsection{De-suiciding}
-Eventually, passionate people figured out the process of accessing the CPS-B RAM. Boards can be brought back to life by re-uploading the proper configuration bytes which essentially de-suiciding them\cite{arcadeHackerCPS1Desuicide}.
+Eventually, passionate people figured out the process of accessing the CPS-B RAM and write it. Boards can be brought back to life by re-uploading the proper configuration bytes which essentially de-suicides them\cite{arcadeHackerCPS1Desuicide}.
 
 
 
@@ -2046,22 +2043,22 @@ Eventually, passionate people figured out the process of accessing the CPS-B RAM
 
 
 \section{Epilogue}
-From 1988 to 1995, Capcom used the CPS-1 to release thirty+ titles. These seven years saw the birth of three of Capcom most loved franchise, Ghouls’n Ghosts, Final Fight, and Street Fighter 2.
+From 1988 to 1995, Capcom used the CPS-1 to release more than thirty titles. These seven years saw the birth of three of Capcom most loved franchise, Ghouls’n Ghosts, Final Fight, and Street Fighter 2.
 
 To Capcom, the CPS-1 was a gamble that paid off hundredfold, allowing them to become a video-game household. 
 
-To players, the games were a series of beautifully crafted titles which provided entertainment and empty pockets. The unforgettable experience was such that passionate people wrote emulators and even in some extreme cases, books to keep these memories alive. 
+To players, the games were a series of beautifully crafted titles which both provided entertainment and emptied their pockets. The experience was so memorable that passionate people wrote emulators and even, in some extreme cases of obsessions, books, to keep these memories alive. 
 
-To counterfeiters, the CP-System was a problem. Capcom games were popular and generated a substantial amount of money. It is likely greed set even more once the demand skyrocketed with the advent of Street Fighter II. 
+To counterfeiters, the CP-System was a problem. Capcom games were popular and generated a substantial amount of money. It is likely greed set in even more so once the demand skyrocketed with the advent AAA titles such as Street Fighter II. 
 
 Capcom engineers had designed security measures able to discourage attackers with a reasonable amount of determination. Perhaps the one flaw the CPS-1 can be faulted with is that it did not provision for the unprecedented level of popularity it enjoyed.
 
 The money in the balance armed the counterfeiters with an unreasonable amount of tenacity. As players lined up to spend time and beat Street Fighter 2, so did the pirates to defeat the copy-protection systems. Eventually they were able to figure out. 
 
 
-Of all the security measures, it would have been fair to assume the custom ASICs would be an impenetrable fortress. Astonishingly, CPS-A and CPS-B replicas were manufactured under the name "COMCO"\cite{arcadeHackerCPS1}. It is unknown if an insider leaked the schematics or if someone made it their life mission to reverse-engineer these chips to make it happen.
+Of all the security measures, it would have been fair to assume the custom ASICs would be an impenetrable fortress. Astonishingly, CPS-A and CPS-B replicas were manufactured under the name "COMCO"\cite{arcadeHackerCPS1}. It is unknown if an insider leaked the schematics or if someone made it their life mission to reverse-engineer these chips to make it happen but it did.
 
-As cracks appeared in its shield, Capcom did not give up on protecting its tiles. As it had proved itself able to evolve and compete in the arcades, it embraced the challenge to always remain one step ahead of bootlegers.
+As cracks appeared in its shield, Capcom did not give up on protecting its tiles. As it had proved itself able to evolve and compete in the business of producing games, it embraced the challenge to embark on an encryption crusade against bootlegers.
 
 \subsection{CPS-1.5 Kabuki}
 \index{CP-System!CPS-1.5 Kabuki}
@@ -2088,7 +2085,7 @@ The CPS 1.5 is noteworthy for its improved copy-protection where the audio instr
 
 The encryption scheme is symmetric. A secret key is used to encrypt the ROM when it is built, and the same secret key must be used to decrypt it at runtime.
 
-The key is not burned in the z80's silicon but, alike the CPS-B v21 configuration, stored in an internal RAM. To keep that key alive, the unused pin 28 we saw on page \pageref{z80_pinRFSH} is re-purposed from "DRAM refresh" to providing power. The system gained a second "suicide battery" (not the same as the CPS-Bs) in the process. 
+The key is not burned in the z80's silicon but, alike the CPS-B v21 configuration, stored in an internal RAM. To keep that key alive, the unused pin 28 we saw on page \pageref{z80_pinRFSH} is re-purposed from "DRAM refresh" to providing power. Alike the CPS-B and its RAM configuration, the z80 requires to be powered at all time which means the system was provided with a second "suicide battery". 
 
 
 
@@ -2102,16 +2099,16 @@ The protection provided by Kabuki held remarkably well over the years. It was on
 \index{CP-System!CPS-2}
 With significantly improved capabilities thanks to its increased ROM capacity and higher processor clocks the CPS-2 instantly became a smash-hit, in particular thanks to the Street Fighter Alpha series. 
 
-From 1993 to 2003, forty-two games were published. The first one was the successful "Super Street Fighter II" while the last one "Hyper Street Fighter II: The Anniversary Edition" paid homage to a series that defined the platform.
+From 1993 to 2003, forty-two games were published. The first one was the wildly successful "Super Street Fighter II" while the last one "Hyper Street Fighter II: The Anniversary Edition" paid homage to a series that defined the platform.
 
-In terms of copy-protection, Capcom once again cranked up security. Not only the platform features the Kabuki audio instruction encryption, it also features encrypted game logic. 
+In terms of copy-protection, Capcom once again cranked up security. Not only the platform featured the Kabuki audio instruction encryption scheme, it also gained encrypted game logic. 
 
 Thanks to a custom CPU, ABI compatible with the 68000, instructions are stored encrypted in ROM and decrypted on the fly. Alike Kabuki, the scheme uses a shared secret key that stored in yet another battery-powered RAM (the third one).
 
-The only part of the CPS-2 that remain stored in plain is the OKI ROM containing audio samples. The GFXROM data was not encrypted but the content was shuffled.
+The only part of the CPS-2 that remained stored in plain was the OKI ROM containing audio samples. The GFXROM data was not encrypted but its content was obfuscated via shuffling.
 
 \begin{trivia}
-This protection was remarkably strong and held for nearly 10 years. It only fell when the "CPS-2 Shock Group" attacked it in 2003\cite{cps2rebirth}.
+No bootleg of CPS-2 title were ever produced. Its protection system was remarkably strong and held for nearly 10 years. It was only when the "CPS-2 Shock Group" attacked it in 2003\cite{cps2rebirth} that its functioning was reverse engineered.
 \end{trivia}
 
 
