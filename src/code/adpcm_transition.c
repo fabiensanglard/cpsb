@@ -1,7 +1,4 @@
-//  index                  0   1   2   3  4  5  6  7
-int transitionTable[8] = {-1, -1, -1, -1, 2, 4, 6, 8};
-
-int stepSizes[49] = {
+int stepSizes[49] = { // Indexed by stepSizeIndex
   16,  17,   19,  21,    23,   25,   28,
   31,  34,   37,  41,    45,   50,   55,
   60,  66,   73,  80,    88,   97,  107, 
@@ -11,3 +8,6 @@ int stepSizes[49] = {
  876, 963, 1060, 1166, 1282, 1411, 1552};
 
 int stepSizeIndex = 0; // Initial value (0) points to 16
+
+//  indexed by MAG         0   1   2   3  4  5  6  7
+int transitionTable[8] = {-1, -1, -1, -1, 2, 4, 6, 8};
