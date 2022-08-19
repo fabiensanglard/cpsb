@@ -2,4 +2,5 @@
 0b00000011_00000000 Layer to draw second
 0b00001100_00000000 Layer to draw third
 0b00110000_00000000 Layer to draw last
-OBJ=0, SCR1=1, SCR2=2, SRC3=3
+
+Layer IDs: OBJ=0, SCROLL1=1, SCROLL2=2, SRCOLL3=3

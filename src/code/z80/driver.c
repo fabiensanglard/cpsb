@@ -32,7 +32,7 @@ void main () {
     if (latch & 0x80) {
       REG_OKI = 0x8  | latch;
       // 0x10 = Channel 1, 0x00 = Max volume.
-      REG_OKI = 0x10 | 0x00; 
+      REG_OKI = 0x10 | 0x00; // TODO: Round-robin on channels.
     } else {
       setupMusicPlayback(latch & 0x70);
     }

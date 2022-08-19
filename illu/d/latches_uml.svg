@@ -7,7 +7,7 @@
    viewBox="0 0 361.19699 168.61521"
    version="1.1"
    id="svg5"
-   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
    sodipodi:docname="latches_uml.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -28,12 +28,12 @@
      fit-margin-right="0"
      fit-margin-bottom="0"
      inkscape:zoom="1.3414682"
-     inkscape:cx="472.24376"
-     inkscape:cy="269.85358"
-     inkscape:window-width="3840"
-     inkscape:window-height="2036"
-     inkscape:window-x="-12"
-     inkscape:window-y="-12"
+     inkscape:cx="111.81778"
+     inkscape:cy="269.48086"
+     inkscape:window-width="1280"
+     inkscape:window-height="736"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
      inkscape:snap-global="false"
@@ -171,7 +171,7 @@
        sodipodi:nodetypes="cc" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.665;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#DotL)"
-       d="m 94.308273,103.84615 253.899917,0"
+       d="M 94.308273,103.84615 H 348.20819"
        id="path12615-8-6"
        sodipodi:nodetypes="cc" />
     <rect
@@ -215,7 +215,7 @@
          id="tspan7070-2-1-0-2-5">OKI</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:0.665;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 67.53095,132.23076 281.8753,0"
+       d="m 67.53095,132.23076 h 281.8753"
        id="path12615-8-6-2"
        sodipodi:nodetypes="cc" />
     <path
@@ -406,7 +406,7 @@
        transform="rotate(90)" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.846667;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM)"
-       d="m 348.86615,131.50841 v 25.54347 l -312.455324,0 v -10.97092"
+       d="m 348.86615,131.50841 v 25.54347 H 36.410826 v -10.97092"
        id="path49686"
        sodipodi:nodetypes="cccc" />
     <rect
@@ -553,7 +553,7 @@
            y="108.70119"
            id="tspan7070-2-1-0-0"><tspan
    id="tspan25692-7"
-   style="font-weight:normal;font-size:9.87778px;text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.264583">z80 </tspan>240Hz</tspan></text>
+   style="font-weight:normal;font-size:9.87778px;text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.264583">z80 </tspan>250Hz</tspan></text>
     </g>
     <path
        style="fill:none;stroke:#000000;stroke-width:0.846667;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM-7-2)"

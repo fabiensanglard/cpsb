@@ -25,12 +25,6 @@ The second stage involves \icode{ccps\_mus}, the music processor. It expects \ic
 The last stage relies on the Small Device C Compiler (SDCC) toolchain. All artifacts generated in the previous stages are used along with the inputs for the sound driver (\icode{.c} files) and the bootstrap \icode{crt0.s} assembled by \icode{sdasz80} assembler. In this step, all resulting relocatable object files \icode{.rel} are linked together via ssdc's linker \icode{sdldz80}. 
 
 
-% \begin{trivia}
-% These are a lot of step but if you use \icode{ccps} build system, it is all taken care of with one keystroke resulting in two ROM sets ready to go.
-% \end{trivia}
-
-
-
 
 
 
@@ -189,24 +183,24 @@ The calling functions from ASM to C requires using \icode{\_} prefixed symbols.
 \index{Interrupts!Programming z80}
 In order to interact with the latches properly but also to be able to keep track of wall-time, the z80 needs to be interrupted regularly. Zilog's CPU does features a timer RFSH but it is intended for DRAM refresh (which the sound system does not feature anyway).
 
-Instead the interrupts are triggered by the YM2151, thanks to its two internal timers. Timer A is a 10-bit counter while Timer B is an 8-bit counter. For a YM2151 at 3,579Hz, the trigger formula is 64 * (1024 - value) / 3579.
+Instead the interrupts are triggered by the YM2151, thanks to its two internal timers. Timer A is a 10-bit counter while Timer B is an 8-bit counter. For a YM2151 running at 3,579Hz, the trigger formula is 64 * (1024 - value) / 3579.
 
 Setting the Timer A to \icode{800} will result in an interrupt 64 * (1024 - 800) / 3579 = 4ms later. When the YM2151 counter reaches zero, it asserts a line connected to the z80 \icode{INT} line which makes the CPU jumps to address \icode{0x38}.
 
 \lstinputlisting[style=CStyle]{src/code/z80/interrupts.c}
 
-Function \icode{schedInterrupt} writes MSB 8-bit \icode{0xC0} and LSB \icode{0x00}. Notice how before writing to the YM2151 register the z80 makes sure the 2151 is not busy via \icode{waitYM2151()}.
+% Function \icode{schedInterrupt} writes MSB 8-bit \icode{0xC0} and LSB \icode{0x00}. Notice how before writing to the YM2151 register the z80 makes sure the 2151 is not busy via \icode{waitYM2151()}.
 
 
 
 
 
 \subsection{Initializing variables}
-To finish bootstrapping, \icode{crt0} makes sure initialized C variables values are set. The linker placed all values requiring initialization in a \icode{\_GSINIT} segment. By wrapping it with markers \icode{\_INITIALIZER} (src) and \icode{\_INITIALIZED} (dst), they can be copied.
+To finish bootstrapping, \icode{crt0} makes sure initialized C variables values are set. The linker placed all values requiring initialization in a \icode{\_GSINIT} segment. By wrapping it with markers \icode{\_INITIALIZER} (src) and \icode{\_INITIALIZED} (dst), they can be copied easily.
 
 \lstinputlisting[style=Z80Style]{src/code/z80/initVar.s}
 
-Copying is done with \icode{ldir} instruction using the linker macros, \icode{s\_} refers to the site of a segment and \icode{l\_} the length of that segment.
+Copying is done with \icode{ldir} instruction using the linker macros. Prefix \icode{s\_} refers to the "start" of a segment while prefix \icode{l\_} refers to the "length" of that segment.
 
 \lstinputlisting[style=Z80Style]{src/code/z80/copyvar.s}
  
@@ -215,23 +209,21 @@ Copying is done with \icode{ldir} instruction using the linker macros, \icode{s\
 
 
 \subsection{z80 Sound Driver}
-A protocol using a stream (like Street Fighter 2 driver) yield more power but for the sake of readability a simpler approach is used here.
-
+The sound driver is a simple loop which reads bytecode from our mini-vgm format to feed music notes, no-op on pauses, and forwards sample playback. 
 
 
 \lstinputlisting[style=CStyle]{src/code/z80/music.c}
 
-The code presented here uses a single latch as "immediate value". If bit 0x80 is set, control is requesting a sound effect to be played, otherwise it is a music. 
+A single latch is used to received commands as "immediate value". If bit 0x80 is set, control is requesting a sound effect to be played, otherwise it is a music. 
 
-
-The interrupt allows the main loop to tick once which does one of three things. It checks it is must wait, feed bytes to the YM2151 or feed soundID/channelID to the OKI.
+The \icode{main} uses an "active" loop in order to never outpace be \icode{interrupt} function call frequency. This guarantees it runs in the vicinity of 250Hz. 
 
 \lstinputlisting[style=CStyle]{src/code/z80/driver.c}
 
 
 
 \section{Back in the days}\index{Back in the days!SFX/Musics}
-In the mid-80s, Capcom recognized the crucial importance of sound for a video-game and set to hire the very best musician they could find.
+From its inception, Capcom recognized the crucial importance of sound for a video-game and set to hire the very best musician they could find.
 
 By 1989, they had assembled a pool of talent who called themselves the "Capcom Sound Team".
 
@@ -240,7 +232,7 @@ By 1989, they had assembled a pool of talent who called themselves the "Capcom S
 The Capcom Sound team. L-R: Yoko Shimomura, Yoshihiro Sakaguchi, Manami Matsumae, Masaki Izumiya, Yasuaki Fujita, Mari Yamaguchi, Minae Fujii, Toshio Kajino, and Isao Abe. Identify of table-man is unknown.
 
 \subsection{Recruiting}
-Capcom actively recruited by taking advantage of 'careers days' to get graduates to come work for them. Many musicians came from music schools located in Kansai region (Kyoto, Osaka, Kobe) near Capcom headquarters. 
+Capcom actively recruited by taking advantage of 'careers days' to get graduates to come work for them. Many musicians emerged from music schools located in Kansai region encompassing Kyoto, Osaka, and Kobe near Capcom headquarters. 
 
 Several alumni of Osaka College of Music ended up working for Capcom where they were able to compose music for a living while having the security of working for a large Japanese company. 
 
@@ -251,7 +243,7 @@ Several alumni of Osaka College of Music ended up working for Capcom where they 
 One of these recruit, Yoko Shimomura, would go on to compose musics of games such as Street Fighter II, Final Fight, and Final Fantasy. Over the years she gave numerous interviews which help to paint a picture of the life of a musician working at Capcom.
 
 
-\begin{q}{Yoko Shimomura, Street Fighter 2 music Composer\cite{beep199010}}
+\begin{q}{Yoko Shimomura, Capcom Sound team\cite{beep199010}}
 
 I studied piano in college, but I loved the Famicom, and would often stay up all night playing it. 
 
@@ -263,7 +255,7 @@ I decided that when I graduated, I would go work at a place where I could play b
 
 Yoko's account of her hiring interview confirm that Capcom was more interested in hiring talented musician than tech savvy people.
 
-\begin{q}{Yoko Shimomura, Street Fighter 2 music Composer\cite{beep199010}}
+\begin{q}{Yoko Shimomura, Capcom Sound team\cite{beep199010}}
   
 I did not know you could write music with a computer until I joined the company. At the entrance exam, I was asked “what sequencer do you use?” and I had to ask back "What? Is that like an electronic controller?".
 
@@ -277,20 +269,20 @@ I was asked to talk about what I knew about FM generation at the entrance exam. 
 \subsection{Creative process}
 Even though musicians were part of a "Sound Team", they usually worked alone on a game. 
 
-If they could pick based on availability\cite{sf2musics}, they were assigned to the next project as soon as they were done with the previous one.
+They could pick projects based on availability\cite{sf2musics} but they were assigned to the next one immediately after they were done with the previous one.
 
 
 Being dropped on a project and asked to write music was difficult. It was mostly the planner's responsibility to brief the musician on what kind of music they wanted\cite{sf2_music}.
 
-\begin{q}{Yoko Shimomura, Street Fighter 2 music Composer\cite{sf2_oral_history}}
-Mr. Nishitani would come up to me and show me designs of the characters and explain the personalities of the characters and ask me to make theme songs for each character.
+\begin{q}{Yoko Shimomura, Capcom Sound team\cite{sf2_oral_history}}
+NiN would come up to me and show me designs of the characters and explain the personalities of the characters and ask me to make theme songs for each character.
 
 I would look at the backgrounds and the character descriptions and all that, and I noticed that each character had a unique background. And because of that, I suggested making each theme song based on their background country and culture.
 \end{q}
 
 The work ethic of the composers had noting to envy to the artists drawing pixels.
 
-\begin{q}{Yoko Shimomura, Street Fighter 2 music Composer\cite{sf2musicsecurity}}
+\begin{q}{Yoko Shimomura, Capcom Sound team\cite{sf2musicsecurity}}
 At 11 o'clock, all the security was activated and you could not move between floors. The elevators stopped moving too. If you had to finish work by 7 o'clock the next day, we had to pass ROM down from the window on a string.
 
 Once I tied a carrier bag and put the ROM inside and gave it to them. 15 mn later, the phone rang. They said "sorry but we broke the pins when we put it in! Can you give us another?"
@@ -299,7 +291,7 @@ Once I tied a carrier bag and put the ROM inside and gave it to them. 15 mn late
 
 
 \subsection{Tools}
-Yoshihiro Sakaguchi, author of MegaMan musics, explain what computer they connected their Yamaha keyboard to.
+Yoshihiro Sakaguchi, author of MegaMan musics, explain what computer the musicians connected their Yamaha keyboard to.
 
 \begin{q}{Yoshihiro Sakaguchi\cite{yoko_shimomura_interview}  }
 We worked on both the music and sound effects for Capcom’s games. We’ve got a centralized recording system setup on a PC-98, so that even if we’re writing music for different hardware, we can compose without needing to be able to program.
@@ -311,7 +303,7 @@ NEC entered the personal computer market in 1979 with its 8800 series. These mac
 
 Thanks to its optional kanji ROM, NEC quickly gained traction The PC-88 accounted for 40\% of the Japanese personal market by 1981.
 
-By the mid-80s, the aging series was discontinued in favor of machines based on 16-bit Intel CPUs. The first computer, named 9801, was be the first in the 9800 line. These machine were commonly referred to as "PC-98".
+By the mid-80s, the aging series was discontinued in favor of machines based on 16-bit Intel CPUs such as the i286. The first computer, named 9801, was be the first in the 9800 line. These machine were commonly referred to as "PC-98".
 
 \begin{figure}[H]
 
@@ -321,7 +313,7 @@ By the mid-80s, the aging series was discontinued in favor of machines based on 
 
 Alike the PC-88, the PC-98 enjoyed considerable success. Over its lifespan ranging from 1992 to 2000, NEC sold more than 18 millions units. Across multiple lines such as "Desktop", "Hi-end", or "Laptop", NEC released a new machine every year\cite{9800lines}. 
 
-The success was such that the series accounted for 60\% of the Japanese market Personal Computer market in 1991. 
+The success was such that the series accounted for 60\% of the Japanese market Personal Computer market by 1991. 
 
 
 
@@ -333,7 +325,7 @@ Because so many models were released, it is hard to tell for sure which PC-98 wa
 \caption*{A selection of PC-98 from 1985 to 1992}
 \end{figure}
 
-It is likely musicians working on CPS-1 title were provided with computers from the Main series. Around that time, it would have likely been an computer based on a Intel 386 CPU.
+It is likely musicians working on CPS-1 titles were provided with computers from the Main series. Around that time, it would have been a computer based on a Intel 386 CPU with 50 MiB HDD.
 
 
 \subsubsection{Proprietary technology}
@@ -343,15 +335,15 @@ Japanese market. NEC's PC were name after what they were, \textbf{P}ersonal \tex
 
 
 \subsubsection{C-Bus}
-The PC-98 uses its own 16-bit C-bus instead of the IBM's ISA bus. BIOS, I/O port addressing, memory management and graphics output are also different. This architecture was both a moat that protected NEC from clone manufacturers and a dungeon that prevented its machine from peripherals built for IBM PCs.
+The PC-98 uses a proprietary 16-bit C-bus instead of the IBM's ISA bus. BIOS, I/O port addressing, memory management and graphics output are also different. This architecture was both a moat that protected NEC from clone manufacturers (which plagued IBM in the USA) and a dungeon that prevented its machine from benefiting of the many peripherals built for IBM PCs.
 
 
-It was an extra effort for manufactures to create c-bus version of their card bu companies such as Roland and Creative did release some of their products for PC-98.
+It was an extra effort for manufactures to create C-bus version of their card but companies such as Roland and Creative did release some of their sound cards for PC-98.
 
 \begin{figure}[H]
 
 \nbimg{roland_cbus2x.png}
-\caption*{A c-bus Roland MIDI card for PC98II}
+\caption*{A C-bus Roland MIDI card for PC98II}
 \end{figure}
 
 
@@ -359,9 +351,9 @@ It was an extra effort for manufactures to create c-bus version of their card bu
 \subsubsection{Video chip}
 Besides its proprietary bus, PC-98 were noteworthy for their, at the time, powerful graphic system.
 
-The heart of it was the High-Performance Graphics Display Controller 7220, more commonly as $\upmu$PD7220. The PC-98 used two of them, both running 2.5MHz. One handles 8KB VRAM for text while the other acts as a co-processor managing a 96KB VRAM framebuffer.
+The heart of it was the High-Performance Graphics Display Controller 7220, more commonly known as $\upmu$PD7220. The PC-98 used two of them, both running 2.5MHz. One handled the 8 KiB VRAM for text while the other acted as a co-processor managing a 96 KiB VRAM framebuffer.
 
-The tandem was one of the first GPU, presenting primitives to draw lines, circles, arcs, and character graphics. In its highest resolution mode the PC-98 reached an impressive 640×400 with 8 colors. Allowing Latin alphabetic, numeric and most importantly katakana characters. An optional ROM board added 3,000 kanji glyphs to the repertory.   
+The tandem was one of the first GPU, presenting primitives to draw lines, circles, arcs, and character graphics. In its highest resolution mode the PC-98 reached an impressive 640×400 with 8 colors. Allowing Latin alphabetic, numeric and most importantly katakana characters, an optional ROM board added 3,000 kanji glyphs to the repertory.   
 
 \subsubsection{The end of PC-98}
 
@@ -373,12 +365,12 @@ A list accounting for games only still accounts for 1,228 titles. Proof of the m
 NEC's domination only started to wade with DOS/V, a special version of Microsoft's MS-DOS supporting Japanese characters, came out at the end of 1990.
 
 
-\begin{trivia}
-When it came to record voices, the whole Street Fighter II development team was encouraged to contribute.
+% \begin{trivia}
+% When it came to record voices, the whole Street Fighter II development team was encouraged to contribute.
 
-\begin{q}{VGDensetsu\cite{sf2samples}  }
-Chun-Li Spinning Bird Kick line was spoken by Eri Nakamura, the graphic designer in charge of Honda, while a background designer did her victory cry ("Kyahahaha! Yattaaa") and a third person recorded another line.
+% \begin{q}{VGDensetsu\cite{sf2samples}  }
+% Chun-Li Spinning Bird Kick line was spoken by Eri Nakamura, the graphic designer in charge of Honda, while a background designer did her victory cry ("Kyahahaha! Yattaaa") and a third person recorded another line.
 
-For Ryu and Ken, who share the same voice, the graphic designer in charge of Guile lent his voice for the Hadoken and Shoryuken while the one in charge of Boxer did the Tatsumaki Senpukyaku.  
-\end{q}
-\end{trivia}
+% For Ryu and Ken, who share the same voice, the graphic designer in charge of Guile lent his voice for the Hadoken and Shoryuken while the one in charge of Boxer did the Tatsumaki Senpukyaku.  
+% \end{q}
+% \end{trivia}

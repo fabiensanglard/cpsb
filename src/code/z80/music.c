@@ -11,7 +11,7 @@ next_byte_code:
     case DELAY : 
        noopCounter = bc; break;
     case MUSIC_NOTE : 
-       REG_YM2151_CMD = next(); 
+       REG_YM2151_ADR = next(); 
        REG_YM2151_DAT = next(); 
        goto next_byte_code;
     case MUSIC_SOUND : 
