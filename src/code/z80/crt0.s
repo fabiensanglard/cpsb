@@ -11,9 +11,9 @@
    jp init  
 
 
-;--------------
-; INTERRUPT
-;--------------
+;------------------
+; INTERRUPT HANDLER
+;------------------
 .org 0x38
    DI                     ; Disable Interrupt
    call _interrupt        ; Process Interrupt

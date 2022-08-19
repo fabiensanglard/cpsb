@@ -56,32 +56,31 @@ Let's take an example converting a stream of 16-bit PCM to 4-bit ADPCM nibbles.
 \lstinputlisting[style=CStyle]{src/code/pcm-dpcm.c}
 
 \subsubsection{Compressing sample 1}
-The first 16-bit sample has a value of \icode{960} which becomes \icode{60} in 12-bit. With the current step size at 16, ADPCM can only commands a delta of + ( 16 + 16/2 + 16/4) = +28 which it encodes in a nibble \icode{0b0111}. The step size index is updated via the the transitionTable to now point to 8 (value \icode{34})
+The first 16-bit sample has a value of \icode{960} which becomes \icode{60} in 12-bit. With the current step size at 16, ADPCM can only commands a delta of + ( 16 + 16/2 + 16/4) = +28 which it encodes in a nibble \icode{0b0111}. The step size index is updated via the transitionTable[\icode{b111}] = 8. The current step size is \icode{34}. 
 
 \subsubsection{Compressing sample 2}
 The second 16-bit sample also has a value of \icode{960} which becomes \icode{60} in 12-bit. Since the latest sample output was 28, ADPCM must somehow encode a difference of 60-28 = 32. ADPCM commands a delta of + ( 0 + 34/2 + 34/4) = +33 which it encodes in a nibble \icode{0b0011}. 
 
 The decompressor will output 28 (its last value) + 33 = 61. It will slightly overshot the desired value but we can see how the step size has adapted to the delta requested with only two steps. 
 
-Once again the step size index is updated via the transitionTable to 8 (previous value) -1 = 7, which equals 31.
+The step size index is updated via 8 (previous value) -1 (transitionTable[\icode{b011}]) = 7. Now the step size is \icode{31}.
 
 \subsubsection{Compressing sample 3}
 The third 16-bit sample has a value of \icode{950} which becomes \icode{56} in 12-bit. Since the latest sample output was 61, ADPCM encodes a difference of 56-61 = -5. ADPCM commands a delta of - (0 + 0 + 31/4) = -7 which it encodes in a nibble \icode{0b1001}. 
 
-The decompressor will output 61 (its last value) - 5 = 56. The step size index is updated via the transitionTable to 7 (previous value) -1 = 6, which equals 28.
+The decompressor will output 61 (its last value) - 5 = 56. The step size index is updated via 7 (previous value) - 1  transitionTable[\icode{b001}] = 6. Now the step size is \icode{28}.
 
 \subsubsection{Compressing sample 4}
 The last 16-bit sample has a value of \icode{160} which becomes \icode{10} in 12-bit. Since the latest sample output was 56, ADPCM encodes a difference of 10-56 = -46. ADPCM commands a delta of - (28 + 28/2 + 0) = -42 which it encodes in a nibble \icode{0b1110}. 
 
-The decompressor will output 56 (its last value) - 42 = 14. The step size index is updated via the transitionTable to 6 (previous value) + 6 = 12, which equals 50.
+The decompressor will output 56 (its last value) - 42 = 14. The step size index is updated via 6 (previous value) + 6 (transitionTable[\icode{0b110}]) = 12. Now the step size is \icode{50}.
 
-% The result is stored in four nibble which fit in an array of two bytes. 
 Graphing PCM vs ADPCM shows that the decompressed stream "lags" behind upon abrupt changes but catches up aggressively. ADPCM first value is always near zero (+/-28) but it is not audible to players since most samples start with a faded-in. 
 
 \nbdraw{adpcm_graphed}
 
 \section{Structure of the OKI ROM}
-The structure of the OKI is simple. It features 127 * 6 bytes table at its beginning. Each entry points to a payload in the ROM. The payload of each entry must be ADPCM stream.
+The structure of the OKI is simple. It features 127 * 6 bytes table at its beginning. Each entry points to a payload in the ROM. The payload of each entry must be a ADPCM stream.
 
 For some reason offset 0 in the table index must not be used.
 
@@ -113,14 +112,14 @@ Making music with FM synthesis is an art which this book does not intend to butc
 
 The VGM (Video Game Music) is a community effort originating from \icode{smspower.org} to create an audio file format able to support many legacy systems (SEGA consoles, MSX, Neo Geo, and PC) as well as Arcade hardware.
 
-The arcade profile is particularly interesting for the CPS-1 since it uses YM2151 for FM Synthesis and SegaPCM for the samples.
+The arcade profile is particularly interesting for CPS-1 development since it uses YM2151 for FM Synthesis and SegaPCM for the samples.
 
 If the YM2151 is obviously a perfect fit that will need no processing, the SegaPCM need some adjustments. As a chip used by SEGA in their AM2 (Amusement Machine 2) from 1985 to 1991, it is superior in capabilities to the MSM6295. It relies on 16-bit PCM, up to 32kHZ sampling, has more channels. and a larger address space.
 
-The build system can take care of compressing the PCM via ADPCM and resample from 32KHz to 8080Hz but it is imperative for the musician to use only two channels to play nicely with the CPS-1 where two channels will be used to play sound effects.
+The build system can take care of compressing the SegaPCM to ADPCM and resample from 32KHz to 8080Hz but the musicians should only use two channels for music samples in order to play nicely with the CPS-1 where the two other channels are used to play sound effects.
 
 
-\lstinputlisting[style=CStyle]{src/code/z80/vgm.c}
+\lstinputlisting[]{src/code/z80/vgm.c}
 
 
 
@@ -155,7 +154,7 @@ Using \icode{sdcc} is helping a lot here since it features an exclusive "placeme
 
 \lstinputlisting[style=CStyle]{src/code/z80/memory_map.c}
 
-With the registers correctly mapped, what remains is to place the \icode{.text} and \icode{.data} at the right location in ROM. This can easily be done thanks to the awesome \icode{sdldz80} linker via a linker script.
+With the registers correctly mapped, what remains is to place the \icode{.text} and \icode{.data} at the right location in ROM. This can easily be done thanks to the awesome \icode{sdldz80} linker and its linker script.
 
 \lstinputlisting[]{src/code/z80/main.lk}
 
@@ -166,15 +165,15 @@ Trivia: Debugging a CPS-1 program can be a tedious task. A good starting point w
 \end{trivia}
 
 \subsection{Bootstrapping}
-A z80 starts fetching and executing instructions from \icode{0x0000}. The bootstrap code \icode{crt0.s} is placed accordingly there via \icode{.org 0}.
+A z80 starts fetching and executing instructions from address \icode{0x0000}. The bootstrap code \icode{crt0.s} (on page \pageref{z80_crt0}) is placed accordingly via directive \icode{.org 0}. The code immediately jumps to \icode{0x100} in order to skip the interrupt handler instructions. 
 
-The code immediately jumps to \icode{0x100} in order to skip the interrupt handler. The z80 can work in interrupt modes 0, 1, or 2. Modes 0 and 2 are the most powerful and complex. They imply retrieving the id of the interrupting peripheral by reading a byte on the data bus. This mechanism allows support of multi-devices interruption. However in this case, it is overkill. The z80 uses Mode 1 and jumps to \icode{0x38} when interrupted.
+The z80 can work in interrupt modes 0, 1, or 2. Modes 0 and 2 are the most powerful and complex but they imply retrieving the id of the interrupting peripheral by reading a byte on the data bus. This mechanism allows support of multi-devices interruption. However in this case, it is overkill. The z80 uses Mode 1 which always makes the CPU jumps to \icode{0x38} when interrupted.
 
-At \icode{0x100}, the stack pointer \icode{sp} is set to point at the end of \icode{RAM} (the z80 stack grows downward), the first interrupt is requested and a mystery \icode{gsinit} function is called.
+At \icode{.org 0x100}, the stack pointer \icode{sp} is set to point at the end of \icode{RAM} (the z80 stack grows downward), the first interrupt is requested and a mystery \icode{gsinit} function is called. All the code in \icode{crt0.s} accounts for a few hundred bytes. Which explains why we requested the linker script to place \icode{\_CODE} further at \icode{0x200}.
 
-All the code in \icode{crt0.s} (on page \pageref{z80_crt0}) accounts for a few hundred bytes. Which explains why we requested the linker script to place \icode{\_CODE} further at \icode{0x200}.
-
-In \icode{crt0.s} below, notice how C functions are prefixed with \icode{\_}.
+\begin{trivia}
+The calling functions from ASM to C requires using \icode{\_} prefixed symbols.
+\end{trivia}
 \pagebreak
 
 \lstinputlisting[style=Z80Style]{src/code/z80/crt0.s}

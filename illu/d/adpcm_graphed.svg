@@ -7,7 +7,7 @@
    viewBox="0 0 158.47532 68.444408"
    version="1.1"
    id="svg4518"
-   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
    sodipodi:docname="adpcm_graphed.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -28,12 +28,12 @@
      fit-margin-right="0"
      fit-margin-bottom="0"
      inkscape:zoom="1.2245804"
-     inkscape:cx="261.314"
-     inkscape:cy="201.70174"
-     inkscape:window-width="1920"
-     inkscape:window-height="1010"
-     inkscape:window-x="-6"
-     inkscape:window-y="-6"
+     inkscape:cx="176.38695"
+     inkscape:cy="201.29344"
+     inkscape:window-width="1280"
+     inkscape:window-height="736"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
      width="158.48541mm"
@@ -173,24 +173,24 @@
          sodipodi:nodetypes="cc" />
     </g>
     <path
-       style="fill:none;stroke:#0033ff;stroke-width:0.565;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:none;stroke:#0033ff;stroke-width:0.565;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 22.03415,52.089806 17.068772,-5.61757 15.98847,-9.722717 16.420589,-14.476048 16.20453,-8.642416 16.420589,-3.456966 17.28484,-0.4321212 15.55634,12.7475642 16.42059,28.519972 16.63665,6.265752"
        id="path9828" />
     <path
-       style="fill:none;stroke:#ff0000;stroke-width:0.565;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:none;stroke:#ff0000;stroke-width:0.565;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M 22.250211,69.5907 38.886861,63.541007 55.739573,51.009504 72.160163,27.0268 88.364693,13.414995 104.78528,9.0937866 l 16.63666,0.6481812 15.98846,6.0496912 16.20453,11.883322 16.63666,25.927247"
        id="path10254" />
     <text
        xml:space="preserve"
        style="font-size:5.64444px;line-height:1.25;font-family:sans-serif;fill:#0033ff;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:1"
-       x="33.611416"
+       x="36.998631"
        y="15.143477"
        id="text11844"><tspan
          sodipodi:role="line"
          id="tspan11842"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#0033ff;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:1"
-         x="33.611416"
-         y="15.143477">PCM</tspan></text>
+         x="36.998631"
+         y="15.143477">PCM INPUT</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:5.64444px;line-height:1.25;font-family:sans-serif;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:1"
@@ -201,6 +201,6 @@
          id="tspan11842-7"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:1"
          x="26.836985"
-         y="22.119289">ADPCM</tspan></text>
+         y="22.119289">ADPCM OUTPUT</tspan></text>
   </g>
 </svg>
