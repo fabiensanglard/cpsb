@@ -20,9 +20,9 @@ The structure of the OKI ROM facilitates the task since it features an index at 
 
 At the very top, \icode{ccps\_sfx} expect artists to provide sound samples contained in \icode{.wav} files, a format which is universally supported by audio tools. This stage generates a partial OKI ROM and a \icode{.h} header file to be injected in the control build graph so the m68k can request samples playback with a simple ID.
 
-The second stage involves \icode{ccps\_mus}, the music processor. It expects \icode{.vgm} (Video Game Music) as input. These contain raw 2151 instructions which are easy to convert. It outputs the final OKI ROM with the sample used by the soundtrack and also a \icode{.c} file including bytecode containing YM2151 register values, timing, and OKI sample timing.
+The second stage involves \icode{ccps\_mus}, the music processor. It expects \icode{.vgm} (Video Game Music) from which are extracted raw YM2151 instructions. It outputs the final OKI ROM with the sample used by the soundtrack and also a \icode{.c} file including bytecode containing YM2151 register values, timing, and OKI sample timing.
 
-The last stage relies on the Small Device C Compiler (SDCC) toolchain. All artifacts generated in the two previous stages are used as input on top of the programmer \icode{.c} files and the bootstrap \icode{crt0.s} assembled by \icode{sdasz80} assembler. In this step, all resulting relocatable object files \icode{.rel} are linked together via ssdc's linker \icode{sdldz80}. 
+The last stage relies on the Small Device C Compiler (SDCC) toolchain. All artifacts generated in the previous stages are used along with the inputs for the sound driver (\icode{.c} files) and the bootstrap \icode{crt0.s} assembled by \icode{sdasz80} assembler. In this step, all resulting relocatable object files \icode{.rel} are linked together via ssdc's linker \icode{sdldz80}. 
 
 
 % \begin{trivia}
@@ -43,18 +43,15 @@ Artists should not produce stereo wavs since the CPS-1 is mono. Moreover, game d
 
 \subsection{ADPCM Compression}
 \index{ADPCM!Compression}
-% ADPCM is a simple way to compress PCM. In an era where every 1 KiB of ROM was precious, ADPCM was just a vessel allowing 50\% space saving. Upon usage, it is be decompressed by the OKI into PCM to drive a speaker cone.
 Decompression is done in hardware by the OKI at runtime but the build system still have to compress assets appropriately. 
 
-% The algorithm to convert PCM to "Dialogic ADPCM" is publicly available and extensively documented by OKI\cite{adpcm_specs}. It is as simple as the decompression algorithm visited in the hardware section on page \pageref{adpcm_decompression_label}.
-
-ADPCM encodes the difference between the previous sample and the sample to be generated. Each 16-bit sample is encoded into a 4-bit nibble\cite{adpcm_specs}.
+ADPCM encodes the difference between the previous sample and the sample to be generated. Each 16-bit sample is downsampled to 12-bit and compressed to 4-bit nibble\cite{adpcm_specs}.
 
 
 \lstinputlisting[style=CStyle]{src/code/adpcm_algo.c}
 
 
-Let's take the example of a stream of 16-bit PCM values received from a wav to be compressed to 4-bit ADPCM values.
+Let's take an example converting a stream of 16-bit PCM to 4-bit ADPCM nibbles.
 
 \lstinputlisting[style=CStyle]{src/code/pcm-dpcm.c}
 
