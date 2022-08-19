@@ -21,16 +21,16 @@ The PAL found on Forgotten Worlds board, the \icode{LW621}, is more complex sinc
 All tiles are stored continuously in memory, using groups of four bytes encoding eight pens. Rows of pens are stored one after another. The dimension of a tile varies depending on the layers. OBJ and SCR2 uses the same 16x16 tiles which mean their tiles are 16*16 / 2 = 128 bytes. For the fine tuned SCR1 which uses 8x8, each tile uses 32 bytes. Finally the larger SCR3 uses 512 bytes for each of its 32x32 tiles.
 
 \section{GFX Layout}
-The EPROMs are organized in groups of four chips and serialized. On a board like Street Fighter II, we find three groups of four. Inside each group, chips are interleaved every two bytes.
+The EPROMs are organized in groups of four chips and serialized. On a board like Street Fighter II, we find three groups of four. Inside each group, chips are interleaved every WORD (two bytes).
 
 \nbdraw{gfx_interleave}
 
 \section{Channels}\label{channels}\index{Channels!Practice}
-The channels mentions earlier are now visible. ROM \icode{01} and ROM \icode{02} are paired on channel 1 to provide 32-bit data. Likewise, ROM \icode{03} and \icode{04} are paired on channel 2. The same division is applied to the rest of the ROMs with the same principle. 
+The channels mentioned earlier are now visible. ROM \icode{01} and ROM \icode{02} are paired on channel 1 to provide 32-bit data. Likewise, ROM \icode{03} and \icode{04} are paired on channel 2. The same division is applied to the rest of the ROMs with the same principle. 
 
 \nbdraw{build_graph_gfx}
 
-Street Fighter II board build generates twelve roms. Each group stores 2 MiB. Group [1-4] start at 0x000000, group [10-13] at 0x200000, and ROMs [20-23] at 0x400000. Each chip goes in the matching numbered DIP slot (page \pageref{boardb_no_chips}).
+Street Fighter II board build generates twelve roms. Each group stores 2 MiB. Group [1-4] start at 0x000000, group [10-13] at 0x200000, and ROMs [20-23] at 0x400000. Each chip goes in the matching numbered DIP slot (see page \pageref{boardb_no_chips}).
 
 
 
@@ -47,7 +47,7 @@ The artwork was the part of a game that required the most people. On a big title
 
 Producing tilemap (background) assets for the SCROLL layers was junior artists responsibility. It required little supervision since the artwork had to be rectangular and the visual importance was not the highest.
 
-Producing assets for the OBJ layer on the other hand was much more elaborated. Four steps, outline drawing, allocation, detail led drawing, and finally dotting were involved.
+Producing assets for the OBJ layer on the other hand was much more elaborated. Four steps, outline drawing, allocation, detailled drawing, and finally dotting were involved.
 
 
 

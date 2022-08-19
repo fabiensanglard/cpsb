@@ -7,7 +7,7 @@
    viewBox="0 0 134.40834 44.247921"
    version="1.1"
    id="svg3605"
-   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
    sodipodi:docname="gfx_interleave.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -29,12 +29,12 @@
      fit-margin-bottom="0"
      inkscape:snap-global="true"
      inkscape:zoom="2.3076783"
-     inkscape:cx="218.18466"
-     inkscape:cy="22.53347"
-     inkscape:window-width="3840"
-     inkscape:window-height="2036"
-     inkscape:window-x="-12"
-     inkscape:window-y="-12"
+     inkscape:cx="289.46842"
+     inkscape:cy="97.283924"
+     inkscape:window-width="1280"
+     inkscape:window-height="736"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
      height="44.24792mm" />
@@ -401,6 +401,17 @@
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
          x="81.176254"
          y="11.7037">E</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:4.23333px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
+       x="86.418182"
+       y="11.620594"
+       id="text10235-0-4-3"><tspan
+         sodipodi:role="line"
+         id="tspan10233-2-44-6"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
+         x="86.418182"
+         y="11.620594">F</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:4.23333px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"

@@ -2,12 +2,12 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="208.74942mm"
-   height="64.00901mm"
+   width="8.2184811in"
+   height="2.5200398in"
    viewBox="0 0 208.74942 64.009008"
    version="1.1"
    id="svg5"
-   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
    sodipodi:docname="prog_rom_mapping.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -28,14 +28,15 @@
      fit-margin-right="0"
      fit-margin-bottom="0"
      inkscape:zoom="1.3765679"
-     inkscape:cx="392.64318"
-     inkscape:cy="110.41954"
-     inkscape:window-width="3840"
-     inkscape:window-height="2036"
-     inkscape:window-x="-12"
-     inkscape:window-y="-12"
+     inkscape:cx="772.93681"
+     inkscape:cy="90.442324"
+     inkscape:window-width="1280"
+     inkscape:window-height="736"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="layer1"
+     units="in" />
   <defs
      id="defs2">
     <marker
@@ -142,13 +143,6 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(-1.1494147,-21.551767)">
-    <rect
-       style="fill:#ffffff;stroke:#000000;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="rect933"
-       width="12.928234"
-       height="12.187842"
-       x="1.3994147"
-       y="50.761925" />
     <rect
        style="fill:#ffffff;stroke:#000000;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect933-1"
@@ -279,14 +273,14 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;line-height:1.25;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
-       x="0.70059103"
-       y="47.999687"
+       x="10.186212"
+       y="47.877304"
        id="text45526"><tspan
          sodipodi:role="line"
          id="tspan45524"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
-         x="0.70059103"
-         y="47.999687">0</tspan></text>
+         x="10.186212"
+         y="47.877304">0</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:7.05556px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:Roboto;stroke-width:0.264583"
