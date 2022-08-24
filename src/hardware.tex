@@ -817,6 +817,8 @@ Out of these 262 lines, not all of them can be used. The issue is that when VSYN
 
 Besides mechanical issues, varying quality of CRT have to be accounted for. Some screen drew lines outside of their visible bounds, a phenomenon known as over-scan. To solve this problem, the number of lines for colors had to further be reduced to ensure a "safe area" would always been drawn regardless of the CRT overscan properties.
 
+
+
 % Considering these two constraints, Capcom settled on discarding 38 lines, keeping 224 active lines
 
 
@@ -825,7 +827,10 @@ Similar constraints come into consideration when choosing an horizontal resoluti
 
 Moreover, even though the color signal is analog, there is still a maximum limit due to bandwidth limitation. CRTs of the era were able to keep up with a maximum of 512 color changes per line.
 
-Ideally, the proportion of horizontal points versus the number of lines would result in an aspect-ratio of 4:3 perfectly matching the CRT dimensions. In this case, there would be no distortion when the signal is rendered on the physical screen. A property called "square-pixels" which few system managed to achieve. 
+% Ideally, the proportion of horizontal points versus the number of lines would result in an aspect-ratio of 4:3 perfectly matching the CRT dimensions. In this case, there would be no distortion when the signal is rendered on the physical screen. A property called "square-pixels" which few system managed to achieve. 
+
+Keeping in mind that regardless of how many lines are BLANKed, the density on the screen is a constant (drawing less lines than 262 does not increase the space between lines), designers must now choose the frequency of color changes, called dot-clock. BALBLA in order render pixel-aspect-ratio PAR of 1:1. .
+
 
 
 \subsubsection{Capcom choices...}

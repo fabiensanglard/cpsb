@@ -7,7 +7,7 @@ The rest of this book describes a full game production pipeline. The goal is to 
 
 This chapter describes the high-level architecture. It is intentionally light on details since those are provided in subsequent chapters.
 
-The pipeline we will describe ingests the source code (\icode{.s}/\icode{.c}) written by programmers, the samples (\icode{.wav}) and musics (\icode{.mvg}) from the musicians, and the graphics assets (\icode{.png}) produced by the artists. The outputs are four sets of ROMs ready to be burned on EPROMs. 
+The pipeline we will describe ingests the source code (\icode{.s}/\icode{.c}) written by programmers, the samples (\icode{.wav}) and musics (\icode{.vgm}) from the musicians, and the graphics assets (\icode{.png}) produced by the artists. The outputs are four sets of ROMs ready to be burned on EPROMs. 
 
  \begin{figure}[H]
 \sdraw{1.0}{game_pipeline}
@@ -21,7 +21,7 @@ Other dependencies are more convoluted. The \icode{.wav} sample files for exampl
 
 Likewise, the \icode{.png} files containing the artworks are transformed to indexed format before making their way to the GFX ROM. They also require to generate a \icode{.h} header file, this time containing tileID. Additionally, a \icode{.c} file containing each tile palette is generated in order to be compiled into the 68000 ROM. 
 
-An even more complicated graph emerge from the music \icode{.vmg} files. The music track contains YM2151 commands that must be transformed in bytecode, stored in a \icode{.c} file, and compiled along with the z80 code. To be referenced, a header file containing music ID must also be generated and compiled with the 68000 ROM. Music are also embellished with audio samples which must also be compressed to ADPCM and added to the OKI ROM.
+An even more complicated graph emerge from the music \icode{.vgm} files. The music track contains YM2151 commands that must be transformed in bytecode, stored in a \icode{.c} file, and compiled along with the z80 code. To be referenced, a header file containing music ID must also be generated and compiled with the 68000 ROM. Music are also embellished with audio samples which must also be compressed to ADPCM and added to the OKI ROM.
 
 To complicate things even further, each of the four ROM mentioned must use different \icode{WORD} size and interleaving across the chips containing it.
 
