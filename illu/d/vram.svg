@@ -62,14 +62,14 @@
     <text
        xml:space="preserve"
        style="font-size:7.76111px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;stroke-width:0.264583"
-       x="96.022697"
-       y="13.663175"
+       x="92.851364"
+       y="12.898527"
        id="text3730"><tspan
          sodipodi:role="line"
          id="tspan3728"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.76111px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
-         x="96.022697"
-         y="13.663175">CPS-B</tspan></text>
+         x="92.851364"
+         y="12.898527">CPS-B</tspan></text>
     <g
        id="g8135-6"
        transform="translate(-30.901701,60.864079)" />
@@ -82,24 +82,24 @@
        xml:space="preserve"
        style="font-size:7.05556px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;stroke-width:0.264583"
        x="35.047314"
-       y="15.870765"
+       y="14.812433"
        id="text16924-3-1"><tspan
          sodipodi:role="line"
          id="tspan16922-8-9"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05556px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
          x="35.047314"
-         y="15.870765">VRAM A</tspan></text>
+         y="14.812433">VRAM A</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:7.05556px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;stroke-width:0.264583"
        x="146.97495"
-       y="16.274839"
+       y="15.216507"
        id="text16924-3-1-9"><tspan
          sodipodi:role="line"
          id="tspan16922-8-9-2"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05556px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
          x="146.97495"
-         y="16.274839">VRAM B</tspan></text>
+         y="15.216507">VRAM B</tspan></text>
     <g
        id="g9704-4"
        transform="translate(-11.422218,26.248596)"

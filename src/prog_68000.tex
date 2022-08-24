@@ -414,13 +414,13 @@ Starfields were used so little that the bytecode mapper was removed altogether f
 
 
 \paragraph{Priority mask}
-The layer located first behind the OBJ layer has the super power of being able to be draw on top of OBJ. Each tile must be marked as such (described in "Rendering SCROLLs" section) and the pen values to be treated specially are to be written in the priority mask registers. Four values can be entered in four registers.
+These four registers control the precedence of pens belonging to the layer behind the OBJ layer. A tile can be assigned to one priority group within a choice of four ranging within\icode{[0-3]}. A group tags pens in the tile palette to be drawn with higher priority via a 16-bit bitfield mask. Marked pens a drawn above OBJs pens.
 
 
 
 \lstinputlisting[style=CStyle]{src/code/68000/maskcontrol.c} 
 
-\textbf{WARNING :} This bit layout changes across versions of CPS-B. What is presented here is for the CPS-B v11. Refer to Mame for documentation on other versions.
+\textbf{TIP :} Tiles using priority group often use a palette where "high priority" colors are grouped together. This makes it easy to tag them in the bitfied because the bits are next to each others. e.g: Mask \icode{0xF000} marks pens \icode{15}, \icode{14}, \icode{13}, and \icode{12} as high priority.
 
 
 

@@ -1203,13 +1203,14 @@ As they are going up the stairs, observe the "back to front" order the following
 
 It all makes sense except for one detail. If we look closely at Haggar (for those who never played Final Fight, Haggar is the bigger one of the two) something is off since it appears to be both in front and behind SCROLL2.
 
-To achieve this effect, the CPS-B allows the SCROLL layer behind the OBJs to tag its tiles. Tagged tiles pens are looked up against up to four mask (each allowing four pen values) indicating which pens have precedence over OBJ.
+The CPS-B allows the SCROLL layer behind the OBJs to tag each of its tiles with a single priority group ID (from a choice of four groups). In each of these groups, sixteen bits indicate which pen in the tile palette have precedence over OBJ.
 
-This feature allows to create complex effect where sprites are sandwitched by a SCROLL. In Final Fight, the tiles making the "near" portion of the ramp are tagged to use priority masks. The "wood" tile use one mask using four pens (
+This is how Final Fight characters are sandwitched by SCROLL2. The tiles making the "near" portion of the ramp are tagged to use two priority mask groups. The "wood" tile use the group mask \icode{0} to make pens resulting in colors
 \fcolorbox{black}{mask1}{\vphantom{W}\hphantom{H}} , 
 \fcolorbox{black}{mask2}{\vphantom{W}\hphantom{H}} , 
 \fcolorbox{black}{mask3}{\vphantom{W}\hphantom{H}} , and 
-\fcolorbox{black}{mask4}{\vphantom{W}\hphantom{H}}). The garbage tiles are tagged to use two masks for a total of eight pens (
+\fcolorbox{black}{mask4}{\vphantom{W}\hphantom{H}} being given precedence. 
+Likewise, the garbage tiles are tagged with group \icode{1} to give precedence to eight pens resulting in colors 
 \fcolorbox{black}{mask5}{\vphantom{W}\hphantom{H}}  , 
 \fcolorbox{black}{mask6}{\vphantom{W}\hphantom{H}} , 
 \fcolorbox{black}{mask7}{\vphantom{W}\hphantom{H}} , 
@@ -1217,9 +1218,9 @@ This feature allows to create complex effect where sprites are sandwitched by a 
 \fcolorbox{black}{mask9}{\vphantom{W}\hphantom{H}} ,
 \fcolorbox{black}{maska}{\vphantom{W}\hphantom{H}} , 
 \fcolorbox{black}{maskb}{\vphantom{W}\hphantom{H}} and  
-\fcolorbox{black}{maskc}{\vphantom{W}\hphantom{H}}).
+\fcolorbox{black}{maskc}{\vphantom{W}\hphantom{H}}.
 
-Once the exit animation is over, all tiles are unmarked to allow free roaming (except behind the ramp) and brawling over the whole screen without priority concerns.
+Once the exit animation is over, all tiles priority groups are cleared to allow free roaming (except behind the ramp) and brawling over the whole screen without priority concerns.
 
 Refer to the CPS-B API on page \pageref{cpsbreg_programming} for more details about tagging and masking.
 \vfill
@@ -1823,7 +1824,7 @@ This design would allows RAM and SAM to be accessed simultaneously but this neve
 
  This is a perfect component for a system that needs to write a few values at varying locations (like when the CPS-B renders a sprite buffer) but read a very large amount sequentially (like when the CPS-B must compose pens towards the palette system).
 
- On the Street Fighter II board, twelves \icode{HM53461P} are combined into six pairs, resulting in 384 Ki * 8-bit.
+ On the Street Fighter II board, twelves \icode{HM53461P} are combined into six pairs, resulting in 384 KiB. Four chips are used for a single line so 96 KiB is never used.
 
 \nbdraw{vram}
 
