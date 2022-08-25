@@ -62,7 +62,7 @@ The step size index is updated via 8 (previous value) -1 (transitionTable[\icode
 \subsubsection{Compressing sample 3}
 The third 16-bit sample has a value of \icode{950} which becomes \icode{56} in 12-bit. Since the latest sample output was 61, ADPCM encodes a difference of 56-61 = -5. ADPCM commands a delta of - (0 + 0 + 31/4) = -7 which it encodes in a nibble \icode{0b1001}. 
 
-The decompressor will output 61 (its last value) - 5 = 56. The step size index is updated via 7 (previous value) - 1  transitionTable[\icode{b001}] = 6. Now the step size is \icode{28}.
+The decompressor will output 61 (its last value) - 5 = 56. The step size index is updated via 7 (previous value) - 1  (transitionTable[\icode{b001}]) = 6. Now the step size is \icode{28}.
 
 \subsubsection{Compressing sample 4}
 The last 16-bit sample has a value of \icode{160} which becomes \icode{10} in 12-bit. Since the latest sample output was 56, ADPCM encodes a difference of 10-56 = -46. ADPCM commands a delta of - (28 + 28/2 + 0) = -42 which it encodes in a nibble \icode{0b1110}. 
