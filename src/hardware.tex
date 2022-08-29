@@ -795,50 +795,136 @@ Since this space is not used for another field, the resulting effect is black ho
 \end{figure}
 
 
-Besides interlacing which had to be avoided, many other key decisions had to be made by the hardware engineers. Namely, how many lines to draw, how much horizontal resolution to use, and at what frequency should the screen be fully redrawn (a.k.a: "refreshed").
+Besides interlacing which had to be avoided, many other decisions had to be made.
 
 
 
 
 
 \subsection{Making choices}
- The main figure to consider when crafting a video system is how fast the display can draw lines. In the late 80s, standard CRTs horizontal scan rate was 15.7 kHz which means they could draw 15,720 lines per second.
+
+To craft a video system meant to build a signals generator and a color generator. We'll study the signal generator first. This circuit is built to take an oscillator signal as input and must be able to output one signal to tells for how long the color generator should hold a color on the color lines, one signal triggers HSYNC, and one signal triggers VSYNC. 
+
+\nbdraw{video_signal}
+
+The oscillator feeds an "horizontal register" which upon each tick is increased by one. Upon reaching its max value, the register wraps around to both issue a HSYNC and increases a "vertical register". 
+
+Likewise, when the vertical register reaches its max value, it wraps around and generates a VSYNC. 
+
+The color duration has no register counting the ticks. Each tick indicates that a dot is being drawn.
+
+A designer can pick any oscillator frequency (which we called dot-clock from now on), however they much be careful to choose vertical max value (number of lines) and horizontal max value (number of dots per line) so the vertical frequency and the horizontal frequency are compatible with what a CRT can sync on. 
+
+Because these screens were meant to be used in TV sets consuming NTSC broadcast, the two imperatives were to be close to \textbf{59.95 Hz} vertical refresh rate and \textbf{15,625 KHz- 15,720 KHz} horizontal refresh rate. 
+
+DRAWING TV NTSC -> 59.95 Hz and 
+\pagebreak
+
+The Horizontal frequency and Vertical frequency formulas are used to verify the signal generator's  closeness to the NTSC norms are as follows.
+
+\begin{align*}
+ \mathtt{Horizontal frequency} = \dfrac{\mathtt{Dotclock}}{\mathtt{numLines}}
+\end{align*}
+\begin{align*}
+\mathtt{Vertical frequency} =   \dfrac{\mathtt{Dotclock}}{\mathtt{(numDots * numLines)}}
+\end{align*}
 
 
+Before looking at Capcom choices for these three values, let's look at the choices made by the video designer for systems contemporary to the CP-System. The Neo-Geo entry shows a machine using a resolution of \icode{384x264} and a dot-clock of 6 Mhz which means it issues a color every  $\frac{1}{6,000,000}\mathtt{th} $ of a second.
 
 
+\begin{figure}[H]
+{ \setlength{\tabcolsep}{3.0pt}
+\begin{tabularx}{\textwidth}{Xrrr} 
+  \textbf{ } & \textbf{Genesis} & \textbf{ Neo-Geo }  & \textbf{ Super NES } \\               
+  \toprule    
+   \textbf{lines} & \texttt{ 262 } & \texttt{ 264 }  & \texttt{ 262 } \\ 
+   \textbf{dots} & \texttt{ 427 } & \texttt{ 384 }  & \texttt{ 341 } \\ 
+   \textbf{dot-clock (Hz)} & \texttt{ 6711647 } & \texttt{ 6000000 }  & \texttt{ 5369318 } \\ 
+\toprule    
+   \textbf{HSYNC frequency (kHz) } & \texttt{ 15718 } & \texttt{ 15625 }  & \texttt{ 15745 } \\ 
+   \textbf{VSYNC frequency (Hz) } & \texttt{ 59.99 } & \texttt{ 59.18 }  & \texttt{ 60.09 } \\ 
+\toprule    
 
-\subsubsection{Vertical scan rate}
-Because these CRTs were made to display NTSC signals, they were guaranteed to sync with VSYNC in the vicinity of 60Hz. Combining this figure with the horizontal scan rate gives 15,720 / 60 = 262 lines per image.
+\end{tabularx}%
+}\caption*{Bla}
+\end{figure}
+
+As the table shows, all manufactures selected different values for the dot-clock, the number of lines, and the number of dot per line but they all made sure they were very close to the vertical and horizontal frequency a CRT should support.
 
 
-\subsubsection{Picking a vertical resolution}
-Out of these 262 lines, not all of them can be used. The issue is that when VSYNC is emitted, the electron gun resets vertically in a nearly instantaneous fashion. This causes the electron beam wobbles for a bit afterward which results in visible artifacts. To avoid visual disturbance, the electron beam is stopped by requesting black on the color wires until the stream stabilize. 
+\subsubsection{Capcom video signal choices}
 
-Besides mechanical issues, varying quality of CRT have to be accounted for. Some screen drew lines outside of their visible bounds, a phenomenon known as over-scan. To solve this problem, the number of lines for colors had to further be reduced to ensure a "safe area" would always been drawn regardless of the CRT overscan properties.
+The CP-System uses a resolution of \icode{512x262} with a dot-clock of 8 Mhz. This figure is not a random value. In order to spare an oscillator, Capcom engineers simply used the CPS-A and CPS-B 16 MHz and halved it for the video system.
+
+\begin{figure}[H]
+{ \setlength{\tabcolsep}{3.0pt}
+\begin{tabularx}{\textwidth}{Xr} 
+  \textbf{ } & \textbf{CP-System} \\
+  \toprule    
+   \textbf{lines} & \texttt{262} \\
+   \textbf{dots} & \texttt{512} \\
+   \textbf{dot clock (Hz)} & \texttt{8000000} \\
+\toprule    
+   \textbf{HSYNC frequency (kHz)} & \texttt{15625} \\
+   \textbf{VSYNC frequency (Hz)} & \texttt{59.6374} \\
+\toprule    
+
+\end{tabularx}%
+}\caption*{Bla}
+\end{figure}
+
+Besides the vertical and horizontal "rules", Capcom engineers had additional constraints. First of all, because the GFX system is digital, they had to pick dimension that could be represented as integer. There was also condition dictated by the graphic system which required both axis to be multiple of 8 (for the tilemaps we will study in the next section).
+
+\subsubsection{Blanking}
+
+The CP-System resolution of \icode{512x262} seem to indicate a very high-resolution for the time. But not all the lines and all the dots on a line can be used, some have to be sacrificed to solve two problems. 
+
+There is the first, obvious problem of retracing vertically and horizontally which are not instantaneous. While the cannon position resets horizontally or vertically, I would leave a trace so no electrons can be shot during that time.
+
+There is a second problem, mechanical this time, where the electron beam wobbles for a bit afterward being reset in a nearly instantaneous fashion. This cost a few more lines and dots to be unused while the beam stabilizes.
+
+Three: Background operations are needed!
+
+As a result, the video designer must perform a second round of decision. How many lines to give to VBLANK, and how many dot give to HBLANK. These decision results in the actual resolution of the machine while the number we studied so far are called "overscan resolution".
 
 
+\subsubsection{Capcom second set of video signal choices}
 
-% Considering these two constraints, Capcom settled on discarding 38 lines, keeping 224 active lines
+Out of these 262 lines available, Capcom decided to use only 224 and let VBLANK last for $\mathtt{262 - 224 = 38}$ lines. Likewise, they kept 383 dot usable per lines and gave $\mathtt{512 - 384 = 128}$.
 
+Every machines sacrified some real-estate to VBLANK and HBLANK.
 
-\subsubsection{Picking an horizontal resolution}
-Similar constraints come into consideration when choosing an horizontal resolution. Alike VSYNC, HSYNC induces wobbling which must be hidden by blanking the ends of a line. Horizontal overscan must also be factored in.
+\begin{figure}[H]
+{ \setlength{\tabcolsep}{3.0pt}
+\begin{tabularx}{\textwidth}{Xrrrr} 
+  \textbf{ } & \textbf{CP-System} & \textbf{Genesis} & \textbf{Neo-Geo} & \textbf{Super NES} \\
+  \toprule    
+   \textbf{Usable lines} & \texttt{224} & \texttt{} & \texttt{} & \texttt{} \\
+   \textbf{Usable dots} & \texttt{384}  & \texttt{} & \texttt{} & \texttt{} \\
+   \textbf{VBLANK (lines)} & \texttt{38}  & \texttt{} & \texttt{} & \texttt{}  \\
+   \textbf{HBLANK (dots )} & \texttt{128}  & \texttt{} & \texttt{} & \texttt{}  \\
+\toprule    
 
-Moreover, even though the color signal is analog, there is still a maximum limit due to bandwidth limitation. CRTs of the era were able to keep up with a maximum of 512 color changes per line.
+\end{tabularx}%
+}\caption*{Bla}
+\end{figure}
+
+\pagebreak
+
+% Similar constraints come into consideration when choosing an horizontal resolution. Alike VSYNC, HSYNC induces wobbling which must be hidden by blanking the ends of a line. Horizontal overscan must also be factored in.
+
+% Moreover, even though the color signal is analog, there is still a maximum limit due to bandwidth limitation. CRTs of the era were able to keep up with a maximum of 512 color changes per line.
 
 % Ideally, the proportion of horizontal points versus the number of lines would result in an aspect-ratio of 4:3 perfectly matching the CRT dimensions. In this case, there would be no distortion when the signal is rendered on the physical screen. A property called "square-pixels" which few system managed to achieve. 
 
-Keeping in mind that regardless of how many lines are BLANKed, the density on the screen is a constant (drawing less lines than 262 does not increase the space between lines), designers must now choose the frequency of color changes, called dot-clock. BALBLA in order render pixel-aspect-ratio PAR of 1:1. .
+% Keeping in mind that regardless of how many lines are BLANKed, the density on the screen is a constant (drawing less lines than 262 does not increase the space between lines), designers must now choose the frequency of color changes, called dot-clock. BALBLA in order render pixel-aspect-ratio PAR of 1:1. .
 
 
+\subsubsection{PIXEL PAR PART}
+All this explaining about video counters was not just pedantic. 
 
-\subsubsection{Capcom choices...}
-Besides the vertical and horizontal "rules", Capcom engineers had additional constraints.
-
-First of all, because the GFX system is digital, they had to pick dimension that could be represented as integer. There was also condition dictated by the graphic system which required both axis to be multiple of 8 (for the tilemaps we will study in the next section).
-
-To check all the boxes, Capcom had the choice between only two resolutions, 288x216 and 320x240. Ultimately they picked neither. They gave 38 lines to VBLANK and kept 224 active lines\cite{petitCRT}. Horizontally, they left 128 elements to HBLANK and kept 384 active ones.  
+To check all the boxes, Capcom had the choice between only two resolutions, 288x216 and 320x240. Ultimately they picked neither. They gave 38 lines to VBLANK and kept 224 active lines\cite{petitCRT} (BUT COULD HAVE BEEN 240 later). Horizontally, they left 128 elements to HBLANK and kept 384 active ones.  
 
 Going for 384x224 was an interesting decision from an aspect-ratio standing point. Other manufacturers such as SNK had also dropped 4:3 with their Neo-Geo using 320×224 but the resulting aspect ratio of 10:7 was close to 4:3. With its 12:7, the CPS-1 drew many more dots horizontally and the image appeared vertically compressed. 
 
@@ -863,6 +949,18 @@ Later I protested again to which my boss replied it was a calculation error.
 \end{q}
 
 \pagebreak
+Bla
+
+\pagebreak
+Bla
+
+\pagebreak
+Bla
+
+\pagebreak
+Bla
+\pagebreak
+
 \begin{trivia}
 \index{Games!R-Type}
 The designers of R-Type in 1987 played on CRT tolerance in order to craft a video system with increased vertical resolution. 
@@ -1070,8 +1168,8 @@ A naive design would work at the same speed as the video system (8MHz). For each
 
 
 \subsubsection{Caching}
-The CPS-A only accesses the GFXRAM during the HBLANK interval. To eliminate memory read operations while a scanline is rasterized, a whole line worth of tilemap is retrieved and stored in an internal cache of 256 bytes.
-%  the CPS-A reads more tilemap than necessary each time it runs out of map. To this effect, it features 256 bytes to cache information retrieved from the GFXRAM during HBLANK.
+The CPS-A only accesses the GFXRAM during the HBLANK interval. To eliminate memory read operations while a scanline is rasterized, a whole line worth of tilemap is retrieved and stored in an internal cache of 256 entry. Each entry stores 16-bit  tileID + 10-bit attributes. Notice the two parts on the die storing respectively 10 bits and 16 bits.
+
 
 
 
@@ -1084,7 +1182,7 @@ The system works with the GFXROM addresses lines connected to the CPS-A (via wit
 % The grid alignment works well with streaming because of the predictable screen location of the tiles in the map.
 
  \begin{figure}[H]%
-\sdraw{1}{gfx_groups}
+\sdraw{0.9}{gfx_groups}
  \end{figure}%
 
 
@@ -1523,6 +1621,33 @@ Decoration in Street Fighter 2 were the object of much consideration. The stone 
 
 \vfill
 \img{lack_sprites_rgb.png}
+
+
+
+
+\subsubsection{Going too far}
+Capcom thoroughly tested their games to make sure the OBJ budget was never exceed. Yet some games such as Final Fight shipped with scenes going beyond the CP-System capacities. In the XX levels, our two heroes encounter an unprecedented level of opposition where the list of sprites is as follows.
+
+\begin{itemize}
+\item Two heroes Haggar and Cody.
+\item Three barrels.
+\item Three Axl (grey heavy) (two temporarily KOed).
+\item Three Slash (copper heavy) (two flying!).
+\item One Bred (grey minion) and one Dug (red minion).
+\end{itemize}
+
+Except Haggar is nowhere in sight behind Cody. Instead we see a blank space. More than 256 tiles are requested and draw commands at the end of the list are dropped. This lasts a few seconds until some of the opponents are neutralized\cite{ffoverload}.
+
+\img{ff_OBJ_overload.png}
+
+\pagebreak
+
+ 
+\nbdraw{ff_OBJ_overload_details}
+
+
+
+\pagebreak
 
 
 \begin{minipage}[t]{0.32\linewidth}
