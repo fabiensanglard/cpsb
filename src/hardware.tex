@@ -952,50 +952,25 @@ The near-square pixels result in minimal distortion when the image is presented 
 \caption*{Metal Slug as it appears on a CRT, PAR = 1.46}
 \end{figure}
 
-Other machines did not have square pixels. It is the case of the Super Nintendo. With its 5.37 MHz dot-clock, it sports a PAR of 8:7.
-
-Combining its \icode{256x224} format gives the aspect ratio of the physical image seen on the CRT.
-
-\begin{align*}
- \mathtt{Display\;Aspect\;Ratio = \frac{(8*256)}{(7*224)} = 1.30}
-\end{align*}
 
 
 
 
-\vfill
-\begin{figure}[H]
-\img{smw.png}
-\caption*{Super Mario World as described in the GFXRAM}
-\end{figure}
-\pagebreak
-
-Non-square pixels were a problem for artists. 
-
-
-\vfill
-\begin{figure}[H]
-\img{smw_scaled.png}
-\caption*{Super Mario World as it appears on a CRT, PAR = 1.30}
-\end{figure}
-\pagebreak
-
-
-
-The CPS-1 uses non-square dots which stretch the image vertically onto the CRT.
+The CPS-1 with its resolution of \icode{384x224} and its dot-clock of 8,000,000 Hz resulted in a PAR of 135:176. Its output signal somewhat matches the CRT aspect ratio of 4:3. 
 
 \begin{align*}
  \mathtt{Display\;Aspect\;Ratio = \frac{(135*384)}{(176*224)} = 1.31}
 \end{align*}
 
-CPS-1 PAR 135:176 avec la définition 384x224 t'obtiens (135*384) / (176*224) ~= 4/3
+However its narrow pixel result in a significant amount of distortion which was a huge problem for artists. If they digitized their drawing as is, the CRT would present to players a vertically stretched version of their original vision. As illustrated on page \pageref{sf2_ratio}, an artist drawing a circular moon on paper, digitizing it as is and running it via the CPS-1 would see an oval satellite on the screen.
 
-The CPS-1 PAR of X:Y means it does not have square "pixels". There wide "pixels" became a huge problem for artists. If they digitized their drawing as is, the CRT would present to players a vertically compressed version of their original vision.
+Akiman reported the problem right away when he started working with the new platform.
 
 \begin{q}{Akiman, Street Fighter 2, Lead Artist\cite{akiman}}
 When I was working on my first CPS-1 game, Forgotten Worlds, I noticed the problem of aspect ratio right away. 
 
-- "The pixels are not square!" I told my boss.\\ 
+- "The pixels are not square!" I told my boss.
+
 - "Impossible, I ordered them to be square!" he replied.
 
 He then proceeded to call hardware on the spot.
@@ -1005,21 +980,23 @@ He then proceeded to call hardware on the spot.
 Later I protested again to which my boss replied it was a calculation error.
 \end{q}
 
-Many drawing in the rest of the book square or rectangles are used interchangeably.
+Could it has been an oversight? Could it actually been a calculation error? In all likelihood the hardware designers wanted to give the CPS-1 a very high horizontal resolution to make it competitive, even it is meant making artist life a little bit difficult.
 
-\pagebreak
+
+
+In the rest of the book, the format of images will vary. For real-estate reason, the "screenshot" may be shown with 1:1 aspect ratio or 1.3 aspect ratio depending on the needs. The difference is pretty significant (as seen on page \pageref{sf2_ratio_solution}) and they should be minimal confusion.
 
 \pagebreak
 
 \sbimg{0.99}{sf2_intro.png}
-
+\label{sf2_ratio}
 
 \sbimg{0.99}{sf2_intro_4_3.png}
 
 \pagebreak
 
 \sbimg{0.99}{sf2_intro.png}
-
+\label{sf2_ratio_solution}
 
 \sbimg{0.99}{sf2_intro_4_3.png}
 
