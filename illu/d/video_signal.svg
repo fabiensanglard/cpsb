@@ -25,11 +25,11 @@
      showgrid="false"
      units="in"
      width="9.26772in"
-     inkscape:zoom="0.40979237"
-     inkscape:cx="395.32215"
-     inkscape:cy="557.59945"
-     inkscape:window-width="1280"
-     inkscape:window-height="736"
+     inkscape:zoom="1.6391695"
+     inkscape:cx="342.24649"
+     inkscape:cy="216.26806"
+     inkscape:window-width="3072"
+     inkscape:window-height="1664"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -114,24 +114,24 @@
     <text
        xml:space="preserve"
        style="font-size:5.64444px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;stroke-width:0.264583"
-       x="33.792831"
-       y="83.439613"
+       x="40.65667"
+       y="83.462944"
        id="text1978-9"><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;stroke-width:0.264583"
-         x="33.792831"
-         y="83.439613"
+         x="40.65667"
+         y="83.462944"
          id="tspan9897">TO COLOR  GENERATOR</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:5.64444px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;stroke-width:0.264583"
        x="112.7618"
-       y="84.052757"
+       y="83.462944"
        id="text1978-9-6"><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;stroke-width:0.264583"
          x="112.7618"
-         y="84.052757"
+         y="83.462944"
          id="tspan9897-6">HSYNC</tspan></text>
     <g
        id="g37580"
@@ -160,12 +160,12 @@
        xml:space="preserve"
        style="font-size:5.64444px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;stroke-width:0.264583"
        x="189.64575"
-       y="85.482498"
+       y="83.462944"
        id="text1978-9-6-1"><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;stroke-width:0.264583"
          x="189.64575"
-         y="85.482498"
+         y="83.462944"
          id="tspan9897-6-8">VSYNC</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:1.965;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM-3)"

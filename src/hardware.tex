@@ -817,7 +817,7 @@ A designer can pick any oscillator frequency (which we called dot-clock from now
 
 These screens were meant to be used in TV sets consuming NTSC broadcast, the two imperatives were to be close to \textbf{59.95 Hz} VSYNC rate and \textbf{15,625 Hz} HSYNC rate. 
 
-\draw{ntsc}
+\nbdraw{ntsc}
 
 
 The Horizontal frequency and Vertical frequency are directly derived from the three values picked for the signal generator. Plugging in the numbers into the following formula allows to verify how close a system is from being compatible with a CRT.
@@ -956,13 +956,13 @@ The near-square pixels result in minimal distortion when the image is presented 
 
 
 
-The CPS-1 with its resolution of \icode{384x224} and its dot-clock of 8,000,000 Hz resulted in a PAR of 135:176. Its output signal somewhat matches the CRT aspect ratio of 4:3. 
+The CPS-1 with its resolution of \icode{384x224} and its dot-clock of 8,000,000 Hz results in a PAR of 135:176. Its output signal somewhat matches the CRT aspect ratio of 4:3. 
 
 \begin{align*}
  \mathtt{Display\;Aspect\;Ratio = \frac{(135*384)}{(176*224)} = 1.31}
 \end{align*}
 
-However its narrow pixel result in a significant amount of distortion which was a huge problem for artists. If they digitized their drawing as is, the CRT would present to players a vertically stretched version of their original vision. As illustrated on page \pageref{sf2_ratio}, an artist drawing a circular sun on paper, digitizing it as is and running it via the CPS-1 would see an oval result on the screen.
+However its narrow pixel generates a significant amount of distortion which was a huge problem for artists. If they digitized their drawing as is, the CRT would present to players a vertically stretched version of their original vision. As illustrated on page \pageref{sf2_ratio}, an artist drawing a circular sun on paper, digitizing it as is and running it via the CPS-1 would see an oval result on the screen.
 
 Akiman reported the problem right away when he started working with the new platform.
 
@@ -988,17 +988,17 @@ In the rest of the book, the format of images will vary. For real-estate reasons
 
 \pagebreak
 
-\sbimg{0.99}{sun.png}
+\sbimg{0.98}{sun.png}
 \label{sf2_ratio}
-
-\sbimg{0.99}{sun_4_3.png}
+\vfill
+\sbimg{0.98}{sun_4_3.png}
 
 \pagebreak
 
-\sbimg{0.99}{sf2_intro.png}
+\sbimg{0.98}{sf2_intro.png}
 \label{sf2_ratio_solution}
 
-\sbimg{0.99}{sf2_intro_4_3.png}
+\sbimg{0.98}{sf2_intro_4_3.png}
 
 
 
@@ -1041,7 +1041,7 @@ The four remaining bits express brightness to allow 16 shades of a base color. I
 
 \subsection{Putting it all together}
 
-Knowing how a CRT works and what decisions Capcom engineers made, we can now understand the video signal as a whole.
+Knowing how a CRT works and what decisions Capcom engineers made, we can now understand the video signal timings.
 
 With a "pixel" clock coming from the GFX oscillator (16MHz) halved to 8MHz, a color is issued every 1s / 8MHz = 125ns.
 
