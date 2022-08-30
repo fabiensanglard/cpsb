@@ -916,7 +916,7 @@ Out of these 262 lines available, Capcom decided to use only 224 and let VBLANK 
 
 The scanlines of a CRT have a fixed height but the width of the dots vary from machine to machine because of their dot-clock. The width/height dot ratio is called the Pixel Aspect Ratio (PAR).
 
-An "ideal" system would have "square" dots with a 1:1 PAR. For CRTs built with a set physical scanline height square pixels were guaranteed if the dot clock was 6,136,363 Hz ($\frac{135}{22}$). A system using a higher frequency would draw narrower dots while a system using a lower frequency would draw wider dots.
+An "ideal" system would have "square" dots with a 1:1 PAR. For these "TV" CRTs built with a set physical scanline height, square pixels were guaranteed if the dot clock was 6,136,363 Hz ($\frac{135}{22}$). A system using a higher frequency would draw narrower dots while a system using a lower frequency would draw wider dots.
 
 \begin{figure}[H]
 \nbdraw{par}
@@ -939,7 +939,7 @@ The PAR formula is a simple division.
  \mathtt{PAR = \dfrac{dotclock\;MHz}{\frac{135}{22}} = \dfrac{dotclock\;MHz * 22}{135}}
 \end{align*}
 
-The Neo-Geo MVS, with its dot-clock of 6,000,000 Hz has a PAR of 45:44. Combining its \icode{320x240} Storage Aspect Ratio (SAR) with its SAR gives the Display Aspect Ratio (DAR) of the physical image seen on the CRT.
+The Neo-Geo MVS, with its dot-clock of 6,000,000 Hz has a PAR of 45:44. Combining its \icode{320x240} Storage Aspect Ratio (SAR) with its PAR gives the Display Aspect Ratio (DAR) of the physical image seen on the CRT.
 
 \begin{align*}
  \mathtt{Display\;Aspect\;Ratio = PAR * SAR = \frac{(45*320)}{(44*224)} = 1.46}
@@ -985,7 +985,7 @@ Could it has been an oversight? Could it actually been a calculation error? In a
 
 Artists managed to work around this annoying "feature" by drawing their assets pre-stretched (as seen on \pageref{sf2_ratio_solution}). Their process is elaborated on page \pageref{artists_par}.
  
-In the rest of the book, the format of images will vary. For real-estate reasons, the "screenshot" may be shown with SAR aspect ratio or DAR aspect ratio depending on the needs. The same goes with the drawings. Since the difference is pretty significant between squares and rectangles (as seen on page \pageref{sf2_ratio_solution}) the aspect ratio is not mentioned again.
+In the rest of the book, the format of images will vary. For real-estate reasons, the "screenshot" may be shown with SAR proportions or DAR proportions depending on the needs. The same goes with the drawings. Since the difference is pretty significant between squares and rectangles (as seen on page \pageref{sf2_ratio_solution}) the aspect ratio is not mentioned again.
 
 \pagebreak
 
@@ -1212,7 +1212,7 @@ A naive design would work at the same speed as the video system (8MHz). For each
 
 
 \subsubsection{Caching}
-The CPS-A only accesses the GFXRAM during the HBLANK interval. To eliminate memory read operations while a scanline is rasterized, a whole line worth of tilemap is retrieved and stored in an internal cache of 256 entries. Each entry stores 16-bit  tileID + 10-bit attributes. Notice the two parts on the die storing respectively 10 bits and 16 bits.
+The CPS-A only accesses the GFXRAM during the HBLANK interval. To eliminate memory read operations while a scanline is rasterized, a line worth of tilemap is retrieved and stored in an internal cache of 256 entries. Each entry stores 16-bit  tileID + 10-bit attributes. Notice the two parts on the die storing respectively 10 bits and 16 bits.
 
 
 
@@ -1673,7 +1673,7 @@ Decoration in Street Fighter 2 were the object of much consideration. The stone 
 Games were tested to ensure the OBJ budget was not exceed but Final Fight last level (Bay Area) managed to ship with that very problem. When the heroes encounter an unprecedented level of opposition, the list of sprites is as follows\cite{ffoverload}.
 
 \begin{itemize}[topsep=0pt]
-\item Two heroes Haggar and Cody.
+\item Haggar and Cody.
 \item Two standing barrels and two rolling barrels.
 \item Three Axl (grey heavy) (two flying backward).
 \item Three Slash (copper heavy) (two temporarily KOed).
@@ -1684,6 +1684,7 @@ Games were tested to ensure the OBJ budget was not exceed but Final Fight last l
 This scene has 258 tiles on the OBJ layer. Final Fight engine is smart enough to not render partial sprites. Since
 Haggar, the last sprite on the list, pushes the total 2 tiles past the maximum, all it tiles are dropped.
 
+\vfill
 \img{ff_OBJ_overload.png}
 
 \pagebreak
