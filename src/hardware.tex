@@ -803,7 +803,7 @@ Besides interlacing which had to be avoided, many other decisions had to be made
 
 \subsection{Making choices}
 
-To craft a video system means to build a signals generator and a color generator. We'll study the signal generator first. This circuit is built to take an oscillator signal as input and to output three signals. One signal tells for how long the color generator should hold a color on the color lines, one signal triggers HSYNC, and one signal triggers VSYNC. 
+To craft a video system means to build a signals generator and a color generator. We'll study the signal generator first. This circuit is built to take an oscillator ticks as input and to output three signals. One signal tells for how long the color generator should hold a color on the color lines, one signal triggers HSYNC, and one signal triggers VSYNC. 
 
 \nbdraw{video_signal}
 
@@ -815,7 +815,7 @@ The color duration has no register counting the ticks. Each tick indicates that 
 
 A designer can pick any oscillator frequency (which we called dot-clock from now on), however they much be careful to choose vertical max value (number of lines) and horizontal max value (number of dots per line) so the vertical frequency and the horizontal frequency are compatible with what a CRT can sync on. 
 
-These screens were meant to be used in TV sets consuming NTSC broadcast, the two imperatives were to be close to \textbf{59.95 Hz} VSYNC rate and \textbf{15,625 Hz} HSYNC rate. 
+These CRTs of the early 90s were meant to TV sets consuming NTSC broadcast so the two imperatives were to be close to \textbf{59.95 Hz} VSYNC rate and \textbf{15,625 Hz} HSYNC rate. 
 
 \nbdraw{ntsc}
 
@@ -881,13 +881,13 @@ Besides the vertical and horizontal frequency "rules", Capcom engineers had addi
 
 The CP-System overscan resolution of \icode{512x262} seem to indicate a very high-resolution for the time. But not all the lines and all the dots on a line can be used, some have to be sacrificed to solve three problems. 
 
-There is the first problem of retracing vertically and horizontally. The cannon movement is not instantaneous so while it resets horizontally or vertically, I would leave a visible diagonal line of electrons across two scanlines in case of horizontal retrace or across the whole screen in case of a vertical retrace.
+There is the first problem of retracing vertically and horizontally. The cannon movement is not instantaneous so while it moves horizontally or vertically, I would leave a visible diagonal of electrons across two scanlines in case of horizontal reset or across the whole screen in case of a vertical reset.
 
-The second problem to solve is a matter of wobbling. Because a reset pulls the cannon abruptly in the opposite direction, it takes a little of time for the electron beam to stabilize again after it completes the reset.
+The second problem is a matter of wobbling. Because a reset changes the cannon position abruptly (as opposed to the smooth progressioin during a scanline), it takes a little of time for the electron beam to stabilize again after it completes the reset.
 
 Lastly, the video system needs break to read or write data without generating visible artifacts. This includes swapping buffers, updating the palettes colors, and retrieving the list of sprites/tilemap to draw on next scanline.
 
-The solution to these three problem is named blanking. By setting the color signals to zero, the cannon shoots no electrons, artifacts are hidden and a timespan where the video system is inactive is created. There is a vertical blanking called VBLANK and an horizontal blanking called HBLANK.
+The solution to these three problem is named blanking. By setting the color signals to zero, the cannon shoots no electrons. Blanking hides artifacts and create a window of time where the video system is inactive. There is a vertical blanking called VBLANK and an horizontal blanking called HBLANK.
 
 
 \subsubsection{Capcom second set of video signal choices}
@@ -914,9 +914,9 @@ Out of these 262 lines available, Capcom decided to use only 224 and let VBLANK 
 
 \subsubsection{Pixel Aspect Ratio}
 
-The scanlines of a CRT have a fixed height. The dot-clock dictates the width of each dot. Together they define a width/height dot ratio called the Pixel Aspect Ratio (PAR).
+The scanlines of a CRT have a fixed height but the width of the dots vary from machine to machine because of their dot-clock. The width/height dot ratio is called the Pixel Aspect Ratio (PAR).
 
-All CRTs at the time were built with a physical scanline height guaranteeing that a dot clock of 6,136,363 Hz ($\frac{135}{22}$) would generate "square" dots with a 1:1 PAR. A system using a higher frequency would draw narrower dots while a system using a lower frequency would draw wider dots.
+An "ideal" system would have "square" dots with a 1:1 PAR. For CRTs built with a set physical scanline height square pixels were guaranteed if the dot clock was 6,136,363 Hz ($\frac{135}{22}$). A system using a higher frequency would draw narrower dots while a system using a lower frequency would draw wider dots.
 
 \begin{figure}[H]
 \nbdraw{par}
@@ -929,7 +929,7 @@ Let's look first at the Neo-Geo which has a PAR close to 1:1 resulting in square
 \vfill
 \begin{figure}[H]
 \img{metalslug.png}
-\caption*{Metal Slug as described in the Neo-Geo GFXRAM, PAR = 1}
+\caption*{Metal Slug as described in the Neo-Geo GFXRAM (320x224)}
 \end{figure}
 
 
@@ -939,13 +939,13 @@ The PAR formula is a simple division.
  \mathtt{PAR = \dfrac{dotclock\;MHz}{\frac{135}{22}} = \dfrac{dotclock\;MHz * 22}{135}}
 \end{align*}
 
-The Neo-Geo MVS, with its dot-clock of 6,000,000 Hz has a PAR of 45:44. Combining its \icode{320x240} format gives the Display Aspect Ratio (DAR) of the physical image seen on the CRT.
+The Neo-Geo MVS, with its dot-clock of 6,000,000 Hz has a PAR of 45:44. Combining its \icode{320x240} Storage Aspect Ratio (SAR) with its SAR gives the Display Aspect Ratio (DAR) of the physical image seen on the CRT.
 
 \begin{align*}
- \mathtt{Display\;Aspect\;Ratio = \frac{(45*320)}{(44*224)} = 1.46}
+ \mathtt{Display\;Aspect\;Ratio = DAR * SAR = \frac{(45*320)}{(44*224)} = 1.46}
 \end{align*}
 
-The near-square pixels result in minimal distortion when the image is presented on the CRT. This is very convenient for artists  since they can digitize their assets 1:1 and experience minimal difference on screen from they artwork.
+The near-square pixels result in minimal distortion when the image is presented on the CRT. This is very convenient for artists  since they can digitize their assets 1:1 and see their artwork rendered as intended.
 
 \vfill
 \begin{figure}[H]
@@ -957,7 +957,7 @@ The near-square pixels result in minimal distortion when the image is presented 
 
 
 
-The CPS-1 with its resolution of \icode{384x224} and its dot-clock of 8,000,000 Hz results in a PAR of 135:176. Its DAR somewhat matches the CRT aspect ratio of 4:3. 
+The CPS-1 with its resolution of \icode{384x224} and its dot-clock of 8,000,000 Hz results in a PAR of 135:176. Its DAR somewhat matches the CRT aspect ratio of 4:3 (=1.333). 
 
 \begin{align*}
  \mathtt{Display\;Aspect\;Ratio = \frac{(135*384)}{(176*224)} = 1.31}
@@ -1682,7 +1682,7 @@ Games were tested to ensure the OBJ budget was not exceed but Final Fight last l
 \end{itemize}
 
 This scene has 258 tiles on the OBJ layer. Final Fight engine is smart enough to not render partial sprites. Since
-Haggar, the sprite on the list, pushes the total 2 tiles past the maximum, all it tiles are dropped.
+Haggar, the last sprite on the list, pushes the total 2 tiles past the maximum, all it tiles are dropped.
 
 \img{ff_OBJ_overload.png}
 
