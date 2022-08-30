@@ -815,7 +815,7 @@ The color duration has no register counting the ticks. Each tick indicates that 
 
 A designer can pick any oscillator frequency (which we called dot-clock from now on), however they much be careful to choose vertical max value (number of lines) and horizontal max value (number of dots per line) so the vertical frequency and the horizontal frequency are compatible with what a CRT can sync on. 
 
-These CRTs of the early 90s were meant to TV sets consuming NTSC broadcast so the two imperatives were to be close to \textbf{59.95 Hz} VSYNC rate and \textbf{15,625 Hz} HSYNC rate. 
+These CRTs of the early 90s were meant to TV sets consuming NTSC broadcast so the two imperatives were to be close to \textbf{59.95 Hz} VSYNC rate and \textbf{15,734 Hz} HSYNC rate. 
 
 \nbdraw{ntsc}
 
@@ -823,7 +823,7 @@ These CRTs of the early 90s were meant to TV sets consuming NTSC broadcast so th
 The Horizontal frequency and Vertical frequency are directly derived from the three values picked for the signal generator. Plugging in the numbers into the following formula allows to verify how close a system is from being compatible with a CRT.
 
 \begin{align*}
- \mathtt{Horizontal\; frequency} = \dfrac{\mathtt{dotclock}}{\mathtt{numLines}}
+ \mathtt{Horizontal\; frequency} = \dfrac{\mathtt{dotclock}}{\mathtt{numDots}}
 \end{align*}
 \begin{align*}
 \mathtt{Vertical\; frequency} =   \dfrac{\mathtt{dotclock}}{\mathtt{(numDots * numLines)}}
@@ -942,7 +942,7 @@ The PAR formula is a simple division.
 The Neo-Geo MVS, with its dot-clock of 6,000,000 Hz has a PAR of 45:44. Combining its \icode{320x240} Storage Aspect Ratio (SAR) with its SAR gives the Display Aspect Ratio (DAR) of the physical image seen on the CRT.
 
 \begin{align*}
- \mathtt{Display\;Aspect\;Ratio = DAR * SAR = \frac{(45*320)}{(44*224)} = 1.46}
+ \mathtt{Display\;Aspect\;Ratio = PAR * SAR = \frac{(45*320)}{(44*224)} = 1.46}
 \end{align*}
 
 The near-square pixels result in minimal distortion when the image is presented on the CRT. This is very convenient for artists  since they can digitize their assets 1:1 and see their artwork rendered as intended.
@@ -985,7 +985,7 @@ Could it has been an oversight? Could it actually been a calculation error? In a
 
 Artists managed to work around this annoying "feature" by drawing their assets pre-stretched (as seen on \pageref{sf2_ratio_solution}). Their process is elaborated on page \pageref{artists_par}.
  
-In the rest of the book, the format of images will vary. For real-estate reasons, the "screenshot" may be shown with 1:1 aspect ratio or 1.3 aspect ratio depending on the needs. The same goes with the drawings. Since the difference is pretty significant between squares and rectangles (as seen on page \pageref{sf2_ratio_solution}) the aspect ratio is not mentioned again.
+In the rest of the book, the format of images will vary. For real-estate reasons, the "screenshot" may be shown with SAR aspect ratio or DAR aspect ratio depending on the needs. The same goes with the drawings. Since the difference is pretty significant between squares and rectangles (as seen on page \pageref{sf2_ratio_solution}) the aspect ratio is not mentioned again.
 
 \pagebreak
 

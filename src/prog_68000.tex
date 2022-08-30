@@ -371,10 +371,10 @@ The CPS-B features only seven registers but their location change based on the v
   \textbf{Name } & \textbf{ Offset }  & \textbf{Desc }\\  
   \toprule   
   \texttt{Layer control} & \texttt{ 0x26* } & Enable and order layers\\      
-\texttt{Priority mask} & \texttt{ 0x28* } &  4 pen values to draw above OBJ   \\  
-\texttt{Priority mask} & \texttt{ 0x2A* } &  4 pen values to draw above OBJ   \\  
-\texttt{Priority mask} & \texttt{ 0x2C* } &  4 pen values to draw above OBJ   \\  
-\texttt{Priority mask} & \texttt{ 0x2E* } &  4 pen values to draw above OBJ  \\  
+\texttt{Priority mask} & \texttt{ 0x28* } &  16-bit mask pen values to draw above OBJ   \\  
+\texttt{Priority mask} & \texttt{ 0x2A* } &  16-bit mask pen values to draw above OBJ   \\  
+\texttt{Priority mask} & \texttt{ 0x2C* } &  16-bit mask pen values to draw above OBJ   \\  
+\texttt{Priority mask} & \texttt{ 0x2E* } &  16-bit mask pen values to draw above OBJ  \\  
 \texttt{Palette control} & \texttt{ 0x30* } &  Request palette upload\\ 
   \toprule   
 \end{tabularx}
