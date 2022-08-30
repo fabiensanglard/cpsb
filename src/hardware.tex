@@ -1544,7 +1544,7 @@ The gain is massive but it comes with three drawbacks.
 First, the price of the machine goes up since it requires much more buffering capacity. At the resolution of 384*224, 9 bits per pixel are stored (5-bits palette index + 4-bit color index) requiring 200 KiB of storage for two framebuffer.
 
 \subsubsection{Bandwidth requirements}
-The second impact is on the bus. A massive amount of data is now written and read to/from the VRAM. It requires so much bandwidth that an especially large data bus connecting the GFX ROM and the VRAM must be designed.
+The second impact is on the bus. A massive amount of data is now written and read to/from the VRAM. It requires so much bandwidth that an especially large data bus connecting the GFX pipeline and the VRAM must be designed.
 
 \subsubsection{De-synchronization}
 Lastly, there is the problem of tilemap and sprites synchronization. When the m68k writes a layout in the GFXRAM, the graphic system picks it up but routes background tiles and sprites tiles to different locations. The tilemap is rasterized directly towards the video system while the sprite layer is rendered to the VRAM framebuffer where it will be picked up on the next frame.
