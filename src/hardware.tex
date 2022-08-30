@@ -803,7 +803,7 @@ Besides interlacing which had to be avoided, many other decisions had to be made
 
 \subsection{Making choices}
 
-To craft a video system meant to build a signals generator and a color generator. We'll study the signal generator first. This circuit is built to take an oscillator signal as input and must be able to output one signal to tells for how long the color generator should hold a color on the color lines, one signal triggers HSYNC, and one signal triggers VSYNC. 
+To craft a video system means to build a signals generator and a color generator. We'll study the signal generator first. This circuit is built to take an oscillator signal as input and to output three signals. One signal tells for how long the color generator should hold a color on the color lines, one signal triggers HSYNC, and one signal triggers VSYNC. 
 
 \nbdraw{video_signal}
 
@@ -830,7 +830,8 @@ The Horizontal frequency and Vertical frequency are directly derived from the th
 \end{align*}
 
 
-Before looking at Capcom choices, let's look at the decisions made by the video designer for systems contemporary to the CP-System. The Neo-Geo entry shows a machine using a resolution of \icode{384x264} and a dot-clock of 6 Mhz which means it issues a color every $\frac{1}{6,000,000}\mathtt{th} $ of a second.
+Before looking at Capcom choices, let's look at the decisions made by the video designer for systems contemporary to the CP-System. 
+% e.g: The Neo-Geo entry shows a machine using a resolution of \icode{384x264} and a dot-clock of 6 Mhz which means it issues a color every $\frac{1}{6,000,000}\mathtt{th} $ of a second.
 
 
 \begin{figure}[H]
@@ -884,14 +885,14 @@ There is the first problem of retracing vertically and horizontally. The cannon 
 
 The second problem to solve is a matter of wobbling. Because a reset pulls the cannon abruptly in the opposite direction, it takes a little of time for the electron beam to stabilize again after it completes the reset.
 
-Lastly, the video system needs break to read or write data without generating visible artifacts. This includes swapping buffers, updating the palettes colors, and retrieve a list of sprites/tilemap to draw on next line.
+Lastly, the video system needs break to read or write data without generating visible artifacts. This includes swapping buffers, updating the palettes colors, and retrieving the list of sprites/tilemap to draw on next scanline.
 
-The solution is named blanking. By setting color signals to zero, the cannon shoots no electrons, artifacts are hidden and a timespan where the video system is inactive is created. There is a vertical blanking called VBLANK and an horizontal blanking called HBLANK.
+The solution to these three problem is named blanking. By setting the color signals to zero, the cannon shoots no electrons, artifacts are hidden and a timespan where the video system is inactive is created. There is a vertical blanking called VBLANK and an horizontal blanking called HBLANK.
 
 
 \subsubsection{Capcom second set of video signal choices}
 
-Out of these 262 lines available, Capcom decided to use only 224 and let VBLANK last for $\mathtt{262 - 224 = 38}$ lines. Likewise, they kept 383 dot usable per lines and gave $\mathtt{512 - 384 = 128}$. These left the machine with an usable resolution of \icode{384x224}.
+Out of these 262 lines available, Capcom decided to use only 224 and let VBLANK last for $\mathtt{262 - 224 = 38}$ lines. Likewise, they kept 384 dots usable per lines and gave $\mathtt{512 - 384 = 128}$ to HBLANK. These left the machine with a resolution of \icode{384x224}.
 
 \begin{figure}[H]
 { \setlength{\tabcolsep}{3.0pt}
@@ -899,9 +900,9 @@ Out of these 262 lines available, Capcom decided to use only 224 and let VBLANK 
   \textbf{ } & \textbf{CP-System} & \textbf{Genesis} & \textbf{Neo-Geo} & \textbf{Super NES} \\
   \toprule    
    \textbf{Usable dots} & \texttt{384}  & \texttt{320} & \texttt{320} & \texttt{256} \\
-   \textbf{HBLANK (dots )} & \texttt{128}  & \texttt{} & \texttt{} & \texttt{}  \\
+   \textbf{HBLANK (dots )} & \texttt{128}  & \texttt{?} & \texttt{64} & \texttt{85}  \\
    \textbf{Usable lines} & \texttt{224} & \texttt{224} & \texttt{224} & \texttt{224} \\
-   \textbf{VBLANK (lines)} & \texttt{38}  & \texttt{} & \texttt{} & \texttt{}  \\
+   \textbf{VBLANK (lines)} & \texttt{38}  & \texttt{?} & \texttt{40} & \texttt{38}  \\
 \toprule    
 
 \end{tabularx}%
@@ -913,9 +914,9 @@ Out of these 262 lines available, Capcom decided to use only 224 and let VBLANK 
 
 \subsubsection{Pixel Aspect Ratio}
 
-The scanlines of a CRT have a fixed height and the dot-clock dictates the width of each dot. Together they define a ratio width/height called the Pixel Aspect Ratio (PAR).
+The scanlines of a CRT have a fixed height. The dot-clock dictates the width of each dot. Together they define a width/height dot ratio called the Pixel Aspect Ratio (PAR).
 
-All CRTs at the time were built with physical line height guaranteeing that a dot clock of 6,136,363 Hz ($\frac{135}{22}$) would generate dot with a square PAR (1:1). A system using a higher frequency would draw narrower dots while a system using a lower frequency would draw wide dots.
+All CRTs at the time were built with a physical scanline height guaranteeing that a dot clock of 6,136,363 Hz ($\frac{135}{22}$) would generate "square" dots with a 1:1 PAR. A system using a higher frequency would draw narrower dots while a system using a lower frequency would draw wider dots.
 
 \begin{figure}[H]
 \nbdraw{par}
@@ -923,7 +924,7 @@ All CRTs at the time were built with physical line height guaranteeing that a do
 \end{figure}
 
 
-Machines like the Neo-Geo and the Genesis had a PAR close to 1:1 resulting in square pixels\cite{par}.
+Let's look first at the Neo-Geo which has a PAR close to 1:1 resulting in square pixels\cite{par}.
 
 \vfill
 \begin{figure}[H]
@@ -938,7 +939,7 @@ The PAR formula is a simple division.
  \mathtt{PAR = \dfrac{dotclock\;MHz}{\frac{135}{22}} = \dfrac{dotclock\;MHz * 22}{135}}
 \end{align*}
 
-The Neo-Geo MVS, with its dot-clock of 6,000,000 Hz had a PAR of 45:44. Combining its \icode{320x240} format gives the aspect ratio of the physical image seen on the CRT.
+The Neo-Geo MVS, with its dot-clock of 6,000,000 Hz has a PAR of 45:44. Combining its \icode{320x240} format gives the Display Aspect Ratio (DAR) of the physical image seen on the CRT.
 
 \begin{align*}
  \mathtt{Display\;Aspect\;Ratio = \frac{(45*320)}{(44*224)} = 1.46}
@@ -949,14 +950,14 @@ The near-square pixels result in minimal distortion when the image is presented 
 \vfill
 \begin{figure}[H]
 \img{metalslug_4_3.png}
-\caption*{Metal Slug as it appears on a CRT, PAR = 1.46}
+\caption*{Metal Slug as it appears on a CRT, DAR = 1.46}
 \end{figure}
 
 
 
 
 
-The CPS-1 with its resolution of \icode{384x224} and its dot-clock of 8,000,000 Hz results in a PAR of 135:176. Its output signal somewhat matches the CRT aspect ratio of 4:3. 
+The CPS-1 with its resolution of \icode{384x224} and its dot-clock of 8,000,000 Hz results in a PAR of 135:176. Its DAR somewhat matches the CRT aspect ratio of 4:3. 
 
 \begin{align*}
  \mathtt{Display\;Aspect\;Ratio = \frac{(135*384)}{(176*224)} = 1.31}
@@ -982,7 +983,7 @@ Later I protested again to which my boss replied it was a calculation error.
 
 Could it has been an oversight? Could it actually been a calculation error? In all likelihood the hardware designers wanted to give the CPS-1 a very high horizontal resolution to make it competitive, even it is meant making artist life a little bit difficult.
 
-How artists managed to work around this annoying "feature" of the platform is revealed on page \pageref{artists_par}.
+Artists managed to work around this annoying "feature" by drawing their assets pre-stretched (as seen on \pageref{sf2_ratio_solution}). Their process is elaborated on page \pageref{artists_par}.
  
 In the rest of the book, the format of images will vary. For real-estate reasons, the "screenshot" may be shown with 1:1 aspect ratio or 1.3 aspect ratio depending on the needs. The same goes with the drawings. Since the difference is pretty significant between squares and rectangles (as seen on page \pageref{sf2_ratio_solution}) the aspect ratio is not mentioned again.
 
@@ -1008,7 +1009,7 @@ In the rest of the book, the format of images will vary. For real-estate reasons
 \index{Games!R-Type}
 The designers of R-Type at Irem were unsatisfied with the default "standard" 224 usable lines of a CRT. 
 
-They calibrated their M72-System registers to draw 284 lines, 512 dots and used an 8 Mhz dot-clock. Leaving 128 dots to HBLANK and 28 lines to VBLANK resulted in a resolution of \icode{384x256} which was higher than other arcade titles at the time. 
+They calibrated their M72-System registers to draw 284 lines, 512 dots, and used an 8 Mhz dot-clock. Leaving 128 dots to HBLANK and 28 lines to VBLANK resulted in a resolution of \icode{384x256} which was higher than other arcade titles at the time. 
 
 The vertical refresh rate of 55.017605 Hz was visually less pleasing and dangerously 10\% off from the CRT recommended values. This refresh rate is difficult to replicate for "modern" emulators but what an impressive feat for a 1987 system!
 \end{trivia}
