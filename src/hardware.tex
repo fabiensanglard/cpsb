@@ -837,14 +837,14 @@ Before looking at Capcom choices, let's look at the decisions made by the video 
 \begin{figure}[H]
 { \setlength{\tabcolsep}{3.0pt}
 \begin{tabularx}{\textwidth}{Xrrr} 
-  \textbf{ } & \textbf{Genesis} & \textbf{ Neo-Geo }  & \textbf{ Super NES } \\               
+  \textbf{ } & \textbf{Genesis (H40)\cite{h40}} & \textbf{ Neo-Geo }  & \textbf{ Super NES } \\               
   \toprule    
-   \textbf{dots} & \texttt{ ? } & \texttt{ 384 }  & \texttt{ 341 } \\ 
-   \textbf{lines} & \texttt{ ? } & \texttt{ 264 }  & \texttt{ 262 } \\ 
+   \textbf{dots} & \texttt{ 420 } & \texttt{ 384 }  & \texttt{ 341 } \\ 
+   \textbf{lines} & \texttt{ 262 } & \texttt{ 264 }  & \texttt{ 262 } \\ 
    \textbf{dot-clock (Hz)} & \texttt{  6,711,647 } & \texttt{ 6,000,000 }  & \texttt{ 5,369,318 } \\ 
 \toprule    
-   \textbf{HSYNC frequency (Hz) } & \texttt{ ? } & \texttt{ 15,625 }  & \texttt{ 15,745 } \\ 
-   \textbf{VSYNC frequency (Hz) } & \texttt{ ? } & \texttt{ 59.18 }  & \texttt{ 60.09 } \\ 
+   \textbf{HSYNC frequency (Hz) } & \texttt{ 15,980 } & \texttt{ 15,625 }  & \texttt{ 15,745 } \\ 
+   \textbf{VSYNC frequency (Hz) } & \texttt{ 59,92 } & \texttt{ 59.18 }  & \texttt{ 60.09 } \\ 
 \toprule    
 
 \end{tabularx}%
@@ -897,12 +897,12 @@ Out of these 262 lines available, Capcom decided to use only 224 and let VBLANK 
 \begin{figure}[H]
 { \setlength{\tabcolsep}{3.0pt}
 \begin{tabularx}{\textwidth}{Xrrrr} 
-  \textbf{ } & \textbf{CP-System} & \textbf{Genesis} & \textbf{Neo-Geo} & \textbf{Super NES} \\
+  \textbf{ } & \textbf{CP-System} & \textbf{Genesis (H40)} & \textbf{Neo-Geo} & \textbf{Super NES} \\
   \toprule    
    \textbf{Usable dots} & \texttt{384}  & \texttt{320} & \texttt{320} & \texttt{256} \\
-   \textbf{HBLANK (dots )} & \texttt{128}  & \texttt{?} & \texttt{64} & \texttt{85}  \\
+   \textbf{HBLANK (dots )} & \texttt{128}  & \texttt{100} & \texttt{64} & \texttt{85}  \\
    \textbf{Usable lines} & \texttt{224} & \texttt{224} & \texttt{224} & \texttt{224} \\
-   \textbf{VBLANK (lines)} & \texttt{38}  & \texttt{?} & \texttt{40} & \texttt{38}  \\
+   \textbf{VBLANK (lines)} & \texttt{38}  & \texttt{38} & \texttt{40} & \texttt{38}  \\
 \toprule    
 
 \end{tabularx}%
@@ -1212,7 +1212,7 @@ A naive design would work at the same speed as the video system (8MHz). For each
 
 
 \subsubsection{Caching}
-The CPS-A only accesses the GFXRAM during the HBLANK interval. To eliminate memory read operations while a scanline is rasterized, a whole line worth of tilemap is retrieved and stored in an internal cache of 256 entry. Each entry stores 16-bit  tileID + 10-bit attributes. Notice the two parts on the die storing respectively 10 bits and 16 bits.
+The CPS-A only accesses the GFXRAM during the HBLANK interval. To eliminate memory read operations while a scanline is rasterized, a whole line worth of tilemap is retrieved and stored in an internal cache of 256 entries. Each entry stores 16-bit  tileID + 10-bit attributes. Notice the two parts on the die storing respectively 10 bits and 16 bits.
 
 
 
