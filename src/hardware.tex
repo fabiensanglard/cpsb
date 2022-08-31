@@ -390,7 +390,7 @@ Thanks to the PAL chips enabling/disabling components, the 68000 memory space is
   \texttt{0x800180} & \texttt{0x800187} & 8 B & Sound commands (latch 1)\\
   \texttt{0x800188} & \texttt{0x80018F} & 8 B & Sound commands (latch 2)\\
   \toprule    
-  \texttt{0x900000} & \texttt{0x92FFFF} & 196 KiB & GFXRAM\\
+  \texttt{0x900000} & \texttt{0x92FFFF} & 192 KiB & GFXRAM\\
   \texttt{0xFF0000} & \texttt{0xFFFFFF} & 64 KiB & Work RAM \\
   % \toprule    
 \end{tabularx}%
@@ -931,11 +931,11 @@ Let's look first at the Neo-Geo which has a PAR close to 1:1 resulting in square
 \vfill
 \begin{figure}[H]
 \img{metalslug.png}
-\caption*{Metal Slug as described in the Neo-Geo GFXRAM (320x224)}
+\caption*{Metal Slug as stored in the Neo-Geo ROM, SAR = 320:224}
 \end{figure}
 
 
-The PAR formula is a simple division.
+The PAR formula is a simple multiplication by a fraction.
 
 \begin{align*}
  \mathtt{PAR = \dfrac{dotclock\;MHz}{\frac{135}{22}} = \dfrac{dotclock\;MHz * 22}{135}}
@@ -944,10 +944,10 @@ The PAR formula is a simple division.
 The Neo-Geo MVS, with its dot-clock of 6,000,000 Hz has a PAR of 45:44. Combining its \icode{320x240} Storage Aspect Ratio (SAR) with its PAR gives the Display Aspect Ratio (DAR) of the physical image seen on the CRT.
 
 \begin{align*}
- \mathtt{Display\;Aspect\;Ratio = PAR * SAR = \frac{(45*320)}{(44*224)} = 1.46}
+ \mathtt{Display\;Aspect\;Ratio\;(DAR) = PAR * SAR = \frac{45*320}{44*224} = 1.46}
 \end{align*}
 
-The near-square pixels result in minimal distortion when the image is presented on the CRT. This is very convenient for artists  since they can digitize their assets 1:1 and see their artwork rendered as intended.
+The near-square pixels result in minimal distortion when the image is presented on a 4:3 CRT. This is very convenient for artists  since they can digitize their assets 1:1 and see their artwork rendered as intended.
 
 \vfill
 \begin{figure}[H]
@@ -962,7 +962,7 @@ The near-square pixels result in minimal distortion when the image is presented 
 The CPS-1 with its resolution of \icode{384x224} and its dot-clock of 8,000,000 Hz results in a PAR of 135:176. Its DAR somewhat matches the CRT aspect ratio of 4:3 (=1.333). 
 
 \begin{align*}
- \mathtt{Display\;Aspect\;Ratio = \frac{(135*384)}{(176*224)} = 1.31}
+ \mathtt{Display\;Aspect\;Ratio = \frac{135*384}{176*224} = 1.31}
 \end{align*}
 
 However its narrow pixel generates a significant amount of distortion which was a huge problem for artists. If they digitized their drawing as is, the CRT would present to players a vertically stretched version of their original vision. As illustrated on page \pageref{sf2_ratio}, an artist drawing a circular sun on paper, digitizing it as is and running it via the CPS-1 would see an oval result on the screen.

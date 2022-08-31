@@ -53,7 +53,7 @@ The last piece of the \icode{\_boot} function, sets up auto-vector mode and jump
 \section{Memory Map}
 Alike for the Sound System and its z80 memory space, we need to make sure the software behaves accordingly to the memory map defined by the board PALs.
 
-The compiler in the GNU Compiler Collection, \icode{gcc} does not have a placement keyword \icode{\_at} but even if it had been available, it would not have been enough to map large portion such as the 196 KiB of GFXRAM.
+The compiler in the GNU Compiler Collection, \icode{gcc} does not have a placement keyword \icode{\_at} but even if it had been available, it would not have been enough to map large portion such as the 192 KiB of GFXRAM.
 
 We can compensate for the lack of \icode{\_\_at} thanks to the power of \icode{ld}'s linker script system. The idea is to use a two steps method where:
 \begin{enumerate}
@@ -85,7 +85,7 @@ To avoid flipping pages, here is the memory map studied on page \pageref{m68k_mm
   \texttt{0x800180} & \texttt{0x800187} & 8 B & Sound commands (latch 1)\\
   \texttt{0x800188} & \texttt{0x80018F} & 8 B & Sound commands (latch 2)\\
   \toprule    
-  \texttt{0x900000} & \texttt{0x92FFFF} & 196 KiB & GFXRAM\\
+  \texttt{0x900000} & \texttt{0x92FFFF} & 192 KiB & GFXRAM\\
   \texttt{0xFF0000} & \texttt{0xFFFFFF} & 64 KiB & RAM \\
   \toprule    
 \end{tabularx}%
