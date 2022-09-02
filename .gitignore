@@ -8,3 +8,6 @@ go.mod
 *.toc
 *.log
 out/**
+**/roms/*
+**/pics/*
+**/.idea/*
