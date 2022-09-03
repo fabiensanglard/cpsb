@@ -36,8 +36,11 @@
 \setlength{\fboxrule}{1pt}%
 \fbox{\includegraphics[width=\textwidth]{\base/illu/d/#1.png}}%
 }%
-
-
+\newcommand{\sbdraw}[2]{%
+\setlength{\fboxsep}{0pt}%
+\setlength{\fboxrule}{1pt}%
+\fbox{\includegraphics[width=#1\textwidth]{\base/illu/img/#2.png}}%
+}%
 
 %------------- NO BORDER IMG ------------------
 \usepackage{graphicx}                                                   
