@@ -6,19 +6,19 @@ Since the graphic pipeline of the CPS-1 is hard-coded in the silicon of the CPS-
 \caption*{The GFX System components}
 \end{figure}
 
-It sound simple but there is more at hand than converting graphic assets to GFXROM format. Even though all types of assets use the same pixel format, observant readers will have noticed that palettes are not stored in GFXROM. Special care must be taken to save them and provide them later to the m68k along with a way to reference them.
+It sounds simple but there is more at hand than converting graphic assets to GFXROM format. Even though all types of assets use the same pixel format, observant readers will have noticed that palettes are not stored in GFXROM. Special care must be taken to save them and provide them to the m68k later, along with a way to reference them.
 
-The other constraint to consider is the "hard-coded regions" of the GFXROM where OBJ, STAR1, STAR2, SCR1, SCR2, and SCR3 assets must reside. If a tile is not where it should, a draw command is simply ignored.
+The other constraints to consider are the "hard-coded regions" of the GFXROM where OBJ, STAR1, STAR2, SCR1, SCR2, and SCR3 assets must reside. If a tile is not where it should, a draw command is simply ignored.
 
 All board use a different layout. The Street Fighter II board and its \icode{STF29} PAL slice the 6MiB GFXROM in four areas (OBJ, SCR1, SCR2, and SCR3) . 
 
-A board running Final Fight uses a \icode{S224B} PAL which also carves the space in the same four area types but with different offset and proportions over a smaller 2MiB space. 
+A boards running Final Fight uses a \icode{S224B} PAL which carves the space in the same four area types but with different offset and proportions over a smaller 2MiB space. 
 
-The PAL found on Forgotten Worlds board, the \icode{LW621}, is more complex since it divide the GFXROM in five areas to also include interleaved STAR1 and STAR2 bytecode.
+The PAL found on Forgotten Worlds' board, the \icode{LW621}, is more complex as it divides the GFXROM in five areas to also include interleaved STAR1 and STAR2 bytecode.
 
 
 \section{Tile format}
-All tiles are stored continuously in memory, using groups of four bytes encoding eight pens. Rows of pens are stored one after another. The dimension of a tile varies depending on the layers. OBJ and SCR2 uses the same 16x16 tiles which mean their tiles are 16*16 / 2 = 128 bytes. For the fine tuned SCR1 which uses 8x8, each tile uses 32 bytes. Finally the larger SCR3 uses 512 bytes for each of its 32x32 tiles.
+All tiles are stored continuously in memory, using groups of four bytes encoding eight pens. Rows of pens are stored one after another. The dimension of a tile varies depending on the layers. OBJ and SCR2 use the same 16x16 tiles which mean their tiles are 16*16 / 2 = 128 bytes. For the fine tuned SCR1, which uses 8x8, each tile uses 32 bytes. Finally the larger SCR3 uses 512 bytes for each of its 32x32 tiles.
 
 \section{GFX Layout}
 The EPROMs are organized in groups of four chips and serialized. On a board like Street Fighter II, we find three groups of four. Inside each group, chips are interleaved every WORD (two bytes).
@@ -30,7 +30,7 @@ The channels mentioned earlier are now visible. ROM \icode{01} and ROM \icode{02
 
 \nbdraw{build_graph_gfx}
 
-Street Fighter II board build generates twelve roms. Each group stores 2 MiB. Group [1-4] start at 0x000000, group [10-13] at 0x200000, and ROMs [20-23] at 0x400000. Each chip goes in the matching numbered DIP slot (see page \pageref{boardb_no_chips}).
+The Street Fighter II board build generates twelve ROMs. Each group stores 2 MiB. Group [1-4] starts at 0x000000, group [10-13] at 0x200000, and ROMs [20-23] at 0x400000. Each chip goes in the matching numbered DIP slot (see page \pageref{boardb_no_chips}).
 
 
 
@@ -45,14 +45,14 @@ Street Fighter II board build generates twelve roms. Each group stores 2 MiB. Gr
 
 The artwork was the part of a game that required the most people. On a big title such as Street Fighter II, that task kept busy twenty artists out of a team of forty.
 
-Producing tilemap (background) assets for the SCROLL layers was junior artists responsibility. It required little supervision since the artwork had to be rectangular and the visual importance was not the highest.
+Producing tilemap (background) assets for the SCROLL layers was junior artists' responsibility. It required little supervision since the artwork had to be rectangular and the visual importance was not the highest.
 
-Producing assets for the OBJ layer on the other hand was much more elaborated. Four steps, outline drawing, allocation, detailled drawing, and finally dotting were involved.
+Producing assets for the OBJ layer, on the other hand, was much more elaborate. Four step were involved: outline drawing, allocation, detailed drawing, and finally dotting.
 
 
 
 \subsection{Pen and Papers}
-The artistic direction was established by the planner of the game. Their goal was to produce concept arts and pose outlines in order to captures the essence of a character as well as establishing proportions and movements. After that, senior artists took over for fine tuning.
+The artistic direction was established by the planner of the game. Their goal was to produce concept art and pose outlines in order to capture the essence of a character, as well as establishing proportions and movements. After that, senior artists took over for fine tuning.
 
 \begin{q}{Eri Nakamura\cite{sf2devinterview}}
 When I joined on Street Fighter II, Akiman had already done the rough drafts. 
@@ -64,13 +64,13 @@ One day, Akiman brought us the rough sketches of a pro wrestler, sumo wrestler, 
 
 
 
-Even though it was no the norm, it could happen that the planner took care of every aspect of a character especially if the topic was dear to their heart.
+Even though it was not the norm, it could happen that the planner took care of every aspect of a character (especially if the topic was dear to their heart).
 
 \begin{q}{Akiman\cite{gameMaestro4}}
 I created all Chun-Li’s graphics in just 1 month.
 \end{q}
 
-However, "chun-li" stories seems to have been rare occurrences.   In the case of Final Fight, Satoru Yamashita animated Guy and Haggar but Akiman drew the key animations for both of them.
+However, "Chun-Li" stories seem to have been rare occurrences.   In the case of Final Fight, Satoru Yamashita animated Guy and Haggar but Akiman drew the key animations for both of them.
 
 
 
@@ -83,9 +83,9 @@ However, "chun-li" stories seems to have been rare occurrences.   In the case of
 
 
 \subsection{Non-square grid paper}\label{artists_par}
-To draw both outline and detailed version of the sprites, artists used a special paper with a double grid system.
+To draw both outlines and detailed versions of the sprites, artists used a special paper with a double grid system.
 
-There was a "light" grid which used non-square proportions to match the CP-system video aspect ratio of 10:7. Artists were able to draw normally without having to worry about distortion since rectangle elements would match the CPS-1 stretched pixels. 
+There was a "light" grid which used non-square proportions to match the CP-system video aspect ratio of 10:7. Artists were able to draw normally without having to worry about distortion since rectangle elements would match the CPS-1's stretched pixels. 
 
 The paper featured a second "darker" grid which grouped elements 16 by 16 to match the OBJ tile dimension. This was an essential feature for the allocation step.
 
@@ -95,7 +95,7 @@ The paper featured a second "darker" grid which grouped elements 16 by 16 to mat
 
 \subsection{OBJ allocation}
 
-If breaking free of the rectangular sprites was a blessing for the artists, it was a problem for Capcom project managers. In an era where ROM chips were very expensive, a game was allocated a ROM budget at its beginning which it could not exceed.
+If breaking free of the rectangular sprites was a blessing for the artists, it was a problem for Capcom project managers. In an era where ROM chips were very expensive, a game was allocated a ROM budget at its beginning which it could not be exceeded.
 
 
 Before the CPS-1, remaining within the budget was a simple matter of a division. The number of sprites allowed to the art team was ROM size / rectangular sprite size. But the free form factor introduced a tracking problem.
@@ -107,7 +107,7 @@ Before the CPS-1, remaining within the budget was a simple matter of a division.
 \caption*{Dhalsim reconstructed sheet}
 \end{figure}
 
-The solution to the allocation problem came with papers and scissors.
+The solution to the allocation problem came with paper and scissors.
 
 \begin{q}{Nin\cite{sf2devinterview}}
 In order to make the best use of the capacity we had, we wrote the ROM’s capacity on a board, and cut and paste the pixel characters on the board. If there was space left on the board, then there was open capacity in the ROM. So, from there we started filling in the spaces, like a puzzle. 
@@ -139,34 +139,34 @@ For a game like Street Fighter II, a budget of 6MiB GFX was approved. With 4.6 M
 \end{figure}
 
 
-Comparing the released material with what actually shipped is the source of many discoveries and hypothesis. 
+Comparing the released material with what actually shipped is the source of many discoveries and hypotheses. 
 
-The Dhalsim sheet sits at offset \icode{0x3300} in the GFXROM. It is a near perfect match with the paper version except for the portion starting at \icode{0x60}. One of the pose was dropped in favor of Chun-li animation "Hundred Rending Legs" which would indicate it was a later addition. 
+The Dhalsim sheet sits at offset \icode{0x3300} in the GFXROM. It is a near perfect match with the paper version except for the portion starting at \icode{0x60}. One of the poses was dropped in favor of the Chun-Li animation "Hundred Rending Legs" which would indicate it was a later addition. 
 
  \begin{figure}[H]
 \img{rom_sheet_ryu.jpg}
 \caption*{Ryu released paper sheet}
 \end{figure}
 
-Ryu's sheet \icode{0x4500} allows to guess even more about the production process. Large coherent sprites show that at the beginning of the production process multiple sheet were allocated on a per-character basis. Tile were layed out and kept together as much as possible to facilitate visual inspection.
+Ryu's sheet \icode{0x4500} allows us to guess even more about the production process. Large coherent sprites show that at the beginning of the production process multiple sheets were allocated on a per-character basis. Tiles were layed out and kept together as much as possible to facilitate visual inspection.
 
-As the project progressed the team scrapped the bottom of the barrel and started to allocate space on a per-tile basic, sometimes spreading a character pose across multiple sheets like in Dhalsim sheet where can be found portions of Blanka.
+As the project progressed, the team scraped the bottom of the barrel and started to allocate space on a per-tile basis. They sometimes spread a character pose across multiple sheets, like in Dhalsim's sheet where portions of Blanka can be found.
 
 \subsection{The sheet system}
 Besides sparsely describing it, Capcom employees never elaborated on the sheet system. For which title and for how long it was used in total are questions that were never answered.
 
-Thanks to the understanding of the GFXROM format, it is possible to peek back in time. The digital structure is an imprint of what the paper sheet looked like. These reconstructed sheet can provide answers.
+Thanks to an understanding of the GFXROM format, it is possible to peek back in time. The digital structure is an imprint of what the paper sheet looked like. These reconstructed sheets can provide answers.
 
  \begin{figure}[H]
 \nbdraw{sfce0x0000}
 \caption*{A Street Fighter II Champion Edition sheet}
 \end{figure}
 
-Examining the GFXROM structure of all games published on CPS-1 uniformly reveals tiles grouped to match actual drawing, which imply usage of paper and scissors.
+Examining the GFXROM structure of all games published on CPS-1 uniformly reveals tiles grouped to match actual drawings, which implies usage of paper and scissors.
 
-The GFXROM layout started to change with the first title using the CPS-2. In Super Street Fighter II, the sheets of the twelve legacy contestants are the same as the one used in Street Fighter II Champion Edition. However new character sheets look like they were created with an automated allocator which sliced sprites vertically.
+The GFXROM layout started to change with the first title using the CPS-2. In Super Street Fighter II, the sheets of the twelve legacy contestants are the same as the ones used in Street Fighter II Champion Edition. However, new character sheets look like they were created with an automated allocator which sliced sprites vertically.
 
-Inspection of subsequent game's GFXROM indicate that all games released on CPS-2 used an automated OBJ allocator.
+Inspection of subsequent games' GFXROM indicate that all games released on CPS-2 used an automated OBJ allocator.
 
  \begin{figure}[H]
 \nbdraw{ssf-0x9000}
@@ -178,11 +178,11 @@ Inspection of subsequent game's GFXROM indicate that all games released on CPS-2
 
 \subsection{Digitizing art}\index{Computers!SONY SMC-70}
 
-To digitize their drawings, Capcom employees used SMC-70 computers. Manufactured by Sony, the SMC-70 hit both the US and japan market in the end of 1982. What is particularly noteworthy about this machine is that is built around extensibility. 
+To digitize their drawings, Capcom employees used SMC-70 computers. Manufactured by Sony, the SMC-70 hit both the US and Japan market in the end of 1982. What is particularly noteworthy about this machine is that it is built around extensibility. 
 
 The main element of a SMC-70 features its keyboard along with the core parts such as the z80 running at 4MHz, 64KiB RAM, and 64 KiB of VRAM. The rest is entirely configurable via daisy chained extenders. 
 
-The only limit to the chain system is the capacity of the power supply which must be located at the very back of the chain. 
+The only limit to the chain system is the capacity of the power supply, which must be located at the very back of the chain. 
 
 
 This architecture allowed Sony's machine capabilities to range from simple office work to a powerful video editing tool in its most extensive chaining configuration. 
@@ -193,7 +193,7 @@ This architecture allowed Sony's machine capabilities to range from simple offic
 \end{figure}
 
 \subsubsection{Sony, the big iron}
-On one side the substantial list of extensions and peripherals, totaling nearly 40 pieces all made by Sony, is a testimony to the company's commitment. One the other side, it also embodies a desire to remain in control of the platform by keeping others manufacturers from contributing to the eco-system.
+On one hand, the substantial list of extensions and peripherals, totaling nearly 40 pieces all made by Sony, is a testament to the company's commitment. One the other hand, it also embodies a desire to remain in control of the platform by keeping other manufacturers from contributing to the eco-system.
 
 \begin{figure}[H]
 
@@ -224,16 +224,16 @@ On one side the substantial list of extensions and peripherals, totaling nearly 
 
 
 \subsubsection{Noteworthy capabilities}
-The SMC-70 is notable for being the first computer to allow 3.5" floppy reader (also invented by Sony in 1981) and its ability to display kanji character via a ROM extension. 
+The SMC-70 is notable for being the first computer to allow a 3.5" floppy reader (also invented by Sony in 1981) and its ability to display kanji characters via a ROM extension. 
 
-However it is really when it comes to graphic capabilities that the machine stood out. Four resolutions were available, ranging from low-resolution 320x200 using sixteen colors up to high-resolution 640x200 in two colors. 
+However, it is really when it comes to graphic capabilities that the machine stood out. Four resolutions were available, ranging from low-resolution 320x200 using sixteen colors up to high-resolution 640x200 in two colors. 
 
-The 16 colors color mode was particularly interesting to Capcom artists since it was a perfect match with the CPS-1 pen system.
+The 16 colors mode was particularly interesting to Capcom artists since it was a perfect match to the CPS-1 pen system.
 
 
 \subsection{Tiny Character Editor}
 
-The SMC-70 had no ability to use a scanner. The digitization process was entirely achieved by hand. To help them in their task, artists used a tool called TCE (Tiny Character Editor). Although no screenshot ever merged, Capcom employees gave a rough description of its minimalist approach.
+The SMC-70 had no ability to use a scanner. The digitization process was entirely achieved by hand. To help them in their task, artists used a tool called TCE (Tiny Character Editor). Although no screenshot ever emerged, Capcom employees gave a rough description of its minimalist approach.
 
 \begin{q}{Koichi Yotsui (Strider planner)}
 You had a 16 pixel grid, a 16-color palette, and that was it.
@@ -241,13 +241,11 @@ You had a 16 pixel grid, a 16-color palette, and that was it.
 
 
 \subsection{Dotting}
-For both SCROLLs and OBJs element, dotting was done on a tile basis. The artist task was to look at their detailed grilled paper drawing and decide, for each rectangular element in the tile, which color of the palette to use for it.
+For both SCROLL and OBJ elements, dotting was done on a tile basis. The artist's task was to look at their detailed graph paper drawing and decide, for each rectangular element in the tile, which color of the palette to use for it.
 
-Pixel-art was a tedious and repetitive process which required a sense of esthetic and creativity to deal with the cases where a line crossed a pixel. Drop the pixel, include it plain, or attempt to anti-alias with a color in the palette were difficult choices to make.
+Pixel-art was a tedious and repetitive process which required a sense of aesthetic creativity to deal with the cases where a line crossed a pixel. Drop the pixel, include it plain, or attempt to anti-alias with a color in the palette were difficult choices to make.
 
-% The task at hand was to look at the detailed drawing, and decide which color from the palette would be used for this coordinate. The value was then set via TCE. 
-
-No mouse were available. Out of the box options were either a keyboard or a keypad. Some employees, satisfied with neither built themselves a custom joystick.
+No mouse was available. Out of the box options were either a keyboard or a keypad. Some employees, satisfied with neither, built themselves a custom joystick.
 
 
 \begin{figure}[H]
@@ -256,7 +254,7 @@ No mouse were available. Out of the box options were either a keyboard or a keyp
 \end{figure}
 
 
-At least, employees were free to use the technique that was the most effective to them.
+At the very least, employees were free to use what was the most effective to them.
 
 \begin{q}{Akiman\cite{akiman}}
 I used a keyboard to draw all the graphics for Vampire and Street Fighter 2.
@@ -272,7 +270,7 @@ I used a keyboard to draw all the graphics for Vampire and Street Fighter 2.
 
 
 \subsection{Saving tiles}
-Artists attempted to reuse tiles as much as possible to reduce the scarce ROM space available. In Street Fighter 2, there was only enough GFXROM for eleven challengers. Ken is a patchwork and a palette swap on top of Ryu tiles base. It "weights" only 98,304 bytes. A remarkable achievement compared to characters such as Zangief (622,592 bytes), Honda (491,520 bytes) or Ryu (442, 368 bytes).
+Artists attempted to reuse tiles as much as possible to reduce the scarce ROM space available. In Street Fighter 2, there was only enough GFXROM for eleven challengers. Ken is a patchwork and a palette swap on top of Ryu tiles base. It "weighs" only 98,304 bytes. A remarkable achievement compared to characters such as Zangief (622,592 bytes), Honda (491,520 bytes), or Ryu (442, 368 bytes).
 
 \begin{minipage}[t]{0.19\linewidth}
   \sdraw{1.0}{patch_ryu0}
@@ -333,7 +331,7 @@ Ryu and Ken use the same seven first colors of their palette to facilitate the p
 Sagat's laughing animation is double optimized. The sequence is made of two poses where only the bust is replaced while the legs remain the same. Moreover, the left leg is missing. It is reconstructed at runtime using an horizontal mirror of the right leg found at \icode{0xB9}.
 
 \begin{trivia}
-The capacity of the ASICs to flip tiles horizontally was used extensively in Street Fighter II when challengers faced left or right. Not really an issue for symmetrical characters, except for Sagat who' eye patch switches side when he turns.
+The capacity of the ASICs to flip tiles horizontally was used extensively in Street Fighter II when challengers faced left or right. Not really an issue for symmetrical characters, except for Sagat's eye patch switches sides when he turns.
 \end{trivia}
 
 \pagebreak
@@ -371,7 +369,7 @@ A strong working culture was established from the very top.
 \subsubsection{Poaching}
 
 
-Retaining talent was a top priority. The credit screen of Street Fighter II illustrates Capcom cautiousness. Artists were only credited by their nicknames.
+Retaining talent was a top priority. The credit screen of Street Fighter II illustrates Capcom's cautiousness. Artists were only credited by their nicknames.
 
  \begin{figure}[H]
 \img{sf2-credit.png}
@@ -382,15 +380,8 @@ Retaining talent was a top priority. The credit screen of Street Fighter II illu
 The most recognition available was a specialty next to a nickname. Some "credit screens" like in "Dynasty Wars" feature \textbf{OBJ} artists and \textbf{SCR} artists.
 \end{trivia}
 
-% \begin{trivia}
 
-% \end{trivia}
-
-
-
-
-
-Despite its precautions, Capcom lost numerous employees over the years. Among them was Takashi Nishiyama who made Street Fighter 1 and then went on to direct Fatal Fury' The King Of Fighters for Capcom arch-rival, SNK\cite{YoshikiOkamotoTakashiNishiyama},.
+Despite its precautions, Capcom lost numerous employees over the years. Among them was Takashi Nishiyama who made Street Fighter 1 and then went on to direct Fatal Fury, The King Of Fighters for Capcom's arch-rival, SNK\cite{YoshikiOkamotoTakashiNishiyama}.
  
 
 
@@ -403,7 +394,7 @@ Despite its precautions, Capcom lost numerous employees over the years. Among th
 
 
 \subsection{Inspiration}
-For Street Fighter II, artists inspiration came from various outlets. 
+For Street Fighter II, artists' inspiration came from various outlets. 
 
 Mangas such as "Yasunori Katō" helped to give birth to Dictator while Tao from "Harmagedon: Genma Wars" was part of the genesis of Chun-Li. 
 
@@ -421,7 +412,7 @@ I remember stitching together a few movies to make a presentation. "Streets of F
 I really took the chairman’s words to heart – "Use movies!" he said, so I took that to mean we should just openly plagiarize them!
 \end{q}
 
-Employees did not get paid to a watch movie. They got paid to watch three !
+Employees did not get paid to watch one movie. They got paid to watch three!
 
 \begin{q}{NiN\cite{ffdevinterview}}
 We didn't have a whole lot of time, so we had a 3-monitor set-up where we could watch other movies at the same time.
@@ -463,18 +454,18 @@ A sprite is a collection of tiles with rectangular boundaries. As we will see in
 \caption*{Honda has a Sprite}
 \end{figure}
 
-While it is convenient to be able to use a single command and the best way to render a set of mostly opaque tiles, it is inefficient. A set of tiles where many of them are transparent not only waste precious storage space in the GFXROM, they also count against the CPS-A/CPS-B limit of 256 tiles per frame.
+While it is convenient to be able to use a single command and the best way to render a set of mostly opaque tiles, it is inefficient. A set of tiles where many are transparent not only wastes precious storage space in the GFXROM, it also counts against the CPS-A/CPS-B limit of 256 tiles per frame.
 
-Another limitation (or advantage depending how you look at it) is that a single palette is specified when placing the sprite draw command so all tiles must use it.
+Another limitation (or advantage depending on how you look at it) is that a single palette is specified when placing the sprite draw command so all tiles must use it.
 
 \subsection{Shape}
 
-A much more efficient and flexible way is to use a Shape where tiles layout can is allowed to be arbitrary. It takes several draw calls to draw (tiles have to be specified one by one) but they can be located anywhere in a GFXROM.
+A much more efficient and flexible method is to use a Shape where tile layout can be arbitrary. It takes several draw calls to draw (tiles have to be specified one by one) but they can be located anywhere in a GFXROM.
 
-Shapes have the triple advantage of saving storage space, narrowing down tile count during rendition to the minimum, and allowing per tile palette. The example of Honda shows that only 41 tiles are required as a Shape. It would have taken 60 tiles if a Sprite had been used.
+Shapes have the triple advantage of saving storage space, narrowing down tile count during rendition to the minimum, and allowing per tile palettes. The example of Honda shows that only 41 tiles are required as a Shape. It would have taken 60 tiles if a Sprite had been used.
 
 \begin{trivia}
-In Street Fighter II artists limited themselves to one palette per character because the OBJ layer was used for multiple things such as decoration and GUI. This was purely a design decision. They could have as well gone with 16 palettes per characters since they are drawn with Shapes instead of Sprites commands. 
+In Street Fighter II, artists limited themselves to one palette per character because the OBJ layer was used for multiple things such as decoration and GUI. This was purely a design decision. They could have as well gone with 16 palettes per character since they are drawn with Shape instead of Sprite commands. 
 \end{trivia}
 
  \begin{figure}[H]
@@ -486,9 +477,9 @@ In Street Fighter II artists limited themselves to one palette per character bec
 To allow sprite draw calls, the build system must allocate images depending on the intended usage. All tiles in a sprite must be placed as they appeared in the original image.
  
 
-The look of Capcom sheets is deceiving. Tiles in the OBJ layers are arranged in a visual coherent fashion which could let assume they are rendered as Sprites. However this was only done to keep track of allocations, most Capcom games render OBJs as Shapes. Modern tools do not have this problem.
+The look of Capcom sheets is deceiving. Tiles in the OBJ layers are arranged in a visual coherent fashion which could lead one to assume they are rendered as Sprites. However this was only done to keep track of allocations, most Capcom games render OBJs as Shapes. Modern tools do not have this problem.
 
-On sheet page \pageref{honda_sheet} is a Honda sheet featuring the same artwork twice. It is features first as a  Sprite, at \icode{0x00} where it appears like a rectangle. It appears a second time as a Shape. Thanks to the automatic allocator in \icode{ccps}, tiles are placed as they were encountered when reading the asset. It looks like mashed potatoes but use less space.
+On page \pageref{honda_sheet} is a Honda sheet featuring the same artwork twice. It is featured first as a Sprite, at \icode{0x00} where it appears like a rectangle. It appears a second time as a Shape. Thanks to the automatic allocator in \icode{ccps}, tiles are placed as they were encountered when reading the asset. It looks like mashed potatoes but uses less space.
 
 \begin{figure}[H]
 \nbdraw{honda_sheet}
