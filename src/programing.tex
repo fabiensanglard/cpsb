@@ -1,7 +1,6 @@
 \chapter{Software concepts}
 
-Nothing tells your more about a system than the process of actually building software for it.
-% The best way to validate knowledge of a computer hardware is to program it. 
+Nothing tells you more about a system than the process of actually building software for it.
 
 The rest of this book describes a full game production pipeline. The goal is to deepen the understanding of Capcom's platform by not only writing code and generating assets but also learning how to process them in order to generate ROMs.
 
@@ -11,24 +10,24 @@ The pipeline we will describe ingests the source code (\icode{.s}/\icode{.c}) wr
 
  \begin{figure}[H]
 \sdraw{1.0}{game_pipeline}
-\caption*{Game ROMs dependency graph}
+\caption*{Game ROM dependency graph}
 \end{figure}
 
 \pagebreak
-Some dependencies in the graph at simple to the extreme. The z80 source code (\icode{.c} and \icode{.s}) only impacts the z80 ROM. Likewise, the m68k code (also \icode{.c} and \icode{.s}) ends up in the 68000 ROM.
+Some dependencies in the graph are simple to the extreme. The z80 source code (\icode{.c} and \icode{.s}) only impacts the z80 ROM. Likewise, the m68k code (also \icode{.c} and \icode{.s}) ends up in the 68000 ROM.
 
 Other dependencies are more convoluted. The \icode{.wav} sample files for example need to be compressed to ADPCM before being added to the OKI ROM. To be referencable at runtime, each sample is given an integer ID. These IDs must be collected into a \icode{.h} header and this file must be compiled along with the rest of the 68000 code.
 
-Likewise, the \icode{.png} files containing the artworks are transformed to indexed format before making their way to the GFX ROM. They also require to generate a \icode{.h} header file, this time containing tileID. Additionally, a \icode{.c} file containing each tile palette is generated in order to be compiled into the 68000 ROM. 
+Likewise, the \icode{.png} files containing artwork are transformed to indexed format before making their way to the GFX ROM. They also require generating a \icode{.h} header file, this time containing tileID. Additionally, a \icode{.c} file containing each tile palette is generated in order to be compiled into the 68000 ROM. 
 
-An even more complicated graph emerge from the music \icode{.vgm} files. The music track contains YM2151 commands that must be transformed in bytecode, stored in a \icode{.c} file, and compiled along with the z80 code. To be referenced, a header file containing music ID must also be generated and compiled with the 68000 ROM. Music are also embellished with audio samples which must also be compressed to ADPCM and added to the OKI ROM.
+An even more complicated graph emerges from the music \icode{.vgm} files. The music track contains YM2151 commands that must be transformed in bytecode, stored in a \icode{.c} file, and compiled along with the z80 code. To be referenced, a header file containing music ID must also be generated and compiled with the 68000 ROM. Music is also embellished with audio samples which must also be compressed to ADPCM and added to the OKI ROM.
 
 To complicate things even further, each of the four ROM mentioned must use different \icode{WORD} size and interleaving across the chips containing it.
 
 \section{CCPS: The CPS-1 Build System}
 As this book was being written, several tools were authored to validate the understanding of the hardware.
 
-Ultimately these tools were combined into a build system called \icode{ccps}. The rest of this book occasionally refers to \icode{ccps} but tries to keep the abstraction level high so reader can build their own build system if they desire so. 
+Ultimately these tools were combined into a build system called \icode{ccps}. The rest of this book occasionally refers to \icode{ccps} but tries to keep the abstraction level high so readers can build their own build system if they desire. 
 
 Even if only to check what obscure compiler flags must be used, it is freely available, open source, and a few command lines away. It also welcomes pull request :P !
 
@@ -36,9 +35,9 @@ Even if only to check what obscure compiler flags must be used, it is freely ava
 
 
 \section{Programming Language}
-For all their CPS-1 titles, Capcom developers used z80/m68k assembly. They did not have much choice anyway since high-level languages did not allow variable placement and humans were better at hand optimizing instructions. Additionally, ROM space was precious and controlling the volume of instructions with accuracy was paramount.
+For all their CPS-1 titles, Capcom developers used z80/m68k assembly. They did not have much choice since high-level languages did not allow variable placement and humans were better at hand optimizing instructions. Additionally, ROM space was precious and controlling the volume of instructions with accuracy was paramount.
 
-Even with the improvements of modern compilers capabilities, output compactness and optimization performances, a developer willing to take a CPS-1 to the next level will undoubtedly use assembly.
+Even with improvements in modern compiler capabilities, output compactness, and optimization performances, a developer willing to take a CPS-1 to the next level will undoubtedly use assembly.
 
 Since the goal of this book is to explains how things works, it uses C for its greater readability and wider knowledge base among programmers. A little bit of assembly is used but only to bootstrap the CPUs.
 	
@@ -47,7 +46,7 @@ Without libraries, frameworks, dynamic linker, syscalls, virtual memory, a loade
 
 Bootstrapping involves simple things like setting the stack pointer and the instruction pointer of a CPU. But it also involves harder tasks like setting up interrupts and more importantly preparing the program to run before calling its \icode{main} function. 
 
-An innocent six lines C program offers a glimpse into what is involved.
+An innocent six line C program offers a glimpse into what is involved.
 
 \lstinputlisting[style=CStyle]{src/code/variablesDeclaration.c}
 
@@ -65,16 +64,18 @@ Instructions for \icode{f} go in \icode{.text} at offset 0. Since the linker kno
 
 Const values \icode{c} and \icode{d} are read only so they go in ROM as well. These are grouped in section \icode{.rodata} apart from \icode{.text}. Read and write access are respectively inlined values equal to \icode{.rodata + 0} and \icode{.rodata + 1}.
 
-\subsubsection{Read-Write}
-Symbol \icode{a} is interesting because it is readable but also writable. The linker will have assigned a RAM address (starting at \icode{0xD000} on z80 and \icode{0xFF0000} on m68k). Since it is uninitialized, it will point to whatever is there in the RAM when it started.
 
-Like \icode{a}, \icode{b} is readable and writable but it is initialized to value \icode{0}. The linker can make \icode{a} point to RAM and even group zero-initialized variable together in \icode{.bss} but setting the value to 0 cannot be done. This is something the bootstrap will have to do.
+
+\subsubsection{Read-Write}
+Symbol \icode{a} is interesting because it is readable but also writable. The linker will have assigned a RAM address (starting at \icode{0xD000} on z80 and \icode{0xFF0000} on m68k). Since it is uninitialized, it will point to whatever is in the RAM when it started.
+
+Like \icode{a}, \icode{b} is readable and writable but it is initialized to value \icode{0}. The linker can make \icode{a} point to RAM and even group zero-initialized variables together in \icode{.bss} but setting the value to 0 cannot be done. This is something the bootstrap will have to do.
 
 Finally we come to variable \icode{e}. Since it is writable, the linker will have used the next available address in RAM after \icode{a}. But how can the linker initialize that location to value \icode{5} since it can only write to file \icode{pro.rom} which is not mapped there? 
 
-The answer is that it cannot. That task, called copy-down", is another thing the bootstrap will have to take care of.
+The answer is that it cannot. That task, called "copy-down", is another thing the bootstrap will have to take care of.
 
-Since they involves low-level operations, both bootstraps for z80 and the m68k are written using assembly and bundled in a file named \icode{crt0.s}.
+Since they involve low-level operations, both bootstraps for z80 and the m68k are written using assembly and bundled in a file named \icode{crt0.s}.
 
 
 
@@ -82,19 +83,19 @@ Since they involves low-level operations, both bootstraps for z80 and the m68k a
 
 \section{Systems communication}
 
-There are many chip in the machine that need to talk to each others. In the hierarchy we studied in the first chapter, each line is an interface. 
+There are many chips in the machine that need to talk to each other. In the hierarchy we studied in the first chapter, each line is an interface. 
 
 \nbdraw{apis}
 
-That is a total of eight communication lines, but the dotted one on the drawing are not programmable which lower the task to undertanding five APIs.
+That is a total of eight communication lines, but the dotted ones on the drawing are not programmable, lowering the task to understanding five APIs.
 
-\subsection{m68k \begin{CJK}{UTF8}{min}→\end{CJK} CPSA and m68k \begin{CJK}{UTF8}{min}→\end{CJK} CPS-B} Communication occurs over the CPS-A and CPS-B registers. Additionally draw commands are written by the 68000 to the GFXRAM where they are read by the CPS-A. All accesses to GFXRAM are arbitrated by the 68000 bus protocol.
+\subsection{m68k \begin{CJK}{UTF8}{min}→\end{CJK} CPSA and m68k \begin{CJK}{UTF8}{min}→\end{CJK} CPS-B} Communication occurs over the CPS-A and CPS-B registers. Additional draw commands are written by the 68000 to the GFXRAM where they are read by the CPS-A. All access to GFXRAM is arbitrated by the 68000 bus protocol.
 
-\subsection{z80 \begin{CJK}{UTF8}{min}→\end{CJK} YM2151} Communication occurs over the YM2151 registers which are mapped on the z80 bus. These accesses are arbitrated by the z80 bus protocol.
+\subsection{z80 \begin{CJK}{UTF8}{min}→\end{CJK} YM2151} Communication occurs over the YM2151 registers which are mapped on the z80 bus. This accesses is arbitrated by the z80 bus protocol.
 
-\subsection{z80 \begin{CJK}{UTF8}{min}→\end{CJK} MSM6295} Communication  occurs over the MSM6295 registers which are mapped on the z80 bus. These accesses are arbitrated by the z80 bus protocol. 
+\subsection{z80 \begin{CJK}{UTF8}{min}→\end{CJK} MSM6295} Communication  occurs over the MSM6295 registers which are mapped on the z80 bus. This access are arbitrated by the z80 bus protocol. 
 
-\subsection{m68k \begin{CJK}{UTF8}{min}→\end{CJK} z80} Communication between these two CPUs is not trivial. They both have their own bus protocol, run at different speed, have different address space, and data width.
+\subsection{m68k \begin{CJK}{UTF8}{min}→\end{CJK} z80} Communication between these two CPUs is not trivial. They both have their own bus protocol, run at different speeds, have different address spaces, and data widths.
 
 Try to think of a design yourself with the following constraints. There are two 1 byte latches. On one side is a m68k running at 10MHz which can write in them but not read. On the other end is a z80, working at 3.579 MHz which can read but not write them. 
 
@@ -114,9 +115,9 @@ Inverting the ratio is done precisely via interrupts. The m68k's IPL1 line is di
 \caption*{z80 interrupt system}
 \end{figure}
 
-This configuration lets the writer ticks every 16ms while the reader ticks every 4ms. This ensures no latch value can be dropped but introduces the problem of duplicates reads.
+This configuration lets the writer tick every 16ms while the reader ticks every 4ms. This ensures no latch value can be dropped but introduces the problem of duplicate reads.
 
-To avoid these, the z80 commits to disregards a latch content if its content did not change since the last time it was checked.
+To avoid these, the z80 commits to disregard a latch content if its content did not change since the last time it was checked.
 
 \begin{figure}[H]
 \nbdraw{interrupt_ctrl}
@@ -129,34 +130,34 @@ This introduces an ultimate problem. It is not possible for the m68k CPU to send
 
 
 \subsection{Back in the days}\index{Back in the days!General}
-The system and conventions we just described allows to exchange data reliably but it does not give a semantic to the values in the latches. 
+The system and conventions we just described allows for reliable date exchange but it does not give a semantic to the values in the latches. 
 
-A developer is free to give any meaning to the latches since it control both the writer and the reader. Maybe you can even take a second to think how you would design this interface if you had to before we study how Capcom did it.
+A developer is free to give any meaning to the latches since they controls both the writer and the reader. Maybe you can even take a second to think how you would design this interface if you had to before we study how Capcom did it.
 
 In a game like Street Fighter II, developers took the approach of not giving values an "immediate" meaning. Communication is a stream of bytes which must be reconstructed on the receiving end before being interpreted.
 
 
 
-When interrupted, the z80 read the byte in latch 1 and append it into a circular buffer. Interpretation happen in the "main" thread. A byte value \icode{FE} means that the next byte is the ID of a music that should start playback. 
+When interrupted, the z80 reads the byte in latch 1 and appends it into a circular buffer. Interpretation happens in the "main" thread. A byte value \icode{FE} means that the next byte is the ID of a music that should start playback. 
 
-Otherwise the value is a sound ID to be played immediately on the OKI. This scheme waste a single byte value to overhead. It allows for 256 music IDs and 254 samples IDs.
+Otherwise the value is a sound ID to be played immediately on the OKI. This scheme wastes a single byte value to overhead. It allows for 256 music IDs and 254 samples IDs.
 
  \begin{figure}[H]
 \nbdraw{latches_interface}
 \caption*{Street Fighter comm model. Stream encoding via \icode{0xFF}}
 \end{figure}
 
-Notice how the encoder, on the m68k side, injects \icode{0xFF} no-op bytes after each write to the latch and how the decoded ignore them.
+Notice how the encoder, on the m68k side, injects \icode{0xFF} no-op bytes after each write to the latch and how the decoder ignores them.
 
 What about the other latch? Street Fighter II only ever uses the first one. The other one is left unused.
 
 \subsubsection{No sound driver can rule them all}
 
-Given the capabilities the communication system described above, it would be fair to assume all Capcom games used it. That would be wrong.
+Given the capabilities of the communication system described above, it would be fair to assume all Capcom games used it. That would be wrong.
 
 The "sound driver" kept on evolving, sometimes changing drastically even between two games made consecutively by the same team. 
 
-In Final Fight, a sound ID received for playback is directly forwarded to the OKI. In Street Fighter II, a translation table is used. The ID received is an index into an array where are found the actual OKI ID along with the channel and volume to use.
+In Final Fight, a sound ID received for playback is directly forwarded to the OKI. In Street Fighter II, a translation table is used. The ID received is an index into an array containing the actual OKI ID along with the channel and volume to use.
 
 The merits of a translation table may be explained by the size of Capcom team and the inability to do a "full build" easily at the time.
 
@@ -165,36 +166,33 @@ If the sound team had to change the OKI layout, all IDS used by the m68k would b
 
 \subsection{Our sound driver}
 
-The sound driver described in the next pages uses the same architecture as Capcom. It relies on interrupts on both side. Besides being used for the latch communication, the interrupts also maintain a counter to pace the main threads.
+The sound driver described in the next pages uses the same architecture as Capcom. It relies on interrupts on both sides. Besides being used for the latch communication, the interrupts also maintain a counter to pace the main threads.
 
 \nbdraw{latches_uml}
 
-The communication protocol however is not streamed. Whereas it is more powerful, it is also much more complicated. For simplicity, a byte is immediately interpreted without need to rebuild a stream.
+The communication protocol however is not streamed. Whereas it is more powerful, it is also much more complicated. For simplicity, a byte is immediately interpreted without the need to rebuild a stream.
 
 The byte space is divided in two. If the MSB is set to one (\icode{0x80}) it is a request for sound effect playback and if the MSB is set to zero \icode{0x00} it indicates a music playback. 
 
-This leaves "only" 126 sound values and 127 music values but it more than enough for the intended purpose. Volume is hard-coded and round-robin rotation is used to pick between channels 1 or 2 to serve a request. 
-
-% To play well with channel selection, musicians are requested to use only channels 3 and 4 to embellish their YM2151 melodies. 
-
+This leaves "only" 126 sound values and 127 music values but is more than enough for the intended purpose. Volume is hard-coded and round-robin rotation is used to pick between channels 1 or 2 to serve a request. 
 
 \section{Tracking wall-time}
-The wall-time is the time experienced by players. Both CPUs must be able to measure it. The m68k must do so in order to sample inputs and run the game engine at the intended speed. The z80 is under the same constrain for the music where it must keep track of pauses and notes duration. 
+The wall-time is the time experienced by players. Both CPUs must be able to measure it. The m68k must do so in order to sample inputs and run the game engine at the intended speed. The z80 is under the same constraint for the music where it must keep track of pauses and note duration. 
 
 Modern systems have Real Time Clock (RTC) chips to do this but the CP-System is devoid of it. The solution is to leverage the counters which are incremented each time the main thread is interrupted. Depending on the CPU these accumulators will have different granularity.
 
-The m68k tracks time in units of 16ms while the z80 can do the same in increment of 4ms.
+The m68k tracks time in units of 16ms while the z80 can do the same in increments of 4ms.
 
 
 \section{Randomness}
-Pseudo-random series of number can be achieved using Maximum-Length LFSRs (Linear Feedback Shift Register). On the m68k, a 32-bit registers will give 4,194,304 different values before repeating itself. On the z80, the 8-bit register will only provide 256 values.
+Pseudo-random series of numbers can be achieved using Maximum-Length LFSRs (Linear Feedback Shift Register). On the m68k, a 32-bit registers will give 4,194,304 different values before repeating itself. On the z80, the 8-bit register will only provide 256 values.
 
 The only tricky part is to pick a seed to initialize the register. Street Fighter 2 uses the frame counter while other titles read the content of the CPU register during bootstrap. The latter method does not work well when working with emulators (they usually initialize their registers to zero) and should be avoided.
 
 \section{Banking system}
 \label{memory_bank_programming}
-This part applies only to the z80 which uses an infamous banking system. The constraint is to make sure the window mapped at [\icode{0xB000-\icode{0xBFFF}}] is slide to "see" the proper part ROM. 
+This part applies only to the z80 which uses an infamous banking system. The constraint is to make sure the window mapped at [\icode{0xB000-\icode{0xBFFF}}] is slid to "see" the proper part ROM. 
 
-This is done via the Bank Switch control register mapped at \icode{0xF004}. The value written is multiplied by \icode{0x4000} which give the starting offset in ROM space of the sliding window. Writing \icode{0} makes \icode{0xB000} in z80 space map to \icode{0x0000} in ROM space, writing \icode{0x0001} makes \icode{0xB000} in z80 space map to \icode{0x4000} in ROM space , and writing \icode{0x0002} make \icode{0xB000} in z80 space map to \icode{0xB000} in ROM space .
+This is done via the Bank Switch control register mapped at \icode{0xF004}. The value written is multiplied by \icode{0x4000} which gives the starting offset in ROM space of the sliding window. Writing \icode{0} makes \icode{0xB000} in z80 space map to \icode{0x0000} in ROM space, writing \icode{0x0001} makes \icode{0xB000} in z80 space map to \icode{0x4000} in ROM space , and writing \icode{0x0002} makes \icode{0xB000} in z80 space map to \icode{0xB000} in ROM space .
  
-This adjustement must be performed before accessing any byte within the bankings interval. 
+This adjustment must be performed before accessing any byte within the banking interval. 
