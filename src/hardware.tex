@@ -1,25 +1,25 @@
 \chapter{Hardware}
 \index{CP-System!CPS-1}
-The project that would later be dubbed by the press "superchip"\cite{tgm198906} started between 1985 and 1986. It was a massive investment that would require two years and five millions dollars\cite{becareful} (the equivalent of \$12 millions dollars in 2022).
+The project that would later be dubbed by the press "superchip"\cite{tgm198906} started between 1985 and 1986. It was a massive investment that would require two years and five million dollars\cite{becareful} (the equivalent of \$12 million dollars in 2022).
 
-The significant time and funds investment left not ambiguities in the mind of Capcom executives. Success would be to dictate the life or death of the company.
+The significant time and funds invested left no ambiguity in the mind of Capcom executives. This project would dictate the life or death of the company.
 
 \begin{q}{Yoshiki Okamoto, Capcom Producer\cite{gamest38}}
 The CP-System is an extremely important business strategy to Capcom: we have gambled everything on it.
 \end{q}
 
 \section{Goals}
-The CPS-1 was expected to solve most of Capcom arcade division problems. Namely reduce production cost, lower selling price, streamline development, increase GFX/SFX/processing capabilities, and stop piracy. 
+The CPS-1 was expected to solve most of Capcom's arcade division problems. Namely: reduce production cost, lower selling price, streamline development, increase GFX/SFX/processing capabilities, and stop piracy. 
 
-Cost reduction would be achieved by mimicking home consoles and standardizing the platform. Instead of re-designing boards for each games, the hardware would be a constant with the cabinet differentiated only by the software running on it.
+Cost reduction would be achieved by mimicking home consoles and standardizing the platform. Instead of re-designing boards for each game, the hardware would be a constant with the cabinet differentiated only by the software running on it.
 
-Price lowering would allow arcades operators to renew their games more often. This objective would be reached by designing a platform where new games board containing mostly ROMs could be purchased separately from the processor board therefore facilitating upgrades.
+Price lowering would allow arcade operators to renew their games more often. This objective would be reached by designing a platform where new game boards containing mostly ROMs could be purchased separately from the processor board.
 
 The development toolchain would improve thanks to the stability of the target platform. Without having to constantly rewrite tools and juggle with assembly languages, programmers could invest in the long term and build an SDK running on powerful workstations such as SHARP's series of X68000s.
 
-More importantly, games would had to catch customer eyes and not pale in comparison with competition. The goal was to design a machine with capabilities an order of magnitude above the current tech stack able to generate audio and visuals that would hold they own compared to titles from powerhouse such as Sega or Namco.
+Most importantly, games had to catch customer eyes and not pale in comparison to the competition. The goal was to design a machine with capabilities an order of magnitude above the current tech stack, able to generate audio and visuals that held their own compared to titles from powerhouses such as Sega or Namco.
 
-Finally was the problem of piracy. In a country like Mexico it was estimated that 200,000 bootlegs were in circulation\cite{sf2_oral_history} despite Capcom recording zero sales in that territory. Multiple concurrent copy-protection mechanisms were to be implemented.
+Finally was the problem of piracy. In a country like Mexico it was estimated that 200,000 PCB bootlegs were in circulation\cite{sf2_oral_history} despite Capcom recording no sales in that territory. Multiple concurrent copy-protection mechanisms needed to be implemented.
 
 
 
@@ -27,21 +27,21 @@ Finally was the problem of piracy. In a country like Mexico it was estimated tha
 
 
 
-\begin{wrapfigure}[19]{r}{0.3\textwidth}
+\begin{wrapfigure}[20]{r}{0.31\textwidth}
 \vspace{-\baselineskip}
 \centering
-  \sdraw{0.3}{cabinet}
+  \sdraw{0.31}{cabinet}
 \end{wrapfigure}
 
 
 % \begingroup
-Arcade operators frequently updated their cabinets by replacing the game it ran in order to keep on bringing novelty to players and quarters to their pockets. Thanks to the \textbf{J}apan \textbf{A}musement \textbf{M}achine and \textbf{M}arketing \textbf{A}ssociation, the process of updating was simple. 
+Arcade operators frequently updated their cabinets by replacing the game it ran in order to keep bringing novelty to players and quarters to their pockets. Thanks to the \textbf{J}apan \textbf{A}musement \textbf{M}achine and \textbf{M}arketing \textbf{A}ssociation, the process of updating was simple. 
 
-The belly of these machines usually hid an abomination of tangled wires converging toward a JAMMA harness where the motherboard would be inserted as a slot-in. All an operator had to do was to swap the old with the new PCBs.
+The belly of these machines usually hid an abomination of tangled wires converging in a JAMMA harness where the motherboard would be inserted as a slot-in. All an operator had to do was swap the old with the new PCBs.
 
-A JAMMA port has everything a game needs to operate. Its 28 pins on each sides provide inputs (four-direction joystick and three buttons per player, two coin sensors, start button, and service button), outputs (mono speakers lines and "monitor" controls), and even power supply.
+A JAMMA port has everything a game needs to operate. Its 28 pins on each side provide inputs (four-direction joystick and three buttons per player, two coin sensors, start button, and service button), outputs (mono speakers lines and "monitor" controls), and even power supply.
 
-The problem with such a standard is that if it improves interoperability, it also hinders innovation. 
+The problem with such a standard is that while it improves interoperability, it also hinders innovation. 
 
 A few pins on the port are not reserved for a specific usage but they could not be used for extra features since once the harness was wired, operators did not want to touch it.
 
@@ -59,7 +59,7 @@ A few pins on the port are not reserved for a specific usage but they could not 
 
 
 
-When Capcom had to retrofit Street Fighter 1 pneumatic buttons, they chose to do it with six buttons per player which was three more than are available in JAMMA. To circumvent the limitation, they designed a parallel input system. 
+When Capcom retrofited Street Fighter 1 pneumatic buttons, they chose to do it with six buttons per player, which was three more than available in JAMMA. To circumvent the limitation, they designed a parallel input system. 
 
 Since the three JAMMA buttons were used for punches, the extension was labeled the "kick harness".
 
@@ -114,39 +114,35 @@ Since the three JAMMA buttons were used for punches, the extension was labeled t
 The connection points are prominent white connectors. Boards A and B are connected via four 2x32-pins connectors while the boards B and C are connected with four 2x20-pin connectors.  Once plugged into each others, the boards are manipulated as a whole with no floating parts.
 
 
-The system was revised over the years. Approximately 229 variations are known to exist, including bootlegs\cite{mame_cps1_video}. The board which will be studied in this book is the one used to run "Street Fighter 2", which uses board A "88617A-7B", board B "90629B", and board C "90628-C".
+The system was revised over the years. Approximately 229 variations are known to exist, including bootlegs\cite{mame_cps1_video}. The board which will be studied in this book is the one used to run "Street Fighter 2": board A "88617A-7B", board B "90629B", and board C "90628-C".
 
 \subsection{Board A}\index{Board!Board A}
-The board "A" is the platform that never changes between games. It features all but one of the chips in charge of processing data, whether it is game logic, audio, or video.
+Board "A" is the platform that never changes between games. It features all but one of the chips in charge of processing data, whether it is game logic, audio, or video.
 
-A summary look at page \pageref{fig:boarda} reveals the powerhouse of the whole system where even an untrained eye will notice the size of an \textbf{A}pplication-\textbf{S}pecific \textbf{I}ntegrated \textbf{C}ircuit (ASIC) and the shear number of bus lines leading to it. In the center left stands the "CPS-A", in charge of 50\% of the graphic system and its 16MHz oscillator. Just above is 384 KiB of VRAM to store a special kind of framebuffer studied in later pages.
+A summary look at page \pageref{fig:boarda} reveals the powerhouse of the whole system. Even an untrained eye will notice the size of the \textbf{A}pplication-\textbf{S}pecific \textbf{I}ntegrated \textbf{C}ircuit (ASIC) and the sheer number of bus lines leading to it. In the center left stands the "CPS-A", in charge of 50\% of the graphic system and its 16MHz oscillator. Just above is 384 KiB of VRAM to store a special kind of framebuffer studied in later pages.
 
 Directly below the CPS-A is the video system and its 8 KiB of SRAM containing the palettes.
 
 The upper right section is the control system with a Motorola m68k, a 10MHz oscillator, 64 KiB of "work" SRAM and 192KiB of GFX SRAM. 
 
-The middle right part is where the audio system lives. It is made of a Zilog z80, a 3.58MHz oscillator, and 2 KiB of "work" SRAM. Also in this area are present the audio chips dedicated to music (YM2151 and YM3012) and sound effects (OKI6295).
+The middle right part is where the audio system lives. It is made of a Zilog z80, a 3.58MHz oscillator, and 2 KiB of "work" SRAM. Also in this area are the audio chips dedicated to music (YM2151 and YM3012) and sound effects (OKI6295).
 
 Finally, in the bottom part we find all the components taking care of the inputs and outputs of the JAMMA connector. Alongside are three DIP switches which an arcade operator can use to configure game parameters such as game difficulty or how many credits a coin grants.
 
 There are many chips on these three boards but it would be a mistake to conclude that combining many processors inevitably leads to better performance. That would be ignoring issues such as bus congestion, bus size difference, bus timings or even processor endianness. 
 
-To design an effective multi-CPUs system able to avoid both instructions and data starvation is in fact far from trivial.
+To design an effective multi-CPUs system able to avoid both instruction and data starvation is in fact far from trivial.
 
 
-\
-  \simg{0.94}{88617A.png}
+
+\simg{0.94}{88617A.png}
 \label{fig:boarda}
 
-
-  \sdraw{0.94}{88617A}
+\sdraw{0.94}{88617A}
 \label{fig:drawboarda}
 
-
-
-
 \subsection{Board B}\index{Board!Board B}
-   The board B is where the ROMs chip containing all the assets and instructions specific to a game are attached via DIP sockets. The chips are not soldered but push-in mounted (and easily removable).
+   Board B is where the ROMs chip containing all the assets and instructions specific to a game are attached via DIP sockets. The chips are not soldered but push-in mounted (and easily removable).
 
    Even though all ROM chips are located on the same board, they are not all part of an unified data system on an unified bus. 
 
@@ -161,9 +157,9 @@ To design an effective multi-CPUs system able to avoid both instructions and dat
   \end{figure}
 \pagebreak
 
-   There are 3x8 = 24 chips, referred as "GFX ROM", dedicated to storing GFX via sockets [1-8], sockets [10-17], and sockets [20-27] for a total of 12 MiB capacity. Because of the price of ROM, games were never budgeted to allowed the max capacity. Most titles were granted 2/4MiB, three (the Street Fighter II series) were allowed 6 MiB and one (Dynasty Wars) got a whooping 8MiB.
+   There are 3x8 = 24 chips, referred to as "GFX ROM", dedicated to storing GFX via sockets [1-8], sockets [10-17], and sockets [20-27] for a total of 12 MiB capacity. Because of the price of ROM, games were never budgeted to allowed the max capacity. Most titles were granted 2/4MiB, three (the Street Fighter II series) were allowed 6 MiB, and one (Dynasty Wars) got a whooping 8 MiB.
 
-   One socket (9) with 64KiB capacity, referred as "z80 ROM",  stores both the z80 instructions and the music assets (instructions for the YM2151). 
+   One socket (9) with 64KiB capacity, referred as "z80 ROM", stores both the z80 instructions and the music assets (instructions for the YM2151). 
 
    Two sockets (18-19) accounting for 256 KiB, referred as "OKI ROM", store ADPCM samples and are directly connected to the OKI chip. 
 
@@ -176,26 +172,16 @@ To design an effective multi-CPUs system able to avoid both instructions and dat
   \caption*{Board B with Street Fighter 2 ROMs}
   \end{figure}
 \pagebreak
-% We will study in the storage subsystem how all these ROMs can be used to build 8-bit, 16-bit, or even 32-bit data buses.
 
 
 \nbdraw{90629B}
 
-Observant readers will have noticed unexplained black chips. For now we'll say they are in charge of bus traffic management. In the drawing above, \icode{STF29} handles the GFX ROM and \icode{IOB1} handles the m68k ROM. As an exercise, go back on page \pageref{fig:drawboarda} and guess which chip handle which ROM/RAM group. Or don't, I am just a book.
-% \begin{figure}[H]
-% \centering
-% \nbdraw{90629B}
-% \caption*{STF29 }
-% \end{figure}
-
-
+Observant readers will have noticed unexplained black chips. For now we'll say they are in charge of bus traffic management. In the drawing above, \icode{STF29} handles the GFX ROM and \icode{IOB1} handles the m68k ROM. As an exercise, go back to page \pageref{fig:drawboarda} and guess which chip handles which ROM/RAM group. Or don't, I am just a book.
 
 \subsection{Board C}\index{Board!Board C}
-Board "C" hosts the "CPS-B" ASICs video chip. It is in charge of the remaining 50\% of the graphic pipeline, namely mix data from the VRAM and the GFX ROMs towards the pixel generator. Capcom also concentrated its anti-piracy measures in that chip and as a result revised the board "C" many more times than the board A and board B. 
+Board "C" hosts the "CPS-B" ASICs video chip. It is in charge of the remaining 50\% of the graphic pipeline, namely mix data from the VRAM and the GFX ROMs towards the pixel generator. Capcom also concentrated its anti-piracy measures in this chip and as a result revised board "C" many more times than board A and board B. 
 
 This will be discussed extensively in the copy-protection section of this chapter.
-
-% released many revision of its hardware in order to remain one step ahead of pirates. Since it concentrated most of its countermeasures on the CPS-B, it made sense to have the chip be on its own board.
 
 \begin{minipage}[t]{0.49\linewidth}
   \simg{1.0}{90628-C-2.jpg}
@@ -214,14 +200,14 @@ They pack boolean logic (\&, \textbar, !) between their input and output lines w
 
 \sdraw{0.44}{PAL16L8A}
 
- Often located near the memory chips group they affect, they are codenamed based on their function. Since most games use slightly different ROM layout, they usually feature different PALs. e.g: Street Fighter II's \icode{STF29} which organizes the GFX ROM is named \icode{S224B} in Final Fight, and \icode{DM620} in Ghouls'n Ghosts.
+ Often located near the memory chip group they affect, they are codenamed based on their function. Since most games use slightly different ROM layout, they usually feature different PALs. e.g: Street Fighter II's \icode{STF29} which organizes the GFX ROM is named \icode{S224B} in Final Fight, and \icode{DM620} in Ghouls'n Ghosts.
 
 
 
 \section{Logical Architecture}
 The CP-System features eight processors, organized hierarchically. Commands issued at the top are carried out to sub-systems via a chain of reports. 
 
-There is a strong isolation via layering where top systems are unable to access sub-systems resources. e.g: Control has no access to VRAM and audio ROM.
+There is strong isolation via layering where top systems are unable to access sub-systems resources. e.g: Control has no access to VRAM and audio ROM.
 
 \begin{figure}[H]
 \nbdraw{arch_hierarchy}
@@ -231,11 +217,12 @@ There is a strong isolation via layering where top systems are unable to access 
 
 The control system features a m68k in charge of coordinating inputs (joystick, buttons, coin) and outputs (video and audio). It can communicate with both the GFX and audio system main processors.
 
-The audio system runs almost totally in isolation. It is connected to control via two 8-bit latches which the z80 actively polls to retrieve commands related to music and sound effects. Notice how these latches bridge different data bus width since control has 16 data lines while the audio system's uses 8 data lines.
+The audio system runs almost totally in isolation. It is connected to control via two 8-bit latches which the z80 actively polls to retrieve commands related to music and sound effects. Notice how these latches bridge different data bus widths since control has 16 data lines while the audio system's uses 8 data lines.
 
-The graphic system needs more communications and exposes not only its CPS-A and CPS-B registers but also the GFX RAM where the screen layout is described. The m68k and the CPS-A use the same bus to access the GFXRAM so the demarcation is not as clean as with the audio system which result in a bit of bus contention.  
+The graphic system needs more communications and exposes not only its CPS-A and CPS-B registers but also the GFX RAM where the screen layout is described. The m68k and the CPS-A use the same bus to access the GFX RAM, so the demarcation is not as clean as with the audio system. This results in a bit of bus contention.  
 \index{Colors!Pen}
 \index{Colors!Ink}
+
 The video system produces a stream of palette addresses. Combined with the palette SRAM (where colors are stored) and the DAC, it outputs a signal towards JAMMA. It is heavy duty in order to keep up with the 59.64Hz refresh rate inflicted on the screen.
 
 \begin{figure}[H]
@@ -246,22 +233,22 @@ The video system produces a stream of palette addresses. Combined with the palet
 
 
 \section{Control system}\index{Systems!Control}
-The control system is the master of the platform. As a ruler it needs not to excel at a specific task but to be able to direct and keep tabs on many components. A tailor made task for the Motorola 68000.
+The control system oversees the platform. As a ruler it needs not to excel at a specific task but to be able to direct and keep tabs on many components. A tailor made task for the Motorola 68000.
 
 
 \subsection{Motorola 68000 CPU}\index{Processors!Motorola 68000}
 
- Released in 1979, and clocked at 10 MHz (later upgraded to 12 MHz), the 68000 was not a particularly powerful chip by the late 80' standards with its two stage pipeline\cite{M68000fv} (prefetch, exec) and no internal cache. Its 1.7 MIPS placed it on par with an Intel 286 10MHz (1.5 MIPS). By 1989 it was already two generations old behind the 1984 M68020 (3 MIPS) and the 1987 M68030 (5 MIPS)\cite{mips}.
+ Released in 1979 and clocked at 10 MHz (later upgraded to 12 MHz), the 68000 with its two stage pipeline\cite{M68000fv} (prefetch, exec) and no internal cache was not a particularly powerful chip by late 80' standards . Its 1.7 MIPS placed it on par with an Intel 286 10MHz (1.5 MIPS). By 1989 it was already two generations old behind the 1984 M68020 (3 MIPS) and the 1987 M68030 (5 MIPS)\cite{mips}.
 
 \nbdraw{mips}
 
-This lack of velocity did not prevent a a plethora of manufacturers to use it as their backbone. On the list of machine adopting the m68k can be found the Atari ST, Amiga, Sega's System 16, Genesis, Sega CD, Apple Macintosh, Sharp X68000, and even SNK's Neo-Geo. It was even IBM's first choice for it PC before production issues allowed the Intel's 8088 to prevail\cite{ieee20170630}. 
+However, this lack of velocity did not prevent a a plethora of manufacturers from using it as their backbone. On the list of machines adopting the m68k can be found the Atari ST, Amiga, Sega's System 16, Genesis, Sega CD, Apple Macintosh, Sharp X68000, and even SNK's Neo-Geo. It was even IBM's first choice for its PC before production issues allowed the Intel 8088 to prevail\cite{ieee20170630}. 
 
-Performance is not what made the 68000 rein as the prime hardware designer choice. The reason this CPU was so successful is because it was a great team player.
+Performance is not what made the 68000 reign as the prime hardware design choice. The reason this CPU was so successful is because it was a great team player.
 
-While most machines used 16-bit address system, its 24-bit address space allowed the 68000 16 MiB of RAM which was considered humongous at the time. This was a considerable advantage when it came to map peripherals. There is so much address space that, had they wished so, Capcom engineers could have allowed the 68000 to see all RAM and all ROM of all systems on the CPS-1.
+While most machines used a 16-bit address system, its 24-bit address space allowed the 68000 16 MiB of RAM, which was considered humongous at the time. This was a considerable advantage when it came to map peripherals. There was so much address space that, had they wished so, Capcom engineers could have allowed the 68000 to see all RAM and all ROM of all systems on the CPS-1.
 
-Other CPUs used small address registers resulting in the infamous segmented addressing, Motorola gave its CPU 32-bit data and address registers. The elegant flat addressing and generous eighteen registers make it a favorite among programmers. 
+While other CPUs used small address registers resulting in the infamous segmented addressing, Motorola gave its CPU 32-bit data and address registers. The elegant flat addressing and generous eighteen registers made it a favorite among programmers. 
 
 
 \begin{figure}[H]
@@ -289,48 +276,48 @@ System control is done via Error (\icode{BERR}), Reset (\icode{RST}), and Halt (
 Finally, the processor status is given by \icode{FC0}, \icode{FC1}, \icode{FC2} and Peripheral control is done via sync (\icode{E}) and valid sig (\icode{VMA}).
 
 \begin{trivia}
-Motorola's CPU name is due to its total number of transistors totaling 68,000 units. The 68030 and 68040 had more transistors than their name indicate. 
+Motorola's CPU name is due to the total number of transistors totaling 68,000 units. The 68030 and 68040 had more transistors than their names indicate. 
 \end{trivia}
 
 Despite the raving description provided in the previous pages, the 68000 could be a peculiar CPU to program. Its most famous shortcoming involved memory alignment. While Intel's line of CISC allows random memory accesses (at the cost of a great performance penalty), Motorola's CPU will \icode{HALT} while attempting to read/write memory not aligned on a 16-bit (\icode{WORD}) boundary.
 
-This limitation is rooted all the way down to the CPU pins where there is no \icode{A0} line. Pins \icode{UDS} and \icode{LDS}indicate which of the high-byte or low-bytes part of a 16-bit \icode{WORD} to access.
+This limitation is rooted all the way down to the CPU pins where there is no \icode{A0} line. Pins \icode{UDS} and \icode{LDS}indicate which of the high-byte or low-byte parts of a 16-bit \icode{WORD} to access.
 
 
 \begin{trivia}
- The 68000 has 32-bit address registers but used only 24-bit addresses. These "unused" eight bits were hijacked by system engineers to mark address as "locked" or "purgeable". These programs promptly broke when running on 68020 which used a 32-bit address bus. 
+ The 68000 has 32-bit address registers but used only 24-bit addresses. These "unused" eight bits were hijacked by system engineers to mark address as "locked" or "purgeable". These programs promptly broke when running on 68020, which used a 32-bit address bus. 
 \end{trivia}
 
-Perhaps the best testament to the quality of the 68000 design is that, as of 2022, 43 years after its release, Motorola's immortal CPU is still in production.
+Perhaps the best testament to the quality of the 68000 design is that as of 2022, 43 years after its release, Motorola's immortal CPU is still in production.
 
 
 \subsection{Motorola 68000 "work" RAM}
-With a 16-bit data bus processor it would have been fair to expect a memory system built with 16-bit RAM chips. However these were expensive and a closer look reveals a bunch of \icode{65256BLSP-10} offering fast access time (100ns SRAM) and 32 KiB capacity but only 8 data lines.
+With 16-bit data bus processors it would be fair to expect a memory system built with 16-bit RAM chips. However these were expensive and a closer look reveals a bunch of \icode{65256BLSP-10} offering fast access time (100ns SRAM) and 32 KiB capacity but only 8 data lines.
 
 \sdraw{0.5}{65256BLSP-10}
 \pagebreak
 
-Using cheaper of-the-shelves 8-bit RAM chips instead of 16-bit RAM chips helped to drive down the cost. Moreover, these are not hard to combine into a 16-bit RAM system via two-way interleave.
+Using cheaper off-the-shelf 8-bit RAM chips instead of 16-bit RAM chips helped to drive down cost. Moreover, these are not hard to combine into a 16-bit RAM system via two-way interleave.
 
 \begin{figure}[H]
 \nbdraw{64k_ram}
 \caption*{32 Ki x 16-bit RAM system with two 32 Ki x 8-bit chips}
 \end{figure}
 
-The two \icode{65256BLSP-10} are not aware of each others. They are connected to the same 15 address lines and the same control lines for Write Enabled (\icode{WE}) and Read Enabled (\icode{OE}). However, they are connected to different lines of the data bus.
+The two \icode{65256BLSP-10} are not aware of each other. They are connected to the same 15 address lines and the same control lines for Write Enabled (\icode{WE}) and Read Enabled (\icode{OE}). However, they are connected to different lines of the data bus.
 
 
  \begin{trivia}
-Interleaving chips can also help to beat memory latency by increasing throughput. Early GPU such as the Voodoo 1 and Voodoo 2 by 3Dfx extensively relied on this technique, even using four-way interleave to keep up with the bandwidth requirements\cite{TheStoryOf3Dfx}.  
+Interleaving chips can also help to beat memory latency by increasing throughput. Early GPUs such as the Voodoo 1 and Voodoo 2 by 3Dfx extensively relied on this technique, even using four-way interleave to keep up with the bandwidth requirements\cite{TheStoryOf3Dfx}.  
  \end{trivia}
 
 
-Notice how the address lines of the SRAM chips are directly connected to the 68000 address bus. There is no mechanism to prevent these two chips to respond to all bus requests. 
+Notice how the address lines of the SRAM chips are directly connected to the 68000 address bus. There is no mechanism to prevent these two chips from responding to all bus requests. 
 
-This is an over-simplification to introduce complexity progressively. We will see next how chips are organized to not conflict with each others.
+This is an over-simplification to introduce complexity progressively. We will see next how chips are organized to not conflict with each other.
 
  \begin{trivia}
- 64 KiB of work RAM seems like a lot but that was not always enough. Some games found themselves with not enough RAM and too much GFXRAM. Street Fighter 2 Champion Edition programmers resolved to generating and executing instructions from the GFXRAM\cite{mame_driver}!
+ 64 KiB of work RAM seems like a lot but was not always enough. Some games found themselves with not enough RAM and too much GFXRAM. Street Fighter 2 Champion Edition programmers resolved to generating and executing instructions from the GFXRAM\cite{mame_driver}!
  \end{trivia}
 \pagebreak
 
@@ -346,7 +333,7 @@ This is an over-simplification to introduce complexity progressively. We will se
 
 The 68000 instructions are provided by eight \icode{27C010} which are 128 Ki x 8-bit chips. They work like the \icode{65256BLSP-10} except that they have sixteen address lines instead of fifteen (and therefore higher capacity).
 
-Like the RAM, ROM chips are combined via two-way interleaves to provide 16-bit data. What is peculiar is how the four pairs are arranged to build a memory system with a larger capacity.
+Like the RAM, ROM chips are combined via two-way interleaves to provide 16-bit data. What is peculiar is how the four pairs are arranged to build a memory system with larger capacity.
 
 
 \begin{figure}[H]
@@ -354,7 +341,7 @@ Like the RAM, ROM chips are combined via two-way interleaves to provide 16-bit d
 \caption*{Two first pairs. 4 x (128 Ki x 8-bit) making a 256Ki x 16-bit system}
 \end{figure}
 
-To place one pair after another in memory space, the \icode{CE} (Chip Enabled, sometimes labeled \icode{CS} for "Chip Selected") pin is leveraged. Asserting it let a chip respond to address request while de-asserting it keeps it dormant. All CEs on all chips on all boards are controlled via PALs.
+To place one pair after another in memory space, the \icode{CE} (Chip Enabled, sometimes labeled \icode{CS} for "Chip Selected") pin is leveraged. Asserting it lets a chip respond to an address request while de-asserting it keeps it dormant. All CEs on all chips on all boards are controlled via PALs.
 
 In this example, the first four out PAL pins must be programmed as follows.
 
@@ -365,11 +352,11 @@ The first pair of chips is mapped to addresses \icode{0x000000} while the second
 
 
 
-By now, it should be abundantly clear that the \icode{CE} / \icode{CS} lines are absolutely crucial to build a memory map. Even though they won't be mentioned again, keep in mind they impact every chips on the boards (except the CPUs).
+By now, it should be abundantly clear that the \icode{CE} / \icode{CS} lines are absolutely crucial to build a memory map. Even though they won't be mentioned again, keep in mind they impact every chip on the boards (except the CPUs).
 
 \subsection{68000 Memory Map}
 
-Thanks to the PAL chips enabling/disabling components, the 68000 memory space is partitioned. The result is summarized in a "memory map".
+Thanks to the PAL chips enabling/disabling components, the 68000's memory space is partitioned. The result is summarized in a "memory map".
 
 \begin{figure}[H]
 {
@@ -399,7 +386,7 @@ Thanks to the PAL chips enabling/disabling components, the 68000 memory space is
 
 \subsection{Putting it all together}
 
-The details of the 68000 operations will be studied in-depth in the next chapters but we can already guess how the CPU operates based on what it has access to. As the m68k boots, it starts to retrieve instructions from it ROM. For regular operations such as store/load, and also to keep track of its call stack, it uses its work RAM. 
+The details of the 68000's operations will be studied in-depth in the next chapters but we can already guess how the CPU operates based on what it has access to. As the m68k boots, it starts to retrieve instructions from its ROM. For regular operations such as store/load, and also to keep track of its call stack, it uses its work RAM. 
 
 The game engine starts and reads the configuration set by the arcade operators via the DIP switches. While the game runs, the CPU continuously polls the JAMMA inputs.
 
@@ -422,27 +409,27 @@ For the audio, the m68k issues simple commands to the z80 via two 1 byte latches
 
 \pagebreak
 \section{Audio system}\index{Systems!Audio}
-The audio system runs in isolation from everything else. It has its own bus, its own RAM, its own ROM systems, and its own oscillators. Its only opening to the outside world are two latches to receive commands from the control system and two JAMMA pins where to output sound.
+The audio system runs in isolation from everything else. It has its own bus, its own RAM, its own ROM systems, and its own oscillators. Its only opening to the outside world are two latches to receive commands from the control system and two JAMMA pins to output sound.
 
 The component in charge is a surprisingly light-weight z80 running at 3.58 MHz.
 
 \subsection{z80 CPU}
-Released in July 1976 by Zilog, the z80 was an intended as an Intel 8080 killer thanks to a compatible instruction set. It ended up becoming an icon of the 70s, sharing the front-scene with the equally mythical MOS 6502 well into the mid-80s. 
+Released in July 1976 by Zilog, the z80 was intended as an Intel 8080 killer thanks to a compatible instruction set. It ended up becoming an icon of the 70s, sharing the scene with the equally mythical MOS 6502 well into the mid-80s. 
 
-The z80 was widely used in home computers, notably featured in the Sinclair ZX Spectrum and the Amstrad CPC. It also found its way in military applications, musical equipment (Roland Jupiter-8), embedded systems and multiple coin-ops arcades. 
+The z80 was widely used in home computers, notably featured in the Sinclair ZX Spectrum and the Amstrad CPC. It also found its way into military applications, musical equipment (Roland Jupiter-8), embedded systems, and multiple coin-op arcades. 
 
-As an 8-bit era processor, the z80 uses 8-bit data registers, 8-bit data bus, 16-bit addresses, and 16-bit address bus. In terms of processing power, despite its "overlapping fetch/execute" design, the CPU had become particularly weak by the late 80s standards with 0.45 MIPS. It was three times slower than the 68000 featured in the control system\cite{mips}. 
+As an 8-bit era processor, the z80 uses 8-bit data registers, 8-bit data bus, 16-bit addresses, and 16-bit address bus. In terms of processing power, despite its "overlapping fetch/execute" design the CPU had become particularly weak by late 80s standards with 0.45 MIPS. It was three times slower than the 68000 featured in the control system\cite{mips}. 
 
 \nbdraw{mips_z80}
 
-Processing power was not to be the deciding factor to elect the master of the Sound system. Thanks for its two powerful co-processors, the CPU would not have to process much data, making the MIPS figure irrelevant. A much more important characteristic would be how well it integrated with its two sidekicks.
+Processing power was not the deciding factor in electing the master of the Sound system, though. Thanks to its two powerful co-processors, the CPU would not have to process much data, making the MIPS figure irrelevant. A much more important characteristic was how well it integrated with its two sidekicks.
 
 Thanks to its 8-bit design, the z80 was a perfect fit for the 8-bit YM2151 and the 8-bit MSM6295. Having been around for a while, the "outdated" CPU was inexpensive. Lastly, it enjoyed a good reputation thanks to its simple programming interface.
 
 \begin{trivia}
-The number of pin lines on a chip dictate their packaging names. DIP (Dual In-line Package), like the z80 below, are recognizable by their two lines of pins. The Motorola 68000 on page \pageref{68000drawing} with its four sides of pins belongs to the "Chip carrier" family. 
+The number of pin lines on a chip dictates its packaging name. DIP (Dual In-line Package), like the z80 below, are recognizable by their two lines of pins. The Motorola 68000 on page \pageref{68000drawing} with its four sides of pins belongs to the "Chip carrier" family. 
 
-Packaging can use materials such as plastic or ceramic in which cases they are referred using increasingly barbaric acronyms such as CLCC or PLCC.
+Packaging can use materials such as plastic or ceramic in which cases they are referred to by increasingly barbaric acronyms such as CLCC or PLCC.
 \end{trivia}
 
 \sdraw{0.9}{z-80}\index{Processors!Zilog 80}
@@ -458,7 +445,7 @@ Other pins are \icode{NMI} Non Maskable Interrupt, \icode{RESET} Restart CPU, \i
 \index{Interrupts!z80}
 
 \label{z80_pinRFSH}
-The \icode{RFSH} pin (ReFreSH signal) tics at regular intervals to trigger DRAM refreshes. The sound system uses only SRAM so it is not used although this pin was re-purposed in a creative way for the CPS-1.5 "Kabuki" (page \pageref{kabuki}).
+The \icode{RFSH} pin (ReFreSH signal) tics at regular intervals to trigger DRAM refreshes. Since the sound system uses only SRAM this pin was re-purposed in a creative way for the CPS-1.5 "Kabuki" (page \pageref{kabuki}).
 
 
 \pagebreak
