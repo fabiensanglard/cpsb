@@ -620,24 +620,22 @@ The \textbf{Bitmap Plane} is particularly well suited to plot pixels and render 
 The \textbf{Text Plane} is deceptively named. It is also a bitmap plane but it expects values across four bitplanes making it well suited to write large quantities of bits in few operations. A m68k writing a 16-bit word can set 16 pixels which makes text rendering very fast when copying characters from a model. Two modes are available.
 
 \begin{itemize}[topsep=0pt]
-% \setlength\itemsep{0.2em}
 \item One 1024x1024 layer with 4bpp indexed colors.
 \item Four 512x512 layers with 1bpp monochrome.
 \end{itemize}
 
 
-The \textbf{Background Plane} works as a tilemap. Two modes are available.
+The \textbf{TileMap Plane} offers two modes.
 \begin{itemize}[topsep=0pt]
-% \setlength\itemsep{0.2em}
-\item Two 512x512 tilemaps using 8x8 tile with 4bpp indexed colors (16 palettes).
-\item One 1024x1024 tilemap using 16x16 tiles with 4bpp indexed colors (16 palettes).
+\item Two 512x512, using 8x8 tiles with 4bpp indexed colors (16 palettes).
+\item One 1024x1024, using 16x16 tiles with 4bpp indexed colors (16 palettes).
 \end{itemize}
 
 The \textbf{Sprite Plane} is a sprite layer allowing 128 sprites on-screen (with a max of 32 sprites per scanlines). Each sprite uses 4bpp indexed color (16 palettes).
 
 
  \begin{figure}[H]
-\nbdraw{z68k_layers}
+\nbdraw{x68k_layers}
 \caption*{X68000 planes and layers. Copyright G-Walk\cite{x68k_perfect_catalogue}}
 \end{figure}
 
@@ -724,7 +722,7 @@ Ghouls 'n Ghosts was released in 1994, six years after the arcade version. It is
 
 It is considered a "perfect port" because of its GFX faithfulness to the CPS-1 version. All the enemies, levels, and weapons are there, rendered with the correct rich colors. 
 
-The Tilemap layer is not used at all since the background lives in two software rendered 512x512 Graphic layers using a shared 8-bit indexed colors palette. The Text layer is also fully software rendered in 1024x1024 16 colors despite the CPU cost of plotting pixels in that mode. The cost and low number of colors makes it a good fit for rendering the GUI elements.
+The Tilemap plane is not used at all since the background lives in two software rendered 512x512 Bitmap layers using a shared 8-bit indexed colors palette. The Text layer is also fully software rendered in 1024x1024 16 colors despite the CPU cost of plotting pixels in that mode. The cost and low number of colors makes it a good fit for rendering the GUI elements.
 
 \begin{figure}[H]
 \img{x68k_gg_scrw.png}
@@ -732,9 +730,9 @@ The Tilemap layer is not used at all since the background lives in two software 
 \end{figure}
 
 
-Notice the vertical "cut" in the right of Graphic plane Pages 0 and 1. This artifact reveals the wraparound resulting from hardware scrolling these two layers. This technique allows the CPU to render only new portion of the background. 
+Notice the vertical "cut" in the right of Bitmap plane Pages 0 and 1. This artifact reveals the wraparound resulting from hardware scrolling these two layers. This technique allows the CPU to render only new portion of the background. 
 
-The Sprite layer contains more than sprites. While rendering the wind blowing in the grass only required swapping tile ID on CPS-1, the X68000 could not plot that many pixels in the Graphic planes. Promoting blades to sprites overlays reduced the fillrate.
+The Sprite layer contains more than sprites. While rendering the wind blowing in the grass only required swapping tile ID on CPS-1, the X68000 could not plot that many pixels in the Bitmap layers. Promoting blades to sprites overlays reduced the fillrate.
 
 The rain effect is replicated as seen on page \pageref{gg_rain} via the Text layer start offset. Note there is no DMA to/from the VRAM so every single pixel except for the Sprite layer is plotted by the CPU. Thanks to hardware scrolling, that cost is amortized.
 
@@ -774,7 +772,7 @@ The rain effect is replicated as seen on page \pageref{gg_rain} via the Text lay
 
 Final Fight was released in 1992, three years after the arcade version. Like the Ghouls'n Ghosts port, the game managed to ship on two 5.25-inch 1.2 MiB floppies.
 
-The graphic render uses the same trade off used by Ghouls 'n Ghosts where usage of Tilemaps is sacrificed in favor of the ability to feed the Sprite layer with tiles. 
+The graphic render uses the same trade off used by Ghouls 'n Ghosts where usage of Tilemap plane is sacrificed in favor of the ability to feed the Sprite layer with tiles. 
 
 Two bitmap layers are used for background elements while the Text layer is used for GUI elements. All these layers are rendered in software with a draw cost amortized thanks to hardware scrolling.
 
@@ -826,56 +824,56 @@ The YM2151 let music be close to the arcade version but without samples. The OKI
 
 \subsection{Per scene renderer}
 
-The color-depth reduction trick is only one among many others. There are many other testament to the hair pulling process it must have been to port to the X68000. One of them is the introduction sequence where Damned takes away the mayor's daughter, Jessica Haggar.
+The color-depth reduction trick is only one among many others. There are many testament to the hair pulling process an X68000 port appears to be. One of them is the introduction sequence where Damned takes away the mayor's daughter.
 
-This scene features many sprites tiles, among them two heroes, the mini-boss Damned, Jessica, two minions (XXXX and YYYY), and six barrels. The number of tiles far exceed the maximum 128 limit of the X68000.
+The arcade version called for many sprites tiles, among them two heroes, the mini-boss Damned, Jessica, two minions (red Dug and blue Jake), and six barrels. The number of tiles far exceed the maximum 128 sprite tile limit of the X68000.
 
 \begin{figure}[H]
 \img{ff_x68000_intro.png}
 \caption*{Final Fight X68000 intro sequence}
 \end{figure}
 
-To manage this problem, developers started by cutting out one minion (). 
+To manage this problem, developers started by cutting out one minion (blue Jake). 
 
-Since it was still not enough, they resorted to using "soft sprites". When the sprite layer is full, additional sprite tiles are drawn in software in the Graphic Plane Page 1. 
+Since it was still too many tiles, they resorted to enabling (for the intro only) the Tilemap plane. Five our of the six barrels are drawn as tilemap in the Tilemap 0.
 
-This trick should have brought the m68k CPU to its knees when the barrels are destroyed. When they explode in multiple pieces, the CPU would have had to repeatedly delete the dirty section of Graphic Plane before drawing the moving parts of the barrel. 
+Since a tilemap is a simple grid of tiles with no concept of sprites and overlap, special 8x8 tiles were generated where columns of barrels are pre-overlapped.
 
-We won't even get into the obscene amount of overdraw incurred when parts of a barrel overlap with each others.
+Things get messy when animation must occur. To allow the barrels to be broken into pieces, the engine exploits the timing of enemies fleeing. First when Damned leaves, then when Dug retires, rows of barrels are progressively migrated out of the tilemap layer into the sprite layer. 
 
 
 
 \begin{minipage}[!t]{0.49\linewidth}
 \vspace{-3mm}
   \begin{figure}[H]
-  \img{x68k_ff_text.png}
-  \caption*{Graphic Plane 0 Layer}
+  \img{ff_x68000_intro_bg.png}
+  \caption*{Tilemap 0 Layer}
   \end{figure}
 \end{minipage}%
 \hfill
 \begin{minipage}[!t]{0.49\linewidth}
 \vspace{-3mm}
    \begin{figure}[H]
-  \img{x68k_ff_sprites.png}
+  \img{ff_x68000_intro_sprites.png}
   \caption*{Sprite Layer}
   \end{figure}
 \end{minipage}
 
 \vspace{4ex}
 
-The trick is to move the barrels form the Background to the Sprite layer as enemies flee. The second player still disappears due to tile scarcity when the barrels are destroyed.
+The whole trick is not perfect. As the barrels break down, the machine reaches its sprite tile limit. Since the engine is not as elaborated as the arcade version (p \pageref{going_too_far}), a partial Cody is drawn. 
 
-\vspace{-2ex}
+\vspace{-4ex}
 \begin{minipage}[t]{0.49\linewidth}
   \begin{figure}[H]
-  \img{x68k_ff_text.png}
-  \caption*{Graphic Plane 0 Layer}
+  \img{ff_x68000_intro2_bg.png}
+  \caption*{Tilemap 0 Layer}
   \end{figure}
 \end{minipage}%
 \hfill
 \begin{minipage}[t]{0.49\linewidth}
    \begin{figure}[H]
-  \img{x68k_ff_sprites.png}
+  \img{ff_x68000_intro2_sprites.png}
   \caption*{Sprite Layer}
   \end{figure}
 \end{minipage}
