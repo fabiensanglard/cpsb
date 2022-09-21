@@ -60,9 +60,9 @@ During the linking stage, all the variables and functions are given an address i
 \end{figure}
 
 \subsubsection{Read-only}
-Instructions for \icode{f} go in \icode{.text} at offset 0. Since the linker knows both where the ROM will be mapped and the section offest in the ROM, it can inline calls to \icode{.text + 0}. This means \icode{0x0000} for both the z80 and the m68k.
+Instructions for \icode{f} go in section \icode{.text} at offset 0. Since the linker knows both where the ROM will be mapped and the section offest in the ROM, it can inline calls to \icode{.text + 0}. This means \icode{0x0000} for both the z80 and the m68k.
 
-Const values \icode{c} and \icode{d} are read only so they go in ROM as well. These are grouped in section \icode{.rodata} apart from \icode{.text}. Read and write access are respectively inlined values equal to \icode{.rodata + 0} and \icode{.rodata + 1}.
+Const values \icode{c} and \icode{d} are read only so they go in ROM as well. These are grouped in section \icode{.rodata} apart from \icode{.text}. Access to these two symbols are respectively inlined with values \icode{.rodata + 0} and \icode{.rodata + 1}.
 
 
 
@@ -89,9 +89,9 @@ There are many chips in the machine that need to talk to each other. In the hier
 
 That is a total of eight communication lines, but the dotted ones on the drawing are not programmable, lowering the task to understanding five APIs.
 
-\subsection{m68k \begin{CJK}{UTF8}{min}→\end{CJK} CPSA and m68k \begin{CJK}{UTF8}{min}→\end{CJK} CPS-B} Communication occurs over the CPS-A and CPS-B registers. Additional draw commands are written by the 68000 to the GFXRAM where they are read by the CPS-A. All access to GFXRAM is arbitrated by the 68000 bus protocol.
+\subsection{m68k \begin{CJK}{UTF8}{min}→\end{CJK} CPSA and m68k \begin{CJK}{UTF8}{min}→\end{CJK} CPS-B} Communication occurs over the CPS-A and CPS-B registers. Additional draw commands are written by the 68000 to the GFXRAM where they are read by the CPS-A. All access to GFXRAM is arbitrated by the m68k bus protocol.
 
-\subsection{z80 \begin{CJK}{UTF8}{min}→\end{CJK} YM2151} Communication occurs over the YM2151 registers which are mapped on the z80 bus. This accesses is arbitrated by the z80 bus protocol.
+\subsection{z80 \begin{CJK}{UTF8}{min}→\end{CJK} YM2151} Communication occurs over the YM2151 registers which are mapped on the z80 bus. This access is arbitrated by the z80 bus protocol.
 
 \subsection{z80 \begin{CJK}{UTF8}{min}→\end{CJK} MSM6295} Communication  occurs over the MSM6295 registers which are mapped on the z80 bus. This access are arbitrated by the z80 bus protocol. 
 
@@ -191,8 +191,8 @@ The only tricky part is to pick a seed to initialize the register. Street Fighte
 
 \section{Banking system}
 \label{memory_bank_programming}
-This part applies only to the z80 which uses an infamous banking system. The constraint is to make sure the window mapped at [\icode{0xB000-\icode{0xBFFF}}] is slid to "see" the proper part ROM. 
+This part applies only to the z80 which uses an infamous banking system. The constraint is to make sure the window mapped at [\icode{0xB000-\icode{0xBFFF}}] is slid to "see" the proper part of the ROM. 
 
-This is done via the Bank Switch control register mapped at \icode{0xF004}. The value written is multiplied by \icode{0x4000} which gives the starting offset in ROM space of the sliding window. Writing \icode{0} makes \icode{0xB000} in z80 space map to \icode{0x0000} in ROM space, writing \icode{0x0001} makes \icode{0xB000} in z80 space map to \icode{0x4000} in ROM space , and writing \icode{0x0002} makes \icode{0xB000} in z80 space map to \icode{0xB000} in ROM space .
+This is done via the Bank Switch control register mapped at \icode{0xF004}. The value written is multiplied by \icode{0x4000} which gives the starting offset (in ROM space) of the sliding window. Writing \icode{0} makes \icode{0xB000} in z80 space map to \icode{0x0000} in ROM space, writing \icode{0x0001} makes \icode{0xB000} in z80 space map to \icode{0x4000} in ROM space , and writing \icode{0x0002} makes \icode{0xB000} in z80 space map to \icode{0xB000} in ROM space .
  
-This adjustment must be performed before accessing any byte within the banking interval. 
+This adjustment must be performed before accessing any address falling within the banking interval. 

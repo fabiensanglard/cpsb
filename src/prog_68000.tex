@@ -674,7 +674,7 @@ Several windows-based GUIs running on top of Human68k were released over the yea
 \subsection{A Development machine?}
 The similarities between the X68000 and the CPS-1 are many. A quick glance over the specs on page \pageref{x68000-specs} could easily lead one to conclude that a small layer of emulation is all a X68000 needed to run CPS-1 games, making it a perfect development machine. 
 
-Since developers detailed to what extent SHARP's machine was involved, we can only make an educated guess. A beginning of an answer comes from the hardware components, while Capcom-produced software leaves no ambiguity.
+Since developers never detailed to what extent SHARP's machine was involved, we can only make an educated guess. A beginning of an answer comes from the hardware components, while Capcom-produced game ports leave no ambiguity.
 
 \subsubsection{Hardware response}
 If the Motorola 680000 CPU and the YM2151 present in both machines are identical, the rest diverge from slightly to significantly.
@@ -683,7 +683,7 @@ The sound chip is an OKI but it is "only" a MSM6258. Although it works alike the
 
 The sprite system is, at first sight, weaker than the CPS-1 since the number of tiles displayable is half (128 instead of 256). But the X68000's  access to raster effect allowed multiplexing (the Sprite Doubler by Koichi Yoshida\cite{x68000spritedoubler}) bringing the upper limit to 512 sprites!\index{Sprites Multiplexing!X68000}
 
-Lastly, the X68000 floppy storage resulted in slow loading time compared to the CPS-1 ROM. To solve this issue, developers used as much RAM as available, going as far as loading the full content of the floppies during startup if the capacity of the X68000 allowed it.
+Lastly, the X68000 floppy storage resulted in slow loading time compared to the CPS-1 ROM. To solve this issue, developers used as much RAM as available, going as far as loading the whole floppies during startup if the capacity of the X68000 allowed it.
 
 
 
@@ -710,9 +710,13 @@ A definitive answer about the viability of the X68000 as a development station c
 \caption*{X68000 Ports of CPS-1 games by Capcom}
 \end{figure}
 
-The XM6 Pro-68k emulator and a methodology shared by Upsilandre\cite{x68k_games_analysis} (detailed in the next pages) shows that the GFX rendering architecture of these titles exhibits no pattern of an emulation layer. Each GFX renderer is tailor made to rely heavily on the CPU. 
+An analysis methodology shared by Upsilandre\cite{x68k_games_analysis}, leveraging XM6 Pro-68k emulator, shows that the GFX rendering architecture of these titles exhibits no pattern of an emulation layer. On the contrary, the GFX renderers are tailor made and rely heavily on CPU tricks. 
 
-The stress on the 68000 is confirmed by Ghouls 'n Ghosts manual which recommends a 16MHz CPU and warns about slowdown with a machine using a 10MHz 68000. This leaves little doubt to the limited usage of the X68000 to write and test assembly, run TCE, and allocate/compile the GFXROM for CPS-2 games.
+\begin{trivia}
+The stress on the 68000 is confirmed by Ghouls 'n Ghosts manual which recommends a 16MHz CPU and warns about slowdown on a 10MHz 68000.
+\end{trivia}
+
+All thes clues strongly suggest the SHARP X68000 was limited to writing/testing assembly, running TCE, and allocating/compiling the GFXROM for CPS-2 games.
 
 \nbimg{gg_manual.jpg}
 
@@ -861,7 +865,7 @@ Things get messy when animation must occur. To allow the barrels to be broken in
 
 \vspace{4ex}
 
-The whole trick is not perfect. As the barrels break down, the machine reaches its sprite tile limit. Since the engine is not as elaborated as the arcade version (p \pageref{going_too_far}), a partial Cody is drawn. 
+The whole trick is not perfect. As the barrels break down, the machine reaches its sprite tile limit. Since the engine is not as elaborated as the arcade version (page \pageref{going_too_far}), a partial Cody is drawn. 
 
 \vspace{-4ex}
 \begin{minipage}[t]{0.49\linewidth}

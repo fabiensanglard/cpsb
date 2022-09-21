@@ -7,7 +7,7 @@
    viewBox="0 0 271.32839 135.16469"
    version="1.1"
    id="svg4810"
-   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
    sodipodi:docname="gfx_groups.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -28,13 +28,13 @@
      fit-margin-right="0"
      fit-margin-bottom="0"
      inkscape:zoom="0.75722503"
-     inkscape:cx="462.87429"
+     inkscape:cx="410.71014"
      inkscape:cy="262.14136"
-     inkscape:window-width="1878"
-     inkscape:window-height="1131"
-     inkscape:window-x="352"
-     inkscape:window-y="352"
-     inkscape:window-maximized="0"
+     inkscape:window-width="1280"
+     inkscape:window-height="736"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
      inkscape:snap-global="false"
      width="271.3284mm"
@@ -171,19 +171,19 @@
        sodipodi:nodetypes="cc" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:8.46667px;line-height:1.25;font-family:sans-serif;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.438078;text-anchor:middle;text-align:center"
+       style="font-style:normal;font-weight:normal;font-size:8.46667px;line-height:1.25;font-family:sans-serif;text-align:center;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.438078"
        x="85.827995"
        y="18.893305"
        id="text18129-6-1-1"><tspan
          sodipodi:role="line"
          id="tspan18127-7-2-9"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#ffffff;fill-opacity:1;stroke-width:0.438078;text-anchor:middle;text-align:center"
-         x="75.4617"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.438078"
+         x="85.827995"
          y="18.893305">32-bit</tspan><tspan
          sodipodi:role="line"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#ffffff;fill-opacity:1;stroke-width:0.438078;text-anchor:middle;text-align:center"
-         x="75.4617"
-         y="29.792706"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.438078"
+         x="85.827995"
+         y="29.770901"
          id="tspan16653">Pens</tspan></text>
     <rect
        style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.64652"
@@ -305,7 +305,7 @@
          x="122.93607"
          y="107.22002">CPS-A</tspan></text>
     <rect
-       style="fill:#80adc5;fill-opacity:1;stroke:#000000;stroke-width:0.750001"
+       style="fill:#6e89b0;fill-opacity:1;stroke:#000000;stroke-width:0.750001"
        id="rect4994-1-5"
        width="61.845875"
        height="44.375294"
@@ -383,8 +383,8 @@
          sodipodi:role="line"
          id="tspan18127-7-7"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46659px;font-family:Roboto;-inkscape-font-specification:Roboto;writing-mode:vertical-lr;text-orientation:upright;fill:#ffffff;fill-opacity:1;stroke-width:0.264581"
-         x="55.004524"
-         y="127.78744">SYNC</tspan></text>
+         x="55.533691"
+         y="127.25827">SYNC</tspan></text>
     <path
        style="fill:none;stroke:#ff0000;stroke-width:5.065;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutS-8)"
        d="M 31.05942,87.4802 V 64.069619"
@@ -399,8 +399,8 @@
          sodipodi:role="line"
          id="tspan18127-7-7-3"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46659px;font-family:Roboto;-inkscape-font-specification:Roboto;writing-mode:vertical-lr;text-orientation:upright;fill:#ffffff;fill-opacity:1;stroke-width:0.264581"
-         x="56.731945"
-         y="17.175213">ADDR</tspan></text>
+         x="56.202778"
+         y="17.70438">ADDR</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:6.61792px;line-height:1.25;font-family:sans-serif;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.407;stroke-miterlimit:4;stroke-dasharray:none"
