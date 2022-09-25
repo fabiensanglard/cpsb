@@ -18,7 +18,7 @@ go get golang.org/x/image/draw
 ```
 - Build
 ```
-go run build.go release
+./make.sh release
 ```
 
 ## How to build (Linux)
