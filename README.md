@@ -40,7 +40,7 @@ sudo apt install -y texlive-full
 
 - Build
 ```
-go run build.go release
+./make.sh release
 ```
 
 ### Debug mode
@@ -49,12 +49,12 @@ Building is slow when using 300dpi assets. To develop, the build system generate
 Debug is the default mode.
 
 ```
-go run build.go
+./make.sh debug
 ```
 
 ### Force asset regeneration
 ```
-go run build.go debug|release -f
+./make.sh debug|release -f
 ```
 
 ### Poor typesetting
