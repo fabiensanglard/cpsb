@@ -35,7 +35,7 @@ All other slots except for one (offset \icode{26}) point to a no-op routine.
 \index{Interrupts!Programming 68000}
 The 68000 has multiple interrupt modes. In its most complex form, \icode{IPL0}, \icode{IPL1}, and \icode{IPL2} encode a level of interrupt and the interrupt ID is retrieved via an external interrupt controller. This would be over-kill for the task at hand.
 
-A simpler mode, auto-vector, makes the CPU jump directly based on the three IPL lines' state. Three lines are treated as bit giving a value within [0,7] which is used to looked up the "vector table" starting at offset \icode{24}.
+A simpler mode, auto-vector, makes the CPU jump directly based on the three IPL lines' state. Three lines are treated as bits, giving a value within [0,7], which is used to look up the "vector table" starting at offset \icode{24}.
 
 The 3-bit scheme uses \icode{IPL0} for bit 0, \icode{IPL1} for bit 1, and \icode{IPL2} for bit 2. With CPS-A INT only connected to \icode{IPL1}, handler \#2 is always called upon interrupt. Therefore, VSync must be placed at offset \icode{24 + 2 = 26}.
 
