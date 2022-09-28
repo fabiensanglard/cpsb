@@ -438,7 +438,7 @@ The z80 comes to life thanks to its \icode{CLK} (clock ), \icode{+V5} (power), a
 
 The bus lines are dedicated \icode{D0-D15} for addresses and \icode{A0-A7} for data. For control, \icode{RD} indicates read while \icode{WR} indicates a write operation. \icode{WAIT} is used to add waitstates. 
 
-Although it is capable of relinquishing control of the bus via \icode{BUSRQ} (Bus Request), \icode{BUSAK} (Bus Acknowledge), \icode{MREQ} (Memory Request), and \icode{IORQ} (IO Request), the z80 completely own its bus and never shares it. In fact, the \icode{BUSRQ} and \icode{BUSAK} pins are not even connected.  Because it is isolated via latches, the z80's bus never suffers contention.
+Although it is capable of relinquishing control of the bus via \icode{BUSRQ} (Bus Request), \icode{BUSAK} (Bus Acknowledge), \icode{MREQ} (Memory Request), and \icode{IORQ} (IO Request), the z80 completely owns its bus and never shares it. In fact, the \icode{BUSRQ} and \icode{BUSAK} pins are not even connected.  Because it is isolated via latches, the z80's bus never suffers contention.
 
 
 Other pins are \icode{NMI} Non Maskable Interrupt, \icode{RESET} Restart CPU, \icode{HALT} Waiting for interrupt, \icode{M1} Fetching next instruction. The \icode{INT} Interrupt line will be of crucial interest in the programming section. An interrupt controller is usually necessary but the simple needs of the sound system allows it to work without one. 
