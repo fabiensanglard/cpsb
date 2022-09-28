@@ -217,7 +217,7 @@ There is strong isolation via layering where top systems are unable to access su
 
 The control system features a m68k in charge of coordinating inputs (joystick, buttons, coin) and outputs (video and audio). It can communicate with both the GFX and audio system main processors.
 
-The audio system runs almost totally in isolation. It is connected to control via two 8-bit latches which the z80 actively polls to retrieve commands related to music and sound effects. Notice how these latches bridge different data bus widths since control has 16 data lines while the audio system's uses 8 data lines.
+The audio system runs almost totally in isolation. It is connected to control via two 8-bit latches which the z80 actively polls to retrieve commands related to music and sound effects. Notice how these latches bridge different data bus widths since control has 16 data lines while the audio system uses 8 data lines.
 
 The graphic system needs more communications and exposes not only its CPS-A and CPS-B registers but also the GFX RAM where the screen layout is described. The m68k and the CPS-A use the same bus to access the GFX RAM, so the demarcation is not as clean as with the audio system. This results in a bit of bus contention.  
 \index{Colors!Pen}
