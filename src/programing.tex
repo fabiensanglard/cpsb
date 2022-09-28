@@ -73,7 +73,7 @@ Like \icode{a}, \icode{b} is readable and writable but it is initialized to valu
 
 Finally we come to variable \icode{e}. Since it is writable, the linker will have used the next available address in RAM after \icode{a}. But how can the linker initialize that location to value \icode{5} since it can only write to file \icode{pro.rom} which is not mapped there? 
 
-The answer is that it cannot. That task, called "copy-down", is another thing the bootstrap will have to take care of.
+The answer is that it cannot. That task, called "copy-down", is another thing the bootstrap will have to resolve.
 
 Since they involve low-level operations, both bootstraps for z80 and the m68k are written using assembly and bundled in a file named \icode{crt0.s}.
 
