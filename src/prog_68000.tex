@@ -345,7 +345,7 @@ A convenient trick is to allocate a rowscroll array of size 1024 with one entry 
 
 \subsubsection{Real-life example}
 
-When a contestant in Street Figther II jumps, SCROLL2 moves vertically but no rowscroll offsets are re-calculated, only \icode{ROWSCROLL\_OFFSET}  is moved. This allows to amortize the generation of perspective correct rowscroll offset.
+When a contestant in Street Figther II jumps, SCROLL2 moves vertically but no rowscroll offsets are re-calculated, only \icode{ROWSCROLL\_OFFSET}  is moved. This allows the engine to amortize the generation of perspective correct rowscroll offset.
 
 Note that rowscroll offsets are unsigned and always indicate an amount to move toward the left side of the screen. To offset toward the right, Street Fighter II developers took advantage of the wrap around nature of the SCROLL layers and used \icode{decalValue = 1024 - desiredRightOffsetValue}.
 
