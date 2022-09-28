@@ -50,7 +50,7 @@ An innocent six line C program offers a glimpse into what is involved.
 
 \lstinputlisting[style=CStyle]{src/code/variablesDeclaration.c}
 
-After compilation and linking, this program will result into a binary blob of raw instructions (no container like ELF or PE) \icode{prog.rom}. Burned on a ROM, is is mapped somewhere in the CPU address space depending on the mapping established for the z80 and m68k.
+After compilation and linking, this program will be a binary blob of raw instructions (no container like ELF or PE) \icode{prog.rom}. Burned on a ROM, it is mapped somewhere in the CPU address space depending on the mapping established for the z80 and m68k.
 
 During the linking stage, all the variables and functions are given an address in either ROM or RAM. 
 
