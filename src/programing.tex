@@ -179,7 +179,7 @@ This leaves "only" 126 sound values and 127 music values but is more than enough
 \section{Tracking wall-time}
 The wall-time is the time experienced by players. Both CPUs must be able to measure it. The m68k must do so in order to sample inputs and run the game engine at the intended speed. The z80 is under the same constraint for the music where it must keep track of pauses and note duration. 
 
-Modern systems have Real Time Clock (RTC) chips to do this but the CP-System is devoid of it. The solution is to leverage the counters which are incremented each time the main thread is interrupted. Depending on the CPU these accumulators will have different granularity.
+Modern systems have Real Time Clock (RTC) chips to do this but the CP-System has none. The solution is to leverage the counters which are incremented each time the main thread is interrupted. Depending on the CPU these accumulators will have different granularity.
 
 The m68k tracks time in units of 16ms while the z80 can do the same in increments of 4ms.
 
