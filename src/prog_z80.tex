@@ -52,21 +52,21 @@ Let's take an example converting a stream of 16-bit PCM to 4-bit ADPCM nibbles.
 The first 16-bit sample has a value of \icode{960} which becomes \icode{60} in 12-bit. With the current step size at 16, ADPCM can only command a delta of + ( 16 + 16/2 + 16/4) = +28 which it encodes in a nibble \icode{0b0111}. The step size index is updated via the transitionTable[\icode{b111}] = 8. The current step size is \icode{34}. 
 
 \subsubsection{Compressing sample 2}
-The second 16-bit sample also has a value of \icode{960} which becomes \icode{60} in 12-bit. Since the latest sample output was 28, ADPCM must somehow encode a difference of 60-28 = 32. ADPCM commands a delta of + ( 0 + 34/2 + 34/4) = +33 which it encodes in a nibble \icode{0b0011}. 
+The second 16-bit sample also has a value of \icode{960} which becomes \icode{60} in 12-bit. Since the latest sample output was 28, ADPCM must somehow encode a difference of 60-28 = 32. ADPCM commands a delta of + ( 0 + 34/2 + 34/4) = +25 which it encodes in a nibble \icode{0b0011}. 
 
-The decompressor will output 28 (its last value) + 33 = 61. It will slightly overshoot the desired value but we can see how the step size has adapted to the delta requested with only two steps. 
+The decompressor will output 28 (its last value) + 25 = 53. We can see how the step size has adapted to the delta requested with only two steps. 
 
 The step size index is updated via 8 (previous value) -1 (transitionTable[\icode{b011}]) = 7. Now the step size is \icode{31}.
 
 \subsubsection{Compressing sample 3}
-The third 16-bit sample has a value of \icode{950} which becomes \icode{56} in 12-bit. Since the latest sample output was 61, ADPCM encodes a difference of 56-61 = -5. ADPCM commands a delta of - (0 + 0 + 31/4) = -7 which it encodes in a nibble \icode{0b1001}. 
+The third 16-bit sample has a value of \icode{950} which becomes \icode{59} in 12-bit. Since the latest sample output was 53, ADPCM encodes a difference of 59-53 = 6. ADPCM commands a delta of + (0 + 0 + 0) = 0 which it encodes in a nibble \icode{0b0000}. 
 
-The decompressor will output 61 (its last value) - 5 = 56. The step size index is updated via 7 (previous value) - 1  (transitionTable[\icode{b001}]) = 6. Now the step size is \icode{28}.
+The decompressor will output 53 (its last value) + 0 = 53. The step size index is updated via 7 (previous value) - 1  (transitionTable[\icode{b000}]) = 6. Now the step size is \icode{28}.
 
 \subsubsection{Compressing sample 4}
-The last 16-bit sample has a value of \icode{160} which becomes \icode{10} in 12-bit. Since the latest sample output was 56, ADPCM encodes a difference of 10-56 = -46. ADPCM commands a delta of - (28 + 28/2 + 0) = -42 which it encodes in a nibble \icode{0b1110}. 
+The last 16-bit sample has a value of \icode{160} which becomes \icode{10} in 12-bit. Since the latest sample output was 53, ADPCM encodes a difference of 10-53 = -43. ADPCM commands a delta of - (28 + 28/2 + 0) = -42 which it encodes in a nibble \icode{0b1110}. 
 
-The decompressor will output 56 (its last value) - 42 = 14. The step size index is updated via 6 (previous value) + 6 (transitionTable[\icode{0b110}]) = 12. Now the step size is \icode{50}.
+The decompressor will output 53 (its last value) - 42 = 11. The step size index is updated via 6 (previous value) + 6 (transitionTable[\icode{0b110}]) = 12. Now the step size is \icode{50}.
 
 Graphing PCM vs ADPCM shows that the decompressed stream "lags" behind upon abrupt changes but catches up aggressively. ADPCM first value is always near zero (+/-28) but it is not audible to players since most samples start with a fade-in. 
 
