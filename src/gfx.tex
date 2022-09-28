@@ -8,7 +8,7 @@ Since the graphic pipeline of the CPS-1 is hard-coded in the silicon of the CPS-
 
 It sounds simple but there is more at hand than converting graphic assets to GFXROM format. Even though all types of assets use the same pixel format, observant readers will have noticed that palettes are not stored in GFXROM. Special care must be taken to save them and provide them to the m68k later, along with a way to reference them.
 
-The other constraints to consider are the "hard-coded regions" of the GFXROM where OBJ, STAR1, STAR2, SCR1, SCR2, and SCR3 assets must reside. If a tile is not where it should, a draw command is simply ignored.
+The other constraints to consider are the "hard-coded regions" of the GFXROM where OBJ, STAR1, STAR2, SCR1, SCR2, and SCR3 assets must reside. If a tile is not where it should be, a draw command is simply ignored.
 
 All board use a different layout. The Street Fighter II board and its \icode{STF29} PAL slice the 6MiB GFXROM in four areas (OBJ, SCR1, SCR2, and SCR3) . 
 
