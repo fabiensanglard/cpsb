@@ -278,7 +278,7 @@ Finally, the processor status is given by \icode{FC0}, \icode{FC1}, \icode{FC2} 
 Motorola's CPU name is due to the total number of transistors totaling 68,000 units. The 68030 and 68040 had more transistors than their names indicate. 
 \end{trivia}
 
-Despite the raving description provided in the previous pages, the 68000 could be a peculiar CPU to program. Its most famous shortcoming involved memory alignment. While Intel's line of CISC allows random memory accesses (at the cost of a great performance penalty), Motorola's CPU will throw an \icode{address error} exception while attempting to read/write memory not aligned on a 16-bit (\icode{WORD}) boundary.
+Despite the enthusiastic description provided in the previous sections, the 68000 could be a peculiar CPU to program. Its most famous shortcoming involved memory alignment. While Intel's line of CISC allows random memory accesses (at the cost of a great performance penalty), Motorola's CPU will throw an \icode{address error} exception while attempting to read/write memory not aligned on a 16-bit (\icode{WORD}) boundary.
 
 This limitation is rooted all the way down to the CPU pins where there is no \icode{A0} line. Pins \icode{UDS} and \icode{LDS}indicate which of the high-byte or low-byte parts of a 16-bit \icode{WORD} to access.
 
