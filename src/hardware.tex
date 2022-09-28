@@ -1936,7 +1936,7 @@ Besides deciding source and destination of data, the CPS-A also generates LI: (L
 The 23-bit address line to the GFX ROM is special. It is not a raw address but a layerID + tileID within that layer. The PAL \icode{STF29} converts IDs into addresses.
 
 
-The CPS-B is put under heavy contribution. It must simultaneously write the next sprite framebuffer but also render the current by reading the previous sprite framebuffer and sampling all five other layers.
+The CPS-B has a heavy obligation. It must simultaneously write the next sprite framebuffer but also render the current by reading the previous sprite framebuffer and sampling all five other layers.
 
 \nbdraw{vram_rw}
 
