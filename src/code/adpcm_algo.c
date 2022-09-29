@@ -11,12 +11,12 @@ int stepSizeIndex = 0; // Initial value (0) points to 16
 int16_t lastSample = 0;
 
 int8_t compress(int16_t sample) {
-  int8_t B3, B2 ,B1, B0; // Bit of the output nibble
+  int8_t B3 = 0, B2 = 0, B1 = 0, B0 = 0; // Bit of the output nibble
 
-  sample >>=4 // Convert from 16-bit to 12-bit
-  int16_t diff = lastSample - sample; 
+  sample >>= 4; // Convert from 16-bit to 12-bit
+  int16_t diff = sample - lastSample; 
 
-  if (diff) < 0) B3 = 1 // Set magnitude sign bit
+  if (diff < 0) B3 = 1; // Set magnitude sign bit
   diff = abs(diff);
 
   int16_t ss = stepSizes[stepSizeIndex]; 
@@ -25,14 +25,11 @@ int8_t compress(int16_t sample) {
   if (diff >= ss/2) B1 = 1, diff -= (ss/2); // Set B1
   if (diff >= ss/4) B0 = 1;                 // Set B0
 
-  int8_t nibble = B3 << 3 | B2 << 2 || B1 << 1 | B0; 
+  int8_t nibble = B3 << 3 | B2 << 2 | B1 << 1 | B0; 
 
   // Keep track of the value upon decompression
   lastSample = decompress(lastSample, nibble, stepSizeIndex); 
 
-  int8_t transIndex = ss/4 * nibble & 0x1) +
-                      ss/2 * nibble & 0x2) +
-                      ss  *  nibble & 0x4) ; 
-  stepSizeIndex += transitionTable[transIndex];
+  stepSizeIndex += transitionTable[nibble & 0x7];
   return nibble;
 }
