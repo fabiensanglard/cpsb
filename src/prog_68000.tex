@@ -53,7 +53,7 @@ The last piece of the \icode{\_boot} function sets up auto-vector mode and jump 
 \section{Memory Map}
 Like for the Sound System and its z80 memory space, we need to make sure the software behaves according to the memory map defined by the board PALs.
 
-The compiler in the GNU Compiler Collection, \icode{gcc} does not have a placement keyword \icode{\_at} but even if it had been available, it would not have been enough to map large portions such as the 192 KiB of GFXRAM.
+The compiler in the GNU Compiler Collection, \icode{gcc} does not have a placement keyword \icode{\_\_at} but even if it had been available, it would not have been enough to map large portions such as the 192 KiB of GFXRAM.
 
 We can compensate for the lack of \icode{\_\_at} thanks to the power of \icode{ld}'s linker script system. The idea is to use a two step method:
 \begin{enumerate}
