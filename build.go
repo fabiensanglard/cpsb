@@ -142,8 +142,8 @@ func prepare(folder string, f func(string, string)) {
 	items, _ := ioutil.ReadDir(folder)
 	for _, item := range items {
 		if item.IsDir() {
-			fmt.Println("Subdirectores in '%s' are not supported", folder)
-			os.Exit(1)
+	      os.MkdirAll(cwd() + out + "/" + folder + item.Name() + "/" , os.ModePerm)
+			prepare(folder + item.Name() + "/" , f)
 		}
 		var src = cwd() + folder + item.Name()
 		var dst = cwd() + out + "/" + folder + item.Name()
@@ -242,8 +242,9 @@ func main() {
 	out = "out/" + mode
 	os.MkdirAll(out, os.ModePerm)
     
-    makeCover("src/cover/pdf/cover_front.svg", out+ "/illu/cover_front.pdf")
-    makeCover("src/cover/pdf/cover_back.svg", out + "/illu/cover_back.pdf")
+    //TODO
+    // makeCover("src/cover/pdf/cover_front.svg", out+ "/illu/cover_front.pdf")
+    // makeCover("src/cover/pdf/cover_back.svg", out + "/illu/cover_back.pdf")
 
 	prepare("illu/img/", prepareImg)
 	prepare("illu/d/", prepareDrawing)
