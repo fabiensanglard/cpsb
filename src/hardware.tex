@@ -750,7 +750,7 @@ HSYNC signal tells the CRT that a line has been drawn and the gun's horizontal p
 \pagebreak
 \subsection{Fields}
 
-The process of drawing scanlines over the screen, also called "raster scan", is flawed as described. If the gun draws a line and upon HSYNC goes back to the left, it would be drawing the same upper left line over and over again. 
+The process of drawing scanlines over the screen, also called "raster scan", is incomplete as described. If the gun draws a line and upon HSYNC goes back to the left, it would be drawing the same upper left line over and over again. 
 
 It is barely noticeable but scanlines are not drawn straight. There is a slight downward slope. This way, when HSYNC is received and horizontal position is reset, the next line is drawn below the previous.
 
