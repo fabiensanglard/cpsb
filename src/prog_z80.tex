@@ -107,7 +107,7 @@ VGM (Video Game Music) is a community effort originating from \icode{smspower.or
 
 The arcade profile is particularly interesting for CPS-1 development since it uses YM2151 for FM Synthesis and SegaPCM for the samples.
 
-While the YM2151 is obviously a perfect fit that will need no processing, the SegaPCM needs some adjustments. As a chip used by SEGA in their AM2 (Amusement Machine 2) from 1985 to 1991, it is superior in capabilities to the MSM6295. It relies on 16-bit PCM, up to 32kHZ sampling, has more channels, and has a larger address space.
+While the YM2151 is obviously a perfect fit that will need no processing, the SegaPCM needs some adjustments. As a chip used by SEGA in their AM2 (Amusement Machine 2) from 1985 to 1991, it is superior in capabilities to the MSM6295. It relies on 16-bit PCM, up to 32kHz sampling, has more channels, and has a larger address space.
 
 The build system can take care of compressing the SegaPCM to ADPCM and resampling from 32KHz to 8080Hz but the musicians should only use two channels for music samples in order to play nicely with the CPS-1, where the two other channels are used to play sound effects.
 
