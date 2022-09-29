@@ -865,7 +865,7 @@ The CP-System overscan resolution of \icode{512x262} seems to indicate a very hi
 
 First, there is the problem of retracing vertically and horizontally. Cannon movement is not instantaneous, so while it moves horizontally or vertically, it would leave a visible diagonal of electrons across two scanlines (horizontal reset) or across the whole screen (vertical reset).
 
-The second problem is wobbling. Because a reset changes the cannon position abruptly (as opposed to the smooth progressioin during a scanline), it takes a little bit of time for the electron beam to stabilize again after it completes the reset.
+The second problem is wobbling. Because a reset changes the cannon position abruptly (as opposed to the smooth progression during a scanline), it takes a little bit of time for the electron beam to stabilize again after it completes the reset.
 
 Lastly, the video system needs breaks to read or write data without generating visible artifacts. This includes swapping buffers, updating palette colors, and retrieving the list of sprites/tilemaps to draw on the next scanline.
 
