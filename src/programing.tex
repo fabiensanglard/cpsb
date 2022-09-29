@@ -60,7 +60,7 @@ During the linking stage, all the variables and functions are given an address i
 \end{figure}
 
 \subsubsection{Read-only}
-Instructions for \icode{f} go in section \icode{.text} at offset 0. Since the linker knows both where the ROM will be mapped and the section offest in the ROM, it can inline calls to \icode{.text + 0}. This means \icode{0x0000} for both the z80 and the m68k.
+Instructions for \icode{f} go in section \icode{.text} at offset 0. Since the linker knows both where the ROM will be mapped and the section offset in the ROM, it can inline calls to \icode{.text + 0}. This means \icode{0x0000} for both the z80 and the m68k.
 
 Const values \icode{c} and \icode{d} are read only so they go in ROM as well. These are grouped in section \icode{.rodata} apart from \icode{.text}. Access to these two symbols are respectively inlined with values \icode{.rodata + 0} and \icode{.rodata + 1}.
 
