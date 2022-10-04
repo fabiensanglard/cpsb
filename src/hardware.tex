@@ -13,7 +13,7 @@ The CPS-1 was expected to solve most of Capcom's arcade division problems. Namel
 
 Cost reduction would be achieved by mimicking home consoles and standardizing the platform. Instead of re-designing boards for each game, the hardware would be a constant with the cabinet differentiated only by the software running on it.
 
-Price lowering would allow arcade operators to renew their games more often. This objective would be reached by designing a platform where new game boards containing mostly ROMs could be purchased separately from the processor board.
+Price lowering would allow arcade operators to replace their games more often. This objective would be reached by designing a platform where new game boards containing mostly ROMs could be purchased separately from the processor board.
 
 The development toolchain would improve thanks to the stability of the target platform. Without having to constantly rewrite tools and juggle with assembly languages, programmers could invest in the long term and build an SDK running on powerful workstations such as SHARP's series of X68000s.
 
@@ -223,7 +223,7 @@ The graphic system needs more communications and exposes not only its CPS-A and 
 \index{Colors!Pen}
 \index{Colors!Ink}
 
-The video system produces a stream of palette addresses. Combined with the palette SRAM (where colors are stored) and the DAC, it outputs a signal towards JAMMA. It is heavy duty in order to keep up with the 59.64Hz refresh rate inflicted on the screen.
+The video system produces a stream of palette addresses. Combined with the palette SRAM (where colors are stored) and the DAC, it outputs a signal towards JAMMA. It is heavy duty in order to keep up with the 59.64Hz refresh rate desired on the screen.
 
 \begin{figure}[H]
 \nbdraw{arch}
@@ -386,7 +386,7 @@ Thanks to the PAL chips enabling/disabling components, the 68000's memory space 
 
 \subsection{Putting it all together}
 
-The details of the 68000's operations will be studied in-depth in the next chapters but we can already guess how the CPU operates based on what it has access to. As the m68k boots, it starts to retrieve instructions from its ROM. For regular operations such as store/load, and also to keep track of its call stack, it uses its work RAM. 
+The details of the 68000's operations will be studied in-depth in the next chapters but we can already guess how the CPU operates based on what it can access. As the m68k boots, it starts to retrieve instructions from its ROM. For regular operations such as store/load, and also to keep track of its call stack, it uses its work RAM. 
 
 The game engine starts and reads the configuration set by the arcade operators via the DIP switches. While the game runs, the CPU continuously polls the JAMMA inputs.
 
@@ -548,7 +548,7 @@ The huge advantage of FM synthesis is the small amount of data required to store
 Looking at the YM2151, we see previously discussed pins such as \icode{+5V}, \icode{GND}, and \icode{CS}. The \icode{CLK} is connected to the same oscillator as the z80 for a frequency of 3.58MHz. The \icode{D0-D7} address/data pins (multiplexed via \icode{A0}) exactly fit the z80's 8-bit data bus with read (\icode{RD}) and write (\icode{WR}) control.
 
 
-One pin is of particular interest to us. \icode{IRQ} allows the YM2151 to generate interrupts based on two internal counters. It's usage is detailed in the programming section.
+One pin is of particular interest to us. \icode{IRQ} allows the YM2151 to generate interrupts based on two internal counters. Its usage is detailed in the programming section.
 
 \sdraw{0.48}{YM2151}
 
@@ -2072,7 +2072,7 @@ To this effect, twenty-five versions the CPS-B exist\cite{mame_cps1_video}, some
 
 In the early days of the CP-System, the CPS-B chips changed frequently. The table above only contains a few of the many PCB revisions. There is a correlation between the number of revisions and how successful a game was. Street Fighter 2 was revised 34 times, while Final Fight received 13 "refreshes".
 
-With the released of "Three Wonders", Capcom stopped changing the CPS-B in favor of a better protection system. All CPS-B ASICs onward were CPS-B v21.
+With the release of "Three Wonders", Capcom stopped changing the CPS-B in favor of a better protection system. All CPS-B ASICs onward were CPS-B v21.
 
 \begin{figure}[H]
 { \setlength{\tabcolsep}{3.0pt}
@@ -2174,7 +2174,7 @@ As the reader will have guessed, passionate fans found a way to bring these game
 \subsubsection{Phoenixing}
 The first method is called "phoenix"-ing. It is a tedious process which consists of dumping a game ROM and patching the m68k instructions to replace CPS-B registers accesses to use the "default values"\cite{csp1_phoenix}. 
 
-People phoenixing CPS-1 board have such intimate knowledge of the CP-System that they even changed the game to display a "Phoenix Edition" splash upon startup.
+People phoenixing CPS-1 boards have such intimate knowledge of the CP-System that they even changed the game to display a "Phoenix Edition" splash upon startup.
 
 \begin{figure}[H]
 \nbimg{phoenix_screen.png}
@@ -2207,7 +2207,7 @@ The money in the balance armed the counterfeiters with an unreasonable amount of
 
 Of all the security measures, it would have been fair to assume the custom ASICs would be an impenetrable fortress. Astonishingly, CPS-A and CPS-B replicas were manufactured under the name "COMCO"\cite{arcadeHackerCPS1}. It is unknown if an insider leaked the schematics or if someone made it their life mission to reverse-engineer these chips to make it happen but it did.
 
-As cracks appeared in its shield, Capcom did not give up on protecting its tiles. As it had proved itself able to evolve and compete in the business of producing games, it embraced the challenge of embarking on an encryption crusade against bootlegers.
+As cracks appeared in its shield, Capcom did not give up on protecting its titles. As it had proved itself able to evolve and compete in the business of producing games, it embraced the challenge of embarking on an encryption crusade against bootlegers.
 
 \subsection{CPS-1.5 Kabuki}
 \index{CP-System!CPS-1.5 Kabuki}

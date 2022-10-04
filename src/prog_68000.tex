@@ -17,7 +17,7 @@ All stages of the build graph rely on tools provided by GNU GCC. Compiling \icod
 
 
 
-At the end of the process, the logical m68k ROM is split into interleaved chip sized ROMs according to the specifics of the target board (described in the hardware chapter).
+At the end of the process, the logical m68k ROM is split into interleaved chip-sized ROMs according to the specifics of the target board (described in the hardware chapter).
 
 Like the z80, bootstrapping is solved with a small assembler program named \icode{crt0.s}.
 
@@ -35,7 +35,7 @@ All other slots except for one (offset \icode{26}) point to a no-op routine.
 \index{Interrupts!Programming 68000}
 The 68000 has multiple interrupt modes. In its most complex form, \icode{IPL0}, \icode{IPL1}, and \icode{IPL2} encode a level of interrupt and the interrupt ID is retrieved via an external interrupt controller. This would be over-kill for the task at hand.
 
-A simpler mode, auto-vector, makes the CPU jump directly based on the three IPL lines' state. Three lines are treated as bit giving a value within [0,7] which is used to looked up the "vector table" starting at offset \icode{24}.
+A simpler mode, auto-vector, makes the CPU jump directly based on the three IPL lines' state. Three lines are treated as bits giving a value within [0,7], which is used to look up the "vector table" starting at offset \icode{24}.
 
 The 3-bit scheme uses \icode{IPL0} for bit 0, \icode{IPL1} for bit 1, and \icode{IPL2} for bit 2. With CPS-A INT only connected to \icode{IPL1}, handler \#2 is always called upon interrupt. Therefore, VSync must be placed at offset \icode{24 + 2 = 26}.
 
@@ -347,7 +347,7 @@ A convenient trick is to allocate a rowscroll array of size 1024 with one entry 
 
 When a contestant in Street Figther II jumps, SCROLL2 moves vertically but no rowscroll offsets are re-calculated, only \icode{ROWSCROLL\_OFFSET}  is moved. This allows to amortize the generation of perspective correct rowscroll offset.
 
-Note that rowscroll offsets are unsigned and always indicate an amount to move toward the left side of the screen. To offset toward the right, Street Fighter II developers took advantage of the wrap around nature of the SCROLL layers and used \icode{decalValue = 1024 - desiredRightOffsetValue}.
+Note that rowscroll offsets are unsigned and always indicate an amount to move toward the left side of the screen. To offset toward the right, Street Fighter II developers took advantage of the wraparound nature of the SCROLL layers and used \icode{decalValue = 1024 - desiredRightOffsetValue}.
 
 \paragraph{Video Control} This register enables/disables misc attributes.
 
@@ -828,7 +828,7 @@ The YM2151 let music be close to the arcade version but without samples. The OKI
 
 \subsection{Per scene renderer}
 
-The color-depth reduction trick is only one among many others. There are many testament to the hair pulling process an X68000 port appears to be. One of them is the introduction sequence where Damned takes away the mayor's daughter.
+The color-depth reduction trick is only one among many others. There are many testaments to the hair pulling process an X68000 port appears to be. One of them is the introduction sequence where Damned takes away the mayor's daughter.
 
 The arcade version called for many sprites tiles, among them two heroes, the mini-boss Damned, Jessica, two minions (red Dug and blue Jake), and six barrels. The number of tiles far exceed the maximum 128 sprite tile limit of the X68000.
 

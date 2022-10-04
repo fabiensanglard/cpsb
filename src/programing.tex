@@ -29,7 +29,7 @@ As this book was being written, several tools were authored to validate the unde
 
 Ultimately these tools were combined into a build system called \icode{ccps}. The rest of this book occasionally refers to \icode{ccps} but tries to keep the abstraction level high so readers can build their own build system if they desire. 
 
-Even if only to check what obscure compiler flags must be used, it is freely available, open source, and a few command lines away. It also welcomes pull request :P !
+Even if only to check what obscure compiler flags must be used, it is freely available, open source, and a few command lines away. It also welcomes pull requests :P !
 
 \lstinputlisting[style=BashStyle]{src/code/clone_ccps.sh}
 
@@ -39,7 +39,7 @@ For all their CPS-1 titles, Capcom developers used z80/m68k assembly. They did n
 
 Even with improvements in modern compiler capabilities, output compactness, and optimization performances, a developer willing to take a CPS-1 to the next level will undoubtedly use assembly.
 
-Since the goal of this book is to explains how things works, it uses C for its greater readability and wider knowledge base among programmers. A little bit of assembly is used but only to bootstrap the CPUs.
+Since the goal of this book is to explain how things work, it uses C for its greater readability and wider knowledge base among programmers. A little bit of assembly is used but only to bootstrap the CPUs.
 	
 \section{CPUs Bootstrapping}
 Without libraries, frameworks, dynamic linker, syscalls, virtual memory, a loader, or even an operating system, CP-System games run on the bare metal. 
@@ -50,7 +50,7 @@ An innocent six line C program offers a glimpse into what is involved.
 
 \lstinputlisting[style=CStyle]{src/code/variablesDeclaration.c}
 
-After compilation and linking, this program will result into a binary blob of raw instructions (no container like ELF or PE) \icode{prog.rom}. Burned on a ROM, is is mapped somewhere in the CPU address space depending on the mapping established for the z80 and m68k.
+After compilation and linking, this program will result into a binary blob of raw instructions (no container like ELF or PE) \icode{prog.rom}. Burned on a ROM, it is mapped somewhere in the CPU address space depending on the mapping established for the z80 and m68k.
 
 During the linking stage, all the variables and functions are given an address in either ROM or RAM. 
 
@@ -69,7 +69,7 @@ Const values \icode{c} and \icode{d} are read only so they go in ROM as well. Th
 \subsubsection{Read-Write}
 Symbol \icode{a} is interesting because it is readable but also writable. The linker will have assigned a RAM address (starting at \icode{0xD000} on z80 and \icode{0xFF0000} on m68k). Since it is uninitialized, it will point to whatever is in the RAM when it started.
 
-Like \icode{a}, \icode{b} is readable and writable but it is initialized to value \icode{0}. The linker can make \icode{a} point to RAM and even group zero-initialized variables together in \icode{.bss} but setting the value to 0 cannot be done. This is something the bootstrap will have to do.
+Like \icode{a}, \icode{b} is readable and writable but it is initialized to value \icode{0}. The linker can make \icode{a} point to RAM and even group zero-initialized variables together in \icode{.bss} but setting the value to 0 cannot be done. This is something the bootstrap will have to resolve.
 
 Finally we come to variable \icode{e}. Since it is writable, the linker will have used the next available address in RAM after \icode{a}. But how can the linker initialize that location to value \icode{5} since it can only write to file \icode{pro.rom} which is not mapped there? 
 
@@ -87,7 +87,7 @@ There are many chips in the machine that need to talk to each other. In the hier
 
 \nbdraw{apis}
 
-That is a total of eight communication lines, but the dotted ones on the drawing are not programmable, lowering the task to understanding five APIs.
+That is a total of eight communication lines, but the dotted ones in the drawing are not programmable, lowering the task to understanding five APIs.
 
 \subsection{m68k \begin{CJK}{UTF8}{min}→\end{CJK} CPSA and m68k \begin{CJK}{UTF8}{min}→\end{CJK} CPS-B} Communication occurs over the CPS-A and CPS-B registers. Additional draw commands are written by the 68000 to the GFXRAM where they are read by the CPS-A. All access to GFXRAM is arbitrated by the m68k bus protocol.
 
@@ -132,7 +132,7 @@ This introduces an ultimate problem. It is not possible for the m68k CPU to send
 \subsection{Back in the days}\index{Back in the days!General}
 The system and conventions we just described allows for reliable date exchange but it does not give a semantic to the values in the latches. 
 
-A developer is free to give any meaning to the latches since they controls both the writer and the reader. Maybe you can even take a second to think how you would design this interface if you had to before we study how Capcom did it.
+A developer is free to give any meaning to the latches since they control both the writer and the reader. Maybe you can even take a second to think how you would design this interface if you had to before we study how Capcom did it.
 
 In a game like Street Fighter II, developers took the approach of not giving values an "immediate" meaning. Communication is a stream of bytes which must be reconstructed on the receiving end before being interpreted.
 
