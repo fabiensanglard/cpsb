@@ -12,13 +12,9 @@ import "image/jpeg"
 import "image/png"
 import "image"
 
-var inkscapeBins = []string{"/Applications/Inkscape.app/Contents/MacOS/inkscape",
-    "/usr/bin/inkscape",
-    "/snap/bin/inkscape",
-   }
-var inkscapeBin = ""
-
+var inkscapeBin = "inkscape"
 var force = false
+
 func isOlder(src string, than string) bool {
 	if force {
 		return false
@@ -151,15 +147,6 @@ func prepare(folder string, f func(string, string)) {
 	}
 }
 
-func findInkscape() {
-   for _, candidate := range inkscapeBins {
-   	if _, err := os.Stat(candidate); err != nil {
-        continue
-    }
-    inkscapeBin = candidate
-   	break
-   	}
-}
 
 func toString(fs []string) string {
 	var b bytes.Buffer
@@ -214,10 +201,20 @@ func cwd() string {
 	return cwd
 }
 
-func main() {
-   findInkscape()
+func checkExecutable(bin string) {
+	path, err := exec.LookPath(bin)
+	if err != nil {
+		fmt.Println(fmt.Sprintf("Could not find executable '%s'", bin))
+		os.Exit(1)
+	}
+	fmt.Println(fmt.Sprintf("Found '%s' -> '%s'", bin, path))
+}
 
+func main() {
    fmt.Println("Building...")
+
+   checkExecutable(inkscapeBin)
+
 	var args = os.Args
 
 	if len(args) > 1 {
@@ -233,13 +230,14 @@ func main() {
 		return
 	}
 
-    compileOptions := ""
+   compileOptions := ""
 	if mode == "print" {
        compileOptions = `\def\forprint{}`
        mode = "release"
 	}
 
-	out = "out/" + mode
+   outputDirName := "out"
+	out = outputDirName + "/" + mode
 	os.MkdirAll(out, os.ModePerm)
     
    makeCover("src/cover/pdf/cover_front.svg", out+ "/illu/cover_front.pdf")
@@ -250,7 +248,7 @@ func main() {
 
 	bin := "pdflatex"
 	arg0 := "-output-directory"
-	arg1 := "out"
+	arg1 := outputDirName
 	arg2 := `\def\base{` + out + `} ` + compileOptions + ` \input{src/book.tex}`
         fmt.Println(bin, arg0, arg1, arg2)
 
