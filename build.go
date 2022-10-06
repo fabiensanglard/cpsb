@@ -18,7 +18,7 @@ var force = false
 func isOlder(src string, than string) bool {
 	if force {
 		return false
-	} 
+	}
 	stat, err := os.Stat(src)
 
 	// If the file does not exist, it is not older.
@@ -57,38 +57,37 @@ func copy(src, dst string) (int64, error) {
 }
 
 func rescale(ssrc string, sdst string) {
-	
+
 	input, _ := os.Open(ssrc)
-defer input.Close()
+	defer input.Close()
 
-output, err := os.Create(sdst)
-defer output.Close()
-if err != nil {
-	panic(fmt.Sprintf("Error creating %s", sdst))
-		
-}
+	output, err := os.Create(sdst)
+	defer output.Close()
+	if err != nil {
+		panic(fmt.Sprintf("Error creating %s", sdst))
+	}
 
-// Decode the image (from PNG to image.Image):
-var src image.Image
-if strings.Contains(ssrc, ".png") {
-   src, err = png.Decode(input) 
-} else {
-	src, err = jpeg.Decode(input) 
-}
+	// Decode the image (from PNG to image.Image):
+	var src image.Image
+	if strings.Contains(ssrc, ".png") {
+		src, err = png.Decode(input)
+	} else {
+		src, err = jpeg.Decode(input)
+	}
 
-if err != nil {
-	panic(fmt.Sprintf("Error loading %s", ssrc))
-		
-}
+	if err != nil {
+		panic(fmt.Sprintf("Error loading %s", ssrc))
 
-// Set the expected size that you want:
-dst := image.NewRGBA(image.Rect(0, 0, 100, 100.0 * src.Bounds().Max.Y / src.Bounds().Max.X))
+	}
 
-// Resize:
-draw.NearestNeighbor.Scale(dst, dst.Rect, src, src.Bounds(), draw.Over, nil)
+	// Set the expected size that you want:
+	dst := image.NewRGBA(image.Rect(0, 0, 100, 100.0*src.Bounds().Max.Y/src.Bounds().Max.X))
 
-// Encode to `output`: 
-png.Encode(output, dst)
+	// Resize:
+	draw.NearestNeighbor.Scale(dst, dst.Rect, src, src.Bounds(), draw.Over, nil)
+
+	// Encode to `output`:
+	png.Encode(output, dst)
 }
 
 func prepareImg(src string, dst string) {
@@ -134,19 +133,18 @@ func prepareDrawing(src string, dst string) {
 }
 
 func prepare(folder string, f func(string, string)) {
-	os.MkdirAll(cwd() + out + "/" + folder, os.ModePerm)
+	os.MkdirAll(cwd()+out+"/"+folder, os.ModePerm)
 	items, _ := ioutil.ReadDir(folder)
 	for _, item := range items {
 		if item.IsDir() {
-	      os.MkdirAll(cwd() + out + "/" + folder + item.Name() + "/" , os.ModePerm)
-			prepare(folder + item.Name() + "/" , f)
+			os.MkdirAll(cwd()+out+"/"+folder+item.Name()+"/", os.ModePerm)
+			prepare(folder+item.Name()+"/", f)
 		}
 		var src = cwd() + folder + item.Name()
 		var dst = cwd() + out + "/" + folder + item.Name()
 		f(src, dst)
 	}
 }
-
 
 func toString(fs []string) string {
 	var b bytes.Buffer
@@ -160,25 +158,24 @@ func makeCover(src string, dst string) {
 	src = cwd() + src
 	dst = cwd() + dst
 
-
 	if isOlder(dst, src) {
 		return
 	}
 	bin := inkscapeBin
 	args := make([]string, 0)
-	args = append(args, "--export-filename=" + dst)
-	
+	args = append(args, "--export-filename="+dst)
+
 	if mode == "debug" {
-		args = append(args,"--export-dpi=100")
+		args = append(args, "--export-dpi=100")
 	} else {
-		args = append(args,"--export-dpi=300")
+		args = append(args, "--export-dpi=300")
 	}
-	args = append(args,"--export-type=pdf")
-	args = append(args,"--export-text-to-path")
+	args = append(args, "--export-type=pdf")
+	args = append(args, "--export-text-to-path")
 	// arg3 := "--verb"
 	// arg4 := "ObjectToPath"
 	// arg3 := ""
-	args = append(args,src)
+	args = append(args, src)
 
 	fmt.Printf("%s %s\n", inkscapeBin, toString(args))
 
@@ -211,9 +208,9 @@ func checkExecutable(bin string) {
 }
 
 func main() {
-   fmt.Println("Building...")
+	fmt.Println("Building...")
 
-   checkExecutable(inkscapeBin)
+	checkExecutable(inkscapeBin)
 
 	var args = os.Args
 
@@ -230,18 +227,18 @@ func main() {
 		return
 	}
 
-   compileOptions := ""
+	compileOptions := ""
 	if mode == "print" {
-       compileOptions = `\def\forprint{}`
-       mode = "release"
+		compileOptions = `\def\forprint{}`
+		mode = "release"
 	}
 
-   outputDirName := "out"
+	outputDirName := "out"
 	out = outputDirName + "/" + mode
 	os.MkdirAll(out, os.ModePerm)
-    
-   makeCover("src/cover/pdf/cover_front.svg", out+ "/illu/cover_front.pdf")
-   makeCover("src/cover/pdf/cover_back.svg", out + "/illu/cover_back.pdf")
+
+	makeCover("src/cover/pdf/cover_front.svg", out+"/illu/cover_front.pdf")
+	makeCover("src/cover/pdf/cover_back.svg", out+"/illu/cover_back.pdf")
 
 	prepare("illu/img/", prepareImg)
 	prepare("illu/d/", prepareDrawing)
@@ -250,7 +247,7 @@ func main() {
 	arg0 := "-output-directory"
 	arg1 := outputDirName
 	arg2 := `\def\base{` + out + `} ` + compileOptions + ` \input{src/book.tex}`
-        fmt.Println(bin, arg0, arg1, arg2)
+	fmt.Println(bin, arg0, arg1, arg2)
 
 	out, err := exec.Command(bin, arg0, arg1, arg2).CombinedOutput()
 
