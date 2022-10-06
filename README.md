@@ -1,7 +1,6 @@
-# The Book of CPS-1
+# The Book of CP-System
 
-A study of the revolutionary hardware used by Capcom from 1989 to 1995 to release breath-taking arcade games such as Street Fighter II, Final Fight, and 
-Ghouls 'n Ghosts.
+A study of the revolutionary hardware used by Capcom from 1989 to 1995 to release breath-taking arcade games such as Street Fighter II, Final Fight, and Ghouls 'n Ghosts.
 
 The source code is open-source but I retain ownership of all drawings. They are only provided here so the project can be compiled.
 
