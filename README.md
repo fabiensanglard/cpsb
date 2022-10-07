@@ -32,11 +32,11 @@ sudo apt install -y texlive-full
 - Follow Linux steps.
 
 ## How to build (MacOS X)
-
 - Install fonts (in `src/fonts` folder)
 - Get MacTeX.
 - Install golang (https://golang.org/doc/install)
 - Install Inkscape > v1.0
+- Symlink inkscape binary to `/usr/local/bin` or add it to your PATH
 - Get build system dependencies 
 ```
 go mod init "image/draw"
