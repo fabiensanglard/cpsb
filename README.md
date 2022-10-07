@@ -4,22 +4,6 @@ A study of the revolutionary hardware used by Capcom from 1989 to 1995 to releas
 
 The source code is open-source but I retain ownership of all drawings. They are only provided here so the project can be compiled.
 
-## How to build (MacOS X)
-
-- Install fonts (in `src/fonts` folder)
-- Get MacTeX.
-- Install golang (https://golang.org/doc/install)
-- Install Inkscape > v1.0
-- Get build system dependencies 
-```
-go mod init "image/draw"
-go get golang.org/x/image/draw
-```
-- Build
-```
-./make.sh release
-```
-
 ## How to build (Linux)
 
 - Setup env
@@ -41,6 +25,29 @@ sudo apt install -y texlive-full
 ```
 ./make.sh release
 ```
+
+## How to build (Windows)
+
+- Install WSL1/WSL2
+- Follow Linux steps.
+
+## How to build (MacOS X)
+
+- Install fonts (in `src/fonts` folder)
+- Get MacTeX.
+- Install golang (https://golang.org/doc/install)
+- Install Inkscape > v1.0
+- Get build system dependencies 
+```
+go mod init "image/draw"
+go get golang.org/x/image/draw
+```
+- Build
+```
+./make.sh release
+```
+
+
 
 ### Debug mode
 
