@@ -200,7 +200,7 @@ They pack boolean logic (\&, \textbar, !) between their input and output lines w
 
 \sdraw{0.44}{PAL16L8A}
 
- Often located near the memory chip group they affect, they are codenamed based on their function. Since most games use slightly different ROM layout, they usually feature different PALs. e.g: Street Fighter II's \icode{STF29} which organizes the GFX ROM is named \icode{S224B} in Final Fight, and \icode{DM620} in Ghouls'n Ghosts.
+ Often located near the memory chip group they affect, they are codenamed based on their function. Since most games use slightly different ROM layout, they usually feature different PALs, e.g: the chip which organizes the GFX ROM is named \icode{STF29} in Street Fighter II, \icode{S224B} in Final Fight, and \icode{DM620} in Ghouls'n Ghosts.
 
 
 
@@ -242,7 +242,7 @@ The control system oversees the platform. As a ruler it needs not to excel at a 
 
 \nbdraw{mips}
 
-However, this lack of speed did not prevent a a plethora of manufacturers from using it as their backbone. On the list of machines adopting the m68k can be found the Atari ST, Amiga, Sega's System 16, Genesis, Sega CD, Apple Macintosh, Sharp X68000, and even SNK's Neo-Geo. It was even IBM's first choice for its PC before production issues allowed the Intel 8088 to prevail\cite{ieee20170630}. 
+However, this lack of speed did not prevent a plethora of manufacturers from using it as their backbone. On the list of machines adopting the m68k can be found the Atari ST, Amiga, Sega's System 16, Genesis, Sega CD, Apple Macintosh, Sharp X68000, and even SNK's Neo-Geo. It was even IBM's first choice for its PC before production issues allowed the Intel 8088 to prevail\cite{ieee20170630}. 
 
 Performance is not what made the 68000 reign as the prime hardware design choice. The reason this CPU was so successful is because it was a great team player.
 
@@ -285,7 +285,7 @@ This limitation is rooted all the way down to the CPU pins where there is no \ic
 
 
 \begin{trivia}
- The 68000 has 32-bit address registers but used only 24-bit addresses. These "unused" eight bits were hijacked by system engineers to mark address as "locked" or "purgeable". These programs promptly broke when running on 68020, which used a 32-bit address bus. 
+ The 68000 has 32-bit address registers but used only 24-bit addresses. These "unused" eight bits were hijacked by system engineers to mark address as "locked" or "purgeable". These programs promptly broke when running on a 68020, which used a 32-bit address bus. 
 \end{trivia}
 
 Perhaps the best testament to the quality of the 68000 design is that as of 2022, 43 years after its release, Motorola's immortal CPU is still in production.
@@ -454,7 +454,7 @@ The \icode{RFSH} pin (ReFreSH signal) ticks at regular intervals to trigger DRAM
 The amount of RAM provided to the z80 may appear scandalously small by today's standards. However because all it has to do is forward requests from the latches to the MSM6295 and feed the YM2151 music notes, the z80 needs few resources. Its bus is connected to a single 2Ki x 8-bit \icode{CXK5816SP} chip.
 
 \subsection{z80 ROM}
-The ROM is made of a simple 64Ki x 8-bit \icode{27C512} chip. It is much larger than the RAM in order to store YM2151 instructions along the z80 instructions. 
+The ROM is made of a simple 64Ki x 8-bit \icode{27C512} chip. It is much larger than the RAM in order to store YM2151 instructions alongside the z80 instructions. 
 
 
 These ROM chips work like those previously described, with pins such as power, ground, addresses, data, control, and of course the crucial \icode{CE}. What is peculiar is the z80 uses 16-bit address registers which allows 65,536 addresses. There is not enough address space for all registers, ROM, and RAM totaling 67 KiB.
@@ -641,8 +641,8 @@ The higher the sampling rate (on the X axis), the more often the cone position c
 
 Sound quality increases linearly with data rate.
 \begin{itemize}[topsep=0pt]
-\item Land-line phones use 8,000Hz/8-bit mono using 8,000 Byte per Second.
-\item CDs use 44,100Hz/16-bit stereo using 176,400 Byte per Second.
+\item Landline phones use 8,000Hz/8-bit mono using 8,000 Bytes per Second.
+\item CDs use 44,100Hz/16-bit stereo using 176,400 Bytes per Second.
 \end{itemize}
 
 
@@ -701,7 +701,7 @@ These five signals are everything a CRT needs to work.
 
 Because the timing of operations is propagated deep in the GFX system, it is important to understand how a CRT works.
 
-At its core, a CRT is a line drawing machine. It draws horizontal lines one after another, from left to right and top to bottom. While it scans a line, three analog signals (one for each RGB colors) indicate the quantity of electrons to shoot from three guns. The higher the signal, the more electrons shot and the more vivid the color.
+At its core, a CRT is a line-drawing machine. It draws horizontal lines one after another, from left to right and top to bottom. While it scans a line, three analog signals (one for each RGB color) indicate the quantity of electrons to shoot from three guns. The higher the signal, the more electrons shot and the more vivid the color.
 
 
 On the way toward the panel, electrons are filtered through a shadow mask to make sure they hit the proper type of colored phosphor receptacles which are grouped by three in RGB "slots". The electron beam-slot is not a one to one relationship. The beam can be larger or smaller than a slot.
@@ -1188,7 +1188,7 @@ A naive design would work at the same speed as the video system (8MHz). For each
  \caption*{CPS-A die. Notice the real estate dedicated to GFXRAM caching}%
  \end{figure}%
 
- Even thought the machine uses the fastest type of memory (SRAM), its response time does not permit enough roundtrips. This problem is solved via caching, streaming, channeling, and an humongous (for the time) 32-bit GFXROM/CPS-B local data bus. 
+ Even thought the machine uses the fastest type of memory (SRAM), its response time does not permit enough roundtrips. This problem is solved via caching, streaming, channeling, and a humongous (for the time) 32-bit GFXROM/CPS-B local data bus. 
 
 
 \subsubsection{Caching}
@@ -1905,7 +1905,7 @@ Using Guile's calf as a pencil, but with the title's palette, three tiles are dr
 
 \begin{figure}[H]
 \nbdraw{world_warrior_title}
- \caption*{18 draws calls. Three more than necessary but with proper spelling.}%
+ \caption*{18 draw calls. Three more than necessary but with proper spelling.}%
  \end{figure}%
 
 \begin{figure}[H]
