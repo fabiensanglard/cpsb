@@ -766,7 +766,7 @@ In the next drawing, see what happens if VSYNC \circled{3} is issued in the midd
 
 Because only half a line was drawn at the bottom, the gun only progressed down half a space vertically. As a result, the next frame will be interlaced with the previous. This is a technique used by TV broadcast such as NTSC in USA and Japan. A signal transmits frames at 30Hz, each contains two "fields" to be drawn interlaced at 60Hz.
 
-While interlacing is acceptable for TV images, it is not for gaming as the artifacts are disturbingly visible on moving text and sprites. 
+While interlacing is acceptable for TV images, it is not for gaming, as the artifacts are disturbingly visible on moving text and sprites. 
 
 The solution to this problem is to only use one field and never display anything on the other one. Doing this means designing a video system where VSYNC is always issued along with a HSYNC. The drawback is that since CRTs were build to display interleaved images, they provision for space between lines. 
 
