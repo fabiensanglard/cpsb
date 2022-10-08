@@ -454,7 +454,7 @@ The \icode{RFSH} pin (ReFreSH signal) ticks at regular intervals to trigger DRAM
 The amount of RAM provided to the z80 may appear scandalously small by today's standards. However because all it has to do is forward requests from the latches to the MSM6295 and feed the YM2151 music notes, the z80 needs few resources. Its bus is connected to a single 2Ki x 8-bit \icode{CXK5816SP} chip.
 
 \subsection{z80 ROM}
-The ROM is made of a simple 64Ki x 8-bit \icode{27C512} chip. It is much larger than the RAM in order to store YM2151 instructions along the z80 instructions. 
+The ROM is made of a simple 64Ki x 8-bit \icode{27C512} chip. It is much larger than the RAM in order to store YM2151 instructions alongside the z80 instructions. 
 
 
 These ROM chips work like those previously described, with pins such as power, ground, addresses, data, control, and of course the crucial \icode{CE}. What is peculiar is the z80 uses 16-bit address registers which allows 65,536 addresses. There is not enough address space for all registers, ROM, and RAM totaling 67 KiB.
