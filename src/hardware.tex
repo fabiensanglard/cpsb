@@ -768,7 +768,7 @@ Because only half a line was drawn at the bottom, the gun only progressed down h
 
 While interlacing is acceptable for TV images, it is not for gaming as the artifacts are disturbingly visible on moving text and sprites. 
 
-The solution to this problem is to only use one field and never display anything on the other one. Doing this means designing a video system where VSYNC is always issued along with a HSYNC. The drawback is that since CRTs were build to display interleaved images, they provision for space between lines. 
+One solution to this problem is to only use one field and never display anything on the other one. Doing this means designing a video system where VSYNC is always issued along with a HSYNC. The drawback is that since CRTs were built to display interleaved images, they provision for space between lines. 
 
 Since this space is not used for another field, the resulting effect is black horizontal strips on the screen. Note that the problem is compensated for by line bleeding so the black lines are not as big as the visible lines.
 
