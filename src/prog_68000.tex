@@ -197,7 +197,7 @@ Functions \icode{VSync} and \icode{main} run in lock-step via two counters. Main
 
 How \icode{hostframe} is implemented is completely at the programmer's discretion. Capcom games used a common kernel framework made of tasks. Since there is no source of interrupt beside \icode{vsync} they implemented a collaborative multi-tasking system where the stack and registers are stored/loaded as each task is executed.
 
-To learn about the kernel and how it is used to run multi-task A.I bytecode and moving fireballs, check out the Street Fighter II Paladium source code\cite{sf2platinium}.
+To learn about the kernel and how it is used to run multi-task A.I bytecode and moving fireballs, check out the Street Fighter II Platinum source code\cite{sf2platinium}.
 
 \subsection{Retrieving inputs}
 Besides joystick and buttons, the engine must recover inputs such as the dip settings, P1Start, P2Start, and most importantly detect coins being inserted.
