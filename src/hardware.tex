@@ -59,7 +59,7 @@ A few pins on the port are not reserved for a specific usage but they could not 
 
 
 
-When Capcom retrofited Street Fighter 1 pneumatic buttons, they chose to do it with six buttons per player, which was three more than available in JAMMA. To circumvent the limitation, they designed a parallel input system. 
+When Capcom retrofitted Street Fighter 1 pneumatic buttons, they chose to do it with six buttons per player, which was three more than available in JAMMA. To circumvent the limitation, they designed a parallel input system. 
 
 Since the three JAMMA buttons were used for punches, the extension was labeled the "kick harness".
 
@@ -142,7 +142,7 @@ To design an effective multi-CPUs system able to avoid both instruction and data
 \label{fig:drawboarda}
 
 \subsection{Board B}\index{Board!Board B}
-   Board B is where the ROMs chip containing all the assets and instructions specific to a game are attached via DIP sockets. The chips are not soldered but push-in mounted (and easily removable).
+   Board B is where the ROM chips containing all the assets and instructions specific to a game are attached via DIP sockets. The chips are not soldered but push-in mounted (and easily removable).
 
    Even though all ROM chips are located on the same board, they are not all part of an unified data system on an unified bus. 
 
@@ -157,7 +157,7 @@ To design an effective multi-CPUs system able to avoid both instruction and data
   \end{figure}
 \pagebreak
 
-   There are 3x8 = 24 chips, referred to as "GFX ROM", dedicated to storing GFX via sockets [1-8], sockets [10-17], and sockets [20-27] for a total of 12 MiB capacity. Because of the price of ROM, games were never budgeted to allowed the max capacity. Most titles were granted 2/4MiB, three (the Street Fighter II series) were allowed 6 MiB, and one (Dynasty Wars) got a whooping 8 MiB.
+   There are 3x8 = 24 chips, referred to as "GFX ROM", dedicated to storing GFX via sockets [1-8], sockets [10-17], and sockets [20-27] for a total of 12 MiB capacity. Because of the price of ROM, games were never budgeted to allowed the max capacity. Most titles were granted 2/4MiB, three (the Street Fighter II series) were allowed 6 MiB, and one (Dynasty Wars) got a whopping 8 MiB.
 
    One socket (9) with 64KiB capacity, referred as "z80 ROM", stores both the z80 instructions and the music assets (instructions for the YM2151). 
 
@@ -179,7 +179,7 @@ To design an effective multi-CPUs system able to avoid both instruction and data
 Observant readers will have noticed unexplained black chips. For now we'll say they are in charge of bus traffic management. In the drawing above, \icode{STF29} handles the GFX ROM and \icode{IOB1} handles the m68k ROM. As an exercise, go back to page \pageref{fig:drawboarda} and guess which chip handles which ROM/RAM group. Or don't, I am just a book.
 
 \subsection{Board C}\index{Board!Board C}
-Board "C" hosts the "CPS-B" ASICs video chip. It is in charge of the remaining 50\% of the graphic pipeline, namely mixing data from the VRAM and the GFX ROMs towards the pixel generator. Capcom also concentrated its anti-piracy measures in this chip and as a result revised board "C" many more times than board A and board B. 
+Board "C" hosts the "CPS-B" ASIC video chip. It is in charge of the remaining 50\% of the graphic pipeline, namely mixing data from the VRAM and the GFX ROMs towards the pixel generator. Capcom also concentrated its anti-piracy measures in this chip and as a result revised board "C" many more times than board A and board B. 
 
 This will be discussed extensively in the copy-protection section of this chapter.
 
@@ -263,7 +263,7 @@ While other CPUs used small address registers resulting in the infamous segmente
 
 The 68000 is brought to life via its clock (\icode{CLK}), +5V (\icode{VCC}), and Ground (\icode{VSS}) pins.
 
-The bus is made of \icode{D0-D7} for data and \icode{A0-A15]} for addresses while address ACK (\icode{AS}), Read/Write (\icode{R/W}), \icode{UDS}, \icode{LDS}, and Data ACK \icode{DTACK} are bus control pins.
+The bus is made of \icode{D0-D7} for data and \icode{A0-A15} for addresses while address ACK (\icode{AS}), Read/Write (\icode{R/W}), \icode{UDS}, \icode{LDS}, and Data ACK \icode{DTACK} are bus control pins.
 
 
 Arbitration to allow peripherals to master the bus is done with Bus Request (\icode{BR}),  Bus Grant (\icode{BG}) and Bus Grant ACK (\icode{GBA-K}) lines.
@@ -271,7 +271,7 @@ Arbitration to allow peripherals to master the bus is done with Bus Request (\ic
 The interrupt system is made of a generous three pins \icode{IPL0}, \icode{IPL1}, \icode{IPL2}, and \icode{VPA} for control. While other CPUs like the x86s or the z80 have a single interrupt line, the multiple \icode{IPL}s can encode an interrupt ID directly which removes the need for an interrupt controller. How this is leveraged will be explained in the programming section.
 
 \index{Interrupts!68000}
-System control is done via Error (\icode{BERR}), Reset (\icode{RST}), and Halt (\icode{HALT}). 
+System control is done via Bus Error (\icode{BERR}), Reset (\icode{RST}), and Halt (\icode{HALT}). 
 
 Finally, the processor status is given by \icode{FC0}, \icode{FC1}, \icode{FC2} and Peripheral control is done via sync (\icode{E}) and valid sig (\icode{VMA}).
 
@@ -434,7 +434,7 @@ Packaging can use materials such as plastic or ceramic in which cases they are r
 
 \sdraw{0.9}{z-80}\index{Processors!Zilog 80}
 
-The z80 comes to life thanks to its \icode{CLK} (clock ), \icode{+V5} (power), and \icode{GND} (ground) pins.
+The z80 comes to life thanks to its \icode{CLK} (clock ), \icode{+5V} (power), and \icode{GND} (ground) pins.
 
 The bus lines are dedicated \icode{D0-D15} for addresses and \icode{A0-A7} for data. For control, \icode{RD} indicates read while \icode{WR} indicates a write operation. \icode{WAIT} is used to add waitstates. 
 
@@ -552,7 +552,7 @@ One pin is of particular interest to us. \icode{IRQ} allows the YM2151 to genera
 
 \sdraw{0.48}{YM2151}
 
-The only drawback of this chip is that it does not features a DAC (Digital to Analog Converter). It generates a signal on the Serial Output (\icode{SO}). 
+The only drawback of this chip is that it does not feature a DAC (Digital to Analog Converter). It generates a signal on the Serial Output (\icode{SO}). 
 
 \subsection{YM3012}\index{Processors!Yamaha 3012}
 
@@ -728,7 +728,7 @@ Smaller slots can render the horizontal analog signals with better fidelity.
 
 
 
- With this duality of lines and signals, a CRT is both a numeric and an analog system. The number of scanlines is finite (i.e: there is a set number of these elements) but there is no horizontal number of "dots", "points", or "pixels" since the three color intensity signals are analog.
+ With this duality of lines and signals, a CRT is both a digital and an analog system. The number of scanlines is finite (i.e: there is a set number of these elements) but there is no horizontal number of "dots", "points", or "pixels" since the three color intensity signals are analog.
 
 
 \subsection{Syncing}
@@ -963,7 +963,7 @@ He then proceeded to call hardware on the spot.
 Later I protested again to which my boss replied it was a calculation error.
 \end{q}
 
-Could it has been an oversight? Could it actually been a calculation error? In all likelihood the hardware designers wanted to give the CPS-1 a very high horizontal resolution to make it competitive, even if this meant making artists' lives a little bit difficult.
+Could it have been an oversight? Could it actually be a calculation error? In all likelihood the hardware designers wanted to give the CPS-1 a very high horizontal resolution to make it competitive, even if this meant making artists' lives a little bit difficult.
 
 Artists managed to work around this annoying "feature" by drawing their assets pre-stretched (as seen on \pageref{sf2_ratio_solution}). Their process is elaborated on page \pageref{artists_par}.
  
@@ -1078,7 +1078,7 @@ Notice how one line out of twelve is used not for addressing but for \icode{CE}i
 
 Colors are grouped into palettes containing 16 units. As will be studied later, the GFX system features 6 layers and each of them allows 32 palettes (called page). This brings the total to 6*32*15 = 2,880 colors which requires 12-bit to be indexed.
 
- The palette SRAM chips are nearly constantly used to generate colors. Their content can only modified during VBLANK.
+ The palette SRAM chips are nearly constantly used to generate colors. Their content can only be modified during VBLANK.
 
 \pagebreak
 
@@ -1188,7 +1188,7 @@ A naive design would work at the same speed as the video system (8MHz). For each
  \caption*{CPS-A die. Notice the real estate dedicated to GFXRAM caching}%
  \end{figure}%
 
- Even thought the machine uses the fastest type of memory (SRAM), its response time does not permit enough roundtrips. This problem is solved via caching, streaming, channeling, and a humongous (for the time) 32-bit GFXROM/CPS-B local data bus. 
+ Even though the machine uses the fastest type of memory (SRAM), its response time does not permit enough roundtrips. This problem is solved via caching, streaming, channeling, and a humongous (for the time) 32-bit GFXROM/CPS-B local data bus. 
 
 
 \subsubsection{Caching}
@@ -1272,7 +1272,7 @@ That did not prevent the feature from being used, though. Long after STARfields 
 
 
 
-When designers needed a full black background, instead of using a SCROLL and repeating requesting rows of black tiles to cover the whole screen, they only had to use a STARfield and request no stars. 
+When designers needed a full black background, instead of using a SCROLL and repeatedly requesting rows of black tiles to cover the whole screen, they only had to use a STARfield and request no stars. 
 
 This is the unacknowledged poetry of the Street Fighter Hyper Fighting intro sequence. As the title appears, the black background is in fact a pitch black night sky which nobody ever knew about.
 
@@ -1372,7 +1372,7 @@ I knew we had raster scrolling so I talked with the programmers and we gave it a
 
 The starfield and rowscroll features are good examples of how difficult it is to design hardware. Doing it well consists of accurately predicting what will be useful and what won't. 
 
-While starfields were heavily used in the inaugural title, "Forgotten Worlds", and prominently featured in the second one , "Strider", rowscrowll on the other hand saw no usage for nearly two years. 
+While starfields were heavily used in the inaugural title, "Forgotten Worlds", and prominently featured in the second one , "Strider", rowscroll on the other hand saw no usage for nearly two years. 
 
 Relegated to implementing flame effects in "Magic Sword" and hazy backgrounds in "Carrier Air Wing", rowscrolling barely appeared for a few seconds of gameplay in the five titles\cite{mame_cps1_video} it was featured in.
 
@@ -1901,7 +1901,7 @@ Using Guile's calf as a pencil, but with the title's palette, three tiles are dr
  \end{figure}%
 
 
- In an troubling coincidence, the pen corresponding colors were a match.
+ In a troubling coincidence, the pen corresponding colors were a match.
 
 \begin{figure}[H]
 \nbdraw{world_warrior_title}
@@ -1923,7 +1923,7 @@ We now have enough knowledge to fully understand how the CPS-A and CPS-B coopera
 The two graphics chips closely work together by sharing custody of the GFX ROM and VRAM. 
 
 
- The CPS-A generates four interleaved stream of pens (OBJ, SCR1, SR2, and SRC3) by driving the address bus.
+ The CPS-A generates four interleaved streams of pens (OBJ, SCR1, SR2, and SRC3) by driving the address bus.
   The CPS-B receives the data and decides for each "pixel" which stream is visible. 
 
 
@@ -2112,7 +2112,7 @@ To make instructions patching of the 68000 ROMs more difficult, calls to verify 
 Starting with CPS-B v21, a slightly more robust feature gave the CPS-B the ability to perform multiplications. Two registers are written and a third can be read. The 68000 code checks that the returned multiplication result is the expected value.
 
 \subsection{Moving registers}
-The CPS-B registers move between revisions. The offset and range does not change, but the offset of each register inside that mapping is different. Accessing the scroll control, scroll priority, and palette upload registers is done slightly differently for each game.
+The CPS-B registers move between revisions. The offset and range do not change, but the offset of each register inside that mapping is different. Accessing the scroll control, scroll priority, and palette upload registers is done slightly differently for each game.
 
 Additionally, the meaning of each bit field inside each register is altered between versions.
 
@@ -2130,7 +2130,7 @@ The game still runs in the background and the audio is played but the screen doe
 
 \subsection{Invalid offset detection}
 
-Each game uses a different amount of assets for each of its SCROLL and OBJ layers. On the "B" board, PAL chips such as the \icode{STF29} discussed earlier are hard-coded with knowledge of the amount of GFX ROM attributed to each layers.
+Each game uses a different amount of assets for each of its SCROLL and OBJ layers. On the "B" board, PAL chips such as the \icode{STF29} discussed earlier are hard-coded with knowledge of the amount of GFX ROM attributed to each layer.
 
 Tile references pointing beyond a range are ignored resulting in rendering "holes" if a game ROMs are inserted in a non-matching "B" board.
 

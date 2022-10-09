@@ -184,7 +184,7 @@ The \icode{frameCounter} variable paces the main thread so a new frame is only h
 
 
 \subsection{Commanding sound}
-Requesting a sound or music playback is only about writing to a latch and forgeting about it. However special care is necessary if the engine requests multiple sounds during the same frame. If this were to happen the value in the latch could be overwritten before the z80 picked it up.
+Requesting a sound or music playback is only about writing to a latch and forgetting about it. However special care is necessary if the engine requests multiple sounds during the same frame. If this were to happen the value in the latch could be overwritten before the z80 picked it up.
 The solution is to implement a queue system where commands are stored and fed one by one every frame. 
 
 Functions \icode{VSync} and \icode{main} run in lock-step via two counters. Main only runs after a sync has occurred. \icode{Sync} is always one step ahead of main function.
@@ -197,7 +197,7 @@ Functions \icode{VSync} and \icode{main} run in lock-step via two counters. Main
 
 How \icode{hostframe} is implemented is completely at the programmer's discretion. Capcom games used a common kernel framework made of tasks. Since there is no source of interrupt beside \icode{vsync} they implemented a collaborative multi-tasking system where the stack and registers are stored/loaded as each task is executed.
 
-To learn about the kernel and how it is used to run multi-task A.I bytecode and moving fireballs, check out the Street Fighter II Paladium source code\cite{sf2platinium}.
+To learn about the kernel and how it is used to run multi-task A.I bytecode and moving fireballs, check out the Street Fighter II Platinum source code\cite{sf2platinium}.
 
 \subsection{Retrieving inputs}
 Besides joystick and buttons, the engine must recover inputs such as the dip settings, P1Start, P2Start, and most importantly detect coins being inserted.
@@ -345,7 +345,7 @@ A convenient trick is to allocate a rowscroll array of size 1024 with one entry 
 
 \subsubsection{Real-life example}
 
-When a contestant in Street Figther II jumps, SCROLL2 moves vertically but no rowscroll offsets are re-calculated, only \icode{ROWSCROLL\_OFFSET}  is moved. This allows to amortize the generation of perspective correct rowscroll offset.
+When a contestant in Street Fighter II jumps, SCROLL2 moves vertically but no rowscroll offsets are re-calculated, only \icode{ROWSCROLL\_OFFSET}  is moved. This allows to amortize the generation of perspective correct rowscroll offset.
 
 Note that rowscroll offsets are unsigned and always indicate an amount to move toward the left side of the screen. To offset toward the right, Street Fighter II developers took advantage of the wraparound nature of the SCROLL layers and used \icode{decalValue = 1024 - desiredRightOffsetValue}.
 
@@ -412,7 +412,7 @@ These four registers control the precedence of pens belonging to the layer behin
 
 \lstinputlisting[style=CStyle]{src/code/68000/maskcontrol.c} 
 
-\textbf{TIP :} Tiles using priority group often use a palette where "high priority" colors are grouped together. This makes it easy to tag them in the bitfield because the bits are next to each others. e.g: Mask \icode{0xF000} marks pens \icode{15}, \icode{14}, \icode{13}, and \icode{12} as high priority.
+\textbf{TIP :} Tiles using priority group often use a palette where "high priority" colors are grouped together. This makes it easy to tag them in the bitfield because the bits are next to each other. e.g: Mask \icode{0xF000} marks pens \icode{15}, \icode{14}, \icode{13}, and \icode{12} as high priority.
 
 
 
