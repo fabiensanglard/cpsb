@@ -2104,7 +2104,7 @@ Mega Man the Power Battle & \texttt{CPS-B-21}  & 1995 \\
 
 
 \subsection{ID check}
-The simplest copy protection available is the chip ID check. By polling a register, the m68k prompts the CPS-B to return its version number. A version match lets the code know if its belongs to the right PCB and resets the CPU if it doesn't. 
+The simplest copy protection available is the chip ID check. By polling a register, the m68k prompts the CPS-B to return its version number. A version match lets the code know if it belongs to the right PCB and resets the CPU if it doesn't. 
 
 To make instructions patching of the 68000 ROMs more difficult, calls to verify the chip ID are placed in several locations in the code. Motivated programmers tried anyway\cite{strider_conversion}!
 
