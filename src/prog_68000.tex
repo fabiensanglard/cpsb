@@ -184,7 +184,7 @@ The \icode{frameCounter} variable paces the main thread so a new frame is only h
 
 
 \subsection{Commanding sound}
-Requesting a sound or music playback is only about writing to a latch and forgeting about it. However special care is necessary if the engine requests multiple sounds during the same frame. If this were to happen the value in the latch could be overwritten before the z80 picked it up.
+Requesting a sound or music playback is only about writing to a latch and forgetting about it. However special care is necessary if the engine requests multiple sounds during the same frame. If this were to happen the value in the latch could be overwritten before the z80 picked it up.
 The solution is to implement a queue system where commands are stored and fed one by one every frame. 
 
 Functions \icode{VSync} and \icode{main} run in lock-step via two counters. Main only runs after a sync has occurred. \icode{Sync} is always one step ahead of main function.
