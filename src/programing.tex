@@ -185,7 +185,7 @@ The m68k tracks time in units of 16ms while the z80 can do the same in increment
 
 
 \section{Randomness}
-Pseudo-random series of numbers can be achieved using Maximum-Length LFSRs (Linear Feedback Shift Register). On the m68k, a 32-bit registers will give 4,194,304 different values before repeating itself. On the z80, the 8-bit register will only provide 256 values.
+Pseudo-random series of numbers can be achieved using Maximum-Length LFSRs (Linear Feedback Shift Register). On the m68k, the 32-bit registers will give 4,294,967,296 different values before repeating itself. On the z80, the 8-bit registers will only provide 256 values.
 
 The only tricky part is to pick a seed to initialize the register. Street Fighter 2 uses the frame counter while other titles read the content of the CPU register during bootstrap. The latter method does not work well when working with emulators (they usually initialize their registers to zero) and should be avoided.
 
