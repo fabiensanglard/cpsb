@@ -271,7 +271,7 @@ Arbitration to allow peripherals to master the bus is done with Bus Request (\ic
 The interrupt system is made of a generous three pins \icode{IPL0}, \icode{IPL1}, \icode{IPL2}, and \icode{VPA} for control. While other CPUs like the x86s or the z80 have a single interrupt line, the multiple \icode{IPL}s can encode an interrupt ID directly which removes the need for an interrupt controller. How this is leveraged will be explained in the programming section.
 
 \index{Interrupts!68000}
-System control is done via Error (\icode{BERR}), Reset (\icode{RST}), and Halt (\icode{HALT}). 
+System control is done via Bus Error (\icode{BERR}), Reset (\icode{RST}), and Halt (\icode{HALT}). 
 
 Finally, the processor status is given by \icode{FC0}, \icode{FC1}, \icode{FC2} and Peripheral control is done via sync (\icode{E}) and valid sig (\icode{VMA}).
 
