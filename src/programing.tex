@@ -16,7 +16,7 @@ The pipeline we will describe ingests the source code (\icode{.s}/\icode{.c}) wr
 \pagebreak
 Some dependencies in the graph are simple to the extreme. The z80 source code (\icode{.c} and \icode{.s}) only impacts the z80 ROM. Likewise, the m68k code (also \icode{.c} and \icode{.s}) ends up in the 68000 ROM.
 
-Other dependencies are more convoluted. The \icode{.wav} sample files for example need to be compressed to ADPCM before being added to the OKI ROM. To be referencable at runtime, each sample is given an integer ID. These IDs must be collected into a \icode{.h} header and this file must be compiled along with the rest of the 68000 code.
+Other dependencies are more convoluted. The \icode{.wav} sample files for example need to be compressed to ADPCM before being added to the OKI ROM. To be referenceable at runtime, each sample is given an integer ID. These IDs must be collected into a \icode{.h} header and this file must be compiled along with the rest of the 68000 code.
 
 Likewise, the \icode{.png} files containing artwork are transformed to indexed format before making their way to the GFX ROM. They also require generating a \icode{.h} header file, this time containing tileID. Additionally, a \icode{.c} file containing each tile palette is generated in order to be compiled into the 68000 ROM. 
 
