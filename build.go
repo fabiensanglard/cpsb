@@ -186,7 +186,7 @@ func makeCover(src string, dst string) {
 	}
 }
 
-var mode = "debug"
+var mode = "release"
 var out = ""
 
 func cwd() string {
