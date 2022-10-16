@@ -2215,18 +2215,18 @@ In 1992, Capcom released the CP System Dash (a.k.a CPS-1.5). Fully encased in a 
 
 \begin{figure}[H]
 { \setlength{\tabcolsep}{3.0pt}
-\begin{tabularx}{\textwidth}{Xrr}
+\begin{tabularx}{\textwidth}{Xrrrrrrr}
   \toprule    
-  \textbf{Game Name} & \textbf{ GFX }  & \textbf{ Year } \\               
+  \textbf{Game Name} & \multicolumn{5}{c}{ \textbf{Type} } &\textbf{ GFX }  & \textbf{ Year } \\               
   \toprule    
-\href{}{Cadillacs and Dinosaurs} & 4 MiB & 1992 \\ 
-\href{}{Warriors of Fate} & 4 MiB & 1992 \\ 
-\href{}{The Punisher} & 4 MiB & 1993 \\ 
-\href{}{Saturday Night Slam Masters} & 6 MiB & 1993 \\ 
-\href{}{Muscle Bomber Duo: Ultimate Team Battle} & 6 MiB & 1993 \\ 
+\href{}{Cadillacs and Dinosaurs} & \po & \beatallcube & \po & \po & \po & 4 MiB & 1992 \\ 
+\href{}{Warriors of Fate} & & \beatallcube  & & & & 4 MiB & 1992 \\ 
+\href{}{The Punisher} & & \beatallcube & & & & 4 MiB & 1993 \\ 
+\href{}{Saturday Night Slam Masters} & \ocube & & & & & 6 MiB & 1993 \\ 
+\href{}{Muscle Bomber Duo: Ultimate Team Battle} & \ocube & & & & & 6 MiB & 1993 \\ 
   \toprule    
 \end{tabularx}%
-}\caption*{Capcom CPS-1.5 based arcades games}
+}\caption*{CPS-1.5 games: other (\ocube), platform (\platcube), shmup (\shmupcube), brawl (\beatallcube), duel (\duelcube)}
 \end{figure}
 
 \label{kabuki}
@@ -2250,15 +2250,134 @@ With significantly improved capabilities thanks to its increased ROM capacity an
 
 From 1993 to 2003, forty-two games were published. The first one was the wildly successful "Super Street Fighter II" while the last one "Hyper Street Fighter II: The Anniversary Edition" paid homage to a series that defined the platform.
 
-In terms of copy-protection, Capcom once again cranked up security. The platform featured not only the Kabuki audio instruction encryption scheme, but it also gained encrypted game logic. 
+In terms of copy-protection, Capcom once again cranked up security. Even though it dropped usage of Kabuki in favor of a plain z80, the platform gained encryption of its game logic. 
 
-Thanks to a custom CPU, ABI compatible with the 68000, instructions are stored encrypted in ROM and decrypted on the fly. Like Kabuki, the scheme uses a shared secret key stored in yet another battery-powered RAM (the third one).
+Thanks to a custom CPU, ABI compatible with the 68000, instructions are stored encrypted in ROM and decrypted on the fly. Like Kabuki, the scheme uses a shared secret key stored in a battery-powered RAM.
 
-The only part of the CPS-2 that still stored plain instructions was the OKI ROM containing audio samples. The GFXROM data was not encrypted but its content was obfuscated via shuffling.
+The graphic asset stored in the GFXROM were slightly obfuscated. However no encryption occurred, data was only shuffled.
 
-\begin{trivia}
-No bootleg of CPS-2 titles were ever produced. Its protection system was remarkably strong and held for nearly 10 years. It was only when the "CPS-2 Shock Group" attacked it in 2003\cite{cps2rebirth} that its functioning was reverse engineered.
-\end{trivia}
+\subsubsection{A strong protection}
+
+No bootlegs of CPS-2 titles are known to have ever been produced. Efforts to shed light on the CPS-2 internal started in 2000\cite{cps2rebirth} via the "CPS-2 Shock Group".
+
+\pagebreak
 
 
 
+% Remove page number on this page
+% \thispagestyle{empty}
+
+\begin{figure}[H]
+\vspace*{-0.35cm} % Cheat a little otherwise the table overflows at the bottom of the page.
+{ \setlength{\tabcolsep}{3.0pt}
+\begin{tabularx}{\textwidth}{Xrrrrrr}
+\textbf{Game Name} & \multicolumn{5}{c}{ \textbf{Type} }  & \textbf{ Year } \\               
+\toprule    
+Super Street Fighter II: The New Challengers  & & & & & \duelcube & 1993\\
+Eco Fighters                                  & & & \shmupcube & &        & 1993\\
+\toprule
+
+Dungeons \& Dragons: Tower of Doom            & & & & \beatallcube &   &  1994\\
+
+Super Street Fighter II Turbo & & & & & \duelcube & 1994\\
+
+Alien vs. Predator & & &  & \beatallcube & &  1994\\
+
+Darkstalkers: The Night Warriors & & & & & \duelcube &  1994\\
+
+Ring of Destruction: Slammasters II & & & & & \duelcube & 1994\\
+
+Armored Warriors & & & & \beatallcube & &  1994\\
+
+X-Men: Children of the Atom & & & & & \duelcube & 1994\\
+  \toprule  
+Night Warriors: Darkstalkers' Revenge & & & & & \duelcube & 1995\\
+
+Cyberbots: Full Metal Madness & & & & & \duelcube & 1995\\
+
+Street Fighter Alpha & & & & & \duelcube &  1995\\
+
+Mega Man: The Power Battle & & \platcube & & & &  1995\\
+
+Marvel Super Heroes & & & & & \duelcube & 1995\\
+
+19XX: The War Against Destiny & & & \shmupcube & & & 1995\\
+  \toprule  
+Dungeons \& Dragons: Shadow over Mystara & & & & \beatallcube & & 1996\\
+
+Street Fighter Alpha 2 & &  & & & \duelcube & 1996\\
+
+Super Puzzle Fighter II Turbo & \ocube & & & & & 1996\\
+
+Mega Man 2: The Power Fighters & & \platcube & & & &  1996\\
+
+Street Fighter Alpha 2 Gold & & & & & \duelcube & 1996\\
+
+Quiz Nanairo Dreams: Nijiirochō no Kiseki & \ocube & & & & & 1996\\
+
+X-Men vs. Street Fighter & & & & & \duelcube &  1996\\
+  \toprule  
+Battle Circuit & &  & & \beatallcube & & 1997\\
+
+Darkstalkers 3 & & & & & \duelcube & 1997\\
+
+Marvel Super Heroes vs. Street Fighter & & & & & \duelcube &  1997\\
+
+Capcom Sports Club & \ocube & & & & &  1997\\
+
+Super Gem Fighter Mini Mix & & & & & \duelcube &  1997\\
+
+Vampire Hunter 2: Darkstalkers' Revenge & & & & & \duelcube & 1997\\
+
+Vampire Savior 2: The Lord of Vampire & & & & & \duelcube & 1997\\
+  \toprule  
+Marvel vs. Capcom: Clash of Super Heroes & & & & & \duelcube &  1998\\
+
+Street Fighter Alpha 3 & &  & & & \duelcube  &  1998\\
+  \toprule  
+Giga Wing & & & \shmupcube & & & 1999\\
+
+Jyangokushi: Haō no Saihai & \ocube & & & & &  1999\\
+  \toprule  
+Dimahoo & & & \shmupcube & & & 2000\\
+Mars Matrix: Hyper Solid Shooting & & & \shmupcube& & &  2000\\
+
+1944: The Loop Master & & & \shmupcube  & &  & 2000\\
+
+Mighty! Pang & & \platcube & & & & 2000\\
+  \toprule  
+Progear & & & \shmupcube & & & 2001\\
+
+Puzz Loop 2 & \ocube & & & & & 2001\\
+
+Janpai Puzzle Choko & & & & & & 2001\\
+  \toprule  
+Hyper Street Fighter II: The Anniversary Edition & \ocube & & & &  & 2003\\
+
+  \toprule    
+\end{tabularx}%
+}\caption*{CPS-2 games: other (\ocube), platform (\platcube), shmup (\shmupcube), brawl (\beatallcube), duel (\duelcube)}
+\end{figure}
+
+\pagebreak
+
+The protection system was remarkably strong and held for nearly 14 years.
+
+The details of the CPS-2 encryption system are fascinating, deserving of a dedicated book (anymore? my fingers hurt!). Here are a few fun facts to open your appetite.
+
+\begin{enumerate}[topsep=0pt]
+  \item Only the ROM read accesses are decrypted by the custom 68000. Read and write operations to the RAM are kept in "clear". 
+  \item The early "CPS-2 Shock Group" effort managed to inject instructions in a running game and have them executed. That was enough to allow unencrypted ROM extraction. This breakthrough opened the door to CPS-2 emulation. The method was convoluted but it worked. Emulators had to ship with a per-game XOR image to "decrypt" the 68000 ROMs.
+
+  \item The encryption scheme was completely reverse engineered in 2007 by Mame programmers. It turned out the secret encryption keys were not randomly generated. Capcom used linearly increasing sequences of numbers (1,2,3,4,...) or permutations of the same sequence.
+
+  \item Every ten seconds the custom 68000 must receive a watchdog command on its \icode{D1} register. If it doesn't, it stops decrypting the ROM instructions. They look as follows.
+  
+
+\end{enumerate}
+
+\begin{addmargin}[2.5em]{0em}
+\lstinputlisting[style=m68kStyle]{src/code/68000/watchdog.s}
+
+As you will probably have noticed, these values have the patterns of birthday dates!
+\end{addmargin}
