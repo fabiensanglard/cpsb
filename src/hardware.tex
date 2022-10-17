@@ -2226,7 +2226,7 @@ In 1992, Capcom released the CP System Dash (a.k.a CPS-1.5). Fully encased in a 
 \href{}{Muscle Bomber Duo: Ultimate Team Battle} & \ocube & & & & & 6 MiB & 1993 \\ 
   \toprule    
 \end{tabularx}%
-}\caption*{CPS-1.5 games: \ocube{} other, \platcube{} platform, \shmupcube{} shmup, \beatallcube{} brawl, \duelcube{} duel}
+}\caption*{CPS-1.5 games: \ocube{} Other, \platcube{} Platform, \shmupcube{} Shmup, \beatallcube{} Brawl, \duelcube{} Duel}
 \end{figure}
 
 \label{kabuki}
@@ -2350,30 +2350,26 @@ Progear & & & \shmupcube & & & 16 MiB & 2001\\
 
 Puzz Loop 2 & \ocube & & & & & 16 MiB & 2001\\
 
-Janpai Puzzle Choko & & & & & & 16 MiB & 2001\\
+Janpai Puzzle Choko & \ocube & & & & & 16 MiB & 2001\\
   \toprule  
 Hyper Street Fighter II: The Anniversary Edition & \ocube & & & & & 32 MiB & 2003\\
 
   \toprule    
 \end{tabularx}%
-}\caption*{CPS-2 games: \ocube{} other, \platcube{} platform, \shmupcube{} shmup, \beatallcube{} brawl, \duelcube{} duel}
+}
 \end{figure}
 
 \pagebreak
 
-The protection system was remarkably strong and held for nearly 14 years.
-
-The CPS-2 encryption scheme is so interesting it deserves its own book (anyone? my fingers hurt!). Here are a few fun facts to open your appetite.
+The protection system was remarkably strong and held for nearly 14 years. The scheme is so interesting it deserves its own book. Here are a few fun facts to open your appetite.
 
 \begin{enumerate}[topsep=0pt]
   \item Only the ROM read accesses are decrypted by the custom 68000. Read and write operations to the RAM are kept in "clear". 
-  \item The early "CPS-2 Shock Group" effort managed to inject instructions in a running game and have them executed. That was enough to allow unencrypted ROM extraction. This breakthrough opened the door to CPS-2 emulation. The method was convoluted but it worked. Emulators had to ship with a per-game XOR image to "decrypt" the 68000 ROMs.
+  \item The early "CPS-2 Shock Group" effort managed to inject instructions in a running game and have them executed\cite{cps2_plain_ROM}. That was enough to allow unencrypted ROM extraction. This breakthrough opened the door to CPS-2 emulation. The method was convoluted but it worked. Emulators had to ship with a per-game XOR image to "decrypt" the 68000 ROMs.
 
   \item The encryption scheme was completely reverse engineered in 2007 by Mame programmers. It turned out the secret encryption keys were not randomly generated. Capcom used linearly increasing sequences of numbers (1,2,3,4,...) or permutations of the same sequence.
 
   \item Every ten seconds the custom 68000 must receive a watchdog command on its \icode{D1} register. If it doesn't, it stops decrypting the ROM instructions. They look as follows.
-  
-
 \end{enumerate}
 
 \begin{addmargin}[2.5em]{0em}
@@ -2381,3 +2377,6 @@ The CPS-2 encryption scheme is so interesting it deserves its own book (anyone? 
 
 As you will probably have noticed, these values have the pattern of birthday dates!
 \end{addmargin}
+
+\vfill
+Previous table, CPS-2 games: \ocube{} Other, \platcube{} Platform, \shmupcube{} Shmup, \beatallcube{} Brawl, \duelcube{} Duel.
