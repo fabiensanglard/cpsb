@@ -2217,7 +2217,7 @@ In 1992, Capcom released the CP System Dash (a.k.a CPS-1.5). Fully encased in a 
 { \setlength{\tabcolsep}{3.0pt}
 \begin{tabularx}{\textwidth}{Xrrrrrrr}
   \toprule    
-  \textbf{Game Name} & \multicolumn{5}{c}{ \textbf{Type} } &\textbf{ GFX }   \textbf{ Year } \\               
+  \textbf{Game Name} & \multicolumn{5}{c}{ \textbf{Type} } & \textbf{ GFX }  & \textbf{ Year } \\               
   \toprule    
 \href{}{Cadillacs and Dinosaurs} & \po & \po & \po & \beatallcube & \po & 4 MiB & 1992 \\ 
 \href{}{Warriors of Fate} & &   & & \beatallcube & & 4 MiB & 1992 \\ 
@@ -2363,7 +2363,7 @@ Hyper Street Fighter II: The Anniversary Edition & \ocube & & & & & 32 MiB & 200
 
 The protection system was remarkably strong and held for nearly 14 years.
 
-The details of the CPS-2 encryption system are fascinating, deserving of a dedicated book (anymore? my fingers hurt!). Here are a few fun facts to open your appetite.
+The CPS-2 encryption scheme is so interesting it deserves its own book (anyone? my fingers hurt!). Here are a few fun facts to open your appetite.
 
 \begin{enumerate}[topsep=0pt]
   \item Only the ROM read accesses are decrypted by the custom 68000. Read and write operations to the RAM are kept in "clear". 
@@ -2379,5 +2379,5 @@ The details of the CPS-2 encryption system are fascinating, deserving of a dedic
 \begin{addmargin}[2.5em]{0em}
 \lstinputlisting[style=m68kStyle]{src/code/68000/watchdog.s}
 
-As you will probably have noticed, these values have the patterns of birthday dates!
+As you will probably have noticed, these values have the pattern of birthday dates!
 \end{addmargin}
