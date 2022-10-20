@@ -8,7 +8,7 @@ void VSync() {
     flipGFXRAMPointers(); // Flip GFX SCROLLs and OBJs.
     writeSoundLatch();    // dequeue and write latch
     readInputs();
-    lastCounter = frameCounter;
+    lastFrameCounter = frameCounter;
   }
 
   vsyncCounter++; // Unlock the main loop.
