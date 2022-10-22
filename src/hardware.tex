@@ -2367,7 +2367,7 @@ The protection system was remarkably strong and held for nearly 14 years. The sc
   \item Only the ROM read accesses are decrypted by the custom 68000. Read and write operations to the RAM are kept in "clear". 
   \item The early "CPS-2 Shock Group" effort managed to inject instructions in a running game and have them executed\cite{cps2_plain_ROM}. That was enough to allow unencrypted ROM extraction. This breakthrough opened the door to CPS-2 emulation. The method was convoluted but it worked. Emulators had to ship with a per-game XOR image to "decrypt" the 68000 ROMs.
 
-  \item The encryption scheme was completely reverse engineered in 2007 by Mame programmers. It turned out the secret encryption keys were not randomly generated. Capcom used linearly increasing sequences of numbers (1,2,3,4,...) or permutations of the same sequence.
+  \item The encryption scheme was completely reverse engineered in 2007 by Mame programmers. It turned out the secret encryption keys were not randomly generated\cite{cps2_keys}. Capcom used linearly increasing sequences of numbers (1,2,3,4,...) or permutations of the same sequence.
 
   \item Every ten seconds the custom 68000 must receive a watchdog command on its \icode{D1} register. If it doesn't, it stops decrypting the ROM instructions. They look as follows.
 \end{enumerate}
