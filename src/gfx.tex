@@ -17,7 +17,7 @@ A board running Final Fight uses a \icode{S224B} PAL which carves the space in t
 The PAL found on Forgotten Worlds' board, the \icode{LW621}, is more complex as it divides the GFXROM in five areas to also include interleaved STAR1 and STAR2 bytecode.
 
 
-\section{Tile format}
+\section{Tile Format}
 All tiles are stored continuously in memory, using groups of four bytes encoding eight pens. Rows of pens are stored one after another. The dimension of a tile varies depending on the layers. OBJ and SCR2 use the same 16x16 tiles which mean their tiles are 16*16 / 2 = 128 bytes. For the fine tuned SCR1, which uses 8x8, each tile uses 32 bytes. Finally the larger SCR3 uses 512 bytes for each of its 32x32 tiles.
 
 \section{GFX Layout}
@@ -41,7 +41,7 @@ The Street Fighter II board build generates twelve ROMs. Each group stores 2 MiB
 
 
 
-\section{Back in the days}\index{Back in the days!GFX}
+\section{Back in the Days}\index{Back in the days!GFX}
 
 The artwork was the part of a game that required the most people. On a big title such as Street Fighter II, that task kept twenty artists busy, out of a team of forty.
 
@@ -82,7 +82,7 @@ However, "Chun-Li" stories seem to have been rare occurrences.   In the case of 
 
 
 
-\subsection{Non-square grid paper}\label{artists_par}
+\subsection{Non-square Grid Paper}\label{artists_par}
 To draw both outlines and detailed versions of the sprites, artists used a special paper with a double grid system.
 
 There was a "light" grid which used non-square proportions to match the CP-system video aspect ratio of 10:7. Artists were able to draw normally without having to worry about distortion since rectangle elements would match the CPS-1's stretched pixels. 
@@ -93,7 +93,7 @@ The paper featured a second "darker" grid which grouped elements 16 by 16 to mat
 
 
 
-\subsection{OBJ allocation}
+\subsection{OBJ Allocation}
 
 If breaking free of the rectangular sprites was a blessing for the artists, it was a problem for Capcom project managers. In an era where ROM chips were very expensive, a game was allocated a ROM budget at its beginning which it could not be exceeded.
 
@@ -152,7 +152,7 @@ Ryu's sheet \icode{0x4500} allows us to guess even more about the production pro
 
 As the project progressed, the team scraped the bottom of the barrel and started to allocate space on a per-tile basis. They sometimes spread a character pose across multiple sheets, like in Dhalsim's sheet where portions of Blanka can be found.
 
-\subsection{The sheet system}
+\subsection{The Sheet System}
 Besides sparsely describing it, Capcom employees never elaborated on the sheet system. For which title and for how long it was used in total are questions that were never answered.
 
 Thanks to an understanding of the GFXROM format, it is possible to peek back in time. The digital structure is an imprint of what the paper sheet looked like. These reconstructed sheets can provide answers.
@@ -176,7 +176,7 @@ Inspection of subsequent games' GFXROM indicate that all games released on CPS-2
 \img{smc-70_ad.jpg}
 
 
-\subsection{Digitizing art}\index{Computers!SONY SMC-70}
+\subsection{Digitizing Art}\index{Computers!SONY SMC-70}
 
 To digitize their drawings, Capcom employees used SMC-70 computers. Manufactured by Sony, the SMC-70 hit both the US and Japan market in the end of 1982. What is particularly noteworthy about this machine is that it is built around extensibility. 
 
@@ -269,7 +269,7 @@ I used a keyboard to draw all the graphics for Vampire and Street Fighter 2.
 \end{q}
 
 
-\subsection{Saving tiles}
+\subsection{Saving Tiles}
 Artists attempted to reuse tiles as much as possible to reduce usage of the scarce ROM space available. In Street Fighter 2, there was only enough GFXROM for eleven challengers. Ken is a patchwork and a palette swap on top of Ryu tiles base. It "weighs" only 98,304 bytes. A remarkable achievement compared to characters such as Zangief (622,592 bytes), Honda (491,520 bytes), or Ryu (442,368 bytes).
 
 \begin{minipage}[t]{0.19\linewidth}
@@ -336,7 +336,7 @@ The capacity of the ASICs to flip tiles horizontally was used extensively in Str
 
 \pagebreak
 
-\subsection{Team structure and Culture}
+\subsection{Team Structure and Culture}
 
 The art team had a strong hierarchy based on skills and seniority.
 

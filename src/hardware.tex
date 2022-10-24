@@ -232,7 +232,7 @@ The video system produces a stream of palette addresses. Combined with the palet
   \end{figure}
 
 
-\section{Control system}\index{Systems!Control}
+\section{Control System}\index{Systems!Control}
 The control system oversees the platform. As a ruler it needs not to excel at a specific task but to be able to direct and keep tabs on many components. This is a task tailor-made for the Motorola 68000.
 
 
@@ -384,7 +384,7 @@ Thanks to the PAL chips enabling/disabling components, the 68000's memory space 
 }\caption*{Control system memory map}
 \end{figure} \label{m68k_mm}
 
-\subsection{Putting it all together}
+\subsection{Putting it All Together}
 
 The details of the 68000's operations will be studied in-depth in the next chapters but we can already guess how the CPU operates based on what it can access. As the m68k boots, it starts to retrieve instructions from its ROM. For regular operations such as store/load, and also to keep track of its call stack, it uses its work RAM. 
 
@@ -408,7 +408,7 @@ For the audio, the m68k issues simple commands to the z80 via two 1 byte latches
 
 
 \pagebreak
-\section{Audio system}\index{Systems!Audio}
+\section{Audio System}\index{Systems!Audio}
 The audio system runs in isolation from everything else. It has its own bus, its own RAM, its own ROM systems, and its own oscillators. Its only opening to the outside world are two latches to receive commands from the control system and two JAMMA pins to output sound.
 
 The component in charge is a surprisingly lightweight z80 running at 3.58 MHz.
@@ -647,7 +647,7 @@ Sound quality increases linearly with data rate.
 
 
 
-\subsection{ADPCM compression}
+\subsection{ADPCM Compression}
 ADPCM is able to take 12-bit PCM samples and compress then as 4-bit nibbles by encoding only the difference between PCM samples. Decompressing an ADPCM stream consists of adding a delta value to the last decompressed  sample, over and over again.
 
 The delta is encoded with a system of weighted offsets called "step", which is accurate for small variations but coarser when deltas increase. 
@@ -678,7 +678,7 @@ The transition table dictates how to adjust the step size index. ADPCM is aggres
 
 
 \pagebreak
-\section{Video system}\index{Systems!Video}
+\section{Video System}\index{Systems!Video}
 The goal of the video system is to pilot the CRT (Cathode-Ray Tube) where images are rasterized for the player to see.
 
 Even though it is connected via an intermediate JAMMA port, there is no abstraction layer or custom protocol. The four red, green, blue, and sync JAMMA output pins are connected directly into the CRT inputs.
@@ -784,7 +784,7 @@ Besides avoiding interlacing, many other decisions had to be made.
 
 
 
-\subsection{Making choices}
+\subsection{Making Choices}
 
 To craft a video system means building a signal generator and a color generator. We'll study the signal generator first. This circuit is built to take an oscillator ticks as input and to output three signals. One signal tells for how long the color generator should hold a color on the color lines, one signal triggers HSYNC, and one signal triggers VSYNC. 
 
@@ -1022,7 +1022,7 @@ The four remaining bits express brightness to allow 16 shades of a base color. I
 \caption*{All darker shades of red using a \icode{\{0xF,0x0, 0x0\}} base.}
 \end{figure}
 
-\subsection{Putting it all together}
+\subsection{Putting it All Together}
 
 Knowing how a CRT works and what decisions Capcom engineers made, we can now understand the video signal timings.
 
@@ -1049,7 +1049,7 @@ The sheer amount of black in the drawings shows the extent of the overhead assoc
 \end{figure}
 
 
-\subsection{Color generator}
+\subsection{Color Generator}
 
 To generate color signals, the CPS-1 uses a palette system storing colors via 4 x 2Ki x 1B \icode{CXK5814P-35L} SRAM chips.
 
@@ -1128,7 +1128,7 @@ Hint: RKCHGZBD-BVSB.
 
 
 
-\section{Graphic system}\index{Systems!Graphics}
+\section{Graphic System}\index{Systems!Graphics}
 
 The graphic system is the most complicated to understand in the whole machine. It is complex because it must satisfy three demanding systems.
 
@@ -1393,7 +1393,7 @@ Ultimately, the balance of these two features was reversed when rowscroll was us
 
 
 
-\subsubsection{Pushing the limits}
+\subsubsection{Pushing the Limits}
 
 Besides priority mask, tiles can be flipped horizontally and/or vertically but there is no scaling or rotation. Moreover, the CPU has no access to the VRAM which forbids pixel "plotting". That did not prevent seemingly impossible effects from being achieved.
 
@@ -1418,7 +1418,7 @@ In Ghouls 'n Ghosts' first level, on top of hordes of zombies, a Red Arremer, an
 
 To add rainfall, developers leveraged temporal blending on the same layer as the GUI.\label{gg_rain} Every five frames the GUI is not drawn. Instead a full screen of rain tiles is rendered, resulting in a convincing effect. Temporal blending is often used to fake translucency. 
 
-\subsubsection{Plotting pixels}
+\subsubsection{Plotting Pixels}
 
 The introduction sequence of the shoot'em up Carrier Air Wing (page \pageref{caw_color} and \pageref{caw_rgb}) is even more impressive. As a F-14 Tomcat takes off from its carrier, the jet leaves in its trail an exhaust that expands vertically one pixel line at a time. The gaze then disperses with a fizzlefade effect. 
 
@@ -1640,7 +1640,7 @@ Decorations in Street Fighter 2 were the object of much consideration. The stone
 
 
 
-\subsubsection{Going too far} \label{going_too_far}
+\subsubsection{Going Too Far} \label{going_too_far}
 Games were tested to ensure the OBJ budget was not exceed but Final Fight's last level (Bay Area) managed to ship with that very problem. When the heroes encounter an unprecedented level of opposition, the list of sprites is as follows\cite{ffoverload}.
 
 \begin{itemize}[topsep=0pt]
@@ -1916,7 +1916,7 @@ Using Guile's calf as a pencil, but with the title's palette, three tiles are dr
 % Sometimes, in order to ship, you need to be pragmatic.
 
 
-\subsection{Putting it all together}
+\subsection{Putting it All Together}
 
 We now have enough knowledge to fully understand how the CPS-A and CPS-B cooperate to render graphics.
 
@@ -1996,7 +1996,7 @@ On the Street Fighter II board, twelve \icode{ MB834200B-15} are combined for a 
 
 % TODO: Talk about channel and how it helped to improve performances of the GFXROM. 
 
-\section{Copy protection system}
+\section{Copy Protection System}
 
 Upon release, Capcom CEO Kenzo Tsujimoto was confident the CPS-1 would significantly reduce piracy, even going as far as labeling it "impossible to copy".
 
@@ -2027,7 +2027,7 @@ Capcom's response was a two-way verification. The hardware could be actively use
 \caption*{Capcom's disclaimer when a CPS-1 game boots}
 \end{figure}
 
-\subsection{The ever changing CPS-B}
+\subsection{The Ever Changing CPS-B}
 The heart of the protection system is the CPS-B. The core idea is to make it behave differently depending on the game it is supposed to run.
 
 To this effect, twenty-five versions the CPS-B exist\cite{mame_cps1_video}, sometimes differing between revision of the same game\cite{cpsBNumbers}.
@@ -2103,22 +2103,22 @@ Mega Man the Power Battle & \texttt{CPS-B-21}  & 1995 \\
 \end{figure}
 
 
-\subsection{ID check}
+\subsection{ID Check}
 The simplest copy protection available is the chip ID check. By polling a register, the m68k prompts the CPS-B to return its version number. A version match lets the code know if it is running on the right PCB and resets the CPU if it isn't. 
 
 To make instructions patching of the 68000 ROMs more difficult, calls to verify the chip ID are placed in several locations in the code. Motivated programmers tried anyway\cite{strider_conversion}!
 
-\subsection{Multiplication check}
+\subsection{Multiplication Check}
 Starting with CPS-B v21, a slightly more robust feature gave the CPS-B the ability to perform multiplications. Two registers are written and a third can be read. The 68000 code checks that the returned multiplication result is the expected value.
 
-\subsection{Moving registers}
+\subsection{Moving Registers}
 The CPS-B registers move between revisions. The offset and range do not change, but the offset of each register inside that mapping is different. Accessing the scroll control, scroll priority, and palette upload registers is done slightly differently for each game.
 
 Additionally, the meaning of each bit field inside each register is altered between versions.
 
 
 
-\subsection{Unexpected behavior detection}
+\subsection{Unexpected Behavior Detection}
 Protections described so far involved active software and passive hardware. The hardware can also actively monitor the software by leveraging the moving register policy. If the CPS-B detects incoherent values written to the wrong registers, it sets and locks all palettes of all layers to black. 
 
 The game still runs in the background and the audio is played but the screen doesn't display anything. The only way to recover is to reboot the machine\cite{petitSecurity}... only for the screen to turn black again.
@@ -2128,7 +2128,7 @@ The game still runs in the background and the audio is played but the screen doe
 
 
 
-\subsection{Invalid offset detection}
+\subsection{Invalid Offset Detection}
 
 Each game uses a different amount of assets for each of its SCROLL and OBJ layers. On the "B" board, PAL chips such as the \icode{STF29} discussed earlier are hard-coded with knowledge of the amount of GFX ROM attributed to each layer.
 

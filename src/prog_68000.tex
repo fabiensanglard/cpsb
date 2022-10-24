@@ -488,7 +488,7 @@ If a full black layer is needed, it can be rendered without using a single tile 
 
 \pagebreak
 
-\section{Back in the days}\index{Back in the days!Programming}
+\section{Back in the Days}\index{Back in the days!Programming}
 The system used by Capcom to program the CP-System remained unknown for many years. Only the nickname of Hiroaki Kondo, a composer/sound programmer often credited as "X68K", alluded to a computer manufactured by Sharp. 
 
 In 2018,  Akiman confirmed\cite{x68000usage1}\cite{x68000usage2} that Capcom's SDK, named CAT-1, was launched during the making of Street Fighter II and ran on a Sharp X68000.
@@ -571,7 +571,7 @@ For everything else, the X68000 features two \icode{extension slots} to welcome 
 
 
 
-\subsection{X68000 Tech specs}  
+\subsection{X68000 Tech Specs}  
 Inside its gorgeous "Manhattan" case, the machine packed an unparalleled amount of horse power. Even a machine such as the Amiga 500, released the same year and praised in Europe and USA for its prowess, pales in comparison to the X68000. 
 
 
@@ -604,7 +604,7 @@ If both music and sound capabilities were outstanding, it is in the graphics dep
 
 The 1056 KiB of VRAM are divided into three segments feeding four planes. 512 KiB are dedicated to the Text plane, 512 KiB are for the Bitmap plane and the rest, 32 KiB, are for the joined use of the Background plane and Sprite plane. Each plane can be configured to use distinct resolution and layers.
 
-\subsection{Video prowess}
+\subsection{Video Prowess}
 
 The \textbf{Bitmap Plane} is particularly well suited to plot pixels and render images. Its direct 16bpp color mode was ideal for raytracing application (a M68881 math coprocessor could be added to reduce rendering time). Four modes are available.
 
@@ -671,7 +671,7 @@ Several windows-based GUIs running on top of Human68k were released over the yea
 
 
 
-\subsection{A Development machine?}
+\subsection{A Development Machine?}
 The similarities between the X68000 and the CPS-1 are many. A quick glance over the specs on page \pageref{x68000-specs} could easily lead one to conclude that a small layer of emulation is all a X68000 needed to run CPS-1 games, making it a perfect development machine. 
 
 Since developers never detailed to what extent SHARP's machine was involved, we can only make an educated guess. A beginning of an answer comes from the hardware components, while Capcom-produced game ports leave no ambiguity.
@@ -826,7 +826,7 @@ The YM2151 let music be close to the arcade version but without samples. The OKI
 
 \pagebreak
 
-\subsection{Per scene renderer}
+\subsection{Per Scene Renderer}
 
 The color-depth reduction trick is only one among many others. There are many testaments to the hair pulling process an X68000 port appears to be. One of them is the introduction sequence where Damned takes away the mayor's daughter.
 
@@ -944,7 +944,7 @@ Investigating further into Street Fighter 2: Champion Edition confirms the colos
 \item Remain within the m68k software rendering budget
 \end{enumerate}
 
-\subsection{Per level renderer}
+\subsection{Per Level Renderer}
 Like in Final Fight, where scenes were optimized on a case-per-case basis, Street Fighter II Champion Edition uses a distinct rendering strategy depending on the arena.
 
 When fighting occurs in China, the Text layer is not used for Sprite decoration like it is in Thailand. Instead it is dedicated to the sky and its animation. Two rows of clouds, accounting for two "frames" of animation are drawn once. The hardware offsets are leveraged to parallax the clouds and alternate their shapes. This was likely done because of the fillrate required to update this layer.
@@ -957,7 +957,7 @@ When fighting occurs in China, the Text layer is not used for Sprite decoration 
 \end{figure}
 
 
-\subsection{Saving further 68000 cycles}
+\subsection{Saving Further 68000 Cycles}
 If we look closely at Page 1 and 2, we see that the background is split. The alley is on Page 2 while the rest is on Page 1, which is surprising since no parallax effect exists (they are on the same plane). 
 
 This reduces overdraw when the Page 1 cyclist crosses the screen and goes over the other cyclist in the back alley, saving a few CPU cycles.

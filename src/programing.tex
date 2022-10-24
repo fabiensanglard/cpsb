@@ -1,4 +1,4 @@
-\chapter{Software concepts}
+\chapter{Software Concepts}
 
 Nothing tells you more about a system than the process of actually building software for it.
 
@@ -81,7 +81,7 @@ Since they involve low-level operations, both bootstraps for z80 and the m68k ar
 
 
 
-\section{Systems communication}
+\section{Systems Communication}
 
 There are many chips in the machine that need to talk to each other. In the hierarchy we studied in the first chapter, each line is an interface. 
 
@@ -176,7 +176,7 @@ The byte space is divided in two. If the MSB is set to one (\icode{0x80}) it is 
 
 This leaves "only" 126 sound values and 127 music values but is more than enough for the intended purpose. Volume is hard-coded and round-robin rotation is used to pick between channels 1 or 2 to serve a request. 
 
-\section{Tracking wall-time}
+\section{Tracking Wall-time}
 The wall-time is the time experienced by players. Both CPUs must be able to measure it. The m68k must do so in order to sample inputs and run the game engine at the intended speed. The z80 is under the same constraint for the music where it must keep track of pauses and note duration. 
 
 Modern systems have Real Time Clock (RTC) chips to do this but the CP-System is devoid of it. The solution is to leverage the counters which are incremented each time the main thread is interrupted. Depending on the CPU these accumulators will have different granularity.
@@ -189,7 +189,7 @@ Pseudo-random series of numbers can be achieved using Maximum-Length LFSRs (Line
 
 The only tricky part is to pick a seed to initialize the register. Street Fighter 2 uses the frame counter while other titles read the content of the CPU register during bootstrap. The latter method does not work well when working with emulators (they usually initialize their registers to zero) and should be avoided.
 
-\section{Banking system}
+\section{Banking System}
 \label{memory_bank_programming}
 This part applies only to the z80 which uses an infamous banking system. The constraint is to make sure the window mapped at [\icode{0xB000-\icode{0xBFFF}}] is slid to "see" the proper part of the ROM. 
 
