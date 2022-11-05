@@ -207,17 +207,21 @@ func checkExecutable(bin string) {
 	fmt.Println(fmt.Sprintf("Found '%s' -> '%s'", bin, path))
 }
 
+func getMode() string {
+  var args = os.Args
+  if len(args) > 1 {
+		return args[1]
+  }
+  return ""
+}
+
 func main() {
 	fmt.Println("Building...")
 
 	checkExecutable(inkscapeBin)
-
-	var args = os.Args
-
-	if len(args) > 1 {
-		mode = args[1]
-	}
-
+	mode = getMode()
+	
+    var args = os.Args
 	if len(args) > 2 {
 		force = true
 	}
@@ -255,6 +259,6 @@ func main() {
 		fmt.Println("%s %s", string(out), err)
 		return
     } else {
-		os.Rename(outputDirName + "/book.pdf", outputDirName + "/" + mode + ".pdf")
+		os.Rename(outputDirName + "/book.pdf", outputDirName + "/" + getMode() + ".pdf")
 	}
 }
