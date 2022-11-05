@@ -11,6 +11,7 @@ import "golang.org/x/image/draw"
 import "image/jpeg"
 import "image/png"
 import "image"
+import "path"
 
 var inkscapeBin = "inkscape"
 var force = false
@@ -198,6 +199,14 @@ func cwd() string {
 	return cwd
 }
 
+func currentDir() string {
+	cwd, err := os.Getwd()
+	if err != nil {
+		panic(err.Error())
+	}
+	return path.Base(cwd)
+}
+
 func checkExecutable(bin string) {
 	path, err := exec.LookPath(bin)
 	if err != nil {
@@ -221,7 +230,7 @@ func main() {
 	checkExecutable(inkscapeBin)
 	mode = getMode()
 	
-    var args = os.Args
+  var args = os.Args
 	if len(args) > 2 {
 		force = true
 	}
@@ -257,8 +266,11 @@ func main() {
 
 	if err != nil {
 		fmt.Println("%s %s", string(out), err)
-		return
-    } else {
-		os.Rename(outputDirName + "/book.pdf", outputDirName + "/" + getMode() + ".pdf")
-	}
+  }
+
+  // Rename
+  var src = outputDirName + "/book.pdf"
+  var dst =  outputDirName + "/" + currentDir() + "_" + getMode() + ".pdf"
+	os.Rename(src, dst)
+
 }

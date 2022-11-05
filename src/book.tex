@@ -353,18 +353,13 @@ boxsep=0pt,left=2pt,right=2pt,top=2pt,bottom=.5pt}
 \renewcommand{\dateseparator}{-}
 \newdateformat{monthyeardate}{\THEYEAR\dateseparator\THEMONTH}
 
+% For end of book empty page (checkoddpage)
+\usepackage{ifoddpage}
+
 \begin{document}    
 \ifx\forprint\undefined
 \includepdf{\base/illu/cover_front.pdf}
 \else
-\blankpage
-\blankpage
-\vspace*{\fill}
-\hfill
-\begin{center}
-This page intentionally left blank.
-\end{center}
-\vspace{\fill}
 \blankpage
 \blankpage
 \fi
@@ -389,21 +384,15 @@ This page intentionally left blank.
 \printindex
 \subfile{src/bib}
 
-% \subfile{src/team} // TODO extract stuff from here.
 
 \ifx\forprint\undefined
-\includepdf{\base/illu/cover_back.pdf}
+   \includepdf{\base/illu/cover_back.pdf}
 \else
-\blankpage
-\blankpage
-\vspace*{\fill}
-\hfill
-\begin{center}
-This page intentionally left blank.
-\end{center}
-\vspace{\fill}
-\blankpage
-\blankpage
+    % Adding the right number of bankpage automatically at the end is tricky.
+    % Doing it manually.
+    \blankpage      
+    \blankpage 
+    \blankpage
 \fi
 
 \end{document}
