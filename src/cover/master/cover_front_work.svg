@@ -20,7 +20,7 @@
      bordercolor="#666666"
      borderopacity="1.0"
      inkscape:pageshadow="2"
-     inkscape:pageopacity="0.0"
+     inkscape:pageopacity="1"
      inkscape:pagecheckerboard="0"
      inkscape:document-units="mm"
      showgrid="false"
@@ -29,8 +29,8 @@
      inkscape:zoom="0.64488976"
      inkscape:cx="142.66004"
      inkscape:cy="496.98417"
-     inkscape:window-width="3072"
-     inkscape:window-height="1664"
+     inkscape:window-width="2560"
+     inkscape:window-height="1376"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -167,7 +167,7 @@
          y="109.58159">OF</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:50.8px;line-height:1.25;font-family:Novarese;fill:url(#meshgradient17665);fill-opacity:1;stroke:none;stroke-width:0.264583;-inkscape-font-specification:Novarese;font-stretch:normal;font-variant:normal"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:50.8px;line-height:1.25;font-family:Novarese;-inkscape-font-specification:Novarese;fill:url(#meshgradient17665);fill-opacity:1;stroke:none;stroke-width:0.264583"
        x="27.177856"
        y="157.13741"
        id="text3526"><tspan
@@ -208,7 +208,7 @@
        sodipodi:nodetypes="cc" />
     <text
        xml:space="preserve"
-       style="font-size:4.93889px;line-height:1.25;font-family:Novarese;stroke-width:0.264583;-inkscape-font-specification:Novarese;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;line-height:1.25;font-family:Novarese;-inkscape-font-specification:Novarese;stroke-width:0.264583"
        x="69.506447"
        y="214.72098"
        id="text120933"><tspan
