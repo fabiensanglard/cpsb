@@ -887,11 +887,11 @@ The whole trick is not perfect. As the barrels break down, the machine reaches i
 \subsection{Ports Analysis: Street Fighter II Champion Edition (1993)}
 Street Fighter II Champion Edition was released only a year after the arcade version.
 
-The volume of assets forced the game to ship on four 5.25-inch 1.2 MiB floppies. The game manages to run with 2 MiB or RAM but suffers numerous loading delays when traveling between countries. However, on a machine with 4MiB the game engine loads all floppies to RAM to provide a loading-free experience.
+The volume of assets forced the game to ship on four 5.25-inch 1.2 MiB floppies. The game manages to run with 2 MiB of RAM but suffers numerous loading delays when traveling between countries. However, on a machine with 4 MiB the game engine loads all floppies to RAM to provide a loading-free experience.
 
 In terms of GFX rendering architecture, the Tilemaps are once again ignored in favor of the Sprite layer. The floors are software rendered. However the per-line parallax is considerably sped up thanks to the combination of raster effect and hardware scrolling. On each HSYNC event the horizontal hardware offset is adjusted which allows rendering Page 0 once and for all.
 
-Some Sprite elements that used to be rendered on the CPS-1 OBJ layer found their way into the Text layer. This layer is not used for GUI but to render decorative sprites (  like the statue in Dictator level). It is likely that the 32 KiB was once again not big enough to contain the sprites for both opponents and decorations.
+Some Sprite elements that used to be rendered on the CPS-1 OBJ layer found their way into the Text layer. This layer is not used for GUI but to render decorative sprites (like the statue in Dictator level). It is likely that the 32 KiB was once again not big enough to contain the sprites for both opponents and decorations.
 
 \begin{figure}[H]
 \img{x68k_sf2ce_scrw.png}
