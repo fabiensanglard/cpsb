@@ -111,7 +111,7 @@ Since the three JAMMA buttons were used for punches, the extension was labeled t
 \end{figure}
 
 \pagebreak
-The connection points are prominent white connectors. Boards A and B are connected via four 2x32-pin connectors while the boards B and C are connected with four 2x20-pin connectors.  Once plugged into each other, the boards are manipulated as a whole with no floating parts.
+The connection points are prominent white connectors. Boards A and B are connected via four 2$\times$32-pin connectors while the boards B and C are connected with four 2$\times$20-pin connectors.  Once plugged into each other, the boards are manipulated as a whole with no floating parts.
 
 
 The system was revised over the years. Approximately 229 variations are known to exist, including bootlegs\cite{mame_cps1_video}. The board which will be studied in this book is the one used to run "Street Fighter 2": board A "88617A-7B", board B "90629B", and board C "90628-C".
@@ -157,11 +157,11 @@ To design an effective multi-CPUs system able to avoid both instruction and data
   \end{figure}
 \pagebreak
 
-   There are 3x8 = 24 chips, referred to as "GFX ROM", dedicated to storing GFX via sockets [1-8], sockets [10-17], and sockets [20-27] for a total of 12 MiB capacity. Because of the price of ROM, games were never budgeted to allow the max capacity. Most titles were granted 2/4MiB, three (the Street Fighter II series) were allowed 6 MiB, and one (Dynasty Wars) got a whopping 8 MiB.
+   There are 3$\times$8 = 24 chips, referred to as "GFX ROM", dedicated to storing GFX via sockets [1--8], sockets [10--17], and sockets [20--27] for a total of 12 MiB capacity. Because of the price of ROM, games were never budgeted to allow the max capacity. Most titles were granted 2/4MiB, three (the Street Fighter II series) were allowed 6 MiB, and one (Dynasty Wars) got a whopping 8 MiB.
 
    One socket (9) with 64KiB capacity, referred as "z80 ROM", stores both the z80 instructions and the music assets (instructions for the YM2151). 
 
-   Two sockets (18-19) accounting for 256 KiB, referred as "OKI ROM", store ADPCM samples and are directly connected to the OKI chip. 
+   Two sockets (18--19) accounting for 256 KiB, referred as "OKI ROM", store ADPCM samples and are directly connected to the OKI chip.
 
    Finally eight ROMs holding 1 MiB, referred as "M68K ROM", are dedicated to hosting m68k instructions. Even though they are related to graphics, palettes are also stored in this ROM group. 
 
@@ -301,7 +301,7 @@ Using cheaper off-the-shelf 8-bit RAM chips instead of 16-bit RAM chips helped t
 
 \begin{figure}[H]
 \nbdraw{64k_ram}
-\caption*{32 Ki x 16-bit RAM system with two 32 Ki x 8-bit chips}
+\caption*{32 Ki $\times$ 16-bit RAM system with two 32 Ki $\times$ 8-bit chips}
 \end{figure}
 
 The two \icode{65256BLSP-10} are not aware of each other. They are connected to the same 15 address lines and the same control lines for Write Enabled (\icode{WE}) and Read Enabled (\icode{OE}). However, they are connected to different lines of the data bus.
@@ -331,14 +331,14 @@ This is an over-simplification to introduce complexity progressively. We will se
 \subsection{Motorola 68000 Program ROM}
 
 
-The 68000 instructions are provided by eight \icode{27C010} which are 128 Ki x 8-bit chips. They work like the \icode{65256BLSP-10} except that they have sixteen address lines instead of fifteen (and therefore higher capacity).
+The 68000 instructions are provided by eight \icode{27C010} which are 128 Ki $\times$ 8-bit chips. They work like the \icode{65256BLSP-10} except that they have sixteen address lines instead of fifteen (and therefore higher capacity).
 
 Like the RAM, ROM chips are combined via two-way interleaves to provide 16-bit data. What is peculiar is how the four pairs are arranged to build a memory system with larger capacity.
 
 
 \begin{figure}[H]
 \nbdraw{128k_ram}
-\caption*{Two first pairs. 4 x (128 Ki x 8-bit) making a 256Ki x 16-bit system}
+\caption*{Two first pairs. 4 $\times$ (128 Ki $\times$ 8-bit) making a 256Ki $\times$ 16-bit system}
 \end{figure}
 
 To place one pair after another in memory space, the \icode{CE} (Chip Enabled, sometimes labeled \icode{CS} for "Chip Selected") pin is leveraged. Asserting it lets a chip respond to an address request while de-asserting it keeps it dormant. All CEs on all chips on all boards are controlled via PALs.
@@ -451,10 +451,10 @@ The \icode{RFSH} pin (ReFreSH signal) ticks at regular intervals to trigger DRAM
 \pagebreak
 
 \subsection{z80 Work RAM}
-The amount of RAM provided to the z80 may appear scandalously small by today's standards. However because all it has to do is forward requests from the latches to the MSM6295 and feed the YM2151 music notes, the z80 needs few resources. Its bus is connected to a single 2Ki x 8-bit \icode{CXK5816SP} chip.
+The amount of RAM provided to the z80 may appear scandalously small by today's standards. However because all it has to do is forward requests from the latches to the MSM6295 and feed the YM2151 music notes, the z80 needs few resources. Its bus is connected to a single 2Ki $\times$ 8-bit \icode{CXK5816SP} chip.
 
 \subsection{z80 ROM}
-The ROM is made of a simple 64Ki x 8-bit \icode{27C512} chip. It is much larger than the RAM in order to store YM2151 instructions alongside the z80 instructions. 
+The ROM is made of a simple 64Ki $\times$ 8-bit \icode{27C512} chip. It is much larger than the RAM in order to store YM2151 instructions alongside the z80 instructions.
 
 
 These ROM chips work like those previously described, with pins such as power, ground, addresses, data, control, and of course the crucial \icode{CE}. What is peculiar is the z80 uses 16-bit address registers which allows 65,536 addresses. There is not enough address space for all registers, ROM, and RAM totaling 67 KiB.
@@ -570,7 +570,7 @@ Despite running at only 1MHz, the MSM6295 is a god-send to a game board designer
 
 These make it a fully enclosed digitized sound system only communicated via its input lines (\icode{I0-I7}), a perfect match for the z80 data bus, from which it receives commands.
 
-To get to work, the OKI only needs to receive a sample ID [1-127], a channel [1-4], and a volume [0-127]. Via a lookup table in its ROM, the sample offset is retrieved and playback starts with an analog signal generated on \icode{DA0}. 
+To get to work, the OKI only needs to receive a sample ID [1--127], a channel [1--4], and a volume [0--127]. Via a lookup table in its ROM, the sample offset is retrieved and playback starts with an analog signal generated on \icode{DA0}.
 
 \sdraw{0.75}{MSM6295}
 
@@ -584,7 +584,7 @@ While the choice of the Yamaha music chip left little ambiguity to the hardware 
 
 First, the sampling rate expected in ROM is directly correlated to the clock rate of the MSM6295. Second, the OKI can operate in two modes via its \icode{SS} pin. In high quality (H), the divisor is 132 and in low quality (L) the divisor is 165.
 
-Running within [1MHz-5MHz] in two modes, the goal was to maximize quality while minimizing required storage. The table below shows that the best quality (37kHz) only allowed storage of 13 seconds of samples, while the lowest quality (6060Hz) gave 86 seconds.
+Running within [1MHz--5MHz] in two modes, the goal was to maximize quality while minimizing required storage. The table below shows that the best quality (37kHz) only allowed storage of 13 seconds of samples, while the lowest quality (6060Hz) gave 86 seconds.
 \begin{figure}[H]
 {
 \setlength\cmidrulewidth{\heavyrulewidth} % Make cmidrule = 
@@ -809,7 +809,7 @@ The horizontal frequency and vertical frequency are directly derived from the th
  \mathtt{Horizontal\; frequency} = \dfrac{\mathtt{dotclock}}{\mathtt{numDots}}
 \end{align*}
 \begin{align*}
-\mathtt{Vertical\; frequency} =   \dfrac{\mathtt{dotclock}}{\mathtt{(numDots * numLines)}}
+\mathtt{Vertical\; frequency} =   \dfrac{\mathtt{dotclock}}{\mathtt{(numDots \times numLines)}}
 \end{align*}
 
 
@@ -918,13 +918,13 @@ Let's look first at the Neo-Geo which has a PAR close to 1:1, resulting in squar
 The PAR formula is a simple multiplication by a fraction.
 
 \begin{align*}
- \mathtt{PAR = \dfrac{dotclock\;MHz}{\frac{135}{22}} = \dfrac{dotclock\;MHz * 22}{135}}
+ \mathtt{PAR = \dfrac{dotclock\;MHz}{\frac{135}{22}} = \dfrac{dotclock\;MHz \times 22}{135}}
 \end{align*}
 
 The Neo-Geo MVS, with its dot-clock of 6,000,000 Hz has a PAR of 45:44. Combining its \icode{320x240} Storage Aspect Ratio (SAR) with its PAR gives the Display Aspect Ratio (DAR) of the physical image seen on the CRT.
 
 \begin{align*}
- \mathtt{Display\;Aspect\;Ratio\;(DAR) = PAR * SAR = \frac{45*320}{44*224} = 1.46}
+ \mathtt{Display\;Aspect\;Ratio\;(DAR) = PAR \times SAR = \frac{45\times320}{44\times224} = 1.46}
 \end{align*}
 
 The near-square pixels result in minimal distortion when the image is presented on a 4:3 CRT. This is very convenient for artists since they can digitize their assets 1:1 and see their artwork rendered as intended.
@@ -942,7 +942,7 @@ The near-square pixels result in minimal distortion when the image is presented 
 The CPS-1 with its resolution of \icode{384x224} and its dot-clock of 8,000,000 Hz results in a PAR of 135:176. Its DAR somewhat matches the CRT aspect ratio of 4:3 ( = 1.333). 
 
 \begin{align*}
- \mathtt{Display\;Aspect\;Ratio = PAR * SAR = \frac{135*384}{176*224} = 1.31}
+ \mathtt{Display\;Aspect\;Ratio = PAR \times SAR = \frac{135\times384}{176\times224} = 1.31}
 \end{align*}
 
 However its narrow pixels generate a significant amount of distortion, which was a huge problem for artists. If they digitized their drawings as is, the CRT would present to players a vertically-stretched version of the original vision. As illustrated on page \pageref{sf2_ratio}, an artist drawing a circular sun on paper, digitizing it as is, and running it via the CPS-1 would see an oval result on the screen.
@@ -1028,7 +1028,7 @@ Knowing how a CRT works and what decisions Capcom engineers made, we can now und
 
 With a "pixel" clock coming from the GFX oscillator (16MHz) halved to 8MHz, a color is issued every 1s / 8MHz = 125ns.
 
-The horizontal resolution of 512 mandates a HSYNC to be generated every 512 * 0.125 = 64$\mu$s. The resulting refresh rate is 8MHz / (512x262) = 59.637Hz and a VSYNC is issued every 1000ms/59.637 = 16.7ms.
+The horizontal resolution of 512 mandates a HSYNC to be generated every 512 $\times$ 0.125 = 64$\mu$s. The resulting refresh rate is 8MHz / (512$\times$262) = 59.637Hz and a VSYNC is issued every 1000ms/59.637 = 16.7ms.
 
 
 A summary drawing exposes all timing and regions, as well as the significant part of the image not usable due to horizontal and vertical blanking.
@@ -1051,7 +1051,7 @@ The sheer amount of black in the drawings shows the extent of the overhead assoc
 
 \subsection{Color Generator}
 
-To generate color signals, the CPS-1 uses a palette system storing colors via 4 x 2Ki x 1B \icode{CXK5814P-35L} SRAM chips.
+To generate color signals, the CPS-1 uses a palette system storing colors via 4 $\times$ 2Ki $\times$ 1B \icode{CXK5814P-35L} SRAM chips.
 
 
 These memory elements feature pinouts explained earlier like Power \icode{+5V}, Ground \icode{GND}, Addresses \icode{A0-A10}, Data \icode{D0-D7}, Write (\icode{WE}), Read (\icode{OW}), and Chip Enabled (\icode{CE}).
@@ -1076,7 +1076,7 @@ Notice how one line out of twelve is used not for addressing but for \icode{CE}i
 
 
 
-Colors are grouped into palettes containing 16 units. As will be studied later, the GFX system features 6 layers and each of them allows 32 palettes (called page). This brings the total to 6*32*15 = 2,880 colors which requires 12-bit to be indexed.
+Colors are grouped into palettes containing 16 units. As will be studied later, the GFX system features 6 layers and each of them allows 32 palettes (called page). This brings the total to 6$\times$32$\times$15 = 2,880 colors which requires 12-bit to be indexed.
 
  The palette SRAM chips are nearly constantly used to generate colors. Their content can only be modified during VBLANK.
 
@@ -1513,7 +1513,7 @@ With a double sprite framebuffer, the PPU does not just draw a line in advance b
 The gain is massive but it comes with three drawbacks. 
 
 \subsubsection{Price tag}
-First, the price of the machine goes up since it requires much more buffering capacity. At the resolution of 384*224, 9 bits per pixel are stored (5-bit palette index + 4-bit color index) requiring 200 KiB of storage for two framebuffers.
+First, the price of the machine goes up since it requires much more buffering capacity. At the resolution of 384$\times$224, 9 bits per pixel are stored (5-bit palette index + 4-bit color index) requiring 200 KiB of storage for two framebuffers.
 
 \subsubsection{Bandwidth requirements}
 The second impact is on the bus. A massive amount of data is now written and read to/from the VRAM. It requires so much bandwidth that an especially large data bus connecting the GFX pipeline and the VRAM must be designed.
@@ -1957,7 +1957,7 @@ A quick glance at the \icode{HM53461P} shows the usual \icode{+5V}, \icode{GND},
 
 \sdraw{0.55}{HM53461P-10}
 
-Able to store 65,536 Ki x 4-bit, the \icode{HM53461P} is peculiar because it not only features a RAM port (\icode{D1-D4}), it also features a SAM "serial" port (\icode{SD1-SD4}).
+Able to store 65,536 Ki $\times$ 4-bit, the \icode{HM53461P} is peculiar because it not only features a RAM port (\icode{D1-D4}), it also features a SAM "serial" port (\icode{SD1-SD4}).
  
 The RAM port is accessed "normally" by first asserting the address lines along with the control lines and then reading or writing on the data lines.
 
@@ -1983,7 +1983,7 @@ This design would allow RAM and SAM to be accessed simultaneously but this never
 \subsubsection{GFX ROM}
 To keep up with the much higher storage requirements, the GFX ROM system is not designed like the others. 
 
-While other chips on the board-B are \icode{27C010} and \icode{27C512}, the GFXROM is made of \icode{MB834200B} (256 Ki x 16-bit). This type of ROM has a much higher capacity but also a slower access time (150ns). 
+While other chips on the board-B are \icode{27C010} and \icode{27C512}, the GFXROM is made of \icode{MB834200B} (256 Ki $\times$ 16-bit). This type of ROM has a much higher capacity but also a slower access time (150ns).
 
 It is likely the dual-channel architecture is the result of a combined desire to use inexpensive components to keep the price down while maintaining high performance.
 
