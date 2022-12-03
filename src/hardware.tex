@@ -1217,7 +1217,7 @@ Upon reading, an address is issued to two chips at the same time, but their data
 
 
 \subsection{CPS1 Tilemaps}
-The CPS-1 features three tilemap layers named SCROLL1, SCROLL2, and SCROLL3. They all rely on tilemaps made of 64x64 tiles.
+The CPS-1 features three tilemap layers named SCROLL1, SCROLL2, and SCROLL3. They all rely on tilemaps made of 64$\times$64 tiles.
 
 
 \vfill
@@ -1227,7 +1227,7 @@ The CPS-1 features three tilemap layers named SCROLL1, SCROLL2, and SCROLL3. The
  \end{figure}%
 \pagebreak
 
-SCROLL1 uses tiles of dimensions 8x8 resulting in a total dimension of 512x512. SCROLL2 uses tiles of dimensions 16x16 resulting in a total dimension of 1024x1024. SCROLL3 uses tiles of dimensions 32x32 resulting in a total dimension of 2048x2048.
+SCROLL1 uses tiles of dimensions 8$\times$8 resulting in a total dimension of 512$\times$512. SCROLL2 uses tiles of dimensions 16$\times$16 resulting in a total dimension of 1024$\times$1024. SCROLL3 uses tiles of dimensions 32$\times$32 resulting in a total dimension of 2048$\times$2048.
 
 \index{Colors!Palette page}
 Each tilemap has a maximum capacity of 32 palettes (called a palette page) which any tile can use freely. SCROLLS can be offset ("scrolled", hence their name) by any X or Y value, appear in any order, and be used for any purpose.
@@ -1557,7 +1557,7 @@ With its architecture based on a double sprite framebuffer, Capcom built a power
 
 Up to that point, frustration arose from sprite dimensions (all sprites had to have the same sizes), shapes (mandatory rectangular), and colors (one palette per sprite). 
 
-The CPS-1 lifted these three limitations by abandoning the concept of sprites. The CPS-1 does have a "sprite" layer but it is made of tiles of dimensions 16x16 pixels. Called OBJ (for OBJects) its TILEs can be arranged however an artist requires to build sprites of arbitrary shapes and sizes. 
+The CPS-1 lifted these three limitations by abandoning the concept of sprites. The CPS-1 does have a "sprite" layer but it is made of tiles of dimensions 16$\times$16 pixels. Called OBJ (for OBJects) its TILEs can be arranged however an artist requires to build sprites of arbitrary shapes and sizes.
 
 Like the other layers, OBJ palette page features 32 units which any tile can freely use.
 
@@ -2139,7 +2139,7 @@ All graphics are
 stored together in the same ROMs.
 
 But the hardware knows which part of the ROM space
-is 8x8 tiles, 16x16 tiles, 16x16 spites, 32x32 tiles, and all games tested only
+is 8$\times$8 tiles, 16$\times$16 tiles, 16$\times$16 spites, 32$\times$32 tiles, and all games tested only
 draw tiles if their code falls in the valid range. 
 
 If a tile is out of range, it is replaced by transparent pixels.
