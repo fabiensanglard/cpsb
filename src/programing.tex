@@ -193,6 +193,6 @@ The only tricky part is to pick a seed to initialize the register. Street Fighte
 \label{memory_bank_programming}
 This part applies only to the z80 which uses an infamous banking system. The constraint is to make sure the window mapped at [\icode{0xB000-\icode{0xBFFF}}] is slid to "see" the proper part of the ROM. 
 
-This is done via the Bank Switch control register mapped at \icode{0xF004}. The value written is multiplied by \icode{0x4000} which gives the starting offset (in ROM space) of the sliding window. Writing \icode{0} makes \icode{0xB000} in z80 space map to \icode{0x0000} in ROM space, writing \icode{0x0001} makes \icode{0xB000} in z80 space map to \icode{0x4000} in ROM space, and writing \icode{0x0002} makes \icode{0xB000} in z80 space map to \icode{0xB000} in ROM space.
+This is done via the Bank Switch control register mapped at \icode{0xF004}. The value written is multiplied by \icode{0x4000} which gives the starting offset (in ROM space) of the sliding window. Writing \icode{0} makes \icode{0xB000} in z80 space map to \icode{0x0000} in ROM space, writing \icode{0x0001} makes \icode{0xB000} in z80 space map to \icode{0x4000} in ROM space, and writing \icode{0x0002} makes \icode{0xB000} in z80 space map to \icode{0x8000} in ROM space.
  
 This adjustment must be performed before accessing any address falling within the banking interval. 
