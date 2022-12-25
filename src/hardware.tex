@@ -1963,7 +1963,7 @@ The RAM port is accessed "normally" by first asserting the address lines along w
 
 The SAM port is different. Upon asserting the address lines, an internal buffer is latched. Each subsequent control operation automatically increments the address counter.
 
-This design would allow RAM and SAM to be accessed simultaneously but this never happens. When A is read, B is written and the other way around. The real value is in the access time. If the RAM port's 100ms is a "normal" figure, the SAM port read operations complete more than twice as fast, taking only 40ms. 
+This design would allow RAM and SAM to be accessed simultaneously but this never happens. When A is read, B is written and the other way around. The real value is in the access time. If the RAM port's 100ns is a "normal" figure, the SAM port read operations complete more than twice as fast, taking only 40ns. 
 
  This is a perfect component for a system that needs to write a few values at varying locations (like when the CPS-B renders a sprite buffer) but read a very large amount sequentially (like when the CPS-B must compose pens towards the palette system).
 
