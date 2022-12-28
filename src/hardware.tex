@@ -263,7 +263,7 @@ While other CPUs used small address registers resulting in the infamous segmente
 
 The 68000 is brought to life via its clock (\icode{CLK}), +5V (\icode{VCC}), and Ground (\icode{VSS}) pins.
 
-The bus is made of \icode{D0-D7} for data and \icode{A0-A15} for addresses while address ACK (\icode{AS}), Read/Write (\icode{R/W}), \icode{UDS}, \icode{LDS}, and Data ACK \icode{DTACK} are bus control pins.
+The bus is made of \icode{D0-D15} for data and \icode{A1-A23} for addresses while address ACK (\icode{AS}), Read/Write (\icode{R/W}), \icode{UDS}, \icode{LDS}, and Data ACK \icode{DTACK} are bus control pins.
 
 
 Arbitration to allow peripherals to master the bus is done with Bus Request (\icode{BR}),  Bus Grant (\icode{BG}) and Bus Grant ACK (\icode{GBA-K}) lines.
@@ -317,7 +317,7 @@ Notice how the address lines of the SRAM chips are directly connected to the 680
 This is an over-simplification to introduce complexity progressively. We will see next how chips are organized to not conflict with each other.
 
  \begin{trivia}
- 64 KiB of work RAM seems like a lot but was not always enough. Some games found themselves with not enough RAM and too much GFXRAM. Street Fighter 2 Champion Edition programmers resolved to generating and executing instructions from the GFXRAM\cite{mame_driver}!
+ 64 KiB of work RAM seems like a lot but was not always enough. Some games found themselves with not enough RAM and too much GFXRAM. Street Fighter 2 Champion Edition programmers resorted to generating and executing instructions from the GFXRAM\cite{mame_driver}!
  \end{trivia}
 \pagebreak
 
@@ -526,7 +526,7 @@ The principle of Frequency Modulation is to use simple wave forms to modulate ea
 
 
 
-The YM2151 is able to play 8 channels (a.k.a voices) of audio. Each channel consists of four operators (a.k.a slots) which can be setup to produce either percussion or instrument sounds.  
+The YM2151 is able to play 8 channels (a.k.a. voices) of audio. Each channel consists of four operators (a.k.a. slots) which can be setup to produce either percussion or instrument sounds.  
 
 Slots are even able to modulate their own output. With proper adjustments, virtually any wave form can be obtained. 
  
@@ -1850,7 +1850,7 @@ Looking inside the GFXROM, one can find the 16 tiles making the "World Warrier".
 It was several months after all the sprite work had been done. Since the logo had already been created, I couldn't just go in and change the letter at this point.
 \end{q}
 
-What Akiman describe is that the GFXROM and all the tiles in it had been finalized. However they could still make modification to the 68000 instructions and most importantly, the palettes that were stored along with it.
+What Akiman describes is that the GFXROM and all the tiles in it had been finalized. However they could still make modifications to the 68000 instructions and most importantly, the palettes that were stored along with it.
 
 \begin{q}{Akiman}
 "Maybe I can just force it to look like an ‘o’," I thought. I tried layering various other sprites over it until finally, it looked like an ‘o’. 
@@ -1865,7 +1865,7 @@ Phew!
 
 
 
-How in the wORld, do you make an 'e' looks like an 'o'? It turns out that Akiman was lucky in the mistake he had made since the letters he needed, 'o' and 'r', can be found in the word "World".
+How in the wORld, do you make an 'e' look like an 'o'? It turns out that Akiman was lucky in the mistake he had made since the letters he needed, 'o' and 'r', can be found in the word "World".
 
 Akiman leveraged what was available and changed the 68000 draw calls to drop the three last tiles and instead draw again tiles \icode{0x6} and \icode{0x7} at the end.
 
@@ -1877,7 +1877,7 @@ It only partially solved the problem since the split 'W' looked like an 'l' whic
  \end{figure}%
 
 
-The problem was displaced from turning an 'e' into an 'o', to turning an 'l' into and 'i'. That would have been simple if the CPU could have written in the VRAM but as we have seen these chips are not mapped in the m68k address space.
+The problem was displaced from turning an 'e' into an 'o', to turning an 'l' into an 'i'. That would have been simple if the CPU could have written in the VRAM but as we have seen these chips are not mapped in the m68k address space.
 
 There is an expensive way to fake pixel plotting. The idea is to find a tile almost fully transparent (\icode{0xF}) but with only a single pen value set in it. 
 
