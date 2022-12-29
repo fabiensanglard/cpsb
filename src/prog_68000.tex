@@ -585,9 +585,9 @@ CPU & M68000 10MHz & M68000 7.16 MHz\\
 RAM & 1MiB & 512 KiB\\
 Max RAM & 4 MiB & 2 MiB\\ 
 Colors  & 65,536 colors (stable) & 4,096 (HAM) \\
-Resolution & 1024×1024 & 736x483 \\
+Resolution & 1024×1024 & 736×483 \\
 % Graphics & 1 sprite plane, 2 bg planes, 4 bitmap planes& \\
-Sprite engine & 128 units, 16x16 tiles & 8 units, 16x16 tiles\\
+Sprite engine & 128 units, 16×16 tiles & 8 units, 16×16 tiles\\
 % Background engine & 2 in 256x256 \\
 VRAM & 1056 KiB & -\\
 Sound & Oki MSM6258 (1 channel)  & 4 channels PCM\\ 
@@ -611,24 +611,24 @@ The \textbf{Bitmap Plane} is particularly well suited to plot pixels and render 
 
 \begin{itemize}[topsep=0pt]
 % \setlength\itemsep{0.2em}
-\item One 512x512 layer with direct 16bpp colors.
-\item Two 512x512 layers with shared 8bpp indexed colors.
-\item Four 512x512 layers with shared 4bpp indexed colors.
-\item One 1024x1024 layer with 4bpp indexed colors.
+\item One 512×512 layer with direct 16bpp colors.
+\item Two 512×512 layers with shared 8bpp indexed colors.
+\item Four 512×512 layers with shared 4bpp indexed colors.
+\item One 1024×1024 layer with 4bpp indexed colors.
 \end{itemize}
 
 The \textbf{Text Plane} is deceptively named. It is also a bitmap plane but it expects values across four bitplanes making it well suited to write large quantities of bits in few operations. A m68k writing a 16-bit word can set 16 pixels which makes text rendering very fast when copying characters from a model. Two modes are available.
 
 \begin{itemize}[topsep=0pt]
-\item One 1024x1024 layer with 4bpp indexed colors.
-\item Four 512x512 layers with 1bpp monochrome.
+\item One 1024×1024 layer with 4bpp indexed colors.
+\item Four 512×512 layers with 1bpp monochrome.
 \end{itemize}
 
 
 The \textbf{TileMap Plane} offers two modes.
 \begin{itemize}[topsep=0pt]
-\item Two 512x512, using 8x8 tiles with 4bpp indexed colors (16 palettes).
-\item One 1024x1024, using 16x16 tiles with 4bpp indexed colors (16 palettes).
+\item Two 512×512, using 8×8 tiles with 4bpp indexed colors (16 palettes).
+\item One 1024×1024, using 16×16 tiles with 4bpp indexed colors (16 palettes).
 \end{itemize}
 
 The \textbf{Sprite Plane} is a sprite layer allowing 128 sprites on-screen (with a max of 32 sprites per scanline). Each sprite uses 4bpp indexed color (16 palettes).
@@ -722,11 +722,11 @@ All these clues strongly suggest the SHARP X68000 was limited to writing/testing
 
 
 \subsection{Ports Analysis: Ghouls 'n Ghosts (1994)}
-Ghouls 'n Ghosts was released in 1994, six years after the arcade version. It is noteworthy for its low RAM requirements of 2MiB RAM and its resolution of 512x512.
+Ghouls 'n Ghosts was released in 1994, six years after the arcade version. It is noteworthy for its low RAM requirements of 2MiB RAM and its resolution of 512$\times$512.
 
 It is considered a "perfect port" because of its GFX faithfulness to the CPS-1 version. All the enemies, levels, and weapons are there, rendered with the correct rich colors. 
 
-The Tilemap plane is not used at all since the background lives in two software rendered 512x512 Bitmap layers using a shared 8-bit indexed colors palette. The Text layer is also fully software rendered in 1024x1024 16 colors despite the CPU cost of plotting pixels in that mode. The cost and low number of colors makes it a good fit for rendering the GUI elements.
+The Tilemap plane is not used at all since the background lives in two software rendered 512$\times$512 Bitmap layers using a shared 8-bit indexed colors palette. The Text layer is also fully software rendered in 1024$\times$1024 16 colors despite the CPU cost of plotting pixels in that mode. The cost and low number of colors makes it a good fit for rendering the GUI elements.
 
 \begin{figure}[H]
 \img{x68k_gg_scrw.png}
@@ -744,28 +744,28 @@ The rain effect is replicated as seen on page \pageref{gg_rain} via the Text lay
 \begin{minipage}[t]{0.49\linewidth}
   \begin{figure}[H]
   \img{x68k_gg_bitmap1.png}
-  \caption*{512x512 Graphic Plane Page 0}
+  \caption*{512$\times$512 Graphic Plane Page 0}
   \end{figure}
 \end{minipage}%
 \hfill
 \begin{minipage}[t]{0.49\linewidth}
   \begin{figure}[H]
   \img{x68k_gg_bitmap2.png}
-  \caption*{512x512 Graphic Plane Page 1}
+  \caption*{512$\times$512 Graphic Plane Page 1}
   \end{figure}
 \end{minipage}%
 
 \begin{minipage}[t]{0.49\linewidth}
   \begin{figure}[H]
   \img{x68k_gg_text.png}
-  \caption*{Portion of 1024x1024 Text Layer}
+  \caption*{Portion of 1024$\times$1024 Text Layer}
   \end{figure}
 \end{minipage}%
 \hfill
 \begin{minipage}[t]{0.49\linewidth}
    \begin{figure}[H]
   \img{x68k_gg_sprites.png}
-  \caption*{512x512 Sprite Layer}
+  \caption*{512$\times$512 Sprite Layer}
   \end{figure}
 \end{minipage}%
 
@@ -798,28 +798,28 @@ The YM2151 let music be close to the arcade version but without samples. The OKI
 \begin{minipage}[t]{0.49\linewidth}
   \begin{figure}[H]
   \img{x68k_ff_bitmap1.png}
-  \caption*{512x512 Graphic Plane Page 0}
+  \caption*{512$\times$512 Graphic Plane Page 0}
   \end{figure}
 \end{minipage}%
 \hfill
 \begin{minipage}[t]{0.49\linewidth}
   \begin{figure}[H]
   \img{x68k_ff_bitmap2.png}
-  \caption*{512x512 Graphic Plane Page 1}
+  \caption*{512$\times$512 Graphic Plane Page 1}
   \end{figure}
 \end{minipage}%
 
 \begin{minipage}[t]{0.49\linewidth}
   \begin{figure}[H]
   \img{x68k_ff_text.png}
-  \caption*{Portion of 1024x1024 Text Layer}
+  \caption*{Portion of 1024$\times$1024 Text Layer}
   \end{figure}
 \end{minipage}%
 \hfill
 \begin{minipage}[t]{0.49\linewidth}
    \begin{figure}[H]
   \img{x68k_ff_sprites.png}
-  \caption*{512x512 Sprite Layer}
+  \caption*{512$\times$512 Sprite Layer}
   \end{figure}
 \end{minipage}%
 
@@ -841,7 +841,7 @@ To manage this problem, developers started by cutting out one minion (blue Jake)
 
 Since it was still too many tiles, they resorted to enabling (for the intro only) the Tilemap plane. Five out of the six barrels are drawn as tilemap in the Tilemap 0.
 
-Since a tilemap is a simple grid of tiles with no concept of sprites and overlap, special 8x8 tiles were generated where columns of barrels are pre-overlapped.
+Since a tilemap is a simple grid of tiles with no concept of sprites and overlap, special 8$\times$8 tiles were generated where columns of barrels are pre-overlapped.
 
 Things get messy when animation must occur. To allow the barrels to be broken into pieces, the engine exploits the timing of enemies fleeing. First when Damned leaves, then when Dug retires, rows of barrels are progressively migrated out of the tilemap layer into the sprite layer. 
 
@@ -909,28 +909,28 @@ Notice the noise in the Graphic layers, the bottom part in Page 0 and the top pa
 \begin{minipage}[t]{0.49\linewidth}
   \begin{figure}[H]
   \img{x68k_sf2ce_bitmap0.png}
-  \caption*{512x512 Graphic Plane Page 0}
+  \caption*{512$\times$512 Graphic Plane Page 0}
   \end{figure}
 \end{minipage}%
 \hfill
 \begin{minipage}[t]{0.49\linewidth}
   \begin{figure}[H]
   \img{x68k_sf2ce_bitmap1.png}
-  \caption*{512x512 Graphic Plane Page 1}
+  \caption*{512$\times$512 Graphic Plane Page 1}
   \end{figure}
 \end{minipage}%
 
 \begin{minipage}[t]{0.49\linewidth}
   \begin{figure}[H]
   \img{x68k_sf2ce_text.png}
-  \caption*{Portion of 1024x1024 Text Layer}
+  \caption*{Portion of 1024$\times$1024 Text Layer}
   \end{figure}
 \end{minipage}%
 \hfill
 \begin{minipage}[t]{0.49\linewidth}
    \begin{figure}[H]
   \img{x68k_sf2ce_sprites.png}
-  \caption*{512x512 Sprite Layer}
+  \caption*{512$\times$512 Sprite Layer}
   \end{figure}
 \end{minipage}%
 
@@ -966,7 +966,7 @@ This reduces overdraw when the Page 1 cyclist crosses the screen and goes over t
 \setlength{\intextsep}{0pt}
 \begin{figure}[H]
 \img{x68k_sf2ce2_bitmap0.png}
-\caption*{512x512 Graphic Plane Page 0}
+\caption*{512$\times$512 Graphic Plane Page 0}
 \end{figure}
 \end{minipage}%
 \hfill
@@ -974,21 +974,21 @@ This reduces overdraw when the Page 1 cyclist crosses the screen and goes over t
 \setlength{\intextsep}{0pt}
   \begin{figure}[H]
   \img{x68k_sf2ce2_bitmap1.png}
-  \caption*{512x512 Graphic Plane Page 1}
+  \caption*{512$\times$512 Graphic Plane Page 1}
   \end{figure}
 \end{minipage}%
 
 \begin{minipage}[t]{0.49\linewidth}
   \begin{figure}[H]
   \img{x68k_sf2ce2_text.png}
-  \caption*{Portion of 1024x1024 Text Layer}
+  \caption*{Portion of 1024$\times$1024 Text Layer}
   \end{figure}
 \end{minipage}%
 \hfill
 \begin{minipage}[t]{0.49\linewidth}
    \begin{figure}[H]
   \img{x68k_sf2ce2_sprites.png}
-  \caption*{512x512 Sprite Layer}
+  \caption*{512$\times$512 Sprite Layer}
   \end{figure}
 \end{minipage}%
 

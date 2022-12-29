@@ -317,7 +317,7 @@ Notice how the address lines of the SRAM chips are directly connected to the 680
 This is an over-simplification to introduce complexity progressively. We will see next how chips are organized to not conflict with each other.
 
  \begin{trivia}
- 64 KiB of work RAM seems like a lot but was not always enough. Some games found themselves with not enough RAM and too much GFXRAM. Street Fighter 2 Champion Edition programmers resolved to generating and executing instructions from the GFXRAM\cite{mame_driver}!
+ 64 KiB of work RAM seems like a lot but was not always enough. Some games found themselves with not enough RAM and too much GFXRAM. Street Fighter 2 Champion Edition programmers resorted to generating and executing instructions from the GFXRAM\cite{mame_driver}!
  \end{trivia}
 \pagebreak
 
@@ -526,7 +526,7 @@ The principle of Frequency Modulation is to use simple wave forms to modulate ea
 
 
 
-The YM2151 is able to play 8 channels (a.k.a voices) of audio. Each channel consists of four operators (a.k.a slots) which can be setup to produce either percussion or instrument sounds.  
+The YM2151 is able to play 8 channels (a.k.a. voices) of audio. Each channel consists of four operators (a.k.a. slots) which can be setup to produce either percussion or instrument sounds.  
 
 Slots are even able to modulate their own output. With proper adjustments, virtually any wave form can be obtained. 
  
@@ -1217,7 +1217,7 @@ Upon reading, an address is issued to two chips at the same time, but their data
 
 
 \subsection{CPS1 Tilemaps}
-The CPS-1 features three tilemap layers named SCROLL1, SCROLL2, and SCROLL3. They all rely on tilemaps made of 64x64 tiles.
+The CPS-1 features three tilemap layers named SCROLL1, SCROLL2, and SCROLL3. They all rely on tilemaps made of 64$\times$64 tiles.
 
 
 \vfill
@@ -1227,7 +1227,7 @@ The CPS-1 features three tilemap layers named SCROLL1, SCROLL2, and SCROLL3. The
  \end{figure}%
 \pagebreak
 
-SCROLL1 uses tiles of dimensions 8x8 resulting in a total dimension of 512x512. SCROLL2 uses tiles of dimensions 16x16 resulting in a total dimension of 1024x1024. SCROLL3 uses tiles of dimensions 32x32 resulting in a total dimension of 2048x2048.
+SCROLL1 uses tiles of dimensions 8$\times$8 resulting in a total dimension of 512$\times$512. SCROLL2 uses tiles of dimensions 16$\times$16 resulting in a total dimension of 1024$\times$1024. SCROLL3 uses tiles of dimensions 32$\times$32 resulting in a total dimension of 2048$\times$2048.
 
 \index{Colors!Palette page}
 Each tilemap has a maximum capacity of 32 palettes (called a palette page) which any tile can use freely. SCROLLS can be offset ("scrolled", hence their name) by any X or Y value, appear in any order, and be used for any purpose.
@@ -1557,7 +1557,7 @@ With its architecture based on a double sprite framebuffer, Capcom built a power
 
 Up to that point, frustration arose from sprite dimensions (all sprites had to have the same sizes), shapes (mandatory rectangular), and colors (one palette per sprite). 
 
-The CPS-1 lifted these three limitations by abandoning the concept of sprites. The CPS-1 does have a "sprite" layer but it is made of tiles of dimensions 16x16 pixels. Called OBJ (for OBJects) its TILEs can be arranged however an artist requires to build sprites of arbitrary shapes and sizes. 
+The CPS-1 lifted these three limitations by abandoning the concept of sprites. The CPS-1 does have a "sprite" layer but it is made of tiles of dimensions 16$\times$16 pixels. Called OBJ (for OBJects) its TILEs can be arranged however an artist requires to build sprites of arbitrary shapes and sizes.
 
 Like the other layers, OBJ palette page features 32 units which any tile can freely use.
 
@@ -1850,7 +1850,7 @@ Looking inside the GFXROM, one can find the 16 tiles making the "World Warrier".
 It was several months after all the sprite work had been done. Since the logo had already been created, I couldn't just go in and change the letter at this point.
 \end{q}
 
-What Akiman describe is that the GFXROM and all the tiles in it had been finalized. However they could still make modification to the 68000 instructions and most importantly, the palettes that were stored along with it.
+What Akiman describes is that the GFXROM and all the tiles in it had been finalized. However they could still make modifications to the 68000 instructions and most importantly, the palettes that were stored along with it.
 
 \begin{q}{Akiman}
 "Maybe I can just force it to look like an ‘o’," I thought. I tried layering various other sprites over it until finally, it looked like an ‘o’. 
@@ -1865,7 +1865,7 @@ Phew!
 
 
 
-How in the wORld, do you make an 'e' looks like an 'o'? It turns out that Akiman was lucky in the mistake he had made since the letters he needed, 'o' and 'r', can be found in the word "World".
+How in the wORld, do you make an 'e' look like an 'o'? It turns out that Akiman was lucky in the mistake he had made since the letters he needed, 'o' and 'r', can be found in the word "World".
 
 Akiman leveraged what was available and changed the 68000 draw calls to drop the three last tiles and instead draw again tiles \icode{0x6} and \icode{0x7} at the end.
 
@@ -1877,7 +1877,7 @@ It only partially solved the problem since the split 'W' looked like an 'l' whic
  \end{figure}%
 
 
-The problem was displaced from turning an 'e' into an 'o', to turning an 'l' into and 'i'. That would have been simple if the CPU could have written in the VRAM but as we have seen these chips are not mapped in the m68k address space.
+The problem was displaced from turning an 'e' into an 'o', to turning an 'l' into an 'i'. That would have been simple if the CPU could have written in the VRAM but as we have seen these chips are not mapped in the m68k address space.
 
 There is an expensive way to fake pixel plotting. The idea is to find a tile almost fully transparent (\icode{0xF}) but with only a single pen value set in it. 
 
@@ -1963,7 +1963,7 @@ The RAM port is accessed "normally" by first asserting the address lines along w
 
 The SAM port is different. Upon asserting the address lines, an internal buffer is latched. Each subsequent control operation automatically increments the address counter.
 
-This design would allow RAM and SAM to be accessed simultaneously but this never happens. When A is read, B is written and the other way around. The real value is in the access time. If the RAM port's 100ms is a "normal" figure, the SAM port read operations complete more than twice as fast, taking only 40ms. 
+This design would allow RAM and SAM to be accessed simultaneously but this never happens. When A is read, B is written and the other way around. The real value is in the access time. If the RAM port's 100ns is a "normal" figure, the SAM port read operations complete more than twice as fast, taking only 40ns. 
 
  This is a perfect component for a system that needs to write a few values at varying locations (like when the CPS-B renders a sprite buffer) but read a very large amount sequentially (like when the CPS-B must compose pens towards the palette system).
 
@@ -2139,7 +2139,7 @@ All graphics are
 stored together in the same ROMs.
 
 But the hardware knows which part of the ROM space
-is 8x8 tiles, 16x16 tiles, 16x16 spites, 32x32 tiles, and all games tested only
+is 8$\times$8 tiles, 16$\times$16 tiles, 16$\times$16 spites, 32$\times$32 tiles, and all games tested only
 draw tiles if their code falls in the valid range. 
 
 If a tile is out of range, it is replaced by transparent pixels.

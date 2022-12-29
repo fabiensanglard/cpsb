@@ -11,7 +11,8 @@ int stepSizeIndex = 0; // Initial value (0) points to 16
 int16_t lastSample = 0;
 
 int8_t compress(int16_t sample) {
-  int8_t B3 = 0, B2 = 0, B1 = 0, B0 = 0; // Bit of the output nibble
+  // Bit of the output nibble
+  int8_t B3 = 0, B2 = 0, B1 = 0, B0 = 0;
 
   sample >>= 4; // Convert from 16-bit to 12-bit
   int16_t diff = sample - lastSample; 

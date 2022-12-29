@@ -182,9 +182,9 @@ The calling functions from ASM to C require using \icode{\_} prefixed symbols.
 \index{Interrupts!Programming z80}
 In order to interact with the latches properly but also be able to keep track of wall-time, the z80 needs to be interrupted regularly. Zilog's CPU does features a timer RFSH but it is intended for DRAM refresh (which the sound system does not feature anyway).
 
-Instead the interrupts are triggered by the YM2151, thanks to its two internal timers. Timer A is a 10-bit counter while Timer B is an 8-bit counter. For a YM2151 running at 3,579Hz, the trigger formula is 64 * (1024 - value) / 3579.
+Instead the interrupts are triggered by the YM2151, thanks to its two internal timers. Timer A is a 10-bit counter while Timer B is an 8-bit counter. For a YM2151 running at 3,579Hz, the trigger formula is 64 $\times$ (1024 - value) / 3579.
 
-Setting the Timer A to \icode{800} will result in an interrupt 64 * (1024 - 800) / 3579 = 4ms later. When the YM2151 counter reaches zero, it asserts a line connected to the z80 \icode{INT} line which makes the CPU jump to address \icode{0x38}.
+Setting the Timer A to \icode{800} will result in an interrupt 64 $\times$ (1024 - 800) / 3579 = 4ms later. When the YM2151 counter reaches zero, it asserts a line connected to the z80 \icode{INT} line which makes the CPU jump to address \icode{0x38}.
 
 \lstinputlisting[style=CStyle]{src/code/z80/interrupts.c}
 

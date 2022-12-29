@@ -8,7 +8,7 @@ The source code is open-source but I retain ownership of all drawings. They are 
 
 - Setup env
 ```
-cp src/fonts ~/.fonts
+cp src/fonts/* ~/.fonts
 fc-cache -f -v
 sudo apt-get update
 sudo apt install -y golang-go
