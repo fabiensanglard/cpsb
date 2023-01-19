@@ -6,7 +6,7 @@ void hostFrame() {
 
 void main() {
   while(true) {
-    if (frameCounter < vsyncCounter) continue;
+    if (frameCounter >= vsyncCounter) continue;
     hostFrame(); // Run 16ms of gameplay
     frameCounter++;
   }

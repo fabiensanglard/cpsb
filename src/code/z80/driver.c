@@ -19,7 +19,7 @@ void main () {
     musCounter++;
     
     // Only tick after interrupt ticks
-    while (musCounter < intCounter) {
+    while (musCounter >= intCounter) {
     }
 
     updateMusic(); // Feed the YM2151 or skip for pause.
