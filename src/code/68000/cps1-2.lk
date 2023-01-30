@@ -2,14 +2,14 @@ SECTIONS {
 
   .text : {
     *(.text)
-    _etext = . ; 
+    _etext = . ;
     . = ALIGN(4);
   } @>@ rom
 
   .data : {
     _data = . ;     // Start of .data marker
     *(.data)
-    _edata = . ;    // End  of .data marker
+    _edata = . ;    // End   of .data marker
     . = ALIGN(4);
   } @>@ rom @AT>@ ram   // LMA = rom but VMA = ram
 
