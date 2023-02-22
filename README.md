@@ -12,7 +12,6 @@ cp src/fonts/* ~/.fonts
 fc-cache -f -v
 sudo apt-get update
 sudo apt install -y golang-go
-go mod init "image/draw"
 go get golang.org/x/image/draw
 sudo add-apt-repository universe
 sudo add-apt-repository ppa:inkscape.dev/stable
