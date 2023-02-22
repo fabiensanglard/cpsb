@@ -262,14 +262,14 @@ func main() {
 	arg1 := outputDirName
 	arg2 := `\def\base{` + out + `} ` + compileOptions + ` \input{src/book.tex}`
 	
-  var err error
+        var err error
 	var out []byte
 	draftMode := "-draftmode"
 
 	// Compile in draft mode to generate only necessary files for Table of Contents
 	if mode != "debug" {
 		fmt.Println(bin, draftMode, arg0, arg1, arg2)
-		_, err = exec.Command(bin, draftMode, arg0, arg1, arg2).CombinedOutput()
+		out, err = exec.Command(bin, draftMode, arg0, arg1, arg2).CombinedOutput()
 	}
 
 	// Full Compile to generate PDF
@@ -280,7 +280,7 @@ func main() {
 
 	if err != nil {
 		fmt.Println("%s %s", string(out), err)
-  }
+        }
 
   // Rename
   var src = outputDirName + "/book.pdf"
