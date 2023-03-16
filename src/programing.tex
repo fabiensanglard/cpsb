@@ -89,7 +89,7 @@ There are many chips in the machine that need to talk to each other. In the hier
 
 That is a total of eight communication lines, but the dotted ones in the drawing are not programmable, lowering the task to understanding five APIs.
 
-\subsection{m68k \begin{CJK}{UTF8}{min}→\end{CJK} CPSA and m68k \begin{CJK}{UTF8}{min}→\end{CJK} CPS-B} Communication occurs over the CPS-A and CPS-B registers. Additional draw commands are written by the 68000 to the GFXRAM where they are read by the CPS-A. All access to GFXRAM is arbitrated by the m68k bus protocol.
+\subsection{m68k \begin{CJK}{UTF8}{min}→\end{CJK} CPS-A and m68k \begin{CJK}{UTF8}{min}→\end{CJK} CPS-B} Communication occurs over the CPS-A and CPS-B registers. Additional draw commands are written by the 68000 to the GFXRAM where they are read by the CPS-A. All access to GFXRAM is arbitrated by the m68k bus protocol.
 
 \subsection{z80 \begin{CJK}{UTF8}{min}→\end{CJK} YM2151} Communication occurs over the YM2151 registers which are mapped on the z80 bus. This access is arbitrated by the z80 bus protocol.
 
