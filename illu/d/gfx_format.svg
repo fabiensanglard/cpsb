@@ -8,7 +8,7 @@
    version="1.1"
    id="svg3916"
    sodipodi:docname="gfx_format.svg"
-   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   inkscape:version="1.2.2 (b0a84865, 2022-12-01)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -24,19 +24,21 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="1.7606141"
-     inkscape:cx="494.14575"
-     inkscape:cy="63.330174"
-     inkscape:window-width="1280"
-     inkscape:window-height="736"
+     inkscape:cx="289.95565"
+     inkscape:cy="44.018732"
+     inkscape:window-width="1728"
+     inkscape:window-height="1051"
      inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:window-y="38"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
      inkscape:snap-global="false"
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
-     fit-margin-bottom="0" />
+     fit-margin-bottom="0"
+     inkscape:showpageshadow="2"
+     inkscape:deskcolor="#d1d1d1" />
   <defs
      id="defs3913">
     <marker
@@ -387,7 +389,7 @@
          id="tspan7415-8"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:'Roboto Mono';-inkscape-font-specification:'Roboto Mono';stroke-width:0.264583"
          x="91.416725"
-         y="61.756618">Pen 6 = 0x6</tspan></text>
+         y="61.756618">Pen 6 = 0x4</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
