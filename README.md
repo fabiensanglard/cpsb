@@ -25,6 +25,8 @@ sudo apt install -y texlive-full
 ./make.sh release
 ```
 
+Note: Make sure Inkscape version is at least v1.0.0 of SVG -> PNG conversion will fail.
+
 ## How to build (Windows)
 
 - Install WSL1/WSL2
