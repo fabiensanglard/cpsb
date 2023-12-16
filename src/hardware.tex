@@ -1837,7 +1837,7 @@ Just three days before the deadline, I discovered something horrible.
 I had made a mistake with the subtitle “World Warrior”, mis-spelling it “World Warrier.”
 \end{q}
 
-The subtitle was drawn with the OBJ layer, using 16 draw calls pointing to tileID \icode{0x0}, \icode{0x1}, \icode{0x2}, \icode{0x3}, \icode{0x4}, \icode{0x5}, \icode{0x6}, \icode{0x7}, \icode{0x8}, \icode{0x9}, \icode{0xA}, \icode{0xB}, \icode{0xC}, \icode{0xD}, \icode{0xE}, \icode{0xE}. 
+The subtitle was drawn with the OBJ layer, using 16 draw calls pointing to tileID \icode{0x0}, \icode{0x1}, \icode{0x2}, \icode{0x3}, \icode{0x4}, \icode{0x5}, \icode{0x6}, \icode{0x7}, \icode{0x8}, \icode{0x9}, \icode{0xA}, \icode{0xB}, \icode{0xC}, \icode{0xD}, \icode{0xE}, \icode{0xF}. 
 
 Looking inside the GFXROM, one can find the 16 tiles making the "World Warrier". 
 
@@ -1867,7 +1867,7 @@ Phew!
 
 How in the wORld, do you make an 'e' look like an 'o'? It turns out that Akiman was lucky in the mistake he had made since the letters he needed, 'o' and 'r', can be found in the word "World".
 
-Akiman leveraged what was available and changed the 68000 draw calls to drop the three last tiles and instead draw again tiles \icode{0x6} and \icode{0x7} at the end.
+Akiman leveraged what was available and changed the 68000 draw calls to drop the three last tiles and instead draw again tiles \icode{0x5} and \icode{0x6} at the end.
 
 It only partially solved the problem since the split 'W' looked like an 'l' which made the title read "The World Warrlor". 
 
