@@ -8,6 +8,7 @@ The source code is open-source but I retain ownership of all drawings. They are 
 
 - Setup env
 ```
+mkdir ~/.fonts
 cp src/fonts/* ~/.fonts
 fc-cache -f -v
 sudo apt-get update
@@ -25,7 +26,7 @@ sudo apt install -y texlive-full
 ./make.sh release
 ```
 
-Note: Make sure Inkscape version is at least v1.0.0 of SVG -> PNG conversion will fail.
+Note: Make sure Inkscape version is at least v1.0.0 or SVG -> PNG conversion will fail.
 
 ## How to build (Windows)
 
