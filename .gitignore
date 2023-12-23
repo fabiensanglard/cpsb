@@ -1,6 +1,5 @@
 .DS_Store
 go.sum
-go.mod
 *.aux
 *.log
 *.out
