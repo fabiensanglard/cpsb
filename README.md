@@ -67,14 +67,14 @@ Debug is the default mode.
 
 ### Poor typesetting
 
-If upon compilation the typesetting is "off" with blank pages, it may be that the wrong version of TexLive is used to compile. Run the following command and make sure you have at least version 2020.
+If upon compilation the typesetting is "off" with blank pages, it may be that the wrong version of TexLive is used to compile. Run the following command and make sure you are using version 2023.
 
 ```
 $ tex --version
-TeX 3.141592653 (TeX Live 2022)
+TeX 3.141592653 (TeX Live 2023)
 ```
 
-This book is verified to compile properly with TexLive 2020, 2021, and 2022. In case you have an older version, use the following steps to install the lastest.
+This book is verified to compile properly with TexLive 2023. In case you have another version, use the following steps to install the lastest.
 
 [Uninstall TexLive](https://puttym.github.io/update-texlive)
 
