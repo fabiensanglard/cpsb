@@ -261,7 +261,7 @@ func parseArgs() {
 }
 
 // hack book.tex to insert correct translation (if the file exists)
-func insertLanguageIntoBookTex() {
+func insertLanguageIntoBookTex() string {
 
 	// open book.tex
 	input, err := ioutil.ReadFile("src/book.tex")
@@ -297,6 +297,8 @@ func insertLanguageIntoBookTex() {
 		fmt.Println("Could not save src/book.tex file",err)
 		os.Exit(3)
 	}
+
+	return langSufix
 }
 
 func main() {
@@ -307,10 +309,11 @@ func main() {
 	if lang == "en" {
 		fmt.Println("Building in english in", mode, "mode...")
 	} else if lang == "fr" {
-		fmt.Println("Construction du livre en français dans le mode", mode, "...")
+		fmt.Println("Construction du livre en français en mode", mode, "...")
 	}
 
-	insertLanguageIntoBookTex()
+	langSufix := insertLanguageIntoBookTex()
+	//fmt.Printf("langSufix="+langSufix)
 
 	compileOptions := ""
 	if mode == "print" {
@@ -323,7 +326,9 @@ func main() {
 	os.MkdirAll(out, os.ModePerm)
 
 	makeCover("src/cover/pdf/cover_front.svg", out+"/illu/cover_front.pdf")
-	makeCover("src/cover/pdf/cover_back.svg", out+"/illu/cover_back.pdf")
+	// makeCover("src/cover/pdf/cover_back"+langSufix+".svg", out+"/illu/cover_back.pdf")
+	//makeCover("src/cover/pdf/cover_front"+langSufix+".svg", out+"/illu/cover_front.pdf")
+	makeCover("src/cover/pdf/cover_back"+langSufix+".svg", out+"/illu/cover_back.pdf")
 
 	prepare("illu/img/", prepareImg)
 	prepare("illu/d/", prepareDrawing)
@@ -355,6 +360,6 @@ func main() {
 
 	// Rename
 	var src = outputDirName + "/book.pdf"
-	var dst =  outputDirName + "/" + currentDir() + "_" + mode + ".pdf"
+	var dst =  outputDirName + "/" + currentDir() + "_" + mode + langSufix + ".pdf"
 	os.Rename(src, dst)
 }
