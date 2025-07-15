@@ -1,0 +1,426 @@
+\chapter{Système Sonore}
+
+Créer les ROMs pour le système sonore est un peu plus complexe que pour le système graphique.
+
+Il ne s'agit pas seulement de traiter les échantillons et les musiques : il faut également compiler du code pour amorcer puis faire fonctionner le processeur Z80. Ce programme est communément appelé un "pilote sonore" (*Sound Driver*).
+
+\begin{figure}[H]
+\sdraw{1.0}{sound_arch}
+\caption*{Les composants du système sonore}
+\end{figure}
+
+Les ressources et le pilote doivent être empaquetés dans deux ROMs distinctes : l'une appelée "ROM Z80" et l'autre "ROM OKI".  
+Cette asymétrie – trois systèmes regroupés dans deux ROMs – est encore compliquée par une arborescence de dépendances aussi confuse qu'une assiette de spaghettis.
+
+La difficulté vient du fait que les effets sonores **et** la musique contribuent au contenu de la ROM OKI, laquelle doit être construite en deux étapes.
+
+\nbdraw{build_graph_sfx}
+
+Heureusement, la structure de la ROM OKI facilite la tâche : un index est présent au début de la ROM et référence toutes les données audio. Cela permet une première passe dans laquelle les échantillons sonores sont ingérés par le système de compilation, générant une ROM OKI incomplète. Lors d'une seconde passe, les pistes musicales sont traitées : de nouveaux échantillons sont alors ajoutés à l'index et le contenu audio est complété.
+
+Tout en amont, le programme \icode{ccps\_sfx} attend que les artistes fournissent les effets sonores sous forme de fichiers \icode{.wav}, un format universellement reconnu par les outils audio. Cette étape produit une ROM OKI partielle, ainsi qu'un fichier d'en-tête \icode{.h} à intégrer dans le graphe de compilation de la partie contrôle afin que le processeur m68k puisse déclencher la lecture d'un sample via un simple identifiant.
+
+La deuxième étape repose sur \icode{ccps\_mus}, le processeur musical. Il attend des fichiers \icode{.vgm} (*Video Game Music*) dont il extrait les instructions brutes pour la puce YM2151. Cette étape produit la ROM OKI finale avec les échantillons utilisés par la bande-son, ainsi qu'un fichier \icode{.c} contenant le bytecode avec les valeurs de registre YM2151, le timing et la synchronisation des samples OKI.
+
+Enfin, la dernière étape repose sur la chaîne d'outils SDCC (*Small Device C Compiler*). Tous les fichiers produits précédemment sont utilisés, ainsi que les sources du pilote sonore (fichiers \icode{.c}) et le fichier d'amorçage \icode{crt0.s}, assemblé via l'assembleur \icode{sdasz80}.  
+Tous les fichiers objets \icode{.rel} générés sont ensuite liés ensemble grâce à l'éditeur de liens \icode{sdldz80} de SDCC.
+
+\section{Traitement des échantillons sonores}
+
+Un fichier WAV est un conteneur simple : un en-tête décrivant les métadonnées du fichier, suivi de la charge utile (payload). Une fois la fréquence d'échantillonnage, le nombre de bits par sample et le nombre de canaux récupérés, les données PCM peuvent être lues.
+
+\subsection{Contraintes}
+
+Les artistes ne doivent pas produire de fichiers WAV stéréo car le CPS-1 est un système **mono**.  
+De plus, les développeurs doivent choisir s'ils veulent utiliser l'OKI en haute qualité (7575 Hz) ou en basse qualité (6060 Hz), et tous les fichiers doivent respecter ce taux.  
+Enfin, comme l'ADPCM compresse un échantillon 12 bits en 4 bits, les artistes doivent fournir des WAV en **16 bits**.
+
+\subsection{Compression ADPCM}
+\index{ADPCM!Compression}
+
+La décompression est effectuée en temps réel par la puce OKI, mais le système de compilation doit tout de même compresser les fichiers de manière appropriée.
+
+L'ADPCM encode la différence entre l'échantillon précédent et le suivant. Chaque échantillon 16 bits est d'abord réduit à 12 bits, puis compressé en une portion de 4 bits (*nibble*)\cite{adpcm_specs}.
+
+\lstinputlisting[style=CStyle]{src/code/adpcm_algo.c}
+
+Prenons un exemple de conversion d'un flux PCM 16 bits vers des nibbles ADPCM 4 bits :
+
+\lstinputlisting[style=CStyle]{src/code/pcm-dpcm.c}
+
+\subsubsection{Compression de l'échantillon 1}
+
+Le premier échantillon 16 bits a une valeur de \icode{960}, qui devient \icode{60} en 12 bits. Avec une taille de pas (*step size*) de 16, l'ADPCM peut commander un delta maximal de \(16 + 16/2 + 16/4 = +28\), encodé sous la forme \icode{0b0111}.  
+L'index de pas est ensuite mis à jour via \icode{transitionTable[0b111]} = 8. La taille de pas devient alors \icode{34}.
+
+\subsubsection{Compression de l'échantillon 2}
+
+Le deuxième échantillon a également une valeur de \icode{960}, soit \icode{60} en 12 bits.  
+Comme le dernier échantillon généré était 28, l'ADPCM doit encoder une différence de \(60 - 28 = 32\).  
+Il commande alors un delta de \(0 + 34/2 + 34/4 = +25\), encodé sous la forme \icode{0b0011}.
+
+Le décompresseur sortira \(28 + 25 = 53\). On observe que l'adaptation de la taille de pas se fait en seulement deux étapes.
+
+L'index de pas est mis à jour de \(8 - 1 = 7\), donnant une nouvelle taille de pas de \icode{31}.
+
+\subsubsection{Compression de l'échantillon 3}
+
+Le troisième échantillon vaut \icode{950}, soit \icode{59} en 12 bits.  
+Le dernier échantillon étant 53, l'ADPCM encode une différence de \(59 - 53 = 6\).  
+Il commande un delta de \(0 + 0 + 0 = 0\), encodé sous la forme \icode{0b0000}.
+
+Le décompresseur produit alors \(53 + 0 = 53\). L'index de pas est mis à jour de \(7 - 1 = 6\), avec une nouvelle taille de pas de \icode{28}.
+
+\subsubsection{Compression de l'échantillon 4}
+
+Le dernier échantillon vaut \icode{160}, soit \icode{10} en 12 bits.  
+Le dernier échantillon était 53, donc l'ADPCM encode une différence de \(10 - 53 = -43\).  
+Il commande un delta de \(- (28 + 28/2 + 0) = -42\), encodé sous la forme \icode{0b1110}.
+
+Le décompresseur produit \(53 - 42 = 11\). L'index de pas est mis à jour de \(6 + 6 = 12\), avec une taille de pas finale de \icode{50}.
+
+Tracer la courbe PCM vs ADPCM montre que le flux décompressé **retarde** légèrement lors des changements brusques, mais **rattrape rapidement**.  
+La première valeur ADPCM est toujours proche de zéro (+/-28), mais ce défaut est inaudible pour les joueurs puisque la majorité des échantillons commencent par un fondu d'entrée (*fade-in*).
+
+
+\nbdraw{adpcm_graphed}
+
+\section{Structure de la ROM OKI}
+
+La structure de la ROM OKI est simple. Elle commence par une table de 127 entrées de 6 octets chacune.  
+Chaque entrée pointe vers une charge utile (payload) dans la ROM. Cette charge doit être un flux ADPCM.
+
+Pour une raison inconnue, l'offset \icode{0} dans l'index de la table ne doit pas être utilisé.
+
+\lstinputlisting[style=CStyle]{src/code/okistruct.c}
+
+On remarque qu'il n'y a aucune métadonnée indiquant le bitrate.  
+Chaque entrée est un simple offset pointant directement vers des nibbles ADPCM.  
+C'est donc au système de compilation de transmettre cette information au Z80.  
+En pratique, les jeux Capcom n'utilisaient jamais de bitrate mixte, et étaient toujours codés en 7575 Hz.
+
+\begin{figure}[H]
+\nbdraw{oki_rom}
+\caption*{Organisation de la ROM OKI\cite{MSM6295_datasheet}}
+\end{figure}
+
+
+\section{Traitement de la musique}
+
+Créer de la musique par synthèse FM est un art en soi que ce document ne prétend pas dénaturer.  
+Le plus simple est de laisser les musiciens de l'équipe utiliser l'outil de leur choix (le formidable *DefleMask* est fortement recommandé), et d'exporter leurs compositions au format VGM.
+
+Le format VGM (*Video Game Music*) est un effort communautaire issu du site \icode{smspower.org} visant à fournir un format audio compatible avec de nombreux systèmes rétro (consoles SEGA, MSX, Neo Geo, PC), ainsi que des bornes d'arcade.
+
+Le profil arcade est particulièrement pertinent pour le développement CPS-1, car il utilise la puce YM2151 pour la synthèse FM, et SegaPCM pour les samples.
+
+Alors que la puce YM2151 est parfaitement compatible (et ne nécessite aucun traitement), la SegaPCM nécessite quelques adaptations.  
+Utilisée dans les systèmes SEGA AM2 entre 1985 et 1991, elle est plus avancée que la MSM6295 :  
+elle prend en charge le PCM 16 bits, jusqu'à 32 kHz de fréquence d'échantillonnage, plus de canaux, et un espace d'adressage plus grand.
+
+Le système de compilation peut compresser automatiquement les données SegaPCM vers ADPCM, et les rééchantillonner de 32 kHz vers 8080 Hz.  
+Cependant, les musiciens doivent se limiter à **deux canaux** pour les samples musicaux, afin de laisser les deux autres canaux libres pour les effets sonores sur CPS-1.
+
+\lstinputlisting[]{src/code/z80/vgm.c}
+
+
+\section{Programmation du Z80}
+
+Programmer le processeur Zilog pour en faire un pilote audio repose sur deux éléments essentiels :  
+1. L'initialisation (bootstrapping)  
+2. La mise en place de la carte mémoire (memory map)
+
+Commençons par cette dernière, qui est la plus simple.  
+Voici un rappel des zones mémoire utiles, afin d'éviter des allers-retours dans le document.
+
+\begin{figure}[H]
+{
+\begin{tabularx}{\textwidth}{rrrX}
+\toprule    
+  \textbf{Début} & \textbf{Fin} & \textbf{Taille} & \textbf{Fonction} \\               
+  \toprule    
+  \texttt{0x0000} & \texttt{0x7FFF} & 32 KiB & ROM (32 KiB sur les 64 KiB d'espace total)\\
+  \texttt{0x8000} & \texttt{0xBFFF} & 16 KiB & Vue "bank-switchée" du reste de la ROM\\
+  \toprule    
+  \texttt{0xD000} & \texttt{0xD7FF} & 2 KiB & RAM\\
+  \toprule    
+  \texttt{0xF000} & \texttt{0xF001} & 2 B & Registres du YM2151\\
+  \texttt{0xF002} & \texttt{0xF002} & 1 B & Registre du OKI6295\\
+  \texttt{0xF004} & \texttt{0xF004} & 1 B & Contrôle de bank-switch (\icode{SOU1})\\
+  \texttt{0xF006} & \texttt{0xF006} & 1 B & Mode H / L du MSM6295\\
+  \toprule    
+  \texttt{0xF008} & \texttt{0xF008} & 1 B & Commandes sonores (latch 1)\\
+  \texttt{0xF00A} & \texttt{0xF00A} & 1 B & Commandes sonores (latch 2)\\
+  \toprule    
+\end{tabularx}%
+}
+\caption*{Carte mémoire du Z80}
+\end{figure}
+
+L'utilisation du compilateur \icode{sdcc} est très utile ici, car il propose le mot-clé spécial \icode{\_\_at} pour positionner les variables à une adresse précise.
+
+\lstinputlisting[style=CStyle]{src/code/z80/memory_map.c}
+
+Une fois les registres mappés correctement, il reste à placer les sections \icode{.text} et \icode{.data} aux bons emplacements dans la ROM.  
+Cela se fait simplement grâce à l'éditeur de liens \icode{sdldz80} et son script dédié.
+
+\lstinputlisting[]{src/code/z80/main.lk}
+
+Comme prévu, la section \icode{\_DATA} est placée à l'adresse \icode{0xD000}.  
+En revanche, la section \icode{\_CODE} n'est pas placée à \icode{0x0000} mais à \icode{0x0200}, pour une raison qui sera expliquée juste après.
+
+\begin{trivia}
+Déboguer un programme CPS-1 peut être laborieux.  
+Un bon réflexe est de consulter le fichier \icode{.map} généré par le linker : il indique précisément où chaque symbole est placé.
+\end{trivia}
+
+
+\subsection{Amorçage (Bootstrapping)}
+
+Un Z80 commence à lire et exécuter les instructions à l'adresse \icode{0x0000}.  
+Le code d'amorçage \icode{crt0.s} (voir page \pageref{z80_crt0}) est placé à cette adresse grâce à la directive \icode{.org 0}.  
+Ce code saute immédiatement à l'adresse \icode{0x100} pour contourner les instructions du gestionnaire d'interruptions.
+
+Le Z80 peut fonctionner en modes d'interruption 0, 1 ou 2.  
+Les modes 0 et 2 sont plus puissants mais aussi plus complexes, car ils impliquent de lire l'identifiant du périphérique déclencheur via le bus de données, afin de gérer des interruptions multiples.  
+Dans notre cas, ce mécanisme est surdimensionné. Le Z80 utilise donc le mode 1, dans lequel toute interruption fait sauter le CPU vers l'adresse \icode{0x38}.
+
+À l'adresse \icode{.org 0x100}, le pointeur de pile \icode{sp} est initialisé pour pointer en fin de RAM (la pile Z80 croît vers le bas), une première interruption est demandée, et une fonction mystérieuse appelée \icode{gsinit} est exécutée.  
+Tout le code de \icode{crt0.s} pèse quelques centaines d'octets, ce qui explique pourquoi on a demandé au script de linker de placer \icode{\_CODE} à partir de \icode{0x200}.
+
+\begin{trivia}
+Pour appeler une fonction en C depuis l'assembleur, il faut utiliser un symbole préfixé par \icode{\_}.
+\end{trivia}
+\pagebreak
+
+\lstinputlisting[style=Z80Style]{src/code/z80/crt0.s}
+\label{z80_crt0}
+
+
+
+
+
+
+
+\subsection{Interruption du Z80}
+\index{Interruptions ! Programmation Z80}
+
+Pour interagir correctement avec les registres de commandes (latches) et suivre le temps réel, le Z80 doit être interrompu régulièrement.  
+Le CPU de Zilog dispose bien d'un registre RFSH, mais celui-ci est destiné au rafraîchissement de la DRAM — ce que le système audio ne possède pas.
+
+À la place, les interruptions sont déclenchées par la puce YM2151, grâce à ses deux minuteries internes.  
+Le Timer A est un compteur sur 10 bits, le Timer B sur 8 bits.  
+Pour un YM2151 cadencé à 3 579 Hz, la formule de déclenchement est :  
+\[ \text{Intervalle} = \frac{64 \times (1024 - \text{valeur})}{3579} \]
+
+Par exemple, si on règle Timer A à \icode{800}, une interruption sera générée après  
+\[ \frac{64 \times (1024 - 800)}{3579} = 4~\text{ms} \]
+
+Quand le compteur atteint zéro, il active la ligne \icode{INT} reliée au Z80, forçant un saut à l'adresse \icode{0x38}.
+
+\lstinputlisting[style=CStyle]{src/code/z80/interrupts.c}
+
+
+\subsection{Initialisation des variables}
+
+Pour terminer le bootstrapping, le \icode{crt0} veille à ce que les variables initialisées en C reçoivent bien leur valeur.  
+Le linker place toutes ces valeurs dans le segment \icode{\_GSINIT}.  
+En l'encadrant avec les marqueurs \icode{\_INITIALIZER} (source) et \icode{\_INITIALIZED} (destination), on peut les copier simplement.
+
+\lstinputlisting[style=Z80Style]{src/code/z80/initVar.s}
+
+La copie est effectuée avec l'instruction \icode{ldir}, en s'appuyant sur les macros générées par le linker.  
+Le préfixe \icode{s\_} désigne le début du segment, \icode{l\_} sa longueur.
+
+\lstinputlisting[style=Z80Style]{src/code/z80/copyvar.s}
+
+% Aucune initialisation de la section BSS
+
+
+\subsection{Pilote sonore Z80}
+
+Le pilote audio est une simple boucle qui lit le bytecode au format mini-VGM :  
+il joue des notes de musique, attend en cas de pause, et déclenche la lecture des samples sonores.
+
+\lstinputlisting[style=CStyle]{src/code/z80/music.c}
+
+Un seul registre de commande (*latch*) est utilisé pour recevoir les instructions.  
+Si le bit \icode{0x80} est activé, cela signifie qu'il s'agit d'un effet sonore à jouer. Sinon, c'est une instruction musicale.
+
+La fonction \icode{main} tourne en boucle active, afin de ne jamais dépasser la fréquence des appels à la fonction \icode{interrupt}, ce qui garantit un rythme de traitement proche de 250 Hz.
+
+\lstinputlisting[style=CStyle]{src/code/z80/driver.c}
+
+
+
+\section{À l'époque}\index{À l'époque ! Effets/Musiques}
+
+Dès ses débuts, Capcom a compris l'importance du son dans un jeu vidéo, et s'est donné pour mission de recruter les meilleurs musiciens disponibles.
+
+En 1989, l'entreprise avait constitué une équipe de talents baptisée le "Capcom Sound Team".
+
+\img{capcom_sound_team.png}
+
+**L'équipe audio de Capcom** (de gauche à droite) : Yoko Shimomura, Yoshihiro Sakaguchi, Manami Matsumae, Masaki Izumiya, Yasuaki Fujita, Mari Yamaguchi, Minae Fujii, Toshio Kajino, et Isao Abe.  
+L'identité de l'homme assis à la table est inconnue.
+
+\subsection{Recrutement}
+
+Capcom recrutait activement lors des salons d'orientation, incitant les jeunes diplômés à rejoindre ses équipes.  
+De nombreux musiciens venaient des écoles de musique de la région du Kansai (Kyoto, Osaka, Kobe), proche du siège de Capcom.
+
+Plusieurs diplômés du *Osaka College of Music* ont ainsi été embauchés, leur permettant de composer pour les jeux vidéo tout en bénéficiant de la sécurité d'un grand groupe japonais.
+
+Parmi eux, **Yoko Shimomura**, qui composera plus tard les musiques de *Street Fighter II*, *Final Fight* et *Final Fantasy*.  
+Ses nombreuses interviews permettent de mieux comprendre la vie d'un compositeur chez Capcom.
+
+\begin{q}{Yoko Shimomura, Capcom Sound Team\cite{beep199010}}
+J'ai étudié le piano à la fac, mais j'adorais la Famicom. Je passais souvent mes nuits blanches dessus.
+
+Le lendemain, j'avais les épaules complètement raides, mon prof de piano me grondait, et ma mère disait "Je ne me souviens pas avoir élevé une fille comme ça."
+
+J'ai décidé que, une fois diplômée, je travaillerais quelque part où je pourrais jouer de la musique **et** à la Famicom toute la journée sans qu'on m'embête !
+\end{q}
+
+Son témoignage sur l'entretien d'embauche montre que Capcom préférait les musiciens talentueux aux profils purement techniques.
+
+\begin{q}{Yoko Shimomura, Capcom Sound Team\cite{beep199010}}
+Je ne savais même pas qu'on pouvait composer de la musique avec un ordinateur.
+
+Lors du test d'entrée, on m'a demandé : "Quel séquenceur utilises-tu ?" et j'ai répondu : "Quoi ? C'est un contrôleur électronique ?"
+
+Ils ont dû tout m'apprendre à partir de zéro. Ensuite, ce n'était plus de la pratique musicale, mais du technique pur.
+
+Le premier fichier que j'ai rendu a été entièrement corrigé. J'étais vraiment déprimée.
+
+Ils m'ont demandé ce que je savais sur la synthèse FM. Je ne savais pas ce que c'était, alors j'ai pensé à la radio AM/FM et écrit :  
+"Ça sonne mieux qu'avant."
+\end{q}
+
+
+\subsection{Processus créatif}
+
+Même si les musiciens faisaient partie de la "Sound Team", ils travaillaient souvent seuls sur un jeu.
+
+Ils pouvaient choisir leur prochain projet selon les disponibilités\cite{sf2musics}, mais étaient généralement affectés directement au suivant dès qu'ils avaient terminé le précédent.
+
+Composer pour un jeu en cours de production n'était pas simple. C'était au *planner* (concepteur) de briefer le compositeur sur l'ambiance souhaitée\cite{sf2_music}.
+
+\begin{q}{Yoko Shimomura, Capcom Sound Team\cite{sf2_oral_history}}
+NiN venait me voir avec des croquis des personnages, il m'expliquait leur personnalité et me demandait de composer un thème pour chacun.
+
+Je regardais les décors et les descriptions, et je remarquais que chaque personnage avait un background culturel spécifique.
+
+C'est moi qui ai suggéré de créer un thème par personnage, basé sur son pays et sa culture.
+\end{q}
+
+Les compositeurs n'avaient rien à envier aux artistes en termes d'exigence et de rythme de travail.
+
+\begin{q}{Yoko Shimomura, Capcom Sound Team\cite{sf2musicsecurity}}
+À 23h, tous les systèmes de sécurité étaient activés. On ne pouvait plus changer d'étage, les ascenseurs étaient arrêtés.
+
+Quand il fallait livrer une ROM pour 7h le lendemain, on la faisait descendre par la fenêtre attachée à une corde.
+
+Un jour, j'ai mis la ROM dans un sac plastique, attaché à une ficelle, et je l'ai descendue.
+
+15 minutes plus tard, le téléphone sonne :  
+"Désolée, mais on a cassé les broches de la puce en la branchant. Tu peux nous en redonner une ?"
+\end{q}
+
+
+\subsection{Outils}
+
+Yoshihiro Sakaguchi, compositeur de *Mega Man*, explique à quel type d'ordinateur étaient reliés leurs claviers Yamaha :
+
+\begin{q}{Yoshihiro Sakaguchi\cite{yoko_shimomura_interview}}
+Nous travaillions à la fois sur les musiques et les effets sonores des jeux Capcom.
+
+Nous avions un système centralisé sur PC-98. Même si le jeu tournait sur un autre matériel, nous pouvions composer sans avoir besoin de savoir programmer.
+\end{q}
+
+\subsubsection{NEC PC-9800 series}\index{Ordinateurs ! NEC PC-98}
+
+NEC entre sur le marché du PC en 1979 avec sa série 8800, équipée de processeurs Z80 8 bits, plus tard renommée "PC-88".
+
+Grâce à une ROM kanji optionnelle, NEC s'impose rapidement.  
+Dès 1981, le PC-88 représente 40\% du marché japonais.
+
+Au milieu des années 1980, NEC remplace cette série vieillissante par des modèles 16 bits à base d'Intel 286 : la série 9801 est lancée.  
+On parle désormais de "PC-98".
+
+\begin{figure}[H]
+\img{PC9800.jpg}
+\caption*{Le PC-9801, premier modèle de la série PC-98 (1984)}
+\end{figure}
+
+Comme son prédécesseur, le PC-98 est un immense succès.  
+Entre 1992 et 2000, NEC vend plus de 18 millions d'unités, dans des gammes "Desktop", "Hi-End" et "Laptop".  
+NEC sortait un nouveau modèle chaque année\cite{9800lines}.
+
+En 1991, la série PC-98 représente 60\% du marché japonais du PC.
+
+\subsubsection{Ce que Capcom utilisait}
+
+Vu le grand nombre de modèles, il est difficile de savoir avec certitude quels PC-98 étaient utilisés pour chaque jeu.  
+Cependant, on peut les estimer en listant les modèles sortis par année.
+
+\begin{figure}[H]
+\nbdraw{pc98lines}
+\caption*{Sélection de modèles PC-98 de 1985 à 1992}
+\end{figure}
+
+Il est probable que les compositeurs des jeux CPS-1 utilisaient des modèles "Main Series", équipés d'un CPU Intel 386 et d'un disque dur de 50 Mo.
+
+\subsubsection{Une technologie propriétaire}
+
+Malgré son nom, le PC-98 n'a rien à voir avec les IBM PC.  
+Le MS-DOS d'IBM ne prenant pas en charge les caractères japonais, Big Blue n'a jamais percé au Japon.
+
+Les PC de NEC étaient véritablement des *Personal Computers* — d'où le nom.
+
+\subsubsection{C-Bus}
+
+Le PC-98 utilisait un bus propriétaire 16 bits, le **C-Bus**, au lieu du bus ISA d'IBM.  
+Son BIOS, ses adresses I/O, sa mémoire et sa sortie vidéo étaient également spécifiques.
+
+Ce choix stratégique protégeait NEC des clones (qui pullulaient chez IBM), mais empêchait l'accès aux nombreux périphériques compatibles IBM.
+
+Malgré tout, certaines marques comme Roland ou Creative ont sorti des cartes son compatibles C-Bus :
+
+\begin{figure}[H]
+\nbimg{roland_cbus2x.png}
+\caption*{Carte MIDI Roland en C-Bus pour PC-98}
+\end{figure}
+
+\subsubsection{Puce vidéo}
+
+Outre son bus propriétaire, le PC-98 était remarquable pour son système graphique, très avancé à l'époque.
+
+Son cœur : le contrôleur graphique $\upmu$PD7220.  
+Le PC-98 en utilisait deux, cadencés à 2,5 MHz.  
+L'un gérait 8 Ko de VRAM texte, l'autre un framebuffer graphique de 96 Ko.
+
+Ce tandem était un des premiers "GPU", capable de tracer lignes, cercles, arcs, et caractères.  
+En mode haute résolution, le PC-98 atteignait 640×400 avec 8 couleurs, et supportait les caractères latins, numériques et katakana.  
+Une ROM optionnelle ajoutait 3 000 glyphes kanji.
+
+\subsubsection{La fin du PC-98}
+
+Même si ses performances étaient inférieures au Fujitsu FM Towns ou au Sharp X68000, NEC vendit 18 millions de PC-98 entre 1982 et 1999.
+
+Une simple liste des jeux sortis sur la plateforme totalise déjà 1 228 titres.  
+Preuve que cette machine était très appréciée des développeurs.
+
+La domination de NEC déclina avec l'arrivée de **DOS/V**, une version spéciale de MS-DOS prenant en charge les caractères japonais, sortie fin 1990.
+
+
+
+% \begin{trivia}
+% When it came to record voices, the whole Street Fighter II development team was encouraged to contribute.
+
+% \begin{q}{VGDensetsu\cite{sf2samples}  }
+% Chun-Li Spinning Bird Kick line was spoken by Eri Nakamura, the graphic designer in charge of Honda, while a background designer did her victory cry ("Kyahahaha! Yattaaa") and a third person recorded another line.
+
+% For Ryu and Ken, who share the same voice, the graphic designer in charge of Guile lent his voice for the Hadoken and Shoryuken while the one in charge of Boxer did the Tatsumaki Senpukyaku.  
+% \end{q}
+% \end{trivia}
