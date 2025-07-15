@@ -1,5 +1,7 @@
 module cpsb
 
-go 1.20
+go 1.23.0
 
-require golang.org/x/image v0.14.0 // indirect
+toolchain go1.23.10
+
+require golang.org/x/image v0.28.0 // indirect

@@ -1,0 +1,646 @@
+\chapter{GFX System}
+Puisque le pipeline graphique du CPS-1 est câblé en dur dans le silicium des puces CPS-A et CPS-B, il n'y a aucun code à écrire ni rien à compiler.
+
+\begin{figure}[H]
+\sdraw{1.0}{gfx_arch}
+\caption*{The GFX System components}
+\end{figure}
+
+Cela semble simple, mais il ne suffit pas de convertir les assets graphiques au format GFXROM.
+Même si tous les types d'assets utilisent le même format de pixels, les lecteurs attentifs auront remarqué que les palettes ne sont pas stockées dans la GFXROM.
+Il faut donc prendre soin de les sauvegarder séparément et de les fournir ultérieurement au processeur m68k, accompagnées d'un mécanisme permettant de les référencer.
+
+Une autre contrainte importante concerne les "zones câblées en dur" de la GFXROM, dans lesquelles les assets des types OBJ, STAR1, STAR2, SCR1, SCR2 et SCR3 doivent obligatoirement être placés.
+Si une tuile ne se trouve pas à l'endroit attendu, la commande de dessin correspondante est simplement ignorée.
+
+Chaque carte utilise une disposition différente.
+La carte de Street Fighter II, avec son PAL \icode{STF29}, divise les 6 Mio de la GFXROM en quatre zones : OBJ, SCR1, SCR2 et SCR3.
+
+Une carte faisant tourner Final Fight utilise un PAL \icode{S224B}, qui découpe l'espace en ces quatre mêmes types de zones, mais avec des offsets différents et des proportions adaptées à un espace plus petit de 2 Mio.
+
+Le PAL présent sur la carte de Forgotten Worlds, appelé \icode{LW621}, est plus complexe : il divise la GFXROM en cinq zones, afin d'y inclure également les bytecodes intercalés de STAR1 et STAR2.
+
+\section{Format des tuiles}
+
+Toutes les tuiles sont stockées de manière continue en mémoire, en utilisant des groupes de quatre octets codant huit pixels (ou "stylos").  
+Les lignes de pixels sont stockées les unes à la suite des autres.  
+La dimension d'une tuile varie en fonction des couches graphiques utilisées.  
+OBJ et SCR2 utilisent les mêmes tuiles de **16x16**, ce qui signifie que chaque tuile occupe $16 \times 16 / 2 = 128$ octets.  
+Pour **SCR1**, qui est plus finement réglé et utilise des tuiles de **8x8**, chaque tuile ne prend que **32 octets**.  
+Enfin, le calque **SCR3**, plus grand, utilise **512 octets** par tuile de **32x32**.
+
+\section{Organisation des GFX}
+
+Les EPROM sont organisées en groupes de quatre puces, avec une sérialisation des données.  
+Sur une carte comme celle de *Street Fighter II*, on trouve **trois groupes de quatre puces**.  
+À l'intérieur de chaque groupe, les puces sont **entrelacées tous les WORD** (deux octets).
+
+\nbdraw{gfx_interleave}
+
+\section{Canaux}\label{channels}\index{Canaux!Pratique}
+
+Les canaux mentionnés précédemment sont maintenant visibles.  
+Les ROMs \icode{01} et \icode{02} sont appairées sur le **canal 1** pour fournir des données en **32 bits**.  
+De même, les ROMs \icode{03} et \icode{04} sont associées sur le **canal 2**.  
+La même division est appliquée aux autres ROMs selon le même principe.
+
+\nbdraw{build_graph_gfx}
+
+La carte de *Street Fighter II* produit un ensemble de **douze ROMs**.  
+Chaque groupe stocke **2 Mio**.  
+Le groupe [1--4] commence à l'adresse **0x000000**, le groupe [10--13] à **0x200000**, et les ROMs [20--23] à **0x400000**.  
+Chaque puce doit être placée dans l'emplacement DIP portant le **même numéro** (voir page \pageref{boardb_no_chips}).
+
+
+
+
+
+
+
+
+
+
+\section{À l'époque}\index{À l'époque!GFX}
+
+Les éléments graphiques étaient la partie d'un jeu qui mobilisait le plus de personnes.  
+Sur un grand titre comme *Street Fighter II*, cette tâche occupait à elle seule **vingt artistes**, dans une équipe de quarante personnes.
+
+La création des tuiles de fond (tilemap) pour les couches **SCROLL** était confiée aux artistes juniors.  
+Elle demandait peu de supervision, car ces décors devaient avoir une forme rectangulaire, et leur importance visuelle n'était pas capitale.
+
+En revanche, la création des assets pour la couche **OBJ** (sprites) était beaucoup plus complexe.  
+Elle se déroulait en **quatre étapes** : dessin des contours, allocation, dessin détaillé, puis "dotting" (pixelisation).
+
+\subsection{Crayon et papier}
+
+La direction artistique était décidée par le **planner** du jeu.  
+Son objectif était de produire les concepts et les postures pour capturer l'essence d'un personnage, ainsi que de fixer les proportions et les mouvements.  
+Ensuite, les artistes seniors prenaient le relais pour affiner le rendu.
+
+\begin{q}{Eri Nakamura\cite{sf2devinterview}}
+Quand j'ai rejoint l'équipe de *Street Fighter II*, Akiman avait déjà fait les esquisses préliminaires.
+
+Nous étions quatre responsables des personnages : Satoru Yamashita, Yoshiaki Ohji, Ikuo Nakayama et moi.  
+Satoru était le plus expérimenté, donc il a pris Ryu et Ken.
+
+Un jour, Akiman est arrivé avec les croquis d'un catcheur professionnel, d'un sumo et d'une bête, et a dit :  
+"Décidez qui fait quoi."  
+Pour être justes, on a fait **pierre-papier-ciseaux** pour décider !
+\end{q}
+
+Même si ce n'était pas courant, il arrivait parfois qu'un **planner prenne en charge l'ensemble du développement graphique d'un personnage**, surtout si celui-ci lui tenait à cœur.
+
+\begin{q}{Akiman\cite{gameMaestro4}}
+J'ai créé tous les graphismes de Chun-Li en seulement un mois.
+\end{q}
+
+Cela dit, les anecdotes comme celle de *Chun-Li* semblaient rester exceptionnelles.  
+Par exemple, pour *Final Fight*, Satoru Yamashita a animé **Guy** et **Haggar**, mais **Akiman a dessiné les animations clés** de ces deux personnages.
+
+
+
+
+\begin{figure}[H]
+  \draw{ff_design}
+  \caption*{Contours des sprites de Guy dans Final Fight, par Akiman}
+  \end{figure}
+  
+  \subsection{Papier quadrillé non carré}\label{artists_par}
+  
+  Pour dessiner à la fois les contours et les versions détaillées des sprites, les artistes utilisaient un papier spécial avec un **système de double quadrillage**.
+  
+  Il y avait d'abord un **quadrillage léger**, dont les proportions n'étaient **pas carrées** afin de correspondre au **rapport d'aspect vidéo du CP-System**, soit **10:7**.  
+  Grâce à cela, les artistes pouvaient dessiner normalement sans se soucier de la déformation de l'image, puisque les éléments rectangulaires correspondaient aux pixels étirés du CPS-1.
+  
+  Le papier comportait aussi un **deuxième quadrillage, plus foncé**, qui regroupait les cases en blocs de **16 par 16**, correspondant à la dimension des tuiles **OBJ**.  
+  Ce quadrillage était essentiel pour l'étape d'**allocation**.
+  
+  \subsection{Allocation des OBJ}
+  
+  Si le fait de s'affranchir des sprites rectangulaires était une bénédiction pour les artistes, c'était un **casse-tête pour les chefs de projet** chez Capcom.  
+  À une époque où les puces ROM étaient **très coûteuses**, chaque jeu se voyait attribuer un **budget ROM** au lancement, qu'il ne fallait **absolument pas dépasser**.
+  
+  Avant l'arrivée du CPS-1, respecter le budget était une simple affaire de division :  
+  le nombre de sprites autorisés à l'équipe graphique était égal à **la taille de la ROM divisée par la taille d'un sprite rectangulaire**.  
+  Mais avec des formes libres, un **nouveau problème de suivi** est apparu.
+  
+  \begin{figure}[H]
+  \nbdraw{0x3300}
+  \caption*{Feuille reconstituée de Dhalsim}
+  \end{figure}
+  
+  La solution au problème d'allocation est venue… **avec du papier et des ciseaux**.
+  
+  \begin{q}{Nin\cite{sf2devinterview}}
+  Pour tirer le meilleur parti de la capacité dont on disposait,  
+  on écrivait la capacité totale de la ROM sur un panneau,  
+  et on y collait les personnages pixelisés découpés sur papier.  
+  S'il restait de la place sur le panneau, alors il restait de la capacité dans la ROM.  
+  On remplissait les espaces comme dans un puzzle.
+  
+  On a gardé la création de la fin du jeu pour la fin du projet,  
+  et à ce moment-là, on n'avait plus du tout de place.  
+  On se demandait ce qu'on allait faire,  
+  quand on a retrouvé **une planche qui avait glissé sous un bureau**.
+  
+  On l'a appelée la **"Mémoire miraculeuse"**.
+  \end{q}
+  
+
+
+
+ \begin{figure}[H]
+\img{rom_sheet_dhalsim.jpg}
+\caption*{Feuille papier publiée de Dhalsim}
+\end{figure}
+
+Seules deux de ces feuilles ont été rendues publiques :  
+l'une représente principalement **Dhalsim**\cite{ffdevinterview},  
+et l'autre est connue sous le nom de **"feuille de Ryu"**\cite{htmcc}.  
+Grâce à l'empreinte laissée dans la **GFXROM** et à la connaissance du format et de la disposition des pixels,  
+**toutes les autres feuilles peuvent être reconstruites**.
+
+Pour un jeu comme *Street Fighter II*, un budget de **6 Mio de GFX** a été validé.  
+Avec **4,6 Mio alloués aux sprites**, **144 feuilles OBJ ont été imprimées**.  
+Cela représentait **une quantité énorme à l'époque**, justifiée uniquement parce que l'équipe avait déjà réussi un gros coup avec *Final Fight*, qui tenait sur **un budget minuscule de 2 Mio**\cite{gameMaestro4}.
+
+\begin{figure}[H]
+\nbdraw{0x4500}
+\caption*{Feuille reconstituée de Ryu}
+\end{figure}
+
+Comparer les documents publiés avec ce qui a réellement été livré dans le jeu est une source de **nombreuses découvertes et hypothèses**.
+
+La feuille de **Dhalsim** se situe à l'offset \icode{0x3300} dans la GFXROM.  
+Elle correspond presque parfaitement à la version papier, **à l'exception de la section commençant à \icode{0x60}**.  
+L'une des poses a été supprimée au profit de l'animation de Chun-Li **"Hundred Rending Legs"**,  
+ce qui laisse penser qu'il s'agissait d'un **ajout plus tardif**.
+
+\begin{figure}[H]
+\img{rom_sheet_ryu.jpg}
+\caption*{Feuille papier publiée de Ryu}
+\end{figure}
+
+La feuille de Ryu, située à l'offset \icode{0x4500}, nous permet de **mieux deviner le processus de production**.  
+De **grands sprites cohérents** montrent qu'au début du développement, plusieurs feuilles étaient allouées **par personnage**.  
+Les tuiles étaient posées ensemble et regroupées autant que possible pour faciliter la **vérification visuelle**.
+
+Mais à mesure que le projet avançait, l'équipe **a gratté jusqu'au moindre octet disponible**,  
+et a commencé à allouer l'espace **tuile par tuile**.  
+Il arrivait même qu'une **pose de personnage soit dispersée sur plusieurs feuilles**,  
+comme sur celle de Dhalsim, où **des parties de Blanka** apparaissent.
+
+\subsection{Le système de feuilles}
+
+Mis à part quelques mentions éparses, **les employés de Capcom n'ont jamais expliqué en détail le fonctionnement du système de feuilles**.  
+On ignore pour quels jeux et pendant combien de temps il a été utilisé au total.
+
+Heureusement, la compréhension du format GFXROM **permet de remonter dans le temps**.  
+La structure numérique est une **empreinte directe de ce à quoi ressemblaient les feuilles papier**.  
+Ces feuilles reconstituées **peuvent nous apporter des réponses**.
+
+\begin{figure}[H]
+\nbdraw{sfce0x0000}
+\caption*{Une feuille de Street Fighter II Champion Edition}
+\end{figure}
+
+L'analyse de la structure GFXROM de tous les jeux publiés sur CPS-1 révèle toujours **des tuiles regroupées pour correspondre à des dessins réels**,  
+ce qui implique clairement l'utilisation du **papier et des ciseaux**.
+
+Mais la disposition des GFXROM commence à changer avec le **premier jeu utilisant le CPS-2**.  
+Dans *Super Street Fighter II*, les feuilles des **douze combattants hérités** sont **identiques** à celles utilisées dans *Street Fighter II Champion Edition*.  
+En revanche, les nouvelles feuilles de personnages **semblent avoir été créées avec un système automatisé d'allocation**,  
+qui **découpe les sprites verticalement**.
+
+L'inspection des GFXROM des jeux suivants indique que **tous les titres sortis sur CPS-2** ont utilisé un **allocateur automatique pour les OBJ**.
+
+
+ \begin{figure}[H]
+\nbdraw{ssf-0x9000}
+\caption*{Feuille de Super Street Fighter II (nouveau personnage : Cammy)}
+\end{figure}
+
+\img{smc-70_ad.jpg}
+
+\subsection{Numérisation des dessins}\index{Ordinateurs!SONY SMC-70}
+
+Pour numériser leurs dessins, les employés de Capcom utilisaient des ordinateurs **SMC-70**.  
+Fabriqué par Sony, le SMC-70 est sorti aux États-Unis et au Japon **à la fin de l'année 1982**.  
+Ce qui est particulièrement remarquable avec cette machine, c'est qu'elle a été conçue dès le départ pour être **extensible**.
+
+L'unité principale du SMC-70 regroupe le **clavier** ainsi que les composants centraux : un processeur **Z80 à 4 MHz**, **64 KiB de RAM**, et **64 KiB de VRAM**.  
+Le reste du système est **entièrement configurable via des modules d'extension en chaîne**.
+
+La seule limite au système de chaînage réside dans la **capacité de l'alimentation**,  
+qui doit impérativement être placée **tout au bout de la chaîne**.
+
+Cette architecture permettait à la machine de Sony d'aller **du simple traitement de texte de bureau** jusqu'à devenir un **puissant outil de traitement vidéo**,  
+dans sa configuration la plus poussée.
+
+\begin{figure}[H]
+\img{sm70_drawing1.png}
+\caption*{Un SMC-70 étendu avec un SMI-7012. L'alimentation se trouve tout à l'arrière}
+\end{figure}
+
+\subsubsection{Sony, la grosse machine}
+
+D'un côté, la **longue liste d'extensions et de périphériques** (près de **40 pièces**, toutes fabriquées par Sony) témoigne de l'engagement de la marque dans ce projet.  
+De l'autre, cela montre aussi une **volonté claire de contrôler la plateforme**,  
+en **empêchant les autres constructeurs** de participer à l'écosystème.
+
+
+\begin{figure}[H]
+
+\begin{tabularx}{\textwidth}{rrX} 
+  \toprule 
+  \textbf{Extension Name} & \textbf{Peripheral Name} & \textbf{Function} \\               
+  \toprule    
+  \texttt{SMI-7011} & & Baie de lecteur disquette 3,5" (interne avec 1 lecteur)\\ 
+  \texttt{SMI-7012} & & Baie de lecteur disquette 3,5" (interne avec 2 lecteurs)\\ 
+  \texttt{SMI-7013} & & Baie de lecteur disquette 3,5" (externe avec 1 lecteur)\\ 
+  \texttt{SMI-7014} & & Baie de lecteur disquette 3,5" (externe avec 2 lecteurs)\\ 
+  \texttt{SMI-7016} & & Unité de contrôle des disquettes\\ 
+   & \texttt{SMI-7020} & Imprimante matricielle\\ 
+  \texttt{SMI-7031} & & Interface série RS232C\\ 
+  \texttt{SMI-7032} & & Interface IEEE-488\\ 
+  \texttt{SMI-7050} & & Unité de disque cache\\ 
+  \texttt{SMI-7056} & & Superchargeur : i8086 à 5 MHz avec 256 KiB de RAM\\ 
+   & \texttt{SMI-7060} & Pavé numérique 10 touches\\ 
+  \texttt{SMI-7070} & & Convertisseur de signal vidéo\\ 
+  \texttt{SMI-7073} & & Superposeur RGB\\ 
+  \texttt{SMI-7074} & & Superposeur NTSC\\ 
+  \texttt{SMI-7075} & & Vidéotiseur\\ 
+  \texttt{SMI-7080} & & Module de sauvegarde par batterie\\ 
+  \toprule
+  \end{tabularx}%
+  \caption*{Extensions et périphériques du SMC-70\cite{smc70tech}}
+  \end{figure}
+  
+  \subsubsection{Capacités notables}
+  
+  Le SMC-70 est remarquable pour avoir été **le premier ordinateur à proposer un lecteur de disquette 3,5"** (également inventé par Sony en 1981),  
+  ainsi que pour sa capacité à **afficher des caractères kanji** grâce à une extension ROM.
+  
+  Mais c'est surtout par ses **capacités graphiques** que cette machine se démarque.  
+  Quatre résolutions étaient disponibles, allant de la **basse résolution 320$\times$200 avec 16 couleurs**,  
+  jusqu'à une **haute résolution 640$\times$200 en deux couleurs**.
+  
+  Le mode **16 couleurs** intéressait particulièrement les artistes de Capcom, car il correspondait **parfaitement au système de palette (pen) du CPS-1**.
+  
+  \subsection{Tiny Character Editor}
+  
+  Le SMC-70 ne permettait pas l'utilisation d'un scanner.  
+  Le processus de numérisation était **entièrement manuel**.  
+  Pour les aider dans cette tâche, les artistes utilisaient un outil appelé **TCE (Tiny Character Editor)**.  
+  Aucune capture d'écran n'a jamais été retrouvée, mais les employés de Capcom en ont donné une description sommaire, évoquant son approche minimaliste.
+  
+  \begin{q}{Koichi Yotsui (planneur de Strider)}
+  Tu avais une grille de 16 pixels, une palette de 16 couleurs, et c'est tout.
+  \end{q}
+  
+  \subsection{Dotting}
+  
+  Pour les éléments **SCROLL** comme **OBJ**, le dotting était réalisé **tuile par tuile**.  
+  L'artiste devait regarder son dessin détaillé sur papier quadrillé et décider, pour chaque élément rectangulaire de la tuile,  
+  quelle couleur de la palette utiliser.
+  
+  Le pixel art était un **travail fastidieux et répétitif**,  
+  nécessitant un **sens artistique affirmé**, surtout dans les cas où une ligne traversait un pixel.  
+  Devait-on laisser tomber ce pixel ? L'afficher en plein ? Ou tenter un **anti-aliasing** en utilisant une couleur voisine de la palette ?  
+  Ces choix étaient **délicats**.
+  
+  Il **n'y avait pas de souris**.  
+  Les seules options disponibles étaient **le clavier** ou **le pavé numérique**.  
+  Certains employés, insatisfaits de ces méthodes, sont même allés jusqu'à **construire leur propre joystick personnalisé**.
+  
+
+\begin{figure}[H]
+\img{smc70_keypad.jpg}
+\caption*{Un SMC-70 avec pavé numérique. Configuration typique pour le dotting}
+\end{figure}
+
+Au minimum, les employés étaient **libres d'utiliser ce qui leur convenait le mieux** en termes d'efficacité.
+
+\begin{q}{Akiman\cite{akiman}}
+J'ai utilisé un **clavier** pour dessiner tous les graphismes de *Vampire* et *Street Fighter 2*.
+\end{q}
+
+\begin{q}{Akiman\cite{ar20160404}}
+  Comme tout était en hexadécimal,  
+  on utilisait les **touches de 0 à F** et les **flèches directionnelles** pour fabriquer les sprites.
+
+  Il y avait un gars qui faisait un **boucan monstre en tapant comme un fou sur son clavier**.  
+  Il faisait des heures sup' et ne dormait même pas,  
+  alors on n'avait pas le choix : **on devait tous rester éveillés pour continuer à bosser**.
+\end{q}
+
+\subsection{Économie de tuiles}
+
+Les artistes tentaient de **réutiliser les tuiles autant que possible**,  
+afin de **minimiser l'utilisation de l'espace ROM**, ressource très limitée à l'époque.
+
+Dans *Street Fighter 2*, il n'y avait **assez de GFXROM que pour onze combattants**.  
+Ken est ainsi un **assemblage (patchwork)** et une **copie de palette** basé sur les tuiles de Ryu.  
+Il “pèse” seulement **98 304 octets**.
+
+Un exploit remarquable si on compare avec des personnages comme :
+- **Zangief** (622 592 octets),
+- **Honda** (491 520 octets),
+- ou **Ryu** (442 368 octets).
+
+
+\begin{minipage}[t]{0.19\linewidth}
+  \sdraw{1.0}{patch_ryu0}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.19\linewidth}
+  \sdraw{1.0}{patch_ryu1}
+\end{minipage}
+\hfill%
+\begin{minipage}[t]{0.19\linewidth}
+  \sdraw{1.0}{patch_ryu2}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.19\linewidth}
+  \sdraw{1.0}{patch_ryu3}
+\end{minipage}
+\hfill%
+\begin{minipage}[t]{0.19\linewidth}
+  \sdraw{1.0}{patch_ryu4}
+\end{minipage}
+
+Créé avec seulement **2 Mio de GFXROM**, *Final Fight* est encore plus impressionnant avec **21 ennemis** et **6 boss**.  
+Les sbires sont construits à partir de **sept bases graphiques**, enrichies via des **patchs** et des **palettes**.
+
+\begin{figure}[H]
+\nbdraw{ff_template}
+\caption*{G. Oriber, Bill Bull et Wong Who de Final Fight}
+\end{figure}
+
+\begin{q}{Nin\cite{1991_retro}}
+Tout le monde dans l'équipe pensait que *Final Fight* allait bénéficier d'une grande capacité mémoire…  
+Mais on s'est trompés.
+
+C'est pour ça que le boss final **Belger saute partout comme ça** :  
+on **n'avait pas assez de mémoire** pour ajouter une animation de marche.
+
+Cela dit, **créer quelque chose de stylé avec peu de ressources**,  
+c'est comme **un puzzle** pour moi, donc j'ai trouvé ça **plutôt fun**.
+\end{q}
+
+\begin{figure}[H]
+\nbdraw{0x0100}  
+\caption*{Feuille Ryu/Ken}
+\end{figure}
+
+**Ryu et Ken utilisent les sept premières couleurs identiques dans leur palette**,  
+ce qui facilite la création de **patchs** et la **substitution dynamique**.
+
+\nbdraw{palette_ryu}
+
+\nbdraw{palette_ken}
+
+\begin{figure}[H]
+\nbdraw{0x4e00}
+\caption*{Feuille de Sagat}
+\end{figure}
+
+L'animation de rire de **Sagat** est **doublement optimisée**.  
+La séquence ne comporte que **deux poses**, dans lesquelles **seul le buste change**,  
+tandis que **les jambes restent les mêmes**.
+
+De plus, la **jambe gauche est absente**.  
+Elle est **reconstruite à l'exécution**, en **miroir horizontal** de la **jambe droite**,  
+trouvée à l'offset \icode{0xB9}.
+
+\begin{trivia}
+La capacité des ASIC à **retourner les tuiles horizontalement** a été largement utilisée dans *Street Fighter II*,  
+notamment lorsque les personnages se tournaient vers la gauche ou la droite.
+
+Ce n'était pas un souci pour les personnages **symétriques**,  
+mais dans le cas de **Sagat**, son **cache-œil changeait de côté** lorsqu'il se retournait…
+\end{trivia}
+
+\pagebreak
+
+\subsection{Structure de l'équipe et culture}
+
+L'équipe artistique fonctionnait avec une **hiérarchie stricte**, basée sur **l'ancienneté** et **les compétences**.
+
+
+\begin{q}{Akiman\cite{akiman2003}}
+  Les planners sont au sommet.\\
+  Les artistes seniors travaillent sur les sprites.\\
+  Les artistes juniors s'occupent des arrière-plans.
+  \end{q}
+  
+  La structure était **plate**, sans managers intermédiaires.  
+  Parmi la **vingtaine de personnes** qui travaillaient sur les graphismes de *Street Fighter II*,  
+  **toutes rapportaient à une seule personne : Akiman**\cite{sf2_oral_history}.
+  
+  Aussi hiérarchisées que soient les tâches,  
+  les rôles n'étaient pas figés, et les employés pouvaient **grimper rapidement les échelons**.  
+  Akiman, par exemple, a été embauché sur *Dyn Side Arms* en 1986 comme **artiste SCROLL**,  
+  le rang le plus bas dans l'équipe artistique.  
+  Deux ans plus tard, il devenait **planner** sur *Forgotten Worlds*,  
+  et enchaînait avec *Final Fight* et *Street Fighter II* dans ce rôle.
+  
+  \subsubsection{Éthique de travail}
+  
+  Une culture du travail exigeante était **instaurée dès le sommet**.
+  
+  \begin{q}{Akiman\cite{akiman2003}}
+    On avait des jours de congé…  
+    mais **Yoshiki Okamoto** (chef du développement Capcom) se mettait en colère si tu les prenais.  
+    Beaucoup se faisaient engueuler : " Hé, pourquoi t'étais pas là dimanche ?! "
+  
+    Je pense que **personne ne peut battre mon record** du "taux de vie passée chez Capcom".  
+    Pendant les phases de développement, je **dormais toujours sous mon bureau**.
+  
+    J'y avais même installé un **futon complet** !  
+    Quand c'était vraiment tendu, **Yoshiki Okamoto redéfinissait les délais toutes les 10 heures**,  
+    donc je ne pouvais plus quitter mon poste…  
+    c'est comme ça que j'ai pris **l'habitude de dormir sous mon bureau**.
+  
+    D'ailleurs, même maintenant que je suis freelance,  
+    **je dors encore sous mon bureau à la maison**.
+  \end{q}
+  
+  \subsubsection{Chasse aux talents}
+  
+  **Conserver les talents** était une priorité stratégique.  
+  L'écran de crédits de *Street Fighter II* illustre bien la prudence de Capcom :  
+  **les artistes n'étaient crédités que par leur surnom**.
+  
+  \begin{figure}[H]
+  \img{sf2-credit.png}
+  \caption*{L'écran de crédits de Street Fighter II n'utilise aucun nom réel, par peur du recrutement sauvage}
+  \end{figure}
+  
+  \begin{trivia}
+  La plus grande reconnaissance possible était une **spécialité indiquée à côté du surnom**.  
+  Certains crédits, comme dans *Dynasty Wars*, affichaient des **artistes OBJ** ou **artistes SCR**.
+  \end{trivia}
+  
+  Malgré ces précautions, Capcom a perdu **de nombreux employés au fil des années**.  
+  Parmi eux : **Takashi Nishiyama**, créateur de *Street Fighter 1*,  
+  qui est ensuite parti diriger *Fatal Fury: The King Of Fighters* pour le **grand rival SNK**\cite{YoshikiOkamotoTakashiNishiyama}.
+  
+  \subsection{Inspiration}
+  
+  Pour *Street Fighter II*, les artistes ont puisé leur inspiration dans de nombreuses sources.
+  
+  Des mangas comme *Yasunori Katō* ont contribué à la création du **Dictateur**,  
+  tandis que **Tao**, de *Harmagedon: Genma Wars*, est à l'origine de **Chun-Li**.
+  
+  **Boxer**, **Ryu**, **Ken**, **Sagat** et **Zangief** ont été inspirés de **personnalités réelles**, respectivement :
+  - **Mike Tyson**
+  - **Mas Oyama**
+  - **Joe Lewis**
+  - **Sagat Petchyindee**
+  - **Victor Zangiev**
+  
+\begin{trivia}
+  À l'origine appelé **M. Bison**, le boxeur a été renommé **Balrog** pour la version américaine,  
+  par crainte d'un procès de la part du célèbre champion de boxe poids lourd américain.
+  \end{trivia}
+  
+  Pour les arrière-plans, **Hollywood et les cassettes VHS** ont été d'un grand secours.
+  
+  \begin{q}{Akiman\cite{ffdevinterview}}
+  Je me souviens avoir monté un petit film de présentation à partir de plusieurs extraits.  
+  *Streets of Fire* et *Hard Times* avec Charles Bronson sont ceux que j'ai utilisés à l'époque.  
+  En gros, des films de baston.
+  
+  J'ai vraiment pris les mots du président à cœur –  
+  **" Utilisez des films ! "**, qu'il a dit,  
+  alors j'ai compris que ça voulait dire : **" Allez-y franchement, plagiez-les ! "**
+  \end{q}
+  
+  Les employés **n'étaient pas payés pour regarder un film**.  
+  Ils étaient **payés pour en regarder trois !**
+  
+  \begin{q}{NiN\cite{ffdevinterview}}
+  On n'avait pas beaucoup de temps, donc on avait installé **trois moniteurs**  
+  pour pouvoir regarder plusieurs films **en même temps**.
+  
+  On a suivi les conseils du président :  
+  **" Regardez-les tous et inspirez-vous-en ! "**
+  \end{q}
+  
+  \begin{trivia}
+  Par coïncidence, le titre japonais de *Hard Times* est **"The Street Fighter"**.
+  \end{trivia}
+  
+  \section{Formes et sprites}
+  
+  Ce détour historique était important pour comprendre le système de feuilles.  
+  Avec cette base, nous pouvons maintenant examiner les **dernières contraintes des GFXROM liées aux OBJ**.
+  
+  Dans cette couche, les tuiles peuvent être utilisées soit **directement**, soit **regroupées**,  
+  ce qui impose des dispositions différentes dans la GFXROM.
+  
+  \begin{figure}[H]
+  \img{ken_stage_design1.png}
+  \caption*{Inspiration pour le stage de Ken}
+  \end{figure}
+  
+  \begin{figure}[H]
+  \img{ken_stage_design2.png}
+  \caption*{Esquisse du stage de Ken\cite{sf2completefiles}}
+  \end{figure}
+  
+  \begin{figure}[H]
+  \img{ken_stage_design3.png}
+  \caption*{Stage de Ken tel qu'il apparaît en jeu}
+  \end{figure}
+  
+  \subsection{Sprite}
+  
+  Un **sprite** est un ensemble de tuiles avec des **bordures rectangulaires**.  
+  Comme nous le verrons dans la section dédiée à la programmation du m68k,  
+  il peut être rendu en émettant **une seule commande de dessin**,  
+  qui spécifie :
+  - l'offset dans la feuille,
+  - la largeur en tuiles,
+  - et la hauteur en tuiles.
+  
+  \begin{figure}[H]
+  \nbdraw{honda_alloc1}
+  \caption*{Honda en tant que sprite}
+  \end{figure}
+  
+  Bien qu'il soit pratique de pouvoir tout afficher avec une seule commande  
+  (et que ce soit la meilleure méthode pour des tuiles largement opaques),  
+  c'est aussi **inefficace**.
+  
+  Un groupe de tuiles avec **beaucoup de transparence** :
+  - gaspille de la place précieuse dans la GFXROM,
+  - **et compte malgré tout** dans la limite des **256 tuiles affichables par frame** imposée par les puces **CPS-A/CPS-B**.
+  
+  Une autre limitation (ou avantage, selon le point de vue) est que :
+  - une **seule palette** est spécifiée dans la commande de dessin du sprite,  
+  - donc **toutes les tuiles doivent utiliser cette même palette**.
+  
+  \subsection{Shape}
+  
+  Une méthode bien plus **efficace** et **flexible** est d'utiliser une **Shape**,  
+  où la disposition des tuiles peut être **arbitraire**.
+  
+  Cela nécessite **plusieurs commandes de dessin** (chaque tuile doit être indiquée séparément),  
+  mais elles peuvent être **placées n'importe où** dans la GFXROM.
+  
+  Les **Shapes** présentent **trois avantages** majeurs :
+  - elles **économisent de l'espace** de stockage,
+  - elles **réduisent le nombre de tuiles** actives à l'écran au strict nécessaire,
+  - et elles permettent **une palette différente pour chaque tuile**.
+  
+  L'exemple de **Honda** montre qu'il suffit de **41 tuiles** en Shape,  
+  contre **60 tuiles** si on avait utilisé un Sprite.
+  
+\begin{trivia}
+  Dans *Street Fighter II*, les artistes **se limitaient à une seule palette par personnage**,  
+  car la couche **OBJ** était utilisée pour plusieurs choses :  
+  les personnages, **la décoration** et l'**interface utilisateur (GUI)**.
+  
+  C'était **un choix de conception**, rien d'imposé techniquement.  
+  Ils auraient tout aussi bien pu utiliser **jusqu'à 16 palettes par personnage**,  
+  puisque les objets étaient dessinés via des **commandes Shape** et non Sprite.
+  \end{trivia}
+  
+  \begin{figure}[H]
+  \nbdraw{honda_alloc2}
+  \caption*{Honda en tant que Shape}
+  \end{figure}
+  
+  Pour autoriser les **commandes de dessin Sprite**,  
+  le système de compilation doit **placer les images** selon leur usage prévu.  
+  Toutes les tuiles d'un sprite doivent être **disposées comme dans l'image d'origine**.
+  
+  Mais **l'apparence des feuilles Capcom peut être trompeuse**.  
+  Les tuiles dans les couches OBJ sont souvent disposées de manière **visuellement cohérente**,  
+  ce qui peut laisser penser qu'elles sont affichées via des Sprites.  
+  
+  Or, cette disposition servait surtout **à suivre les allocations manuellement**.  
+  La plupart des jeux Capcom rendent leurs OBJ via **des Shapes**, pas des Sprites.  
+  Les outils modernes, eux, **n'ont plus ce problème**.
+  
+  À la page \pageref{honda_sheet} se trouve une feuille de Honda,  
+  affichant **deux fois la même illustration**.  
+  Elle apparaît d'abord **en Sprite**, à l'offset \icode{0x00},  
+  sous forme de rectangle.
+  
+  Puis elle réapparaît **en Shape**.  
+  Grâce à l'allocateur automatique de \icode{ccps},  
+  les tuiles sont disposées dans **l'ordre où elles sont lues dans l'asset**.  
+  Cela ressemble à **une purée visuelle**,  
+  mais **prend beaucoup moins d'espace**.
+  
+  \begin{figure}[H]
+  \nbdraw{honda_sheet}
+  \caption*{Une feuille, générée avec \icode{ccps}, contenant Honda en Sprite et en Shape}
+  \end{figure}
+  \label{honda_sheet}
+  
+  % À l'inverse, une Shape n'a aucune contrainte de disposition.
+  

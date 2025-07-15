@@ -1,0 +1,2215 @@
+\chapter{Matériel}
+\index{CP-System!CPS-1}
+Le projet qui allait plus tard être surnommé par la presse le "superchip"\cite{tgm198906} débuta entre 1985 et 1986. C'était un investissement massif qui allait nécessiter deux ans et cinq millions de dollars\cite{becareful} (l'équivalent de 12 millions de dollars en 2022).
+
+Le temps et les fonds considérables investis ne laissaient aucun doute dans l'esprit des dirigeants de Capcom. Ce projet allait déterminer la vie ou la mort de l'entreprise.
+
+\begin{q}{Yoshiki Okamoto, Producteur chez Capcom\cite{gamest38}}
+Le CP-System est une stratégie commerciale extrêmement importante pour Capcom : nous avons tout misé dessus.
+\end{q}
+
+\section{Objectifs}
+Le CPS-1 devait résoudre la majorité des problèmes de la division arcade de Capcom. À savoir : réduire les coûts de production, baisser le prix de vente, simplifier le développement, augmenter les capacités graphiques/sonores/de traitement, et lutter contre le piratage.
+
+La réduction des coûts serait obtenue en s'inspirant des consoles de salon et en standardisant la plateforme. Au lieu de concevoir une carte différente pour chaque jeu, le matériel resterait constant, la borne étant différenciée uniquement par le logiciel qu'elle exécute.
+
+La baisse du prix de vente permettrait aux exploitants de salles d'arcade de renouveler plus souvent leurs jeux. Cet objectif serait atteint en concevant une plateforme où de nouvelles cartes, contenant essentiellement des ROM, pourraient être achetées séparément de la carte processeur.
+
+La chaîne d'outils de développement s'améliorerait grâce à la stabilité de la plateforme cible. Sans avoir à réécrire en permanence les outils ou jongler avec plusieurs assembleurs, les développeurs pouvaient investir sur le long terme et construire un SDK fonctionnant sur des stations de travail puissantes comme la série X68000 de SHARP.
+
+Mais surtout, les jeux devaient attirer l'attention des clients et ne pas paraître fades face à la concurrence. L'objectif était de concevoir une machine dont les capacités dépasseraient d'un ordre de grandeur la technologie existante, capable de générer sons et visuels au niveau de titres venant de géants comme Sega ou Namco.
+
+Enfin, il fallait résoudre le problème du piratage. Dans un pays comme le Mexique, on estimait à 200 000 le nombre de copies pirates de PCB en circulation\cite{sf2_oral_history}, alors même que Capcom n'y avait enregistré aucune vente. Plusieurs mécanismes de protection simultanés devaient donc être mis en œuvre.
+
+\section{JAMMA}
+
+\begin{wrapfigure}[20]{r}{0.31\textwidth}
+\vspace{-\baselineskip}
+\centering
+  \sdraw{0.31}{cabinet}
+\end{wrapfigure}
+
+Les exploitants de bornes d'arcade remplaçaient fréquemment le jeu installé afin d'offrir de la nouveauté aux joueurs et de continuer à faire rentrer des pièces. Grâce à la \textbf{J}apan \textbf{A}musement \textbf{M}achine and \textbf{M}arketing \textbf{A}ssociation, ce processus était devenu simple.
+
+L'intérieur de ces machines cachait généralement un enchevêtrement de câbles se rejoignant dans un faisceau JAMMA, dans lequel la carte mère s'insérait comme une cartouche. Tout ce que l'exploitant avait à faire était de retirer l'ancienne carte et d'y insérer la nouvelle.
+
+Un port JAMMA regroupe tout ce dont un jeu a besoin pour fonctionner. Ses 28 broches de chaque côté assurent les entrées (joystick à quatre directions et trois boutons par joueur, deux capteurs de pièces, bouton start et bouton service), les sorties (haut-parleur mono et commandes du moniteur), ainsi que l'alimentation électrique.
+
+Le problème avec un tel standard, c'est que s'il améliore la compatibilité entre systèmes, il freine aussi l'innovation.
+
+Quelques broches du port ne sont pas réservées à un usage précis, mais elles ne pouvaient pas être utilisées pour des fonctionnalités supplémentaires car une fois le faisceau câblé, les exploitants ne voulaient plus y toucher.
+
+\begin{figure}[H]
+\draw{jamma_t}
+\caption*{Broches côté composants du connecteur JAMMA}
+\end{figure}
+
+\begin{figure}[H]
+\draw{jamma_b}
+\caption*{Broches côté soudures du connecteur JAMMA}
+\end{figure}
+
+Lorsque Capcom a adapté les boutons pneumatiques de Street Fighter 1, ils ont choisi d'utiliser six boutons par joueur, soit trois de plus que ce que le standard JAMMA permettait. Pour contourner cette limitation, ils ont conçu un système d'entrée parallèle.
+
+Puisque les trois boutons JAMMA étaient utilisés pour les coups de poing, cette extension fut baptisée le "kick harness".
+
+\begin{figure}[H]
+\begin{tabularx}{\textwidth}{lrX}
+  \toprule    
+  \textbf{Couleur du fil} & \textbf{Broche n°} & \textbf{Fonction} \\               
+  \toprule   
+  Noir & 1 & Masse \\
+  Noir & 2 & Masse \\
+  \toprule   
+  Violet & 3 & Coup de pied faible Joueur 1 \\
+  Gris & 4 & Coup de pied moyen Joueur 1 \\
+  Blanc & 5 & Coup de pied fort Joueur 1 \\
+  \toprule   
+  & 6 & Non connecté \\
+  \toprule   
+  Orange & 7 & Coup de pied faible Joueur 2 \\
+  Vert & 8 & Coup de pied moyen Joueur 2 \\
+  Bleu & 9 & Coup de pied fort Joueur 2 \\
+  \toprule   
+  & 10 & Non connecté \\
+  \toprule   
+\end{tabularx}
+\caption*{Brochage du "kick harness"}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+  
+
+
+\section{Architecture physique}
+Le CP-System est constitué de trois cartes électroniques appelées carte "A", carte "B" et carte "C", empilées les unes sur les autres.
+
+\begin{figure}[H]
+\centering
+\nbdraw{arch_phy}
+% \caption*{Un jeu CPS-1 complet composé de trois PCB}
+\end{figure}
+
+\pagebreak
+Les points de connexion sont des connecteurs blancs proéminents. Les cartes A et B sont reliées via quatre connecteurs 2$\times$32 broches, tandis que les cartes B et C sont connectées par quatre connecteurs 2$\times$20 broches. Une fois branchées, les cartes forment un ensemble manipulable comme un tout, sans pièces flottantes.
+
+Le système a été révisé au fil des années. Environ 229 variantes sont connues, y compris des copies pirates\cite{mame_cps1_video}. La carte étudiée dans ce livre est celle utilisée pour faire fonctionner "Street Fighter 2" : carte A "88617A-7B", carte B "90629B" et carte C "90628-C".
+
+\subsection{Carte A}\index{Board!Board A}
+La carte "A" est la plateforme qui ne change jamais d'un jeu à l'autre. Elle contient tous les circuits de traitement des données, sauf un, qu'il s'agisse de logique de jeu, de son ou de vidéo.
+
+Un aperçu à la page \pageref{fig:boarda} révèle le cœur du système. Même un œil non averti remarquera la taille du circuit intégré spécialisé (\textbf{A}pplication-\textbf{S}pecific \textbf{I}ntegrated \textbf{C}ircuit, ASIC) et le nombre impressionnant de lignes de bus qui y mènent. Sur la partie gauche centrale se trouve le "CPS-A", responsable de 50 % du système graphique, accompagné de son oscillateur 16 MHz. Juste au-dessus, 384 KiB de VRAM stockent un type particulier de framebuffer étudié plus loin.
+
+Directement sous le CPS-A, on trouve le système vidéo et ses 8 KiB de SRAM contenant les palettes.
+
+En haut à droite se situe le système de contrôle, avec un Motorola m68k, un oscillateur 10 MHz, 64 KiB de SRAM de travail et 192 KiB de SRAM graphique.
+
+Au milieu à droite se trouve le système audio. Il se compose d'un Zilog z80, d'un oscillateur à 3,58 MHz et de 2 KiB de SRAM de travail. On y trouve également les puces audio dédiées à la musique (YM2151 et YM3012) et aux effets sonores (OKI6295).
+
+Enfin, en bas de la carte se trouvent les composants gérant les entrées et sorties du connecteur JAMMA. À côté se trouvent trois DIP switches permettant à l'exploitant d'arcade de configurer des paramètres comme la difficulté du jeu ou le nombre de crédits accordés par pièce insérée.
+
+Les trois cartes comportent de nombreux circuits, mais il serait faux de croire que multiplier les processeurs garantit de meilleures performances. Cela ignorerait des problèmes comme la congestion du bus, la taille des bus, les timings ou encore les différences d'endianness entre processeurs.
+
+Concevoir un système multi-CPU efficace, capable d'éviter la famine en instructions et en données, est en réalité loin d'être trivial.
+
+\simg{0.94}{88617A.png}
+\label{fig:boarda}
+
+\sdraw{0.94}{88617A}
+\label{fig:drawboarda}
+
+\subsection{Carte B}\index{Board!Board B}
+La carte B est celle sur laquelle sont insérées les puces ROM contenant les données et instructions propres à un jeu. Les puces ne sont pas soudées mais insérées dans des sockets DIP (et donc facilement remplaçables).
+
+Même si toutes les ROM sont physiquement sur la même carte, elles ne font pas partie d'un système unifié de données ou de bus.
+
+Les ROM sont regroupées en fonction du sous-système auquel elles appartiennent. Chaque groupe dispose de ses propres lignes de données connectées à un bus dédié menant à un processeur spécifique.
+
+La carte présente 38 emplacements DIP visibles, répartis en quatre groupes de ROM.
+
+\vfill
+\begin{figure}[!b] \label{boardb_no_chips}
+  \nbimg{90629B-3.jpg}
+  \caption*{Carte B sans les puces}
+\end{figure}
+\pagebreak
+
+On trouve 3$\times$8 = 24 puces, appelées "GFX ROM", dédiées au stockage graphique, dans les sockets [1--8], [10--17] et [20--27], pour une capacité totale de 12 MiB. À cause du coût des ROM, les jeux ne prévoyaient jamais la capacité maximale. La plupart des titres utilisaient 2 à 4 MiB, trois jeux (la série Street Fighter II) avaient droit à 6 MiB, et un seul (Dynasty Wars) atteignait 8 MiB.
+
+Un socket (9) de 64 KiB, appelé "ROM z80", contient à la fois les instructions du z80 et les données musicales (instructions pour le YM2151).
+
+Deux sockets (18--19), pour un total de 256 KiB, appelés "ROM OKI", stockent les échantillons ADPCM et sont directement connectés à la puce OKI.
+
+Enfin, huit ROM de 1 MiB, appelées "ROM M68K", sont dédiées à l'exécution des instructions du m68k. Même si elles concernent le graphique, les palettes sont également stockées dans ce groupe.
+
+\vfill
+\begin{figure}[H]
+  \nbimg{90629B.jpg}
+  \caption*{Carte B avec les ROMs de Street Fighter 2}
+\end{figure}
+\pagebreak
+
+\nbdraw{90629B}
+
+Les lecteurs attentifs auront remarqué des puces noires non identifiées. Pour l'instant, disons simplement qu'elles gèrent le trafic sur les bus. Sur le schéma ci-dessus, \icode{STF29} gère les ROM GFX et \icode{IOB1} gère les ROM m68k. En guise d'exercice, retournez à la page \pageref{fig:drawboarda} et essayez de deviner quelle puce gère quel groupe de ROM/RAM. Ou pas, je ne suis qu'un livre.
+
+\subsection{Carte C}\index{Board!Board C}
+La carte "C" contient la puce vidéo ASIC "CPS-B". Elle gère les 50 % restants du pipeline graphique, à savoir le mélange des données venant de la VRAM et des ROM GFX vers le générateur de pixels. Capcom a également concentré ses mécanismes anti-piratage dans cette puce, ce qui explique pourquoi la carte "C" a été révisée bien plus souvent que les cartes A et B.
+
+Cela sera abordé en détail dans la section sur la protection contre la copie de ce chapitre.
+
+\begin{minipage}[t]{0.49\linewidth}
+  \simg{1.0}{90628-C-2.jpg}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.49\linewidth}
+  \nbdraw{90628-C}
+\end{minipage}
+
+\subsection{PALs}
+Les puces noires présentes sur les schémas sont appelées \textbf{P}rogrammable \textbf{A}rray \textbf{L}ogic (PAL). Elles jouent un rôle crucial dans la création des mappages mémoire.
+
+Elles contiennent des logiques booléennes (\&, \textbar, !) entre leurs lignes d'entrée et de sortie, ce qui simplifie la carte, permet d'ajuster la logique sans modifier le câblage du PCB, et réduit le nombre de composants.
+
+\sdraw{0.44}{PAL16L8A}
+
+Souvent placées à proximité des groupes de ROM qu'elles gèrent, elles sont nommées selon leur fonction. Comme la plupart des jeux utilisent un agencement légèrement différent, les PALs varient : par exemple, la puce qui organise les ROM GFX s'appelle \icode{STF29} dans Street Fighter II, \icode{S224B} dans Final Fight, et \icode{DM620} dans Ghouls'n Ghosts.
+
+\section{Architecture logique}
+Le CP-System comporte huit processeurs, organisés de manière hiérarchique. Les ordres donnés au sommet sont transmis aux sous-systèmes par une chaîne de relais.
+
+L'isolation est forte entre les couches : les systèmes supérieurs n'ont pas accès aux ressources internes des systèmes inférieurs. Par exemple, le système de contrôle ne peut pas accéder à la VRAM ni aux ROM audio.
+
+\begin{figure}[H]
+\nbdraw{arch_hierarchy}
+  \caption*{Hiérarchie des processeurs du CP-System}
+\end{figure}
+
+Le système de contrôle comporte un m68k chargé de coordonner les entrées (joysticks, boutons, pièces) et les sorties (vidéo et audio). Il peut communiquer avec les processeurs principaux des systèmes graphique et audio.
+
+Le système audio fonctionne presque totalement en autonomie. Il est relié au système de contrôle via deux verrous 8 bits que le z80 interroge activement pour récupérer les commandes audio. À noter que ces verrous font le lien entre des bus de données de tailles différentes : 16 bits côté contrôle, 8 bits côté audio.
+
+Le système graphique nécessite plus d'échanges et expose non seulement ses registres CPS-A et CPS-B, mais aussi la VRAM graphique où la mise en page de l'écran est définie. Le m68k et le CPS-A partagent le même bus pour accéder à cette VRAM, ce qui crée une démarcation moins nette que pour le système audio. Cela entraîne une certaine contention sur le bus.
+
+\index{Colors!Pen}
+\index{Colors!Ink}
+
+Le système vidéo produit un flux d'adresses de palette. Combiné avec la SRAM des palettes (où les couleurs sont stockées) et le DAC, il génère un signal envoyé vers la borne via JAMMA. Ce processus est exigeant afin de maintenir les 59,64 Hz de rafraîchissement de l'écran.
+
+\begin{figure}[H]
+\nbdraw{arch}
+  \caption*{Architecture logique du CPS-1 avec lignes de données}
+  \label{cps1_arch}
+\end{figure}
+
+\section{Système de contrôle}\index{Systems!Control}
+Le système de contrôle supervise la plateforme. En tant que chef d'orchestre, il n'a pas besoin d'exceller dans un domaine particulier, mais doit être capable de diriger et surveiller de nombreux composants. C'est une tâche parfaitement adaptée au Motorola 68000.
+
+\subsection{Processeur Motorola 68000}\index{Processors!Motorola 68000}
+Sorti en 1979 et cadencé à 10 MHz (puis 12 MHz), le 68000 avec son pipeline à deux étages\cite{M68000fv} (prélecture, exécution) et sans cache interne n'était pas un processeur particulièrement rapide selon les standards de la fin des années 1980. Avec ses 1,7 MIPS, il était comparable à un Intel 286 à 10 MHz (1,5 MIPS). En 1989, il avait déjà deux générations de retard sur le M68020 (1984, 3 MIPS) et le M68030 (1987, 5 MIPS)\cite{mips}.
+
+\nbdraw{mips}
+
+Cependant, cette lenteur relative n'a pas empêché une multitude de fabricants de l'adopter comme base de leurs machines. Parmi elles : Atari ST, Amiga, Sega System 16, Genesis, Sega CD, Apple Macintosh, Sharp X68000, et même la Neo-Geo de SNK. IBM lui-même avait initialement choisi le 68000 pour son PC avant que des problèmes de production ne le poussent à se rabattre sur l'Intel 8088\cite{ieee20170630}.
+
+La performance brute n'est pas ce qui a fait la gloire du 68000. Ce qui a fait de ce CPU un choix privilégié, c'est sa capacité à bien travailler avec les autres.
+
+Alors que la majorité des systèmes utilisaient une adresse sur 16 bits, son espace d'adressage 24 bits permettait au 68000 de gérer 16 Mio de RAM, ce qui était énorme à l'époque. Un avantage considérable pour mapper des périphériques. Capcom aurait pu, s'ils l'avaient voulu, rendre visible au 68000 toute la RAM et les ROM de tous les sous-systèmes du CPS-1.
+
+Alors que d'autres processeurs utilisaient de petits registres d'adresses, provoquant le fameux "segmented addressing", Motorola fournit au 68000 des registres d'adresses et de données sur 32 bits. Son adressage plat élégant et ses dix-huit registres généreux en ont fait un favori des programmeurs.
+
+
+
+\begin{figure}[H]
+
+ 
+\sdraw{0.75}{68000}
+\caption*{Brochage du Motorola 68000}
+\label{68000drawing}
+\end{figure}
+
+Le 68000 est mis en marche via ses broches d'horloge (\icode{CLK}), d'alimentation +5V (\icode{VCC}) et de masse (\icode{VSS}).
+
+Le bus est composé de \icode{D0-D15} pour les données et de \icode{A1-A23} pour les adresses, tandis que \icode{AS} (Address ACK), \icode{R/W} (Read/Write), \icode{UDS}, \icode{LDS} et \icode{DTACK} (Data ACK) sont les broches de contrôle du bus.
+
+L'arbitrage permettant à des périphériques de prendre la main sur le bus est géré par les lignes \icode{BR} (Bus Request), \icode{BG} (Bus Grant) et \icode{BGACK} (Bus Grant ACK).
+
+Le système d'interruptions dispose de trois broches généreuses : \icode{IPL0}, \icode{IPL1}, \icode{IPL2}, et d'une broche de contrôle \icode{VPA}. Alors que d'autres CPU comme les x86 ou le z80 n'ont qu'une ligne d'interruption, les lignes \icode{IPL} multiples permettent d'encoder directement un identifiant d'interruption, évitant ainsi l'usage d'un contrôleur externe. L'exploitation de ce mécanisme sera expliquée dans la section programmation.
+
+\index{Interrupts!68000}
+Le contrôle du système se fait via les lignes \icode{BERR} (Bus Error), \icode{RST} (Reset) et \icode{HALT}.
+
+Enfin, l'état du processeur est indiqué par \icode{FC0}, \icode{FC1}, \icode{FC2}, et le contrôle des périphériques est assuré par les signaux \icode{E} (sync) et \icode{VMA} (valid sig).
+
+\begin{trivia}
+Le nom du processeur Motorola vient du nombre total de transistors : 68 000 unités. Le 68030 et le 68040 possédaient plus de transistors que ce que leur nom suggère.
+\end{trivia}
+
+Malgré l'éloge faite dans les pages précédentes, le 68000 peut se montrer capricieux à programmer. Son défaut le plus connu concerne l'alignement mémoire. Alors que les processeurs Intel de type CISC autorisent des accès mémoire non alignés (au prix d'une grosse pénalité de performance), le processeur Motorola déclenche une exception \icode{address error} s'il tente de lire ou d'écrire sur une adresse non alignée sur 16 bits (\icode{WORD}).
+
+Cette contrainte est présente jusque dans le câblage même du processeur, qui ne possède pas de ligne \icode{A0}. À la place, les broches \icode{UDS} et \icode{LDS} indiquent s'il faut accéder au poids fort ou faible du mot 16 bits.
+
+\begin{trivia}
+Le 68000 possède des registres d'adresse 32 bits mais n'utilise que 24 bits pour l'adressage. Les huit bits restants ont été "détournés" par des ingénieurs pour marquer certaines adresses comme "verrouillées" ou "purgables". Ces programmes ont cessé de fonctionner lorsqu'ils furent exécutés sur un 68020, qui utilise un bus d'adresses 32 bits.
+\end{trivia}
+
+Le meilleur témoignage de la qualité de conception du 68000 reste peut-être ceci : en 2022, 43 ans après sa sortie, ce processeur légendaire est toujours produit.
+
+\subsection{RAM de travail du Motorola 68000}
+
+Avec un processeur doté d'un bus de données 16 bits, on pourrait s'attendre à trouver des puces RAM elles aussi 16 bits. Mais ces dernières étaient coûteuses, et une inspection attentive montre qu'il s'agit de puces \icode{65256BLSP-10}, avec un temps d'accès rapide (SRAM 100 ns) et une capacité de 32 KiB, mais seulement 8 lignes de données.
+
+\sdraw{0.5}{65256BLSP-10}
+\pagebreak
+
+Utiliser des puces RAM 8 bits du commerce, moins chères que leurs homologues 16 bits, a permis de réduire les coûts. De plus, il est facile de les combiner en une RAM 16 bits grâce à une intercalation en deux voies.
+
+\begin{figure}[H]
+\nbdraw{64k_ram}
+\caption*{Système RAM 32 Ki $\times$ 16 bits avec deux puces 32 Ki $\times$ 8 bits}
+\end{figure}
+
+Les deux \icode{65256BLSP-10} ne sont pas conscientes l'une de l'autre. Elles partagent les mêmes 15 lignes d'adresses ainsi que les lignes de contrôle d'écriture (\icode{WE}) et de lecture (\icode{OE}), mais sont connectées à des lignes de données différentes.
+
+\begin{trivia}
+Intercaler les puces permet aussi d'augmenter le débit mémoire en réduisant la latence. Les premières cartes graphiques comme les Voodoo 1 et 2 de 3Dfx utilisaient cette technique, parfois en quatre voies, pour faire face aux besoins en bande passante\cite{TheStoryOf3Dfx}.
+\end{trivia}
+
+Remarquez que les lignes d'adresses de la SRAM sont directement connectées au bus d'adresses du 68000. Il n'y a pas de mécanisme empêchant les deux puces de répondre à toutes les requêtes du bus.
+
+C'est une simplification volontaire, utilisée ici pour introduire progressivement la complexité. Nous verrons ensuite comment les composants sont organisés pour éviter les conflits.
+
+\begin{trivia}
+64 KiB de RAM de travail peuvent sembler beaucoup, mais ce n'était pas toujours suffisant. Certains jeux manquaient de RAM et avaient trop de GFXRAM. Les programmeurs de Street Fighter 2 Champion Edition sont allés jusqu'à générer puis exécuter du code directement depuis la GFXRAM\cite{mame_driver} !
+\end{trivia}
+\pagebreak
+
+\subsection{ROM programme du Motorola 68000}
+
+Les instructions du 68000 sont stockées dans huit puces \icode{27C010}, des ROM de 128 Ki $\times$ 8 bits. Elles fonctionnent comme les \icode{65256BLSP-10}, mais avec 17 lignes d'adresses au lieu de 15 (et donc une plus grande capacité).
+
+Comme pour la RAM, les ROM sont combinées par paires (interleave) pour fournir des données sur 16 bits. Ce qui est particulier ici, c'est la manière dont les quatre paires sont agencées pour obtenir une capacité mémoire étendue.
+
+\begin{figure}[H]
+\nbdraw{128k_ram}
+\caption*{Deux premières paires. 4 $\times$ (128 Ki $\times$ 8 bits) pour faire un système 256 Ki $\times$ 16 bits}
+\end{figure}
+
+Pour placer une paire après l'autre dans l'espace mémoire, on utilise la broche \icode{CE} (Chip Enable, aussi appelée \icode{CS} pour Chip Select). L'activer permet à une puce de répondre à une requête d'adresse, tandis que la désactiver la rend muette. Toutes les broches CE de toutes les puces sur toutes les cartes sont contrôlées via les puces PAL.
+
+Dans cet exemple, les quatre premières sorties d'une PAL sont programmées comme suit :
+
+\lstinputlisting[style=CStyle]{src/code/pal.c}
+
+La première paire de ROM est mappée à l'adresse \icode{0x000000}, la seconde à \icode{0x40000}. Selon la même logique, deux autres paires sont mappées à \icode{0x80000} et \icode{0xc0000}, soit un total de 1 MiB de ROM.
+
+Il doit maintenant être clair que les lignes \icode{CE} / \icode{CS} sont absolument cruciales pour créer une carte mémoire. Même si nous ne les mentionnerons plus, gardez en tête qu'elles impactent toutes les puces sur les cartes (sauf les processeurs).
+
+\subsection{Mappage mémoire du 68000}
+
+Grâce aux puces PAL qui activent/désactivent les composants, l'espace mémoire du 68000 est découpé. Le résultat est résumé dans un "memory map".
+
+\begin{figure}[H]
+{
+\begin{tabularx}{\textwidth}{rrrX}
+  \textbf{Début} & \textbf{Fin} & \textbf{Taille} & \textbf{Fonction} \\               
+  \toprule    
+  \texttt{0x000000} & \texttt{0x3FFFFF} & 4 MiB & ROM \\
+  \toprule    
+  \texttt{0x800000} & \texttt{0x800007} & 8 B & Entrées joueur JAMMA \\
+  \texttt{0x800018} & \texttt{0x80001F} & 8 B & DIP Switches JAMMA \\
+  \texttt{0x800030} & \texttt{0x800037} & 8 B & Détecteurs de pièces JAMMA \\
+  \texttt{0x800176} & \texttt{0x800177} & 2 B & Kick harness \\
+  \toprule    
+  \texttt{0x800100} & \texttt{0x80013f} & 64 B & Registres CPS-A \\
+  \texttt{0x800140} & \texttt{0x80017f} & 64 B & Registres CPS-B \\
+  \toprule    
+  \texttt{0x800180} & \texttt{0x800187} & 8 B & Commandes sonores (latch 1) \\
+  \texttt{0x800188} & \texttt{0x80018F} & 8 B & Commandes sonores (latch 2) \\
+  \toprule    
+  \texttt{0x900000} & \texttt{0x92FFFF} & 192 KiB & GFXRAM \\
+  \texttt{0xFF0000} & \texttt{0xFFFFFF} & 64 KiB & RAM de travail \\
+\end{tabularx}
+}
+\caption*{Mappage mémoire du système de contrôle}
+\end{figure}
+\label{m68k_mm}
+
+\subsection{Mise en relation des éléments}
+
+Les détails du fonctionnement du 68000 seront étudiés dans les chapitres suivants, mais on peut déjà deviner son comportement à partir de ce à quoi il a accès. Au démarrage, le m68k commence par lire les instructions dans sa ROM. Pour ses opérations classiques (lecture/écriture) et pour maintenir sa pile d'appels, il utilise sa RAM de travail.
+
+Le moteur du jeu démarre et lit la configuration définie par l'exploitant d'arcade via les DIP switches. Pendant le jeu, le CPU interroge en continu les entrées JAMMA.
+
+Le moteur lit les entrées JAMMA et délègue la génération des signaux vidéo et audio à ses sous-systèmes. Ceux-ci génèrent alors les signaux à destination des sorties JAMMA.
+
+Pour la vidéo, le m68k décrit la scène à afficher via la GFXRAM. Les ASICs graphiques sont ensuite configurés via leurs registres pour aller chercher les données de la scène.
+
+Pour l'audio, le m68k envoie des commandes simples au z80 via deux verrous de 1 octet, selon un protocole qui sera détaillé plus tard.
+
+  
+
+
+
+
+
+
+
+
+
+
+
+\pagebreak
+\section{Système audio}\index{Systems!Audio}
+Le système audio fonctionne de manière totalement isolée du reste. Il dispose de son propre bus, de sa propre RAM, de sa propre ROM, ainsi que de ses propres oscillateurs. Ses seules connexions avec l'extérieur sont deux verrous (latches) pour recevoir les commandes du système de contrôle, et deux broches JAMMA pour transmettre le son.
+
+Le composant principal est un étonnamment modeste z80 cadencé à 3,58 MHz.
+
+\subsection{CPU z80}
+Sorti en juillet 1976 par Zilog, le z80 avait pour ambition de supplanter l'Intel 8080 grâce à un jeu d'instructions compatible. Il est devenu une icône des années 70, partageant la vedette avec le non moins célèbre MOS 6502 jusque dans le milieu des années 80.
+
+Le z80 fut largement utilisé dans les ordinateurs domestiques, en particulier dans le Sinclair ZX Spectrum et l'Amstrad CPC. On le retrouve aussi dans des applications militaires, des instruments de musique (comme le Roland Jupiter-8), des systèmes embarqués et de nombreuses bornes d'arcade.
+
+En tant que processeur 8 bits, le z80 utilise des registres de données 8 bits, un bus de données 8 bits, des adresses sur 16 bits et un bus d'adresses de 16 bits. En termes de puissance de calcul, malgré sa conception avec recouvrement fetch/execute, le CPU était particulièrement faible à la fin des années 80 avec 0,45 MIPS. Il était trois fois plus lent que le 68000 utilisé dans le système de contrôle\cite{mips}.
+
+\nbdraw{mips_z80}
+
+La puissance de calcul n'était toutefois pas un critère déterminant pour désigner le maître du système audio. Grâce à ses deux puissants coprocesseurs, le CPU n'avait que peu de données à traiter, rendant le chiffre MIPS sans importance. Une caractéristique bien plus cruciale était sa capacité à bien s'intégrer avec ses deux assistants.
+
+Avec sa conception 8 bits, le z80 s'adapte parfaitement aux composants 8 bits que sont le YM2151 et le MSM6295. De plus, ce CPU “dépassé” avait l'avantage d'être peu coûteux. Enfin, il bénéficiait d'une bonne réputation grâce à une interface de programmation simple.
+
+\begin{trivia}
+Le nombre de broches d'un circuit intégré détermine le type de son encapsulage. Les DIP (Dual In-line Package), comme le z80 ci-dessous, sont reconnaissables à leurs deux rangées de broches. Le Motorola 68000 (voir page \pageref{68000drawing}) avec ses broches sur les quatre côtés appartient à la famille des “Chip carrier”.
+
+Les boîtiers peuvent être en plastique ou en céramique, avec des acronymes toujours plus barbares comme CLCC ou PLCC.
+\end{trivia}
+
+\sdraw{0.9}{z-80}\index{Processors!Zilog 80}
+
+Le z80 est mis en marche via ses broches \icode{CLK} (clock), \icode{+5V} (alimentation), et \icode{GND} (masse).
+
+Les lignes de bus sont dédiées : \icode{A0-A15} pour les adresses, \icode{D0-D7} pour les données. Pour le contrôle, \icode{RD} indique une lecture, \icode{WR} une écriture. \icode{WAIT} est utilisée pour ajouter des cycles d'attente.
+
+Bien qu'il soit capable de céder le contrôle du bus via \icode{BUSRQ} (Bus Request), \icode{BUSAK} (Bus Acknowledge), \icode{MREQ} (Memory Request), et \icode{IORQ} (IO Request), le z80 possède entièrement son bus et ne le partage jamais. En fait, les broches \icode{BUSRQ} et \icode{BUSAK} ne sont même pas connectées. Grâce à son isolement via des latches, le bus du z80 ne souffre jamais de contentions.
+
+Les autres broches sont : \icode{NMI} (Non Maskable Interrupt), \icode{RESET} (Réinitialisation du CPU), \icode{HALT} (Attente d'interruption), \icode{M1} (Lecture de l'instruction suivante). La ligne \icode{INT} (interruption) sera d'un intérêt crucial dans la section dédiée à la programmation. Un contrôleur d'interruptions est généralement nécessaire, mais les besoins simples du système audio permettent de s'en passer.
+\index{Interrupts!z80}
+
+\label{z80_pinRFSH}
+La broche \icode{RFSH} (ReFreSH signal) génère des impulsions à intervalles réguliers pour rafraîchir la DRAM. Comme le système audio n'utilise que de la SRAM, cette broche a été réutilisée de manière ingénieuse dans le CPS-1.5 “Kabuki” (voir page \pageref{kabuki}).
+
+\pagebreak
+
+\subsection{RAM de travail du z80}
+La quantité de RAM disponible pour le z80 peut paraître ridiculement faible de nos jours. Cependant, comme il ne fait que transmettre les commandes des latches au MSM6295 et alimenter le YM2151 avec des notes musicales, le z80 n'a besoin que de peu de ressources. Son bus est connecté à une seule puce \icode{CXK5816SP} de 2 Ki $\times$ 8 bits.
+
+\subsection{ROM du z80}
+La ROM est une simple puce \icode{27C512} de 64 Ki $\times$ 8 bits. Elle est bien plus grande que la RAM afin de stocker à la fois les instructions pour le z80 et celles à destination du YM2151.
+
+Ces ROM fonctionnent comme celles déjà décrites : alimentation, masse, adresses, données, contrôle, et bien sûr, la précieuse broche \icode{CE}. Ce qui est particulier ici, c'est que le z80 utilise des registres d'adresses 16 bits, ce qui permet d'adresser 65 536 octets. Il n'y a donc pas assez d'espace pour adresser tous les registres, la ROM et la RAM, qui totalisent 67 KiB.
+
+La solution consiste à mapper en permanence la moitié de la ROM (32 KiB) contenant les instructions, et à utiliser un système de bank switching pour accéder dynamiquement à une vue de 16 KiB sur la seconde moitié de la ROM, là où sont stockées les données musicales. Cette opération est gérée par une PAL nommée \icode{SOU1} et fut une source de douleur pour les développeurs (voir page \pageref{memory_bank_programming}).
+
+Espérons que ce registre de bank switching infernal vous convaincra de la supériorité du m68k et de son adressage plat sur 24 bits.
+
+\subsection{Mappage mémoire du z80}
+
+\begin{figure}[H]
+{
+\begin{tabularx}{\textwidth}{rrrX}
+\toprule    
+  \textbf{Début} & \textbf{Fin}  & \textbf{Taille} & \textbf{Fonction} \\               
+  \toprule    
+  \texttt{0x0000} & \texttt{0x7FFF} & 32 KiB & ROM (32 KiB sur les 64 KiB) \\
+  \texttt{0x8000} & \texttt{0xBFFF} & 16 KiB & Bank switching sur le reste de la ROM \\
+  \toprule    
+  \texttt{0xD000} & \texttt{0xD7FF} & 2 KiB & RAM \\
+  \toprule    
+  \texttt{0xF000} & \texttt{0xF001} & 2 B & Registres YM2151 \\
+  \texttt{0xF002} & \texttt{0xF002} & 1 B & Registres OKI6295 \\
+  \texttt{0xF004} & \texttt{0xF004} & 1 B & Contrôle du bank switch (\icode{SOU1}) \\
+  \texttt{0xF006} & \texttt{0xF006} & 1 B & Mode H / L du MSM6295 \\
+  \toprule    
+  \texttt{0xF008} & \texttt{0xF008} & 1 B & Commande sonore (latch 1) \\
+  \texttt{0xF00A} & \texttt{0xF00A} & 1 B & Commande sonore (latch 2) \\
+  \toprule    
+\end{tabularx}
+}
+\caption*{Mappage mémoire du système audio}
+\end{figure}
+
+\subsection{YM2151}\index{Processors!Yamaha 2151}
+
+Le choix de la puce musicale n'était pas une question de concurrence entre fournisseurs, mais bien un choix chez Yamaha. Grâce à la licence des brevets de modulation de fréquence (FM) de Stanford en 1975, Yamaha dominait alors le monde de la musique électronique.
+
+\begin{trivia}
+Yamaha a licencié la technologie FM de Stanford dès 1975 pour un tarif de 10 \$ par clavier. En 1985, le contrat fut renégocié sur la base du prix par puce\cite{fm_licensing}.
+\end{trivia}
+
+Trois architectures dominaient le marché au début des années 90. Entre l'OPL2 3812, l'OPN2 2612, et l'OPM (OPerator type M) 2151, c'est cette dernière qui fut choisie pour sa grande polyvalence.
+
+Le principe de la modulation de fréquence est d'utiliser des ondes simples pour se moduler entre elles dans une paire Modulateur/ Porteuse, produisant ainsi des formes d'ondes complexes\cite{fmProgramming}.
+
+\begin{figure}[H]
+\draw{fm_carrier}
+\caption*{Onde porteuse}
+\end{figure}
+
+\begin{figure}[H]
+\draw{fm_signal}
+\caption*{Onde modulatrice}
+\end{figure}
+
+\begin{figure}[H]
+\draw{fm_result}
+\caption*{Résultat de la modulation}
+\end{figure}
+
+
+
+
+
+
+
+
+Le YM2151 est capable de jouer 8 canaux (aussi appelés "voix") audio. Chaque canal se compose de quatre opérateurs (ou "slots") qui peuvent être configurés pour produire des sons de percussion ou d'instruments.
+
+Les slots peuvent même moduler leur propre sortie. Avec des réglages appropriés, il est possible de générer pratiquement n'importe quelle forme d'onde.
+
+\begin{figure}[H]
+\nbdraw{waveforms}
+\caption*{Quelques formes d'onde que le YM2151 peut générer}
+\end{figure}
+
+D'autres paramètres peuvent être appliqués à la sortie d'un canal. L'enveloppe permet d'ajuster les phases d'attaque, de déclin, de maintien (sustain) et de relâchement.
+
+\nbdraw{adsr}
+
+Le grand avantage de la synthèse FM est la faible quantité de données nécessaire pour stocker une mélodie. Une fois les instruments définis, il suffit d'enregistrer les notes et leur tempo. La technologie Yamaha est si efficace que dans Street Fighter 2, la musique complète de la scène principale de Sagat (2min06, 10 KiB) utilise moins de mémoire qu'un seul échantillon ADPCM du cri "Tiger Uppercut" (777 ms, 12 KiB).
+
+En observant le YM2151, on retrouve les broches déjà vues telles que \icode{+5V}, \icode{GND} et \icode{CS}. L'horloge (\icode{CLK}) est reliée au même oscillateur que celui du z80, à une fréquence de 3,58 MHz. Les broches de données/adresses \icode{D0-D7} (multiplexées via \icode{A0}) correspondent exactement au bus de données 8 bits du z80, avec les lignes de contrôle de lecture (\icode{RD}) et d'écriture (\icode{WR}).
+
+Une broche nous intéresse tout particulièrement : \icode{IRQ} permet au YM2151 de générer des interruptions via deux compteurs internes. Son utilisation est détaillée dans la section programmation.
+
+\sdraw{0.48}{YM2151}
+
+Le seul inconvénient de cette puce est qu'elle ne dispose pas de convertisseur numérique-analogique (DAC). Elle génère un signal via sa sortie série \icode{SO}.
+
+\subsection{YM3012}\index{Processors!Yamaha 3012}
+
+Le YM3012 est un DAC connecté à la sortie numérique \icode{SO} du YM2151. Le signal analogique produit sur \icode{CH1} et \icode{CH2} est ensuite mixé avec celui du OKI6295 avant d'être envoyé au système JAMMA.
+
+\sdraw{0.95}{YM3012}
+
+\subsection{MSM6295}\index{Processors!OKI MSM6295}
+
+Pour la lecture d'échantillons audio, Capcom n'a pas lésiné sur les moyens et a choisi une puce capable de décompresser de l'audio ADPCM 4 bits sur quatre canaux : la MSM6295 (aussi appelée OKI).
+
+Malgré une fréquence de fonctionnement de seulement 1 MHz, la MSM6295 est une aubaine pour tout concepteur de carte arcade. Elle ne nécessite aucune instruction, son comportement étant entièrement câblé en dur. Ses lignes d'adresse (\icode{A0-A15}) et de données (\icode{D0-D7}) sont directement connectées à sa propre ROM de 256 KiB sur un bus local, où sont stockés les échantillons audio. Cela évite toute contention avec le bus du z80.
+
+Ainsi, cette puce est un système de lecture audio entièrement autonome, uniquement contrôlé par ses lignes d'entrée \icode{I0-I7}, parfaitement adaptées au bus de données du z80.
+
+Pour fonctionner, le OKI a simplement besoin d'un identifiant d'échantillon [1--127], d'un canal [1--4] et d'un volume [0--127]. Grâce à une table de correspondance présente dans sa ROM, l'offset de l'échantillon est retrouvé, et la lecture commence avec un signal analogique produit sur la broche \icode{DA0}.
+
+\sdraw{0.75}{MSM6295}
+
+Jusqu'à quatre canaux peuvent être actifs simultanément. Comme les jeux n'ont pas besoin de jouer autant d'effets sonores à la fois, deux canaux sont généralement réservés aux effets et deux autres à l'ajout de samples dans la musique.
+
+La compression ADPCM, avec perte, permet de diviser la taille des données par trois en convertissant des échantillons PCM 12 bits en nibbles de 4 bits.
+
+\subsubsection{Faire des choix}
+
+Le choix de la puce musicale Yamaha était évident, mais celui de la MSM6295 était plus complexe.
+
+Tout d'abord, le taux d'échantillonnage attendu dans la ROM dépend directement de la fréquence d'horloge du MSM6295. Ensuite, la puce peut fonctionner dans deux modes via sa broche \icode{SS}. En mode haute qualité (H), le diviseur est de 132, et en mode basse qualité (L), de 165.
+
+Fonctionnant entre 1 MHz et 5 MHz selon le mode, le but était de maximiser la qualité tout en minimisant l'espace requis. Le tableau ci-dessous montre que la meilleure qualité (37 kHz) permettait de stocker seulement 13 secondes d'échantillons, alors que la plus basse (6 060 Hz) permettait 86 secondes.
+
+\begin{figure}[H]
+{
+\setlength\cmidrulewidth{\heavyrulewidth}
+
+\begin{tabularx}{\textwidth}{Ycccc}
+  & \multicolumn{2}{c}{H} &  \multicolumn{2}{c}{L} \\
+  \cmidrule(lr){2-3}
+  \cmidrule(lr){4-5}
+  \textbf{MHz} & \textbf{Taux d'échantillonnage (Hz)} & \textbf{Durée (s)} & \textbf{Taux d'échantillonnage (Hz)} & \textbf{Durée (s)}\\               
+  \toprule    
+  \texttt{1} & 7575 & 69 & 6060 & 86\\
+  \texttt{2} & 15151 & 34 & 12121 & 43\\  
+  \texttt{3} & 22727 & 23 & 18181 & 28\\
+  \texttt{4} & 30303 & 17 & 24242 & 21\\
+  \texttt{5} & 37878 & 13 & 30303 & 17\\
+  \toprule    
+\end{tabularx}
+}
+\caption*{Modes de fonctionnement du MSM6295 (ROM = 256 KiB).}
+\end{figure}
+
+Au final, Capcom a connecté le OKI au cristal graphique (16 MHz) et a divisé la fréquence par 16 pour obtenir 1 MHz. Avec la broche SS réglée sur H, le système utilise un taux d'échantillonnage de 7 575 Hz.
+
+\subsection{Notions de base sur le PCM}
+\index{ADPCM!Décompression}
+Les entrées et sorties du MSM6295 sont respectivement des flux ADPCM et PCM. Pour mieux comprendre cette puce, il est nécessaire d'étudier le fonctionnement de la \textbf{P}ulse-\textbf{C}ode \textbf{M}odulation.
+
+Que ce soit à l'enregistrement ou à la lecture, le PCM est une suite de valeurs représentant directement la position d'une membrane vibrante. Lors de l'enregistrement, cette membrane est celle d'un microphone ; lors de la lecture, elle est celle d'un haut-parleur.
+
+\pagebreak
+
+\begin{figure}[H]
+\nbdraw{speaker}
+\caption*{Le cône du haut-parleur se déplace proportionnellement aux valeurs PCM}
+\end{figure}
+
+Deux paramètres influencent la fidélité du signal : le taux d'échantillonnage (sampling rate) et la profondeur de bit (bit depth).
+
+\begin{figure}[H]
+\nbdraw{pcm}
+\caption*{Valeurs PCM (échantillons 4 bits) quantifiant un signal analogique}
+\end{figure}
+
+Plus le taux d'échantillonnage (axe X) est élevé, plus souvent la position du cône peut être mise à jour. Plus la profondeur de bit (axe Y) est grande, plus précisément on peut définir la position du cône. Le son stéréo est obtenu en entrelaçant deux flux PCM.
+
+La qualité sonore augmente linéairement avec le débit :
+
+\begin{itemize}[topsep=0pt]
+\item Les téléphones fixes utilisent 8 000 Hz / 8 bits mono, soit 8 000 octets par seconde.
+\item Les CD audio utilisent 44 100 Hz / 16 bits stéréo, soit 176 400 octets par seconde.
+\end{itemize}
+
+\subsection{Compression ADPCM}
+
+L'ADPCM permet de compresser des échantillons PCM 12 bits en nibbles de 4 bits, en ne stockant que la différence entre les échantillons successifs. La décompression consiste à ajouter une valeur delta à l'échantillon précédent, encore et encore.
+
+Le delta est codé selon un système d'offsets pondérés appelé “step”, précis pour les faibles variations, mais approximatif lorsque les variations deviennent importantes.
+
+Le premier bit du nibble indique le signe du delta (+ ou -). Les trois autres indiquent une “magnitude”. Celle-ci dépend de la taille de step courante dans le décompresseur ADPCM.
+
+\begin{figure}[H]
+\sdraw{0.3}{adpcm_nibble}
+\caption*{Un nibble ADPCM}
+\end{figure}
+
+
+
+Dans son état initial, la taille de pas (step size) est de 16, ce qui signifie que le bit trois correspond à ±16, le bit deux à ±8, et le bit un à ±4. Dans cet état, le delta appliqué peut varier de 0 (\icode{b000}) à ±28 (\icode{b111}).
+
+Le décompresseur surveille en permanence l'amplitude utilisée dans la taille de pas. Cette dernière est ajustée après chaque échantillon à l'aide d'une table de transition prédéfinie, indexée via la valeur de magnitude.
+
+\lstinputlisting[style=CStyle]{src/code/adpcm_transition.c}
+
+La table de transition indique comment ajuster l'indice de taille de pas. L'ADPCM augmente agressivement l'indice lorsque les valeurs de magnitude sont comprises entre 4 et 7 (ajustement entre \icode{2} et \icode{8}). À l'inverse, il diminue l'indice plus prudemment pour les valeurs faibles de magnitude (0 à 3), avec un décrément fixe de \icode{-1}.
+
+\pagebreak
+\section{Système Vidéo}\index{Systems!Video}
+
+Le système vidéo a pour objectif de piloter le tube cathodique (CRT – Cathode-Ray Tube) où les images sont tracées ligne par ligne pour être visibles par le joueur.
+
+Même s'il est connecté via un port intermédiaire JAMMA, il n'existe ni couche d'abstraction, ni protocole spécifique. Les quatre broches de sortie JAMMA (rouge, vert, bleu et synchronisation) sont directement connectées aux entrées du CRT.
+
+\begin{figure}[H]
+\nbdraw{rgb_wires}
+\caption*{Les quatre câbles nécessaires pour piloter un CRT}
+\end{figure}
+
+Il y a quatre câbles, mais en réalité cinq signaux sont transmis. Chacun des signaux rouge, vert et bleu a son propre fil, tandis que le fil de synchronisation transporte deux signaux multiplexés : une impulsion de synchronisation horizontale et une verticale. C'est pourquoi on l'appelle CSYNC (Composite SYNC).
+
+Ces cinq signaux sont tout ce dont un CRT a besoin pour fonctionner.
+
+\begin{trivia}
+Le CRT est un pur consommateur de signaux. Il ne renvoie jamais quoi que ce soit sur ces câbles. Contrairement à une idée reçue, ce n'est pas le CRT qui émet le VSYNC. Tous les signaux sont générés par le système vidéo.
+\end{trivia}
+
+\subsection{Notions de base sur les CRT}
+
+Comme le minutage de toutes les opérations est directement lié au fonctionnement du système graphique, il est important de comprendre le fonctionnement d'un CRT.
+
+À sa base, un CRT est une machine qui trace des lignes. Il dessine des lignes horizontales successivement, de gauche à droite, puis de haut en bas. Pendant le tracé d'une ligne, trois signaux analogiques (un pour chaque couleur RGB) indiquent la quantité d'électrons à émettre depuis trois canons. Plus le signal est fort, plus d'électrons sont émis, et plus la couleur est vive.
+
+Sur leur trajectoire, les électrons traversent un masque d'ombre pour garantir qu'ils atteignent le bon type de phosphore coloré. Les récepteurs phosphorescents sont groupés par trois, un pour chaque couleur RGB. Le faisceau d'électrons et les slots ne sont pas en relation un-à-un. Le faisceau peut être plus large ou plus étroit qu'un slot.
+
+\begin{figure}[H]
+\draw{shadow_mask}
+\caption*{Canon à électrons, masque, et récepteurs}
+\end{figure}
+
+Les récepteurs ne sont pas strictement alignés. Lorsque le faisceau touche l'écran, il ne sait pas précisément quels récepteurs il atteint. Il peut frapper un slot complet, deux moitiés, ou d'autres combinaisons selon la densité et la dispersion du faisceau.
+
+La seule garantie est qu'un électron tiré par un canon d'une couleur atteindra un phosphore de la même couleur, et que la hauteur du faisceau est constante pour chaque ligne.
+
+\begin{figure}[H]
+\draw{triad_slots}
+\caption*{Un balayage de ligne touchant des récepteurs variables}
+\end{figure}
+
+Des récepteurs plus petits permettent un rendu plus fidèle des signaux analogiques horizontaux.
+
+\draw{triad_slots_hd}
+
+Grâce à cette dualité entre lignes numériques et signaux analogiques, un CRT est à la fois un système numérique et analogique. Le nombre de lignes de balayage est fini (donc discret), mais il n'y a pas de nombre fixe de "points" ou "pixels" horizontaux, car les signaux RGB sont analogiques.
+
+\subsection{Synchronisation}
+
+Les signaux RGB décrivent les lignes à dessiner, mais le CRT doit savoir *où* les dessiner. Le signal de contrôle permet de synchroniser l'orientation des canons avec les lignes de couleur, afin que l'image soit affichée au bon endroit. Sans synchronisation, l'image apparaît déformée.
+
+\begin{figure}[H]
+\sdraw{0.93}{desync}
+\caption*{Un CRT désynchronisé. Les lignes sont correctes mais mal positionnées}
+\end{figure}
+
+Le signal VSYNC indique au CRT qu'il doit réinitialiser la position verticale du canon en haut de l'écran. Ce mouvement du bas vers le haut est appelé "retour vertical" (vertical retrace). Durant cette phase, le canon doit cesser de tirer des électrons, ce qui est obtenu en envoyant une couleur noire sur les lignes RGB. Ce "blanking" (effacement) est légèrement anticipé et prolongé autour du VSYNC. L'intervalle pendant lequel rien n'est dessiné est appelé VBLANK.
+
+De même, le signal HSYNC indique qu'une ligne a été dessinée et que la position horizontale du canon doit revenir à gauche. Ce mouvement est le retour horizontal (horizontal retrace). Là aussi, il existe une période de HBLANK.
+
+\pagebreak
+
+\subsection{Trames et demi-trames}
+
+Le processus de balayage de lignes, aussi appelé "raster scan", ne serait pas complet sans une subtilité supplémentaire. Si le canon recommençait toujours à tracer la ligne supérieure après chaque HSYNC, il dessinerait toujours la même ligne.
+
+Même si cela est difficile à percevoir à l'œil nu, les lignes de balayage ont une légère inclinaison vers le bas. Ainsi, quand le HSYNC est reçu, le canon se positionne pour tracer la ligne suivante plus bas.
+
+\nbdraw{p_scan}
+
+Tant que le VSYNC est émis en même temps qu'un HSYNC, les lignes s'affichent toujours au même endroit.
+
+Sur le dessin suivant, voyons ce qui se passe si le VSYNC \circled{3} est émis au milieu de la dernière ligne en cours de tracé (entre HSYNC \circled{2} et \circled{4}).
+
+\nbdraw{i_scan}
+
+Comme seule une demi-ligne a été dessinée en bas, le canon n'a progressé que d'un demi-espace vertical. Résultat : la prochaine trame sera entrelacée avec la précédente. Cette technique est utilisée dans la diffusion télévisée (NTSC), où chaque trame (à 30 Hz) est divisée en deux "champs" dessinés en alternance à 60 Hz.
+
+Bien que tolérable pour la vidéo, l'entrelacement est inacceptable en jeu vidéo car les artefacts deviennent visibles avec les mouvements de sprites ou de texte.
+
+Une solution consiste à n'utiliser qu'un seul champ et à ignorer l'autre. Cela implique de concevoir un système vidéo où le VSYNC est toujours émis en même temps que le HSYNC. L'inconvénient est que les CRT conçus pour l'entrelacement prévoient un espacement vertical supplémentaire entre les lignes.
+
+Puisque cet espace n'est pas utilisé, l'effet visuel est celui de lignes noires entre les lignes affichées. Heureusement, cet effet est atténué par le "bleeding" du faisceau, rendant ces bandes noires moins visibles.
+
+\begin{figure}[H]
+\img{sf2_4_3_interlaced.png}
+\caption*{Un balayage non entrelacé laisse apparaître des espaces noirs entre les lignes}
+\end{figure}
+
+Outre le choix de ne pas entrelacer, de nombreuses autres décisions ont dû être prises.
+
+\subsection{Faire des choix}
+
+Créer un système vidéo, c'est construire un générateur de signal et un générateur de couleur. Commençons par le générateur de signal. Ce circuit prend comme entrée les impulsions d'un oscillateur, et produit trois signaux : un signal de durée d'affichage des couleurs, un signal HSYNC, et un signal VSYNC.
+
+\nbdraw{video_signal}
+
+L'oscillateur alimente un "registre horizontal" qui s'incrémente à chaque tick. Une fois arrivé à sa valeur maximale, ce registre se remet à zéro, déclenche un HSYNC et incrémente un "registre vertical".
+
+Lorsque ce registre vertical atteint à son tour sa valeur maximale, il se remet à zéro et génère un VSYNC.
+
+Il n'y a pas de compteur pour la durée des couleurs. Chaque tick équivaut simplement à un "point" affiché.
+
+Le concepteur peut choisir n'importe quelle fréquence pour l'oscillateur (appelée désormais dot-clock). Il doit cependant veiller à choisir un nombre de lignes verticales et un nombre de points horizontaux tel que les fréquences verticales et horizontales restent compatibles avec un CRT.
+
+Les CRT des années 90 étaient conçus pour les signaux TV de type NTSC. Les impératifs étaient donc de se rapprocher d'un taux de rafraîchissement vertical de \textbf{59,95 Hz} et d'un taux de synchronisation horizontal de \textbf{15 734 Hz}.
+
+\nbdraw{ntsc}
+
+Les fréquences horizontale et verticale sont dérivées directement des trois valeurs du générateur de signal. Les formules suivantes permettent de vérifier la compatibilité d'un système avec un CRT :
+
+\begin{align*}
+    \mathtt{Horizontal\; frequency} = \dfrac{\mathtt{dotclock}}{\mathtt{numDots}}
+   \end{align*}
+   \begin{align*}
+   \mathtt{Vertical\; frequency} =   \dfrac{\mathtt{dotclock}}{\mathtt{(numDots \times numLines)}}
+   \end{align*}
+
+Avant d'examiner les choix faits par Capcom, voyons les décisions prises par les concepteurs d'autres systèmes contemporains du CP-System.
+
+
+
+\begin{figure}[H]
+    { \setlength{\tabcolsep}{3.0pt}
+    \begin{tabularx}{\textwidth}{Xrrr} 
+      \textbf{ } & \textbf{Genesis (H40)\cite{h40}} & \textbf{Neo-Geo}  & \textbf{Super NES} \\               
+      \toprule    
+       \textbf{points} & \texttt{420} & \texttt{384}  & \texttt{341} \\ 
+       \textbf{lignes} & \texttt{262} & \texttt{264}  & \texttt{262} \\ 
+       \textbf{horloge point (Hz)} & \texttt{6,711,647} & \texttt{6,000,000}  & \texttt{5,369,318} \\ 
+    \toprule    
+       \textbf{fréquence HSYNC (Hz)} & \texttt{15,700} & \texttt{15,625}  & \texttt{15,745} \\ 
+       \textbf{fréquence VSYNC (Hz)} & \texttt{59,92} & \texttt{59,18}  & \texttt{60,09} \\ 
+    \toprule    
+    \end{tabularx}%
+    }\caption*{Valeurs du générateur de signal pour Genesis, Neo-Geo et Super NES}
+    \end{figure}
+    
+    Il faut garder à l'esprit que ces résolutions ne sont pas celles sur lesquelles les programmeurs peuvent compter. En raison des contraintes expliquées dans la section suivante, certaines lignes et certains points sont indisponibles. Les résolutions présentées ici sont appelées "résolutions overscan".
+    
+    \subsubsection{Choix vidéo de Capcom}
+    
+    Le CPS-1 utilise une résolution overscan de \icode{512x262}. Le dot-clock est de 8 MHz, obtenu en divisant par deux l'horloge de 16 MHz utilisée par les composants CPS-A/CPS-B (ce qui permet d'économiser un oscillateur dédié).
+    
+    \begin{figure}[H]
+    { \setlength{\tabcolsep}{3.0pt}
+    \begin{tabularx}{\textwidth}{Xr} 
+      \textbf{ } & \textbf{CP-System} \\
+      \toprule    
+       \textbf{points} & \texttt{512} \\
+       \textbf{lignes} & \texttt{262} \\
+       \textbf{horloge point (Hz)} & \texttt{8,000,000} \\
+    \toprule    
+       \textbf{HSYNC (Hz)} & \texttt{15,625} \\
+       \textbf{VSYNC (Hz)} & \texttt{59,6374} \\
+    \toprule    
+    \end{tabularx}%
+    }\caption*{Valeurs du générateur de signal pour le CP-System}
+    \end{figure}
+    
+    En plus de ces contraintes de fréquence verticale et horizontale, les ingénieurs de Capcom avaient une contrainte supplémentaire. Comme le système graphique utilise des tuiles de taille 8, 16 ou 32 pixels, les dimensions sur les deux axes devaient être des multiples de huit.
+    
+    \subsubsection{Blanking}
+    
+    La résolution overscan du CP-System, \icode{512x262}, semble indiquer une résolution très élevée pour l'époque. Mais toutes les lignes et tous les points d'une ligne ne peuvent pas être utilisés. Certains doivent être sacrifiés pour résoudre trois problèmes :
+    
+    Premièrement, le retour horizontal et vertical. Le déplacement du canon n'est pas instantané, donc pendant qu'il revient au début d'une ligne ou en haut de l'écran, il pourrait laisser une traînée visible en diagonale.
+    
+    Deuxièmement, les vibrations. Comme le repositionnement est brutal (contrairement au mouvement progressif pendant une ligne), il faut un petit temps pour que le faisceau d'électrons se stabilise à nouveau.
+    
+    Troisièmement, le système vidéo a besoin de pauses pour lire ou écrire des données sans générer d'artefacts visibles. Cela comprend l'échange de tampons, la mise à jour des palettes, et la récupération des tuiles ou sprites à dessiner à la ligne suivante.
+    
+    La solution à ces trois problèmes s'appelle le blanking. En mettant les signaux de couleur à zéro, le canon n'émet aucun électron. Le blanking masque les artefacts et crée une fenêtre pendant laquelle le système graphique est inactif. Il existe un blanking vertical (VBLANK) et un blanking horizontal (HBLANK).
+    
+    \subsubsection{Deuxième série de choix de Capcom}
+    
+    Sur les 262 lignes disponibles, Capcom a choisi d'en utiliser 224 et de réserver $\mathtt{262 - 224 = 38}$ lignes au VBLANK. Pour chaque ligne de 512 points, seuls 384 sont utilisés, laissant $\mathtt{512 - 384 = 128}$ points au HBLANK. Les développeurs peuvent donc s'appuyer sur une résolution réelle de \icode{384x224}.
+    
+    \begin{figure}[H]
+    { \setlength{\tabcolsep}{3.0pt}
+    \begin{tabularx}{\textwidth}{Xrrrr} 
+      \textbf{ } & \textbf{CP-System} & \textbf{Genesis (H40)} & \textbf{Neo-Geo} & \textbf{Super NES} \\
+      \toprule    
+       \textbf{points utiles} & \texttt{384}  & \texttt{320} & \texttt{320} & \texttt{256} \\
+       \textbf{HBLANK (points)} & \texttt{128}  & \texttt{100} & \texttt{64} & \texttt{85}  \\
+       \textbf{lignes utiles} & \texttt{224} & \texttt{224} & \texttt{224} & \texttt{224} \\
+       \textbf{VBLANK (lignes)} & \texttt{38}  & \texttt{38} & \texttt{40} & \texttt{38}  \\
+    \toprule    
+    \end{tabularx}%
+    }\caption*{Résolution utile du CP-System et des systèmes concurrents}
+    \end{figure}
+    
+    \pagebreak
+    
+    \subsubsection{Pixel Aspect Ratio}
+    
+    Les lignes de balayage d'un CRT ont une hauteur fixe, mais la largeur des points varie selon la machine à cause de la fréquence d'horloge. Le rapport largeur/hauteur d'un point est appelé Pixel Aspect Ratio (PAR).
+    
+    Un système "idéal" aurait des points carrés avec un PAR de 1:1. Sur ces CRT conçus pour la télévision, cela est garanti si l'horloge est de 6 136 363 Hz ($\frac{135}{22}$). Une fréquence plus élevée produit des points plus étroits ; une fréquence plus basse produit des points plus larges.
+    
+    \begin{figure}[H]
+    \nbdraw{par}
+    \caption*{Pixel Aspect Ratio de quatre systèmes (exagéré)}
+    \end{figure}
+    
+    Commençons par le Neo-Geo, dont le PAR est proche de 1:1, donnant des pixels carrés\cite{par}.
+    
+    \vfill
+    \begin{figure}[H]
+    \img{metalslug.png}
+    \caption*{Metal Slug tel que stocké en ROM Neo-Geo, SAR = 320:224}
+    \end{figure}
+    
+    La formule du PAR est une simple multiplication par une fraction :
+    
+    \begin{align*}
+     \mathtt{PAR = \dfrac{dotclock\;MHz \times 22}{135}}
+    \end{align*}
+    
+    Le Neo-Geo MVS, avec une horloge de 6 MHz, a un PAR de 45:44. Combiné à son ratio de stockage (SAR) \icode{320x224}, cela donne un Display Aspect Ratio (DAR) de :
+    
+    \begin{align*}
+     \mathtt{DAR = \frac{45\times320}{44\times224} = 1.46}
+    \end{align*}
+    
+    Des pixels presque carrés minimisent la distorsion lorsqu'on affiche l'image sur un CRT 4:3. Cela facilite grandement le travail des artistes, qui peuvent concevoir leurs assets en 1:1 et les voir apparaître comme prévu.
+    
+    \vfill
+    \begin{figure}[H]
+    \img{metalslug_4_3.png}
+    \caption*{Metal Slug tel qu'affiché sur un CRT, DAR = 1.46}
+    \end{figure}
+    
+
+
+
+
+
+    Le CPS-1, avec sa résolution de \icode{384x224} et une horloge point de 8 000 000 Hz, donne un PAR de 135:176. Son DAR correspond à peu près au ratio 4:3 des CRTs (soit 1,333).
+
+    \begin{align*}
+     \mathtt{Display\;Aspect\;Ratio = PAR \times SAR = \frac{135\times384}{176\times224} = 1.31}
+    \end{align*}
+    
+    Cependant, ses pixels étroits génèrent une distorsion notable, ce qui fut un vrai casse-tête pour les artistes. S'ils numérisaient leurs dessins tels quels, l'image affichée sur CRT apparaissait étirée verticalement par rapport à leur intention. Comme illustré page \pageref{sf2_ratio}, un artiste dessinant un soleil circulaire sur papier, puis le numérisant tel quel et l'affichant via le CPS-1, verrait un ovale apparaître à l'écran.
+    
+    Akiman a immédiatement signalé le problème lorsqu'il a commencé à travailler sur cette nouvelle plateforme.
+    
+    \begin{q}{Akiman, Lead Artist\cite{akiman}}
+    Quand j'ai commencé à travailler sur mon premier jeu CPS-1, Forgotten Worlds, j'ai remarqué tout de suite le problème de ratio.
+    
+    - "Les pixels ne sont pas carrés !" ai-je dit à mon patron.
+    
+    - "Impossible, j'ai demandé qu'ils soient carrés !" m'a-t-il répondu.
+    
+    Il a alors immédiatement appelé le service hardware.
+    
+    - "Les pixels sont carrés !" a-t-il insisté.
+    
+    Plus tard, j'ai protesté à nouveau, et il m'a répondu que c'était une erreur de calcul.
+    \end{q}
+    
+    Était-ce un oubli ? Ou vraiment une erreur de calcul ? Très probablement, les concepteurs hardware voulaient offrir au CPS-1 une résolution horizontale très élevée pour le rendre compétitif, même si cela compliquait un peu la vie des artistes.
+    
+    Ces derniers ont fini par contourner ce "désagrément" en créant leurs assets déjà pré-étirés (voir page \pageref{sf2_ratio_solution}). Leur méthode est expliquée plus en détail page \pageref{artists_par}.
+    
+    Dans le reste de ce livre, le format des images variera. Par souci de place, les captures d'écran pourront être affichées selon leur SAR (Storage Aspect Ratio) ou leur DAR (Display Aspect Ratio), selon le contexte. Il en va de même pour les schémas. Étant donné la différence visuelle importante entre pixels carrés et étirés (voir page \pageref{sf2_ratio_solution}), le ratio ne sera plus précisé systématiquement.
+    
+    \pagebreak
+    
+    \sbdraw{0.98}{sun}
+    \label{sf2_ratio}
+    \vfill
+    \sbdraw{0.98}{sun_4_3}
+    
+    \pagebreak
+    
+    \sbdraw{0.98}{sf2_intro}
+    \label{sf2_ratio_solution}
+    
+    \sbdraw{0.98}{sf2_intro_4_3}
+    
+    \begin{trivia}
+    \index{Games!R-Type}
+    Les concepteurs de R-Type chez Irem n'étaient pas satisfaits des 224 lignes standards utilisables sur un CRT.
+    
+    Ils ont calibré les registres de leur M72-System pour dessiner 284 lignes, 512 points, avec un dot-clock de 8 MHz. En réservant 128 points au HBLANK et 28 lignes au VBLANK, ils ont atteint une résolution de \icode{384x256}, supérieure à celle des autres bornes de l'époque.
+    
+    Le compromis ? Une fréquence de rafraîchissement verticale de 55,017605 Hz, visuellement moins fluide et dangereusement éloignée (10%) des valeurs recommandées pour les CRTs. Cette fréquence est d'ailleurs difficile à reproduire sur les émulateurs modernes. Mais quelle prouesse pour un système de 1987 !
+    \end{trivia}
+    
+    \subsection{Espace colorimétrique} \index{Colors!Space}
+    
+    Avant de passer au générateur de couleur, il fallait définir la profondeur de couleur.
+    
+    Le CPS-1 utilise 16 bits pour encoder les couleurs, avec 4 bits par composante RGB, soit 12 bits pour décrire une couleur parmi 4 096 possibilités.
+    
+    \begin{figure}[H]
+    \begin{minipage}[t]{0.49\linewidth}
+      \simg{1.0}{clear_4bit.png}
+    \end{minipage}%
+    \hfill%
+    \begin{minipage}[t]{0.49\linewidth}
+      \simg{1.0}{dark_4bit.png}
+    \end{minipage}
+    \caption*{Le cube colorimétrique 12 bits du CPS-1}
+    \end{figure}
+    
+    Les 4 bits restants servent à exprimer la luminosité, permettant d'ajouter 16 niveaux d'intensité à une même couleur de base. En tout, cela donne 65 536 couleurs différentes accessibles aux artistes.
+    
+    \begin{figure}[H]
+    \nbdraw{brightness}
+    \caption*{Toutes les déclinaisons sombres du rouge, à partir de la couleur \icode{\{0xF,0x0,0x0\}}}
+    \end{figure}
+    
+    \subsection{Mise en perspective}
+    
+    Maintenant que l'on comprend comment fonctionne un CRT et les choix techniques faits par Capcom, on peut comprendre le timing des signaux vidéo.
+    
+    Avec une horloge pixel issue de l'oscillateur graphique (16 MHz), divisée par deux pour obtenir 8 MHz, une couleur est émise toutes les 1 s / 8 MHz = 125 ns.
+    
+    Une résolution horizontale de 512 points implique un HSYNC toutes les 512 $\times$ 0.125 = 64 $\mu$s. Le taux de rafraîchissement est donc de 8 MHz / (512$\times$262) = 59,637 Hz, avec un VSYNC toutes les 1000 ms / 59,637 = 16,7 ms.
+    
+    Un schéma récapitulatif illustre ces timings ainsi que les zones non affichables à cause du blanking horizontal et vertical.
+    
+    \nbdraw{sf2_withoverscan_zero}
+    
+    Il faut garder à l'esprit que le HSYNC se produit 262 fois (lignes verticales vertes), mais que le VSYNC n'apparaît qu'une fois. La ligne rouge horizontale pointillée du schéma ci-dessus sert uniquement à indiquer le moment où le canon retourne en haut de l'écran.
+    
+    La quantité de noir visible sur ces illustrations montre à quel point le blanking prend de la place. Mais ce temps de non-affichage n'est pas perdu : il est mis à profit pour réaliser des opérations de fond, comme modifier les couleurs des palettes. Par exemple, l'upload d'une page de palettes (32 palettes) nécessite seize lignes.
+    
+    \begin{figure}[H]
+    \nbdraw{sf2_withoverscan}
+    \caption*{Même concept mais vu plus près de la réalité affichée à l'écran CRT}
+    \end{figure}
+    
+    \subsection{Générateur de couleur}
+    
+    Pour générer les signaux de couleur, le CPS-1 utilise un système de palettes stockées dans 4 puces SRAM de type \icode{CXK5814P-35L}, chacune de 2 Ki $\times$ 1 B.
+    
+    Ces puces disposent de broches classiques : alimentation \icode{+5V}, masse \icode{GND}, adresses \icode{A0-A10}, données \icode{D0-D7}, écriture \icode{WE}, lecture \icode{OW}, et activation \icode{CE}.
+    
+    Ce qui est inhabituel, c'est que le composant connecté aux lignes d'adresse n'est pas le même que celui connecté aux lignes de données.
+    
+    \sdraw{0.45}{CXK5814P-35L}
+    
+    Le CPS-B pilote le bus d'adresse à 8 MHz pour générer les entrées 16 bits du DAC, qui convertit alors en signaux analogiques Rouge, Vert et Bleu. En parallèle, il génère les signaux HSYNC et VSYNC, combinés en CSYNC.
+    
+    Remarquez qu'une ligne sur douze ne sert pas à l'adressage, mais à activer (\icode{CE}) les paires de puces.
+    
+    \nbdraw{video_lookup}
+    
+
+
+
+
+    \nbdraw{video_lookup}
+
+    Les couleurs sont regroupées en palettes de 16 entrées. Comme nous le verrons plus tard, le système graphique comporte 6 couches, chacune pouvant utiliser 32 palettes (appelées "pages"). Cela donne un total de 6$\times$32$\times$15 = 2 880 couleurs, ce qui nécessite 12 bits pour l'indexation.
+    
+    Les puces SRAM de palettes sont presque constamment sollicitées pour générer les couleurs. Leur contenu ne peut être modifié que pendant la période de VBLANK.
+    
+    \pagebreak
+    
+    Douze palettes issues des personnages d'un célèbre jeu de combat Capcom. Les reconnais-tu ?
+    
+    \nbdraw{palette_ryu}
+    
+    \nbdraw{palette_ken}
+    
+    \nbdraw{palette_chun}
+    
+    \nbdraw{palette_honda}
+    
+    \nbdraw{palette_guile}
+    
+    \nbdraw{palette_zan}
+    
+    \nbdraw{palette_blanka}
+    
+    \nbdraw{palette_dahlsim}
+    
+    \par\noindent\rule{\textwidth}{0.5pt}
+    
+    \nbdraw{palette_boxer}
+    
+    \nbdraw{palette_vega}
+    
+    \nbdraw{palette_sagat}
+    
+    \nbdraw{palette_bison}
+    
+    Indice : RKCHGZBD-BVSB.
+    
+    \section{Graphic System}\index{Systems!Graphics}
+    
+    Le système graphique est le plus complexe à comprendre de toute la machine. Il l'est parce qu'il doit satisfaire les besoins de trois sous-systèmes exigeants.
+    
+    D'un côté, il y a le système de contrôle qui demande une composition sophistiquée d'arrière-plans et de sprites à afficher à l'écran. Ces instructions sont bien plus détaillées qu'un simple entier reçu par le système audio pour jouer un sample ou une musique. La communication passe par l'exposition des registres graphiques, mais aussi via un accès partagé à une mémoire appelée "GFX RAM". Le m68k du système de contrôle écrit des "commandes de dessin" que le système graphique lit et exécute.
+    
+    D'un autre côté, il y a le système vidéo cadencé à 8 MHz qui réclame impitoyablement une couleur de pixel toutes les 125 ns. Les canons du CRT n'attendent jamais, une couleur doit être émise instantanément.
+    
+    Enfin, il y a le GFXROM, un immense réservoir pouvant atteindre 12 MiB d'assets graphiques. Il a une latence et un débit limités qui seraient insuffisants s'il devait répondre aux demandes du système vidéo pixel par pixel.
+    
+    Résoudre ces problèmes de timing et de latence avec efficacité, c'est ce qui a fait du CPS-1 une plateforme hors du commun. C'est sans conteste la "recette secrète" du système.
+    
+    \begin{figure}[H]
+    \sdraw{0.7}{ppus}
+    \caption*{Architecture du système graphique du CPS-1}
+    \end{figure}
+    
+    \subsection{CPS-A et CPS-B : Les ASICs sur mesure}\index{Processors!CPS-A}\index{Processors!CPS-B}
+    
+    Pour concevoir leur pipeline graphique, Capcom n'a pas utilisé un composant standard du marché. Ils ont conçu leurs propres ASICs (\textbf{A}pplication-\textbf{S}pecific \textbf{I}ntegrated \textbf{C}ircuit), adaptés à leurs besoins : le CPS-A (le cerveau) et le CPS-B (les jambes).
+    
+    \subsection{Pens et encres}
+    
+    L'unité élémentaire manipulée est une valeur de 4 bits, servant d'index dans une palette de 16 couleurs. Tous les éléments — arrière-plans comme sprites — utilisent ces index 4 bits (nibbles). Par analogie, et c'est le terme utilisé dans ce livre, on peut imaginer que le système graphique manipule des "crayons" ("pens"), chacun correspondant à une position dans la palette. La couleur réelle affichée à l'écran est définie par la valeur stockée à cette position, appelée "encre" ("ink").
+    
+    Cette séparation fait que le système graphique n'a aucune connaissance de la couleur finale affichée sur le CRT : il ne manipule que des crayons.
+    
+    Des groupes de quatre octets encodant huit crayons sont appelés "lignes de tuile". Assemblées verticalement, elles forment une "tuile", l'unité de base manipulée par les couches d'arrière-plan et de sprites.
+    
+    \nbdraw{gfx_format}
+    
+    \begin{trivia}
+    La valeur de crayon \icode{0xF} est toujours traitée comme transparente !
+    \end{trivia}
+    
+    \subsection{Éléments de dessin}
+    
+    Les jeux sont composés d'arrière-plans sur lesquels sont dessinés les sprites. Les circuits les plus simples à implémenter sont ceux des arrière-plans. Ils sont étudiés en premier, avant les circuits de sprites.
+    
+    \subsection{Dessin des arrière-plans}
+    
+    Un arrière-plan est défini en termes de "tuiles", organisées selon une carte (tilemap). Le but du circuit est de "rasteriser" cette tilemap.
+    
+    Un design naïf consisterait à travailler à la vitesse du système vidéo (8 MHz). Pour chaque pixel (toutes les 125 ns), on lirait la GFXRAM pour savoir quelle tuile afficher, puis on lirait un crayon dans le GFXROM, enfin on transmettrait ce crayon au système vidéo via la palette.
+    
+    \begin{figure}[H]
+    \nbimg{DL-0311.png}
+    \caption*{Die du CPS-A. Remarquer la zone dédiée au cache GFXRAM}
+    \end{figure}
+    
+    Même si la machine utilise de la mémoire rapide (SRAM), son temps de réponse ne permet pas assez de cycles. Le problème est résolu par du cache, du streaming, du channeling et un bus local CPS-B / GFXROM de 32 bits (énorme pour l'époque).
+    
+    \subsubsection{Cache}
+    
+    Le CPS-A accède à la GFXRAM uniquement pendant l'intervalle HBLANK. Pour éviter toute lecture pendant le raster d'une ligne, une ligne entière de tilemap est copiée dans un cache interne de 256 entrées. Chaque entrée stocke un tileID sur 16 bits + 10 bits d'attributs. Les deux zones du die stockent respectivement ces 10 et 16 bits.
+    
+    \subsubsection{Streaming}
+    
+    Les valeurs de crayon sont "streamées" du GFXROM vers le CRT sans stockage intermédiaire. Le GFXROM envoie les données par blocs de 8 crayons grâce au bus 32 bits.
+    
+    Les lignes d'adresse du GFXROM sont connectées au CPS-A (avec un décodage intermédiaire via PAL). Les lignes de données vont au CPS-B, qui sélectionne ou ignore des crayons avant de les transmettre au système vidéo.
+    
+    \begin{figure}[H]
+    \sdraw{0.9}{gfx_groups}
+    \end{figure}
+    
+    \subsubsection{Channeling}
+    
+    Pour encore améliorer le temps de réponse, le GFXROM adopte une disposition où 8 octets consécutifs sont entrelacés par blocs de 16 bits entre quatre puces.
+    
+    Lors de la lecture, une adresse est émise pour deux puces à la fois, mais leurs lignes de données sont activées successivement. Le channeling évite un cycle d'attente tous les deux accès.
+    
+    \nbdraw{channels}
+    
+    \subsection{Tilemaps du CPS-1}
+    
+    Le CPS-1 possède trois couches de tilemap : SCROLL1, SCROLL2 et SCROLL3. Elles utilisent toutes des maps de 64$\times$64 tuiles.
+    
+    \vfill
+    \begin{figure}[!b]
+    \img{color-00003208.png}
+    \caption*{Street Fighter 2}
+    \end{figure}
+    \pagebreak
+    
+    SCROLL1 utilise des tuiles de 8$\times$8 pour un total de 512$\times$512. SCROLL2 utilise des tuiles de 16$\times$16 (1024$\times$1024). SCROLL3 utilise des tuiles de 32$\times$32 (2048$\times$2048).
+    
+    \index{Colors!Palette page}
+    Chaque tilemap dispose de 32 palettes maximum (appelées pages) que les tuiles peuvent utiliser librement. Les SCROLL peuvent être décalés (scrollés), apparaître dans n'importe quel ordre et remplir n'importe quel rôle.
+    
+    Dans Street Fighter 2, les trois scrolls servent à créer des effets de parallaxe. L'interface (GUI) est dessinée avec les sprites sur une quatrième couche appelée OBJ (étudiée plus tard).
+    
+    Dans d'autres jeux comme le shoot'em up Forgotten Worlds, tous les sprites étaient nécessaires pour le gameplay. Pour ne pas en gaspiller, l'interface fut dessinée sur SCROLL1 au lieu d'OBJ. L'inconvénient : l'interface est alors alignée sur une grille de 8 pixels.
+    
+    Les codes couleur utilisés dans cette section sont : \fcolorbox{black}{red}{\vphantom{W}\hphantom{H}} SCROLL1, \fcolorbox{black}{green}{\vphantom{W}\hphantom{H}} SCROLL2, \fcolorbox{black}{blue}{\vphantom{W}\hphantom{H}} SCROLL3, \fcolorbox{black}{black}{\vphantom{W}\hphantom{H}} OBJ.
+    
+    \vfill
+    \begin{figure}[!b]
+    \img{rgb-00003208.png}
+    \caption*{Street Fighter 2 layers}
+    \end{figure}
+    \pagebreak
+    
+
+
+    \subsubsection{Starfields}
+
+    En plus des SCROLLs, le CPS-1 possède deux couches appelées "STARfield" qui sont toujours placées derrière les SCROLLs, et toujours dans l'ordre STAR1 puis STAR2. Comme les autres couches, chacune dispose d'une page complète de 32 palettes.
+    
+    Pour afficher les étoiles, le GFXROM ne contient pas de tuiles, mais du bytecode dictant la position des points ainsi que le timing de changement de palette.
+    
+    Il est surprenant aujourd'hui de voir autant de silicium dédié à une fonctionnalité "de niche", mais la popularité extrême des shoot'em up comme R-Type, Gradius ou Darius à l'époque justifiait ce choix. Concevoir un système qui économise de l'espace dans le GFXROM tout en facilitant le travail des artistes était une bonne idée. Ironiquement, la plateforme n'a jamais accueilli de shoot spatial !
+    
+    Mais cela n'a pas empêché cette fonctionnalité d'être utilisée. Bien après que les STARfields soient passés de mode, le système a été réutilisé à d'autres fins.
+    
+    \vfill
+    \begin{figure}[!b]
+    \img{color_short_forgottn-00000450.png}
+    \caption*{Forgotten Worlds. Remarquez l'alignement en grille de l'interface (SCROLL1)}
+    \end{figure}
+    \pagebreak
+    
+    \subsubsection{Noir profond}
+    
+    Lorsque les concepteurs avaient besoin d'un fond noir complet, au lieu d'utiliser un SCROLL et de demander en boucle des lignes de tuiles noires pour couvrir tout l'écran, il leur suffisait d'utiliser un STARfield... et de ne demander aucune étoile.
+    
+    C'est la poésie cachée de l'intro de Street Fighter Hyper Fighting. Lorsque le titre apparaît, l'arrière-plan noir est en réalité un ciel nocturne d'encre que personne n'a jamais remarqué.
+    
+    \begin{trivia}
+    Le système de couches n'utilise pas un algorithme de peinture où les pixels sont écrasés successivement dans une framebuffer. Le CPS-B reçoit un flux de crayons issus de toutes les couches, qu'il sélectionne selon la priorité et la valeur de transparence (\icode{0xF}). Une fois sélectionné, le crayon est envoyé directement au système vidéo.
+    \end{trivia}
+    
+    Codes couleur des couches : \fcolorbox{black}{red}{\vphantom{W}\hphantom{H}} SCROLL1, \fcolorbox{black}{green}{\vphantom{W}\hphantom{H}} SCROLL2, \fcolorbox{black}{blue}{\vphantom{W}\hphantom{H}} SCROLL3, \fcolorbox{black}{mycyan}{\vphantom{W}\hphantom{H}} STAR1, \fcolorbox{black}{myyellow}{\vphantom{W}\hphantom{H}} STAR2, \fcolorbox{black}{black}{\vphantom{W}\hphantom{H}} OBJ.
+    
+    \vfill
+    \begin{figure}[!b]
+    \img{rgb_short_forgottn-00000450.png}
+    \caption*{Forgotten Worlds}
+    \end{figure}
+    \pagebreak
+    
+    \subsubsection{Ordre de dessin et masques de priorité}\label{finalfight_trick}
+    
+    L'ordre de dessin (aussi appelé "priorité") des SCROLLs et de la couche de sprites est entièrement configurable (à l'exception des STARs qui doivent toujours rester en arrière-plan). N'importe quel ordre peut être défini, mais une fonctionnalité supplémentaire est disponible pour la couche SCROLL juste derrière les sprites.
+    
+    Prenons l'exemple de Final Fight. Après avoir combattu dans un entrepôt souterrain, Haggar et Guy émergent dans une zone désolée où les attend Damned, le boss du premier niveau.
+    
+    Pendant qu'ils montent les escaliers, observons l'ordre arrière-plan vers avant-plan des couches suivantes :
+    
+    - \fcolorbox{black}{blue}{\vphantom{W}\hphantom{H}} SCROLL3 pour l'horizon.\\
+    - \fcolorbox{black}{green}{\vphantom{W}\hphantom{H}} SCROLL2 pour la zone principale de jeu.\\
+    - \fcolorbox{black}{black}{\vphantom{W}\hphantom{H}} OBJ pour les personnages, les pneus, les tonneaux.\\
+    - \fcolorbox{black}{red}{\vphantom{W}\hphantom{H}} En avant-plan, SCROLL1 pour l'interface.
+    
+    \vfill
+    \begin{figure}[!b]
+    \img{ff_color-00007375.png}
+    \caption*{Final Fight}
+    \end{figure}
+    \pagebreak
+    
+    Tout semble logique sauf un détail. En observant de près Haggar (le plus costaud des deux), on remarque qu'il semble à la fois devant et derrière SCROLL2.
+    
+    Le CPS-B permet à la couche SCROLL située derrière les OBJs d'attribuer à chacune de ses tuiles un identifiant de groupe de priorité (parmi quatre). Dans chaque groupe, 16 bits permettent d'indiquer quels crayons (dans la palette de la tuile) prennent le dessus sur les sprites OBJ.
+    
+    C'est ainsi que les personnages de Final Fight sont "pris en sandwich" par SCROLL2. Les tuiles représentant la rampe en avant-plan sont associées à deux groupes de masques de priorité. Les tuiles en "bois" utilisent le masque de groupe \icode{0} qui donne la priorité aux crayons correspondant aux couleurs :
+    \fcolorbox{black}{mask1}{\vphantom{W}\hphantom{H}}, 
+    \fcolorbox{black}{mask2}{\vphantom{W}\hphantom{H}}, 
+    \fcolorbox{black}{mask3}{\vphantom{W}\hphantom{H}}, 
+    \fcolorbox{black}{mask4}{\vphantom{W}\hphantom{H}}.
+    
+    De même, les tuiles de "déchets" sont marquées avec le groupe \icode{1} qui donne la priorité à huit crayons correspondant aux couleurs :
+    \fcolorbox{black}{mask5}{\vphantom{W}\hphantom{H}}, 
+    \fcolorbox{black}{mask6}{\vphantom{W}\hphantom{H}}, 
+    \fcolorbox{black}{mask7}{\vphantom{W}\hphantom{H}}, 
+    \fcolorbox{black}{mask8}{\vphantom{W}\hphantom{H}}, 
+    \fcolorbox{black}{mask9}{\vphantom{W}\hphantom{H}}, 
+    \fcolorbox{black}{maska}{\vphantom{W}\hphantom{H}}, 
+    \fcolorbox{black}{maskb}{\vphantom{W}\hphantom{H}} et 
+    \fcolorbox{black}{maskc}{\vphantom{W}\hphantom{H}}.
+    
+    Une fois l'animation de sortie terminée, tous les groupes de priorité des tuiles sont désactivés, permettant une liberté de mouvement totale sur l'écran (sauf derrière la rampe) pour continuer les combats sans se soucier de la priorité.
+    
+    Reportez-vous à l'API du CPS-B page \pageref{cpsbreg_programming} pour plus de détails sur le marquage et les masques.
+    
+\vfill
+\begin{figure}[!b]
+\img{ff_rgb-00007375.png}
+\caption*{Final Fight avec la grille de la couche SCROLL2}
+\end{figure}
+\pagebreak
+
+\subsubsection{Rowscrolling}
+
+SCROLL2 a la capacité de décaler horizontalement les lignes en fonction de leur position verticale.
+
+Cette fonctionnalité, appelée communément "rowscroll", est implémentée via une table de 1024 entiers de 10 bits (un par ligne) stockée dans la GFXRAM.
+
+C'est une fonction entièrement codée en dur dans les ASICs. Une fois activée, le m68k n'intervient plus du tout : il n'a pas conscience du HSYNC, seulement du VSYNC.
+
+\begin{q}{Nin}
+Je savais qu'on avait du raster scrolling, alors j'en ai parlé aux programmeurs et on a tenté le coup. C'était efficace. Mais, encore aujourd'hui, je ne sais pas ce qui se passe en interne !
+\end{q}
+
+\vfill
+\begin{figure}[!b]
+\draw{ryu_rowscroll}
+\caption*{Street Fighter 2, le sol de Ryu utilise le rowscroll}
+\end{figure}
+\pagebreak
+
+\subsubsection{Choisir les bonnes fonctionnalités}
+
+Les fonctionnalités "starfield" et "rowscroll" sont de bons exemples de la difficulté du design matériel. Bien le faire consiste à prévoir avec justesse ce qui sera utile ou non.
+
+Alors que les starfields ont été fortement utilisés dans le jeu de lancement "Forgotten Worlds" puis dans "Strider", la fonction de rowscroll n'a, elle, quasiment pas été exploitée pendant près de deux ans.
+
+Cantonné à des effets de flammes dans "Magic Sword" ou des arrières-plans brumeux dans "Carrier Air Wing", le rowscroll est resté invisible dans les cinq jeux\cite{mame_cps1_video} qui l'ont intégré.
+
+Finalement, l'équilibre s'est inversé lorsque le rowscroll a permis de créer le sol à parallaxe ligne-par-ligne de Street Fighter 2, contribuant largement à l'attrait visuel du jeu.
+
+\vfill
+\begin{figure}[!b]
+\draw{honda_rowscroll}
+\caption*{Street Fighter 2, le niveau de Honda utilise un triple rowscroll}
+\end{figure}
+\pagebreak
+
+\subsubsection{Repousser les limites}
+
+Outre le masque de priorité, les tuiles peuvent être retournées horizontalement et/ou verticalement, mais il n'existe ni rotation, ni zoom. De plus, le CPU n'a pas accès à la VRAM, ce qui interdit le traçage de pixels (plotting). Cela n'a pourtant pas empêché d'obtenir des effets visuellement impressionnants.
+
+Dans le premier niveau de Ghouls 'n Ghosts, en plus des hordes de zombies, d'un Red Arremer et de contrôles impitoyables, le joueur doit affronter... la météo. Le vent se lève et une forte pluie s'abat. En regardant la capture d'écran de la scène, toutes les couches semblent utilisées : il ne devrait pas y avoir de place pour afficher la pluie.
+
+- \fcolorbox{black}{cyan}{\vphantom{W}\hphantom{H}} STAR1 pour le ciel sombre.\\
+- \fcolorbox{black}{blue}{\vphantom{W}\hphantom{H}} SCROLL3 pour l'arrière-plan.\\
+- \fcolorbox{black}{green}{\vphantom{W}\hphantom{H}} SCROLL2 pour la zone de jeu.\\
+- \fcolorbox{black}{black}{\vphantom{W}\hphantom{H}} OBJ pour le personnage, les grosses gouttes de pluie et les ennemis.\\
+- \fcolorbox{black}{red}{\vphantom{W}\hphantom{H}} SCROLL1 pour l'interface utilisateur (GUI).\\
+
+\vfill
+\begin{figure}[!b]
+\img{rgb_ghouls-00009167.png}
+\caption*{Ghouls 'n Ghosts avec interface utilisateur}
+\end{figure}
+\pagebreak
+
+Pour ajouter la pluie, les développeurs ont utilisé une technique de fusion temporelle sur la même couche que la GUI.\label{gg_rain} Toutes les cinq images, l'interface n'est pas affichée. À la place, un plein écran de tuiles de pluie est rendu, produisant un effet convaincant. La fusion temporelle est souvent utilisée pour simuler la transparence.
+
+\subsubsection{Tracé de pixels}
+
+La séquence d'introduction du shoot'em up Carrier Air Wing (voir page \pageref{caw_color} et \pageref{caw_rgb}) est encore plus impressionnante. Lorsqu'un F-14 Tomcat décolle de son porte-avions, les gaz d'échappement s'élargissent verticalement, ligne par ligne. Le panache se dissipe ensuite avec un effet de "fizzlefade".
+
+On croirait que des pixels sont tracés directement dans une framebuffer, mais ces deux effets sont en réalité générés via la couche OBJ (\fcolorbox{black}{black}{\vphantom{W}\hphantom{H}}). L'élargissement est produit à l'aide de 16 tuiles pré-rendues (chacune couvrant plus de lignes verticales). Le fizzlefade est obtenu à l'aide de tuiles avec une densité croissante de crayons transparents. Le motif de répétition du fizzle est visible sur la quatrième capture d'écran colorée.
+
+
+
+
+ 
+
+\vfill
+\begin{figure}[!b]
+\img{rgb_ghouls-00009168.png}
+\caption*{Ghouls 'n Ghosts pendant la pluie}
+\end{figure}
+\pagebreak
+
+\img{fizzlefade-0-color.png} \label{caw_color}
+
+\img{fizzlefade-1-color.png}
+
+\img{fizzlefade-2-color.png}
+
+\img{fizzlefade-3-color.png}
+
+\img{fizzlefade-4-color.png}
+
+\pagebreak
+
+\img{fizzlefade-0-rgb.png} \label{caw_rgb}
+
+\img{fizzlefade-1-rgb.png}
+
+\img{fizzlefade-2-rgb.png}
+
+\img{fizzlefade-3-rgb.png}
+
+\img{fizzlefade-4-rgb.png}
+
+\pagebreak
+
+\subsection{Affichage des sprites}
+
+Afficher des sprites est plus complexe que d'afficher des tilemaps. Il faut résoudre les mêmes problèmes de bande passante et de latence, mais avec une difficulté supplémentaire : les sprites peuvent apparaître n'importe où à l'écran, sans être alignés sur une grille.
+
+Pour bien comprendre comment Capcom a relevé ce défi, il vaut la peine d'analyser les approches utilisées par d'autres plateformes.
+
+\subsubsection{Sprites matériels}
+
+Un circuit de sprite peut être conçu en suivant la même logique qu'un tilemap. C'est un cas particulier où la carte ne contient qu'une seule tuile, sans décalage horizontal ou vertical.
+
+À chaque HSYNC, la GFXRAM est lue pour vérifier si un sprite doit apparaître sur la ligne suivante. Si c'est le cas, le circuit intercepte les crayons du tilemap pour envoyer à la place ceux du sprite.
+
+Cette approche présente deux inconvénients : elle nécessite un circuit dédié par sprite (donc coûteux), et cette complexité "un sprite = un circuit" empêche toute montée en charge. C'est pourtant la solution choisie par des machines comme le Commodore 64, qui mettait en avant ses "sprites matériels".\index{Sprites Multiplexing!C64}
+
+Mais cette limitation peut être contournée partiellement grâce à une technique appelée **multiplexage**. Un C64 dispose de 8 unités sprites, mais cela ne signifie pas qu'il ne peut afficher que 8 sprites à l'écran. Cela signifie qu'il ne peut en afficher que 8 sur une même ligne.
+
+Comme le canon du CRT progresse verticalement, une unité sprite utilisée en haut de l'écran peut être réutilisée plus bas. En changeant sa configuration durant le HBLANK, on peut afficher bien plus de 8 sprites. Cette astuce était souvent utilisée pour dépasser les 100 sprites à l'écran.
+
+Le Commodore Amiga allait encore plus loin avec un multiplexage intégré : ses sprites étaient limités à 16 pixels de large, mais leur hauteur pouvait être illimitée.\index{Sprites Multiplexing!Amiga}
+
+\subsubsection{Line buffer}
+
+Pour prendre en charge un plus grand nombre de sprites, les concepteurs ont introduit le **line buffer**.
+
+Un line buffer est une mémoire tampon aussi large qu'une ligne visible du CRT. Il est rempli à l'avance avec les crayons par une unité de traitement graphique (PPU). Le nombre de sprites affichables dépend alors de la puissance du PPU.
+
+Sa limite est que le tampon ne peut être écrit que pendant le HBLANK (16$\mu$s), puisqu'il sert le reste du temps à alimenter le CRT.
+
+Des machines comme la Super Nintendo utilisaient cette approche, avec un PPU puissant, permettant des effets visuels spectaculaires en plein écran (Mode-7/HDMA), notamment dans F-Zero ou Pilot Wings.
+
+\subsubsection{Double Line Buffer}
+
+Une manière simple d'augmenter la puissance du PPU est de lui donner plus de temps pour travailler. On ne peut pas ralentir le "pixel clock", mais on peut allonger le pipeline.
+
+Avec deux line buffers utilisés en alternance, on augmente la latence, mais on libère le PPU du HBLANK. Pendant qu'un buffer est envoyé à l'écran, l'autre est rempli. Cela donne 64$\mu$s pour le rendu, au lieu de 16, multipliant par 4 les capacités graphiques.
+
+C'est le choix fait par SNK pour la Neo-Geo, ce qui permettait de bâtir des titres entiers avec des sprites, sans tilemap. Cette technique est tellement puissante que tout le pipeline graphique de la Neo-Geo repose sur le double line buffer. Elle n'utilise pas de tilemap.
+
+\subsubsection{Framebuffer de sprites CPS-1}
+
+Capcom a voulu aller encore plus loin qu'un double line buffer. Pour donner au PPU plus que les 64$\mu$s accordés, la CPS-1 utilise un **framebuffer double de sprites** (même technique que le Sega Super Scaler). Ce framebuffer est hébergé dans une mémoire dédiée appelée VRAM.
+
+Avec cette architecture, le PPU ne rend plus une ligne à l'avance, mais tout l'écran. Cela donne en moyenne 16\% de temps supplémentaire par ligne, et surtout permet d'afficher un nombre **illimité** de tuiles par ligne (la Neo-Geo est limitée à 96).
+
+Le gain est considérable, mais il a un prix.
+
+\subsubsection{Coût}
+
+D'abord, le coût de la machine augmente : le double framebuffer exige une grande capacité mémoire. Pour une résolution de 384$\times$224, avec 9 bits par pixel (5 bits de palette + 4 bits de couleur), il faut environ 200 KiB pour deux buffers.
+
+\subsubsection{Bande passante}
+
+Ensuite, cela impose une énorme bande passante sur le bus. Écrire et lire autant de données en temps réel nécessite un bus très large entre la VRAM et le pipeline graphique.
+
+\subsubsection{Désynchronisation}
+
+Enfin, un problème apparaît avec la synchronisation des tilemaps et des sprites. Quand le m68k écrit la disposition dans la GFXRAM, le système graphique la récupère, mais route séparément les tuiles de fond et les sprites. Le tilemap est directement rasterisé vers la sortie vidéo, tandis que les sprites sont rendus dans la VRAM, pour être affichés lors de la **frame suivante**.
+
+ 
+
+\begin{trivia}
+    Le problème de synchronisation est particulièrement visible dans le niveau 2 de Final Fight. Le wagon du métro bouge de haut en bas pour simuler les secousses des aiguillages, mais les poignées au plafond et les personnages semblent avoir un temps de retard.
+    \end{trivia}
+    
+    Une séquence de trois images suffit à illustrer le problème. Sur l'image 1, les scrolls de la frame 1 sont affichés. Aucun sprite n'est encore visible à ce stade.
+    
+    \begin{figure}[H]
+    \nbdraw{latency1}
+     \caption*{Frame 1}%
+     \end{figure}%
+    
+    Ensuite, les scrolls de la frame 2 sont affichés, mais les sprites proviennent toujours de la frame 1.
+    
+    \begin{figure}[H]
+    \nbdraw{latency2}
+     \caption*{Frame 2}%
+     \end{figure}%
+    
+    Enfin, les scrolls de la frame 3 sont affichés avec les sprites de la frame 2. Ce désynchronisme ne peut être compensé qu'en logiciel, en dessinant les OBJs avec une frame d'avance par rapport aux SCROLLs.
+    
+    \begin{figure}[H]
+    \nbdraw{latency3}
+     \caption*{Frame 3}%
+     \end{figure}%
+    
+    \subsubsection{Tuiles de sprites CPS-1}
+    
+    Grâce à son architecture fondée sur un double framebuffer dédié aux sprites, Capcom a conçu un système capable de manipuler une quantité impressionnante d'objets animés. Mais la performance ne suffisait pas : encore fallait-il proposer un système flexible, utilisable facilement par les artistes.
+    
+    Jusqu'à présent, les contraintes posaient problème : tous les sprites devaient avoir la même taille, une forme rectangulaire imposée, et une seule palette de couleurs par sprite.
+    
+    La CPS-1 a levé ces trois limitations en abandonnant la notion de "sprite" au sens classique. Le système possède bien une **couche sprite**, appelée **OBJ** (pour "objects"), mais elle est composée de tuiles de **16×16 pixels** qui peuvent être assemblées librement. Cela permet de créer des formes et tailles de sprites entièrement personnalisables.
+    
+    Comme pour les autres couches, la couche OBJ dispose de 32 palettes utilisables indépendamment, une par tuile.
+    
+    \pagebreak
+    
+    Street Fighter II illustre parfaitement la puissance de ce système. En combinant ces tuiles, les artistes peuvent construire des personnages aux formes spécifiques et reconnaissables, ce qui renforce leur identité visuelle.
+    
+    \begin{minipage}[t]{0.453\linewidth}
+      \sdraw{1.0}{chunLi}
+    \end{minipage}%
+    \hfill%
+    \begin{minipage}[t]{0.53\linewidth}
+      \sdraw{1.0}{zanghief}
+    \end{minipage}
+    
+    Posture de garde de Chun-Li : 25 tuiles (3 200 octets).\\
+    Posture debout de Zangief : 34 tuiles (4 352 octets).
+    
+    \vspace{1em}
+    
+    \begin{minipage}[t]{0.3\linewidth}
+      \sdraw{1.0}{ryu}
+    \end{minipage}%
+    \hfill%
+    \begin{minipage}[t]{0.53\linewidth}
+      \sdraw{1.0}{sagat}
+    \end{minipage}
+    
+    Victoire de Ryu : 29 tuiles (3 712 octets).\\
+    Tiger Punch de Sagat : 30 tuiles (3 840 octets).
+    
+
+
+
+    \sdraw{1.0}{kingpin}
+
+    Le boss final dans *The Punisher*, Kingpin, est une montagne humaine composée de 69 tuiles, occupant la moitié de l'écran. Cet exploit impressionnant a été réalisé avec un minimum de pixels gaspillés grâce à l'utilisation de tuiles composées.
+    
+    Les tuiles de la couche OBJ peuvent être affichées avec une symétrie horizontale et/ou verticale. En revanche, il n'existe toujours aucun support matériel pour la rotation ou le zoom.
+    
+    \vspace{1em}
+    \begin{minipage}[t]{0.535\linewidth}
+      \nbdraw{damnd}
+    \end{minipage}%
+    \hfill%
+    \begin{minipage}[t]{0.445\linewidth}
+      \nbdraw{damnd2}
+    \end{minipage}
+    
+    Lorsque Damned, le mini-boss de Final Fight, effectue une roulade arrière dans le niveau 1, aucune rotation n'est réellement effectuée. Deux ensembles de tuiles sont utilisés et retournés en X/Y pour produire deux variantes supplémentaires en miroir. L'illusion fonctionne grâce à la rapidité de l'animation et à l'interprétation du cerveau du joueur.
+    
+    \pagebreak
+    
+    \subsection{Limites de la couche OBJ}
+    
+    Le système de sprites impose une limite stricte de **256 tuiles** affichables par frame. Ce chiffre n'est pas arbitraire : il correspond à la quantité maximale que le système peut lire depuis les GFXROM et écrire en VRAM durant un balayage complet de l'écran (soit 16,7ms).
+    
+    Comme les tuiles OBJ sont les plus flexibles (elles peuvent être placées n'importe où, indépendamment des autres), la tentation était grande de les utiliser massivement.
+    
+    Les concepteurs de Street Fighter II ont poussé le système à sa limite, utilisant les tuiles OBJ non seulement pour les personnages, mais aussi pour des éléments du décor, l'interface, et même des effets visuels de parallaxe en arrière-plan. Cette approche a toutefois posé problème lors du développement d'une suite.
+    
+    Lorsque Ken affronte Ryu dans le niveau du Japon, près de **200 tuiles** sont utilisées. Si deux des plus grands personnages, Honda et Zangief, se rencontraient dans ce décor, la CPS-1 ne pourrait afficher tous les éléments nécessaires. Une telle situation était impossible dans Street Fighter II, mais elle le devient dans **Street Fighter II: Champion Edition**, qui permet les matchs miroir sur n'importe quel décor.
+    
+    \vfill
+    \img{lack_sprites_color.png}
+    
+    \begin{q}{Nin}
+    Nous avions soigneusement planifié SF2 pour que le plus grand personnage et le deuxième plus grand puissent à peine tenir à l'écran en même temps. 
+    
+    Mais quand les matchs miroir sont devenus possibles dans Champion Edition, cela signifiait qu'il fallait afficher deux fois le plus grand personnage à l'écran. 
+    
+    Nous avons dû supprimer certains éléments de décor.
+    \end{q}
+    
+    Pour respecter le budget OBJ, l'enseigne "\begin{CJK}{UTF8}{min}風林火山\end{CJK}" (vent, forêt, feu, montagne) a été retirée. En revanche, les autres objets destructibles (baril de Ken, caisse de Guile, statues du Dictateur) ont pu être conservés.
+    
+    \begin{trivia}
+    Les éléments décoratifs de Street Fighter 2 ont fait l'objet de nombreuses discussions. La pierre au sol dans le niveau de Sagat change de position aléatoirement au début de chaque round pour qu'aucun joueur ne puisse l'utiliser comme repère de position.
+    \end{trivia}
+    
+    \vfill
+    \img{lack_sprites_rgb.png}
+    
+    
+    \subsubsection{Aller trop loin} \label{going_too_far}
+    
+    Les jeux étaient soigneusement testés pour éviter de dépasser le budget de tuiles OBJ. Pourtant, le dernier niveau de Final Fight (la baie de Metro City) est sorti avec **ce problème précis**. Lors de l'ultime affrontement, le nombre de sprites est le suivant\cite{ffoverload} :
+    
+    \begin{itemize}[topsep=0pt]
+    \item Haggar et Cody
+    \item Deux barils stationnaires et deux barils roulants
+    \item Trois Axl (brute grise), dont deux projetés en arrière
+    \item Trois Slash (brute cuivrée), dont deux au sol temporairement
+    \item Un Bred (voyou gris) et un Dug (voyou rouge)
+    \item Les éclats de poussière soulevés par les barils roulants
+    \end{itemize}
+    
+    Cette scène utilise **258 tuiles** sur la couche OBJ. Le moteur de Final Fight est assez intelligent pour ne pas afficher des sprites partiels. Ainsi, **Haggar**, dernier de la liste, fait dépasser la limite de **2 tuiles**. Résultat : **aucune** de ses tuiles n'est affichée.
+    
+    \vfill
+    \img{ff_OBJ_overload.png}
+    
+    \pagebreak
+    
+
+ 
+\nbdraw{ff_OBJ_overload_details}
+
+
+
+\pagebreak
+
+
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001209}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001210}
+\end{minipage}
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001211}
+\end{minipage}
+
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001212}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001213}
+\end{minipage}
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001214}
+\end{minipage}
+
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001215}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001216}
+\end{minipage}
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001217}
+\end{minipage}
+
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001218}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001219}
+\end{minipage}
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001220}
+\end{minipage}
+
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001221}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001222}
+\end{minipage}
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001223}
+\end{minipage}
+
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001224}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001225}
+\end{minipage}
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001226}
+\end{minipage}
+
+
+\pagebreak
+
+
+
+
+
+
+
+
+
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001227}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001228}
+\end{minipage}
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001229}
+\end{minipage}
+
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001230}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001231}
+\end{minipage}
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001232}
+\end{minipage}
+
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001233}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001234}
+\end{minipage}
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001235}
+\end{minipage}
+
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001236}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001237}
+\end{minipage}
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001238}
+\end{minipage}
+
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001239}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001240}
+\end{minipage}
+\hfill%
+\begin{minipage}[t]{0.32\linewidth}
+  \img{sf2frames-00001241}
+\end{minipage}
+
+\subsubsection{Absence de zoom et de rotation}
+
+L'absence de zoom et de rotation sur les sprites OBJ fut un véritable casse-tête pour les développeurs de *Street Fighter 2*, notamment pour l'introduction du jeu qui nécessitait précisément ces deux effets.
+
+Pour contourner la limitation, deux versions du logo sont utilisées : un petit logo composé de 33 tuiles et un grand logo de 112 tuiles. Les tuiles sont animées pour tourner en cercle autour du centre de la forme. Le basculement entre la version petite et grande s'effectue à la fin de la première révolution.
+
+Une fois encore, Capcom s'en est remis à la vitesse de l'animation, à l'interprétation visuelle du joueur… et peut-être aussi à son indulgence face à un jeu exceptionnel.
+
+\vspace{1em}
+
+\subsubsection{The World Warrier}
+
+Le système OBJ fut utilisé de manière particulièrement créative par **Akiman** pour corriger un bug bloquant… à seulement quelques jours de la deadline, alors qu'il travaillait comme planneur sur *Street Fighter 2*.
+
+\begin{q}{Akiman}
+À seulement trois jours de la deadline, j'ai découvert quelque chose d'horrible.
+
+J'avais fait une erreur dans le sous-titre “World Warrior” : je l'avais écrit “World Warrier”.
+\end{q}
+
+Le sous-titre était composé de 16 appels de tuiles affichés sur la couche OBJ, correspondant aux identifiants suivants :  
+\icode{0x0}, \icode{0x1}, \icode{0x2}, \icode{0x3}, \icode{0x4}, \icode{0x5}, \icode{0x6}, \icode{0x7},  
+\icode{0x8}, \icode{0x9}, \icode{0xA}, \icode{0xB}, \icode{0xC}, \icode{0xD}, \icode{0xE}, \icode{0xF}.  
+
+En observant les GFXROM, on retrouve bien les 16 tuiles utilisées pour écrire “World Warrier” avec la faute.
+
+\begin{figure}[H]
+\nbdraw{worldwarrier_tile}
+\caption*{Les 16 tuiles OBJ composant le titre, avec une faute d'orthographe}
+\end{figure}
+
+\begin{q}{Akiman}
+Cela faisait plusieurs mois que toutes les tuiles graphiques avaient été finalisées. Le logo était terminé, je ne pouvais plus changer la lettre directement.
+\end{q}
+
+Ce qu'Akiman explique ici, c'est que les GFXROM — et donc toutes les tuiles qu'elles contiennent — avaient été figées. Mais les instructions du 68000 et surtout les **palettes associées** restaient modifiables.
+
+\begin{q}{Akiman}
+"Et si je forçais visuellement la lettre à ressembler à un ‘o' ?", me suis-je dit.
+
+J'ai superposé plusieurs sprites jusqu'à obtenir quelque chose qui ressemblait enfin à un ‘o'.
+
+Ouf !
+\end{q}
+
+\begin{figure}[H]
+\img{sf2_title_warrier.png}
+\caption*{Reconstitution du problème}
+\end{figure}
+
+
+
+
+\subsubsection{Comment transformer un "e" en "o" ?}
+
+Comment, en toute logique, transformer un ‘e' en ‘o' ? Il s'avère qu'Akiman a eu de la chance dans son erreur. Les lettres dont il avait besoin, le ‘o' et le ‘r', étaient déjà présentes dans le mot “World”.
+
+Akiman exploita cette coïncidence et modifia les instructions du 68000 pour supprimer les trois dernières tuiles du mot "Warrier", et à la place, dessina de nouveau les tuiles \icode{0x5} et \icode{0x6} en fin de chaîne.
+
+Cela ne résolut que partiellement le problème, car le ‘W' scindé en deux ressemblait désormais à un ‘l', ce qui donnait “The World Warr\textbf{l}or”.
+
+\begin{figure}[H]
+\nbdraw{world_warrWor}
+\caption*{"The World Warrlor". Un peu mieux… mais pas encore parfait}
+\end{figure}
+
+Le problème s'était donc déplacé : il ne s'agissait plus de transformer un ‘e' en ‘o', mais un ‘l' en ‘i'. Cela aurait été simple si le CPU avait pu écrire dans la VRAM — mais comme on l'a vu, cette mémoire n'est pas mappée dans l'espace mémoire du m68k.
+
+\subsubsection{Un crayon improvisé}
+
+Il existe toutefois une méthode coûteuse pour simuler l'écriture de pixels : trouver une tuile presque entièrement transparente (valeurs \icode{0xF}), mais contenant un seul point coloré (pen). 
+
+Akiman trouva exactement cela… dans le mollet de Guile. Une de ses poses contient une tuile avec une simple valeur de pen dans le coin inférieur gauche.
+
+\begin{figure}[H]
+\nbdraw{guileCalve}
+\caption*{Le mollet de Guile sauve la mise}
+\end{figure}
+
+En utilisant ce mollet comme “crayon” mais en lui appliquant la palette du titre, trois tuiles furent dessinées sur le ‘l' pour le transformer en ‘i'.
+
+\begin{figure}[H]
+\nbdraw{palette_guile}
+\caption*{Palette de Guile}
+\end{figure}
+
+\begin{figure}[H]
+\nbdraw{palette_title}
+\caption*{Palette du titre}
+\end{figure}
+
+\subsubsection{Un heureux hasard}
+
+Par un troublant hasard, les couleurs correspondant au pen du mollet et à celles du titre étaient compatibles.
+
+\begin{figure}[H]
+\nbdraw{world_warrior_title}
+\caption*{18 appels de tuiles. Trois de plus que nécessaire, mais sans faute}
+\end{figure}
+
+\begin{figure}[H]
+\img{sf2_title.png}
+\caption*{Une fois qu'on le voit, on ne peut plus l'oublier}
+\end{figure}
+
+% Parfois, pour livrer dans les temps, il faut faire preuve de pragmatisme.
+
+\vspace{1em}
+
+\subsection{Tout assembler}
+
+Nous avons désormais tous les éléments nécessaires pour comprendre comment les puces CPS-A et CPS-B coopèrent pour afficher les graphismes.
+
+Les deux puces travaillent en étroite collaboration en partageant la gestion de la GFX ROM et de la VRAM.
+
+La CPS-A génère quatre flux entremêlés de “pens” (OBJ, SCR1, SR2 et SCR3) en pilotant le bus d'adresses.  
+La CPS-B reçoit les données et décide, pixel par pixel, quel flux doit être affiché.
+
+\begin{figure}[H]
+\nbdraw{shared_custody}
+\caption*{Bus partagés : CPS-A (adresse) et CPS-B (données) pour GFX ROM / VRAM}
+\end{figure}
+
+Outre le choix des sources et destinations, la CPS-A génère également les signaux \icode{LI} (Line Increment) et \icode{FI} (Frame Increment) envoyés à la CPS-B, qui les convertit en signaux HSYNC et VSYNC pour le CRT.
+
+La ligne d'adresses sur 23 bits vers la GFX ROM est particulière. Il ne s'agit pas d'une adresse brute, mais d'un identifiant de couche + identifiant de tuile dans cette couche. Le PAL \icode{STF29} se charge de convertir ces identifiants en adresses physiques.
+
+La CPS-B est très sollicitée. Elle doit simultanément écrire la prochaine image de sprites dans le framebuffer et lire la précédente pour l'afficher, tout en échantillonnant les cinq autres couches graphiques.
+
+\begin{figure}[H]
+\nbdraw{vram_rw}
+\caption*{La VRAM est lue et écrite en parallèle}
+\end{figure}
+
+Pour satisfaire les exigences en bande passante, la VRAM et la GFX ROM sont spécialement conçues avec des lignes de données larges.
+
+
+
+
+
+
+
+
+
+\subsubsection{VRAM}
+
+Le système de VRAM est physiquement divisé en deux blocs indépendants, A et B, afin de faciliter le double buffering du framebuffer de sprites. Ce composant bénéficie également d'une puce exceptionnellement puissante comparée au reste de la machine.
+
+Un coup d'œil rapide au \icode{HM53461P} révèle les classiques \icode{+5V}, \icode{GND}, \icode{CLK} et les broches d'adresse/données. Mais les lignes \icode{SD0}, \icode{SD1}, \icode{SD2}, et \icode{SD3} indiquent que cette puce fait bien plus que celles vues jusqu'à présent.
+
+\sdraw{0.55}{HM53461P-10}
+
+Capable de stocker 65 536 mots de 4 bits, le \icode{HM53461P} est particulier car il dispose non seulement d'un port RAM classique (\icode{D1-D4}), mais aussi d'un port "série" SAM (\icode{SD1-SD4}).
+
+Le port RAM est utilisé de manière "normale" : on positionne les lignes d'adresse avec les lignes de contrôle, puis on lit ou écrit sur les lignes de données.
+
+Le port SAM est différent. Lorsqu'une adresse est définie, une mémoire tampon interne est verrouillée. Chaque opération de contrôle suivante incrémente automatiquement le compteur d'adresses.
+
+En théorie, RAM et SAM pourraient être utilisés simultanément — mais ce n'est jamais le cas ici. Lorsqu'on lit A, on écrit B, et inversement. La vraie valeur de cette architecture est dans les temps d'accès. Si le port RAM affiche un temps "classique" de 100 ns, le port SAM permet des lectures plus de deux fois plus rapides, à seulement 40 ns.
+
+C'est donc un composant parfait pour un système qui doit écrire quelques valeurs à des emplacements variés (comme quand la CPS-B prépare un framebuffer de sprites) mais lire une grande quantité de données de façon séquentielle (comme lors du rendu à l'écran).
+
+Sur la carte de Street Fighter II, douze \icode{HM53461P} sont combinées en six paires, pour un total de 384 KiB. Quatre puces sont utilisées pour une seule ligne, donc 96 KiB ne sont jamais utilisés.
+
+\nbdraw{vram}
+
+% Pourquoi autant de VRAM ? Deux framebuffers suffisent, mais ici on a presque 150 KiB en excès. Était-ce une anticipation pour des améliorations futures ?
+
+% \begin{trivia}
+% Tous les systèmes mémoire sont construits avec des ROM ou des SRAM. La VRAM est le seul système utilisant de la DRAM, nécessitant donc un mécanisme de rafraîchissement mémoire.
+% \end{trivia}
+
+
+\subsubsection{GFX ROM}
+
+Pour répondre aux besoins bien plus importants en stockage, le système de GFX ROM ne ressemble en rien aux autres.
+
+Alors que les autres composants de la carte B sont des \icode{27C010} ou des \icode{27C512}, la GFX ROM est composée de \icode{MB834200B} (256 Ki × 16 bits). Ce type de ROM a une capacité bien supérieure, mais aussi un temps d'accès plus lent (150 ns).
+
+Il est probable que l'architecture double canal soit le résultat d'un compromis entre coût et performance : utiliser des composants moins chers tout en maintenant des performances élevées.
+
+\sdraw{0.7}{MB834200B-15}
+
+Sur la carte de Street Fighter II, douze \icode{MB834200B-15} sont combinées pour un total de 6 MiB de ressources graphiques.
+
+\nbdraw{gfxroms}
+
+% TODO: Parler de l'organisation en canaux et comment cela améliore les performances de la GFXROM.
+
+
+\section{Système de protection contre la copie}
+
+Lors de la sortie du système, le PDG de Capcom, Kenzo Tsujimoto, se montra confiant : le CPS-1 allait significativement réduire la piraterie, allant jusqu'à affirmer qu'il était "impossible à copier".
+
+\begin{q}{Kenzo Tsujimoto, PDG de Capcom\cite{gamest38}}
+Les nouvelles cartes d'arcade CP System sont très importantes pour Capcom à deux égards. D'abord, elles disposent de beaucoup plus de mémoire que nos anciens matériels. Les développeurs peuvent ainsi explorer librement de nouvelles idées de gameplay ambitieuses, en exploitant les dernières avancées technologiques. Le CP System a déjà fait monter le niveau de nos développeurs.
+
+Le second point crucial est la protection contre la copie. Les bootlegs illégaux sont un problème majeur pour nous, notamment à l'étranger ; je crois que le CP System est le seul système arcade à ce jour qui ne peut être copié. Les cartes intègrent divers mécanismes de protection, et leur matériel avancé devrait rendre la tâche très difficile aux contrefacteurs voulant les dupliquer avec les composants actuels.
+
+Les bootlegs ne nous nuisent pas uniquement ; ils sont aussi une nuisance pour nos clients, qui pensent acheter une carte originale. La protection contre la copie est l'un des plus grands succès du CP System.
+\end{q}
+
+
+Il y avait de bonnes raisons d'être optimiste. Les ingénieurs avaient bourré la plateforme de protections visant à contrer deux types de piraterie :
+
+\textbf{La piraterie matérielle} consistait à vendre des copies physiques des cartes PCB (appelées bootlegs). En copiant le contenu des ROMs d'une carte authentique, puis en achetant les mêmes composants disponibles sur le marché, les pirates pouvaient revendre le jeu à moindre coût.
+
+La réponse du CPS-1 fut d'utiliser des composants personnalisés, non disponibles dans le commerce. Capcom fit fabriquer exclusivement les deux ASICs propriétaires (CPS-A et CPS-B) par Ricoh. Et pour empêcher le décapsulage et le reverse engineering, une grille métallique fut apposée au-dessus des puces\cite{arcadeHackerCPS1Rev}.
+
+\textbf{La piraterie logicielle}, quant à elle, consistait pour les exploitants à acheter un jeu authentique pour obtenir la carte, mais ensuite à copier les ROMs d'un jeu plus récent pour s'épargner l'achat de nouveaux titres.
+
+Capcom mit en place une double vérification : le matériel pouvait être interrogé par le logiciel pour prouver son authenticité, et inversement, des mécanismes passifs permettaient au matériel de surveiller le comportement du programme et de détecter les copies.
+
+\begin{figure}[H]
+\nbimg{copy_protection.png}
+\caption*{Avertissement de Capcom lors du démarrage d'un jeu CPS-1}
+\end{figure}
+
+\subsection{L'évolutif CPS-B}
+
+Le cœur du système de protection est le CPS-B. L'idée centrale était de faire en sorte qu'il se comporte différemment selon le jeu qu'il devait exécuter.
+
+À cette fin, il existe vingt-cinq versions différentes du CPS-B\cite{mame_cps1_video}, avec parfois des différences entre révisions d'un même jeu\cite{cpsBNumbers}.
+
+\begin{figure}[H]
+{ \setlength{\tabcolsep}{3.0pt}
+\begin{tabularx}{\textwidth}{Xrrr} 
+  \textbf{Nom du jeu} & \textbf{Révision} & \textbf{ CPS-B }  & \textbf{ Année } \\               
+  \toprule    
+\href{}{Forgotten Worlds} & & \texttt{CPS-B-01} & 1988 \\ 
+\href{}{Lost Worlds} & & \texttt{CPS-B-01} & 1988 \\ 
+\href{}{Ghouls'n Ghosts} & & \texttt{CPS-B-01} & 1988 \\ 
+  \toprule    
+\href{}{Strider} & & \texttt{CPS-B-01} & 1989 \\ 
+\href{}{Dynasty Wars} & & \texttt{CPS-B-02} & 1989 \\ 
+\href{}{Willow} & & \texttt{CPS-B-03} & 1989 \\ 
+\href{}{U.N Squadron} & & \texttt{CPS-B-11} & 1989 \\ 
+\href{}{Final Fight } & \texttt{Original} & \texttt{CPS-B-04} & 1989 \\ 
+\href{}{Final Fight } & \texttt{900112} & \texttt{CPS-B-01} & 1989 \\ 
+\href{}{Final Fight } & \texttt{900424} & \texttt{CPS-B-03} & 1989 \\ 
+\href{}{Final Fight } & \texttt{900613} & \texttt{CPS-B-05} & 1989 \\ 
+  \toprule    
+\href{}{1941: Counter Attack} & & \texttt{CPS-B-05} & 1990 \\ 
+\href{}{Mercs} & & \texttt{CPS-B-12} & 1990 \\ 
+\href{}{Mega Twins} & & \texttt{CPS-B-14} & 1990 \\ 
+\href{}{Magic Sword} & & \texttt{CPS-B-13} & 1990 \\ 
+\href{}{Carrier Air Wing} & & \texttt{CPS-B-16} & 1990 \\ 
+\href{}{Nemo} & & \texttt{CPS-B-15} & 1990 \\ 
+  \toprule    
+\href{}{Street Fighter II: The World Warrior} & \texttt{Original} & \texttt{CPS-B-11} & 1991 \\ 
+\href{}{Street Fighter II: The World Warrior} & \texttt{910204} & \texttt{CPS-B-17} & 1991 \\ 
+\href{}{Street Fighter II: The World Warrior} & \texttt{910318} & \texttt{CPS-B-05} & 1991 \\ 
+\href{}{Street Fighter II: The World Warrior} & \texttt{910228} & \texttt{CPS-B-18} & 1991 \\ 
+\href{}{Street Fighter II: The World Warrior} & \texttt{910411} & \texttt{CPS-B-15} & 1991 \\ 
+\toprule    
+\end{tabularx}
+}
+\caption*{Sélection de quelques révisions de jeux CPS-1}
+\end{figure}
+
+Au début du CP-System, les versions du CPS-B changeaient fréquemment. Le tableau ci-dessus ne contient qu'un échantillon des nombreuses révisions existantes. Plus un jeu avait de succès, plus il avait de versions. Street Fighter II en comptait 34, contre 13 pour Final Fight.
+
+À partir de "Three Wonders", Capcom cessa de faire évoluer le CPS-B et adopta un système de protection plus robuste. Tous les ASICs CPS-B devinrent alors des versions CPS-B-21.
+
+\begin{figure}[H]
+{ \setlength{\tabcolsep}{3.0pt}
+\begin{tabularx}{\textwidth}{Xrr} 
+  \textbf{Nom du jeu} & \textbf{CPS-B} & \textbf{Année} \\
+  \toprule    
+\href{}{Three Wonders} & \texttt{CPS-B-21} & 1991 \\ 
+\href{}{The King of Dragons} & \texttt{CPS-B-21} & 1991 \\ 
+\href{}{Captain Commando} & \texttt{CPS-B-21} & 1991 \\ 
+\href{}{Knights of the Round} & \texttt{CPS-B-21} & 1991 \\ 
+\href{}{Street Fighter II: Champion Edition} & \texttt{CPS-B-21} & 1992 \\ 
+\href{}{Adventure Quiz: Capcom World 2} & \texttt{CPS-B-21} & 1992 \\ 
+\href{}{Varth: Operation Thunderstorm} & \texttt{CPS-B-21} & 1992 \\ 
+\href{}{Quiz \& Dragons: Capcom Quiz Game} & \texttt{CPS-B-21} & 1992 \\ 
+\href{}{Street Fighter II' Turbo: Hyper Fighting} & \texttt{CPS-B-21} & 1992 \\ 
+\href{}{Ken Sei Mogura: Street Fighter II} & \texttt{CPS-B-21} & 1993 \\ 
+\href{}{Pnickies} & \texttt{CPS-B-21} & 1993 \\ 
+\href{}{Quiz Tonosama no Yabo 2} & \texttt{CPS-B-21} & 1995 \\ 
+\href{}{Pang! 3} & \texttt{CPS-B-21} & 1995 \\ 
+\href{}{Mega Man: The Power Battle} & \texttt{CPS-B-21} & 1995 \\ 
+\toprule    
+\end{tabularx}
+}
+\caption*{Après 1991, tous les jeux CPS-1 utilisent le CPS-B v21}
+\end{figure}
+
+
+\subsection{Vérification d'ID}
+
+La protection la plus simple est celle de l'identifiant du CPS-B. En interrogeant un registre, le 68000 peut demander au CPS-B de renvoyer son numéro de version. Si le numéro correspond à celui attendu, le code continue ; sinon, le processeur est réinitialisé.
+
+Pour compliquer le patch manuel des instructions dans les ROMs 68000, les appels de vérification sont dispersés à plusieurs endroits du programme. Des programmeurs motivés ont tout de même tenté de contourner cette mesure\cite{strider_conversion} !
+
+\subsection{Vérification de multiplication}
+
+À partir de la version CPS-B-21, une nouvelle mesure renforça le système : le CPS-B pouvait effectuer des multiplications. Le processeur écrit deux valeurs dans deux registres, puis lit le résultat depuis un troisième. Si le produit ne correspond pas à l'attendu, la machine se bloque ou redémarre.
+
+\subsection{Registres mouvants}
+
+Les registres du CPS-B changent entre les versions. Leur offset de base et leur plage restent constants, mais leur position exacte à l'intérieur de cette plage varie d'un jeu à l'autre.
+
+De plus, le sens des bits dans chaque registre est modifié selon la version du jeu. Cela signifie qu'un moteur de rendu conçu pour un jeu ne fonctionnera pas forcément avec un autre, même en apparence identique.
+
+\subsection{Détection de comportements inattendus}
+
+Jusqu'ici, les protections impliquaient un logiciel actif (le jeu) et un matériel passif (le CPS-B). Mais l'inverse existe aussi : le CPS-B peut activement surveiller le comportement du jeu.
+
+En exploitant la politique des registres mouvants, le CPS-B détecte les écritures incohérentes dans les registres (écriture au mauvais endroit, ou avec une valeur incorrecte). Lorsqu'un tel comportement est identifié, il verrouille toutes les palettes de toutes les couches à la couleur noire.
+
+Le jeu continue à tourner normalement en arrière-plan, le son fonctionne, mais l'écran reste désespérément noir. La seule façon de s'en sortir est de redémarrer la machine… pour constater que l'écran reste noir à nouveau\cite{petitSecurity}.
+
+
+
+
+
+
+
+\subsection{Détection d'offsets invalides}
+
+Chaque jeu utilise une quantité différente d'assets pour ses couches SCROLL et OBJ. Sur la carte "B", des puces PAL comme la \icode{STF29} (vue précédemment) sont codées en dur pour savoir quelle portion de la ROM graphique est attribuée à chaque couche.
+
+Si un identifiant de tuile fait référence à une zone hors de cette plage autorisée, il est ignoré, ce qui provoque des "trous" à l'écran si les ROMs du jeu sont utilisées avec une carte "B" non adaptée.
+
+\begin{q}{Pilote vidéo CPS-1 de MAME}
+Tous les graphismes sont stockés ensemble dans les mêmes ROMs.
+
+Mais le matériel sait quelle partie de la ROM correspond aux tuiles 8$\times$8, 16$\times$16, aux sprites 16$\times$16, aux tuiles 32$\times$32, etc. Tous les jeux testés ne dessinent des tuiles que si leur identifiant tombe dans une plage valide.
+
+Si une tuile est hors limite, elle est remplacée par des pixels transparents.
+\end{q}
+
+\begin{trivia}
+Des résistances de rappel (pull-up) le long des lignes de données des ROMs graphiques permettent de détecter si une valeur de crayon correspond à un identifiant de tuile.
+
+Si aucune donnée n'est détectée, la valeur \icode{0xF} est automatiquement "insérée", ce qui produit un pixel transparent.
+\end{trivia}
+
+
+\subsection{Clé de configuration}
+
+Jusqu'en 1991, le comportement d'un CPS-B était gravé en dur dans le silicium lors de sa fabrication. Il n'était donc pas possible de le modifier ou de le réutiliser pour un autre jeu après sa production.
+
+Cela engendrait des coûts élevés pour adapter le matériel à chaque jeu, mais aussi des difficultés logistiques pour anticiper la demande — produire assez de puces pour un futur succès sans se retrouver avec des invendus pour un jeu moins populaire.
+
+Pour résoudre ce problème, Capcom révisa le CPS-B une dernière fois et le rendit **configurable par logiciel**.
+
+L'ensemble du comportement du CPS-B est encodé dans une petite zone interne de 18 octets, non pas en ROM, mais en RAM. Pour que ces octets soient conservés, le CPS-B v21 doit rester alimenté en permanence\cite{petitSecurity}.
+
+Cette mémoire RAM était conçue pour survivre même lorsque la borne était éteinte, grâce à une pile située au dos de la carte C (côté soudure), directement connectée au CPS-B. Le composant était même prévu pour survivre quelques minutes sans pile afin de permettre un remplacement sans perte de données.
+
+\begin{trivia}
+Ces piles se sont avérées étonnamment fiables : encore aujourd'hui, on peut trouver des cartes fonctionnelles avec leur pile d'origine, plus de 30 ans plus tard.
+\end{trivia}
+
+\subsubsection{Les fameuses "suicide batteries"}
+
+Le surnom tristement célèbre de "suicide battery" vient du comportement fatal d'un CPS-B v21 qui perd son alimentation : il efface sa configuration interne et réinitialise tous ses registres avec des valeurs par défaut… que **aucun** jeu n'utilise. La carte devient inutilisable.
+
+Capcom proposait un service de remplacement de pile pour ressusciter les cartes mortes ("seppuku")… mais finit par y mettre un terme.
+
+Heureusement, des passionnés ont fini par trouver une solution pour **ressusciter** les jeux.
+
+\subsubsection{Phoenixing}
+
+La première méthode, dite "phoenixing", est un processus laborieux qui consiste à extraire le contenu des ROMs d'un jeu, à modifier manuellement le code 68000 pour **remplacer toutes les instructions accédant aux registres du CPS-B** par des appels compatibles avec les valeurs par défaut\cite{csp1_phoenix}.
+
+Les personnes qui phoenixent des jeux CPS-1 possèdent une telle connaissance du système qu'elles modifient parfois l'écran d'introduction pour afficher un splash "Phoenix Edition" au démarrage.
+
+\begin{figure}[H]
+\nbimg{phoenix_screen.png}
+\caption*{Écran d'intro modifié d'un jeu phoenixé}
+\end{figure}
+
+\subsubsection{De-suiciding}
+
+Plus tard, d'autres passionnés ont réussi à comprendre comment accéder à la RAM interne du CPS-B et y **réinjecter la bonne configuration**.
+
+Ainsi, les cartes mortes peuvent être remises en service — on parle alors de *de-suicide*\cite{arcadeHackerCPS1Desuicide}.
+
+
+\section{Épilogue}
+
+De 1988 à 1995, Capcom publia plus de 30 titres sur le CPS-1. Ces sept années virent naître trois de ses franchises les plus cultes : *Ghouls'n Ghosts*, *Final Fight* et *Street Fighter II*.
+
+Pour Capcom, le CP-System fut un pari audacieux… mais cent fois gagnant. Il leur permit de devenir un acteur incontournable du jeu vidéo.
+
+Pour les joueurs, ces titres étaient des chefs-d'œuvre visuels et sonores, capables à la fois de divertir et de vider les porte-monnaie. L'expérience fut si marquante que certains passionnés créèrent des émulateurs… et d'autres, dans des cas d'obsession extrême, des livres entiers pour préserver cette mémoire.
+
+Pour les contrefacteurs, le CPS-1 représentait un défi. Les jeux Capcom étaient si populaires qu'ils généraient d'énormes profits. La tentation de les pirater fut encore plus forte avec l'explosion de la demande provoquée par des titres AAA comme *Street Fighter II*.
+
+Les ingénieurs de Capcom avaient conçu des systèmes de sécurité assez robustes pour dissuader les pirates "raisonnables". Mais peut-être que **la seule faille** du CPS-1 fut de ne pas avoir anticipé **un tel niveau de succès**.
+
+La manne financière était telle que les pirates, eux aussi, se professionnalisèrent. Tandis que les joueurs faisaient la queue pour tenter de battre *Street Fighter II*, les pirates, eux, s'acharnaient à battre le système de protection.
+
+Et ils y sont parvenus.
+
+Parmi toutes les mesures de sécurité, on aurait pu croire que les **ASICs customisés** seraient imprenables. Et pourtant… Des copies fonctionnelles des CPS-A et CPS-B ont fini par être fabriquées sous le nom de "COMCO"\cite{arcadeHackerCPS1}.
+
+On ignore si les schémas ont fuité ou si un génie a passé sa vie à les rétroconcevoir, mais le fait est que cela s'est produit.
+
+Malgré les failles, Capcom ne baissa jamais les bras. L'entreprise sut prouver qu'elle pouvait non seulement survivre, mais **évoluer** — en s'engageant dans une véritable croisade technologique contre le piratage. Une croisade… qu'elle était prête à mener aussi loin que nécessaire.
+
+
+\subsection{CPS-1.5 Kabuki}
+\index{CP-System!CPS-1.5 Kabuki}
+En 1992, Capcom sortit le CP System Dash (également appelé CPS-1.5). Entièrement encapsulé dans un boîtier plastique gris, il introduisait une quatrième carte satellite appelée "Qboard" dédiée à la lecture audio tridimensionnelle spatialisée avec le système QSound. Cinq jeux furent publiés jusqu'à fin 1993.
+
+\begin{figure}[H]
+{ \setlength{\tabcolsep}{3.0pt}
+\begin{tabularx}{\textwidth}{Xrrrrrrr}
+  \toprule    
+  \textbf{Nom du jeu} & \multicolumn{5}{c}{ \textbf{Type} } & \textbf{ GFX }  & \textbf{ Année } \\               
+  \toprule    
+\href{}{Cadillacs and Dinosaurs} & \po & \po & \po & \beatallcube & \po & 4 Mio & 1992 \\ 
+\href{}{Warriors of Fate} & &   & & \beatallcube & & 4 Mio & 1992 \\ 
+\href{}{The Punisher} & &  & & \beatallcube & & 4 Mio & 1993 \\ 
+\href{}{Saturday Night Slam Masters} & \ocube & & & & & 6 Mio & 1993 \\ 
+\href{}{Muscle Bomber Duo: Ultimate Team Battle} & \ocube & & & & & 6 Mio & 1993 \\ 
+  \toprule    
+\end{tabularx}%
+}\caption*{Jeux CPS-1.5 : \ocube{} Autres, \platcube{} Plateforme, \shmupcube{} Shmup, \beatallcube{} Brawler, \duelcube{} Combat}
+\end{figure}
+
+\label{kabuki}
+Le CPS-1.5 se distingue par une **protection contre la copie renforcée**. Les instructions audio sont stockées **chiffrées** dans la ROM. Le CPU audio est un z80 spécial, surnommé *Kabuki*\cite{arcadeHackerKabuki}, capable de **déchiffrer les instructions à la volée**.
+
+Le chiffrement est symétrique : une clé secrète est utilisée pour chiffrer la ROM à la fabrication, et la même clé est nécessaire à l'exécution pour la déchiffrer.
+
+Cette clé n'est pas gravée dans le silicium du z80 mais, comme pour la configuration du CPS-B v21, **stockée dans une RAM interne**. Pour la conserver, le **pin inutilisé 28** (vu page \pageref{z80_pinRFSH}) est réutilisé non plus pour rafraîchir la DRAM, mais pour **alimenter la RAM**. Le z80 requiert donc une **alimentation continue**, ce qui a conduit à l'ajout d'une **seconde "suicide battery"**.
+
+\begin{trivia}
+La protection Kabuki a tenu remarquablement longtemps. Elle n'a été contournée qu'au début des années 2000\cite{mame_kabuki}.
+\end{trivia}
+
+\subsection{CPS-2}
+\index{CP-System!CPS-2}
+Avec une capacité de ROM fortement augmentée et des fréquences processeur plus élevées, le **CPS-2** devint un immense succès, notamment grâce à la série *Street Fighter Alpha*.
+
+De 1993 à 2003, **quarante-deux jeux** furent publiés. Le premier, *Super Street Fighter II*, connut un immense succès. Le dernier, *Hyper Street Fighter II: The Anniversary Edition*, fut un hommage à une série qui avait défini la plateforme.
+
+Concernant la protection contre la copie, Capcom redoubla d'efforts. Même si le Kabuki fut abandonné au profit d'un z80 "classique", le CPS-2 introduisit une **encryption des instructions du jeu principal**.
+
+Grâce à un processeur personnalisé, compatible ABI avec le 68000, les instructions sont **stockées chiffrées** dans la ROM et **déchiffrées à la volée**. Comme pour le Kabuki, la clé de déchiffrement est **stockée dans une RAM alimentée par batterie**.
+
+Les données graphiques du GFXROM furent légèrement **obfusquées**, sans véritable chiffrement, mais avec un **ordonnancement des données modifié**.
+
+\subsubsection{Une protection efficace}
+
+Aucun bootleg de jeux CPS-2 n'est connu. Les tentatives d'exploration de l'architecture du CPS-2 commencèrent dès 2000\cite{cps2rebirth}, notamment via le groupe "CPS-2 Shock".
+
+\pagebreak
+
+\begin{figure}[H]
+\vspace*{-0.35cm}
+{ \setlength{\tabcolsep}{3.0pt}
+\begin{tabularx}{\textwidth}{Xrrrrrrr}
+\textbf{Nom du jeu} & \multicolumn{5}{c}{ \textbf{Type} }  &\textbf{ GFX }  & \textbf{ Année } \\               
+\toprule    
+Super Street Fighter II: The New Challengers  & & & & & \duelcube & 12 Mio & 1993\\
+Eco Fighters                                  & & & \shmupcube & &        & 12 Mio & 1993\\
+\toprule
+
+Dungeons \& Dragons: Tower of Doom            & & & & \beatallcube &   &  12 Mio & 1994\\
+
+Super Street Fighter II Turbo & & & & & \duelcube & 12 Mio & 1994\\
+
+Alien vs. Predator & & &  & \beatallcube & &  16 Mio & 1994\\
+
+Darkstalkers: The Night Warriors & & & & & \duelcube &  20 Mio & 1994\\
+
+Ring of Destruction: Slammasters II & & & & & \duelcube & 18 Mio & 1994\\
+
+Armored Warriors & & & & \beatallcube & &  20 Mio & 1994\\
+
+X-Men: Children of the Atom & & & & & \duelcube & 32 Mio & 1994\\
+\toprule  
+Night Warriors: Darkstalkers' Revenge & & & & & \duelcube & 32 Mio & 1995\\
+
+Cyberbots: Full Metal Madness & & & & & \duelcube & 32 Mio & 1995\\
+
+Street Fighter Alpha & & & & & \duelcube & 16 Mio  & 1995\\
+
+Mega Man: The Power Battle & & \platcube & & & & 16 Mio & 1995\\
+
+Marvel Super Heroes & & & & & \duelcube & 32 Mio & 1995\\
+
+19XX: The War Against Destiny & & & \shmupcube & & & 16 Mio & 1995\\
+\toprule  
+Dungeons \& Dragons: Shadow over Mystara & & & & \beatallcube & & 24 Mio & 1996\\
+
+Street Fighter Alpha 2 & &  & & & \duelcube & 20 Mio & 1996\\
+
+Super Puzzle Fighter II Turbo & \ocube & & & & & 12 Mio & 1996\\
+
+Mega Man 2: The Power Fighters & & \platcube & & & & 16 Mio & 1996\\
+
+Street Fighter Alpha 2 Gold & & & & & \duelcube & 20 Mio & 1996\\
+
+Quiz Nanairo Dreams: Nijiirochō no Kiseki & \ocube & & & & & 16 Mio & 1996\\
+
+X-Men vs. Street Fighter & & & & & \duelcube & 32 Mio & 1996\\
+\toprule  
+Battle Circuit & &  & & \beatallcube & & 16 Mio & 1997\\
+
+Darkstalkers 3 & & & & & \duelcube & 32 Mio & 1997\\
+
+Marvel Super Heroes vs. Street Fighter & & & & & \duelcube & 32 Mio & 1997\\
+
+Capcom Sports Club & \ocube & & & & & 16 Mio & 1997\\
+
+Super Gem Fighter Mini Mix & & & & & \duelcube & 20 Mio & 1997\\
+
+Vampire Hunter 2: Darkstalkers' Revenge & & & & & \duelcube & 32 Mio &1997\\
+
+Vampire Savior 2: The Lord of Vampire & & & & & \duelcube & 32 Mio &1997\\
+\toprule  
+Marvel vs. Capcom: Clash of Super Heroes & & & & & \duelcube & 32 Mio & 1998\\
+
+Street Fighter Alpha 3 & &  & & & \duelcube  & 32 Mio & 1998\\
+\toprule  
+Giga Wing & & & \shmupcube & & & 16 Mio & 1999\\
+
+Jyangokushi: Haō no Saihai & \ocube & & & & & 16 Mio & 1999\\
+\toprule  
+Dimahoo & & & \shmupcube & & & 16 Mio & 2000\\
+Mars Matrix: Hyper Solid Shooting & & & \shmupcube& & & 32 Mio & 2000\\
+
+1944: The Loop Master & & & \shmupcube  & &  & 32 Mio & 2000\\
+
+Mighty! Pang & & \platcube & & & & 8 Mio & 2000\\
+\toprule  
+Progear & & & \shmupcube & & & 16 Mio & 2001\\
+
+Puzz Loop 2 & \ocube & & & & & 16 Mio & 2001\\
+
+Janpai Puzzle Choko & \ocube & & & & & 16 Mio & 2001\\
+\toprule  
+Hyper Street Fighter II: The Anniversary Edition & \ocube & & & & & 32 Mio & 2003\\
+\toprule    
+\end{tabularx}%
+}
+\end{figure}
+
+\pagebreak
+
+
+Le système de protection du CPS-2 fut **remarquablement robuste** et tint bon pendant **près de 14 ans**. Le mécanisme est tellement fascinant qu'il mériterait un livre à lui seul. Voici quelques anecdotes savoureuses pour ouvrir l'appétit.
+
+\begin{enumerate}[topsep=0pt]
+  \item Seuls les accès **en lecture** à la ROM sont déchiffrés par le processeur 68000 personnalisé. Les lectures et écritures en RAM, elles, sont conservées en clair.
+  
+  \item Le groupe de recherche "CPS-2 Shock Group" est parvenu, dans ses premières tentatives, à **injecter des instructions dans un jeu en cours d'exécution** et à les faire exécuter\cite{cps2_plain_ROM}. Cela a suffi pour extraire les ROMs non chiffrées. Cette percée ouvrit la voie à l'émulation du CPS-2. La méthode était complexe, mais fonctionnelle. Les émulateurs devaient être livrés avec une **image XOR spécifique à chaque jeu** pour "décrypter" les instructions du 68000.
+
+  \item En 2007, le **schéma de chiffrement fut entièrement rétroconçu** par les programmeurs de MAME. Il s'est avéré que les clés secrètes n'étaient pas générées de manière aléatoire\cite{cps2_keys}. Capcom utilisait en fait des **suites croissantes linéaires** (1, 2, 3, 4, ...) ou des **permutations** de ces suites.
+
+  \item Toutes les **dix secondes**, le 68000 personnalisé doit recevoir une **commande de "watchdog"** via le registre \icode{D1}. Sans cela, il cesse de déchiffrer les instructions en ROM. Ces commandes ressemblent à ceci :
+\end{enumerate}
+
+\begin{addmargin}[2.5em]{0em}
+\lstinputlisting[style=m68kStyle]{src/code/68000/watchdog.s}
+
+Comme tu l'auras probablement remarqué, ces valeurs suivent un motif… celui de **dates d'anniversaire** !
+\end{addmargin}
+
+\vfill
+
+Tableau précédent, jeux CPS-2 : \ocube{} Autres, \platcube{} Plateforme, \shmupcube{} Shmup, \beatallcube{} Beat'em up, \duelcube{} Combat.
+
