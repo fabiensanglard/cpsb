@@ -958,9 +958,9 @@ When fighting occurs in China, the Text layer is not used for Sprite decoration 
 
 
 \subsection{Saving Further 68000 Cycles}
-If we look closely at Page 0 and 1, we see that the background is split. The alley is on Page 2 while the rest is on Page 1, which is surprising since no parallax effect exists (they are on the same plane). 
+If we look closely at Page 0 and 1, we see that the background is split. The alley is on Page 1 while the rest is on Page 0, which is surprising since no parallax effect exists (they are on the same plane). 
 
-This reduces overdraw when the Page 1 cyclist crosses the screen and goes over the other cyclist in the back alley, saving a few CPU cycles.
+This reduces overdraw when the Page 0 cyclist crosses the screen and goes over the other cyclist in the back alley, saving a few CPU cycles.
 
 \begin{minipage}[t]{0.49\linewidth}
 \setlength{\intextsep}{0pt}
