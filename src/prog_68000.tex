@@ -10,7 +10,7 @@ While the latch toward the Sound system is a small API surface, the GFX API is h
 
 To our advantage, the Motorola 68000 is a target supported by the \textbf{G}NU \textbf{C}ompiler \textbf{C}ollection (GCC). This suite features a much more powerful linker script system than \icode{sdcc} which helps considerably to solve the memory mapping requirements.
 
-All stages of the build graph rely on tools provided by GNU GCC. Compiling \icode{.c} code to \icode{.obj} is done via the \icode{gcc} compiler. Assembling \icode{.s} files to \icode{.obj} files is taken care of by the \icode{as} assembler . Finally, the \icode{ld} linker combines all \icode{.obj} together into raw instructions. 
+All stages of the build graph rely on tools provided by GNU GCC. Compiling \icode{.c} code to \icode{.obj} is done via compiler \icode{gcc}. Assembling \icode{.s} files to \icode{.obj} files is taken care of by assembler \icode{as}. Finally, linker \icode{ld} combines all \icode{.obj} together into raw instructions. 
 
 
 \nbdraw{build_graph_ctrl}
@@ -776,7 +776,7 @@ The rain effect is replicated as seen on page \pageref{gg_rain} via the Text lay
 
 Final Fight was released in 1992, three years after the arcade version. Like the Ghouls'n Ghosts port, the game managed to ship on two 5.25-inch 1.2 MiB floppies.
 
-The graphics renderer uses the same trade off used by Ghouls 'n Ghosts where usage of Tilemap plane is sacrificed in favor of the ability to feed the Sprite layer with tiles. 
+The graphics renderer uses the same trade off used by Ghouls 'n Ghosts where usage of the Tilemap plane is sacrificed in favor of the ability to feed the Sprite layer with tiles. 
 
 Two bitmap layers are used for background elements while the Text layer is used for GUI elements. All these layers are rendered in software with a draw cost amortized thanks to hardware scrolling.
 
