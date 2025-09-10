@@ -10,7 +10,7 @@ While the latch toward the Sound system is a small API surface, the GFX API is h
 
 To our advantage, the Motorola 68000 is a target supported by the \textbf{G}NU \textbf{C}ompiler \textbf{C}ollection (GCC). This suite features a much more powerful linker script system than \icode{sdcc} which helps considerably to solve the memory mapping requirements.
 
-All stages of the build graph rely on tools provided by GNU GCC. Compiling \icode{.c} code to \icode{.obj} is done via \icode{gcc} compiler. Assembling \icode{.s} files to \icode{.obj} files is taken care of by \icode{as} assembler . Finally, the \icode{ld} linker combines all \icode{.obj} together into raw instructions. 
+All stages of the build graph rely on tools provided by GNU GCC. Compiling \icode{.c} code to \icode{.obj} is done via the \icode{gcc} compiler. Assembling \icode{.s} files to \icode{.obj} files is taken care of by the \icode{as} assembler . Finally, the \icode{ld} linker combines all \icode{.obj} together into raw instructions. 
 
 
 \nbdraw{build_graph_ctrl}
@@ -33,7 +33,7 @@ All other slots except for one (offset \icode{26}) point to a no-op routine.
 
 \section{Auto-Interrupt}
 \index{Interrupts!Programming 68000}
-The 68000 has multiple interrupt modes. In its most complex form, \icode{IPL0}, \icode{IPL1}, and \icode{IPL2} encode a level of interrupt and the interrupt ID is retrieved via an external interrupt controller. This would be over-kill for the task at hand.
+The 68000 has multiple interrupt modes. In its most complex form, \icode{IPL0}, \icode{IPL1}, and \icode{IPL2} encode a level of interrupt and the interrupt ID is retrieved via an external interrupt controller. This would be overkill for the task at hand.
 
 A simpler mode, auto-vector, makes the CPU jump directly based on the three IPL lines' state. Three lines are treated as bits giving a value within [0,7], which is used to look up the "vector table" starting at offset \icode{24}.
 
@@ -41,7 +41,7 @@ The 3-bit scheme uses \icode{IPL0} for bit 0, \icode{IPL1} for bit 1, and \icode
 
 \lstinputlisting[style=m68kStyle]{src/code/68000/crt1.s}
 
-The last piece of the \icode{\_boot} function sets up auto-vector mode and jump to \icode{main}.
+The last piece of the \icode{\_boot} function sets up auto-vector mode and jumps to \icode{main}.
 
 \lstinputlisting[style=m68kStyle]{src/code/68000/crt2.s}
 
@@ -249,7 +249,7 @@ In Street Fighter 2, DIP B is used to configure the difficulty level of the game
   \toprule
   \texttt{DIP1} & JAMMA DIPs &  \texttt{0x80001A}    &  \texttt{0bXXXXXXXX}    \\
   \texttt{DIP2} & JAMMA DIPs &  \texttt{0x80001C}    &  \texttt{0bXXXXXXXX}    \\
-  \texttt{DIP2} & JAMMA DIPs &  \texttt{0x80001E}    &  \texttt{0bXXXXXXXX}    \\
+  \texttt{DIP3} & JAMMA DIPs &  \texttt{0x80001E}    &  \texttt{0bXXXXXXXX}    \\
   \toprule
 \end{tabularx}
 % \caption*{Input bit layouts}
@@ -406,7 +406,7 @@ Starfields were used so little that the bytecode mapper was removed altogether f
 
 
 \paragraph{Priority mask}
-These four registers control the precedence of pens belonging to the layer behind the OBJ layer. A tile can be assigned to one priority group within a choice of four ranging within\icode{[0-3]}. A group tags pens in the tile palette to be drawn with higher priority via a 16-bit bitfield mask. Marked pens a drawn above OBJs pens.
+These four registers control the precedence of pens belonging to the layer behind the OBJ layer. A tile can be assigned to one priority group within a choice of four ranging within\icode{[0-3]}. A group tags pens in the tile palette to be drawn with higher priority via a 16-bit bitfield mask. Marked pens are drawn above OBJs pens.
 
 
 
@@ -647,7 +647,7 @@ An even more impressive feat from the CRT compositor is that all layers of each 
 
 The numerous plane capabilities made the X68000 a versatile instrument able to excel at a wide range of tasks, from simple text editing to demanding raytracing. 
 
-Video games were obviously a strength of the machine thanks to its Background and Sprite layers although, as we will see, developers did not employ resources as one would expect.
+Video games were obviously a strength of the machine thanks to its Background and Sprite layers. Although, as we will see, developers did not employ resources as one would expect.
 
 
 
@@ -681,9 +681,9 @@ If the Motorola 68000 CPU and the YM2151 present in both machines are identical,
 
 The sound chip is an OKI but it is "only" a MSM6258. Although it works alike the MSM6296 with ADPCM, it features only one channel which severely impacts how rich the sound effects and music systems can be.
 
-The sprite system is, at first sight, weaker than the CPS-1 since the number of tiles displayable is half (128 instead of 256). But the X68000's  access to raster effect allowed multiplexing (the Sprite Doubler by Koichi Yoshida\cite{x68000spritedoubler}) bringing the upper limit to 512 sprites!\index{Sprites Multiplexing!X68000}
+The sprite system is, at first sight, weaker than the CPS-1 since the number of tiles displayable is half (128 instead of 256). But the X68000's access to raster effects allowed multiplexing (the Sprite Doubler by Koichi Yoshida\cite{x68000spritedoubler}) bringing the upper limit to 512 sprites!\index{Sprites Multiplexing!X68000}
 
-Lastly, the X68000 floppy storage resulted in slow loading time compared to the CPS-1 ROM. To solve this issue, developers used as much RAM as available, going as far as loading the whole floppies during startup if the capacity of the X68000 allowed it.
+Lastly, the X68000 floppy storage resulted in slow loading time compared to the CPS-1 ROM. To solve this issue, developers used as much RAM as available, going as far as loading whole floppies during startup if the capacity of the X68000 allowed it.
 
 
 
@@ -710,7 +710,7 @@ A definitive answer about the viability of the X68000 as a development station c
 \caption*{X68000 Ports of CPS-1 games by Capcom}
 \end{figure}
 
-An analysis methodology shared by Upsilandre\cite{x68k_games_analysis}, leveraging XM6 Pro-68k emulator, shows that the GFX rendering architecture of these titles exhibits no pattern of an emulation layer. On the contrary, the GFX renderers are tailor-made and rely heavily on CPU tricks. 
+An analysis methodology shared by Upsilandre\cite{x68k_games_analysis}, leveraging the XM6 Pro-68k emulator, shows that the GFX rendering architecture of these titles exhibits no pattern of an emulation layer. On the contrary, the GFX renderers are tailor-made and rely heavily on CPU tricks. 
 
 \begin{trivia}
 The stress on the 68000 is confirmed by Ghouls 'n Ghosts manual which recommends a 16MHz CPU and warns about slowdown on a 10MHz 68000.
@@ -734,7 +734,7 @@ The Tilemap plane is not used at all since the background lives in two software 
 \end{figure}
 
 
-Notice the vertical "cut" in the right of Bitmap plane Pages 0 and 1. This artifact reveals the wraparound resulting from hardware scrolling these two layers. This technique allows the CPU to render only new portion of the background. 
+Notice the vertical "cut" in the right of Bitmap plane Pages 0 and 1. This artifact reveals the wraparound resulting from hardware scrolling these two layers. This technique allows the CPU to render only new portions of the background. 
 
 The Sprite layer contains more than sprites. While rendering the wind blowing in the grass only required swapping tile ID on CPS-1, the X68000 could not plot that many pixels in the Bitmap layers. Promoting blades to sprites overlays reduced the fillrate.
 
@@ -776,11 +776,11 @@ The rain effect is replicated as seen on page \pageref{gg_rain} via the Text lay
 
 Final Fight was released in 1992, three years after the arcade version. Like the Ghouls'n Ghosts port, the game managed to ship on two 5.25-inch 1.2 MiB floppies.
 
-The graphic render uses the same trade off used by Ghouls 'n Ghosts where usage of Tilemap plane is sacrificed in favor of the ability to feed the Sprite layer with tiles. 
+The graphics renderer uses the same trade off used by Ghouls 'n Ghosts where usage of Tilemap plane is sacrificed in favor of the ability to feed the Sprite layer with tiles. 
 
 Two bitmap layers are used for background elements while the Text layer is used for GUI elements. All these layers are rendered in software with a draw cost amortized thanks to hardware scrolling.
 
-The port of Final Fight to X68000 is close to the arcade version but is not considered "perfect" because of missing graphic elements and color discrepancies. 
+The port of Final Fight to X68000 is close to the arcade version but is not considered "perfect" because of missing graphics elements and color discrepancies. 
 
 
 \begin{figure}[H]
@@ -788,7 +788,7 @@ The port of Final Fight to X68000 is close to the arcade version but is not cons
 \caption*{Final Fight on X68000}
 \end{figure}
 
-The number of characters on screen was restricted to 7 which is less than the arcade version where up to 13 where visible. In this case, both the 32 KiB VRAM and the 128 tiles limits were the limiting factor since no multiplexing was possible with free roaming characters.
+The number of characters on screen was restricted to 7 which was less than the arcade version where up to 13 were visible. In this case, both the 32 KiB VRAM and the 128 tiles limits were the limiting factor since no multiplexing was possible with free roaming characters.
 
 The Sprite sandwich trick (page \pageref{finalfight_trick}), where parts of the staircase appear in front of the Sprite is done with a special blending mode were the MSBs gives precedence over the Sprite layer. This leaves 7bpp for the color indexes and the Background ends up using 128 colors instead of 256. In other levels, this blending mode is not used so the Bitmap layers go back to using 8bpp for a total of 256 colors available.
 
@@ -839,11 +839,11 @@ The arcade version called for many sprites tiles, among them two heroes, the min
 
 To manage this problem, developers started by cutting out one minion (blue Jake). 
 
-Since it was still too many tiles, they resorted to enabling (for the intro only) the Tilemap plane. Five out of the six barrels are drawn as tilemap in the Tilemap 0.
+Since it was still too many tiles, they resorted to enabling (for the intro only) the Tilemap plane. Five out of the six barrels are drawn as tilemap in Tilemap 0.
 
 Since a tilemap is a simple grid of tiles with no concept of sprites and overlap, special 8$\times$8 tiles were generated where columns of barrels are pre-overlapped.
 
-Things get messy when animation must occur. To allow the barrels to be broken into pieces, the engine exploits the timing of enemies fleeing. First when Damned leaves, then when Dug retires, rows of barrels are progressively migrated out of the tilemap layer into the sprite layer. 
+Things get messy when animation must occur. To allow the barrels to be broken into pieces, the engine exploits the timing of enemies fleeing. First, when Damned leaves and then when Dug retires, rows of barrels are progressively migrated out of the tilemap layer into the sprite layer. 
 
 
 
@@ -865,7 +865,7 @@ Things get messy when animation must occur. To allow the barrels to be broken in
 
 \vspace{4ex}
 
-The whole trick is not perfect. As the barrels break down, the machine reaches its sprite tile limit. Since the engine is not as elaborated as the arcade version (page \pageref{going_too_far}), a partial Cody is drawn. 
+The whole trick is not perfect. As the barrels break down, the machine reaches its sprite tile limit. Since the engine is not as elaborate as the arcade version (page \pageref{going_too_far}), a partial Cody is drawn. 
 
 \vspace{-4ex}
 \begin{minipage}[t]{0.49\linewidth}
@@ -889,7 +889,7 @@ Street Fighter II Champion Edition was released only a year after the arcade ver
 
 The volume of assets forced the game to ship on four 5.25-inch 1.2 MiB floppies. The game manages to run with 2 MiB of RAM but suffers numerous loading delays when traveling between countries. However, on a machine with 4 MiB the game engine loads all floppies to RAM to provide a loading-free experience.
 
-In terms of GFX rendering architecture, the Tilemaps are once again ignored in favor of the Sprite layer. The floors are software rendered. However the per-line parallax is considerably sped up thanks to the combination of raster effect and hardware scrolling. On each HSYNC event the horizontal hardware offset is adjusted which allows rendering Page 0 once and for all.
+In terms of GFX rendering architecture, the Tilemaps are once again ignored in favor of the Sprite layer. The floors are software rendered. However the per-line parallax is considerably sped up thanks to the combination of raster effects and hardware scrolling. On each HSYNC event the horizontal hardware offset is adjusted which allows rendering Page 0 once and for all.
 
 Some Sprite elements that used to be rendered on the CPS-1 OBJ layer found their way into the Text layer. This layer is not used for GUI but to render decorative sprites (like the statue in Dictator level). It is likely that the 32 KiB was once again not big enough to contain the sprites for both opponents and decorations.
 
@@ -958,7 +958,7 @@ When fighting occurs in China, the Text layer is not used for Sprite decoration 
 
 
 \subsection{Saving Further 68000 Cycles}
-If we look closely at Page 1 and 2, we see that the background is split. The alley is on Page 2 while the rest is on Page 1, which is surprising since no parallax effect exists (they are on the same plane). 
+If we look closely at Page 0 and 1, we see that the background is split. The alley is on Page 2 while the rest is on Page 1, which is surprising since no parallax effect exists (they are on the same plane). 
 
 This reduces overdraw when the Page 1 cyclist crosses the screen and goes over the other cyclist in the back alley, saving a few CPU cycles.
 
