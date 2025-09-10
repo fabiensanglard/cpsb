@@ -1,7 +1,7 @@
 \chapter{Sound System}
 Making ROMs for the sound system is a little bit more complicated than for the GFX system. 
 
-Not only are samples and music assets processed, there is also a need to compile code to bootstrap and then run the z80. This program is commonly called a "Sound Driver".
+Not only are samples and music assets processed, there is also a need to compile code to bootstrap and then run on the z80. This program is commonly called a "Sound Driver".
 
 \begin{figure}[H]
 \sdraw{1.0}{sound_arch}
@@ -101,7 +101,7 @@ Notice there is no metadata to indicate the bitrate. The "database" entry is a p
 
 
 \section{Processing Music}
-Making music with FM synthesis is an art which this book does not intend to butcher. The best way to go is to ask the musicians in the team to work with whatever tool they wish (the amazing DefleMask is highly recommended) and export their symphonies using VGM file format.
+Making music with FM synthesis is an art which this book does not intend to butcher. The best way to go is to ask the musicians in the team to work with whatever tool they wish (the amazing DefleMask is highly recommended) and export their symphonies using the VGM file format.
 
 VGM (Video Game Music) is a community effort originating from \icode{smspower.org} to create an audio file format able to support many legacy systems (SEGA consoles, MSX, Neo Geo, and PC) as well as arcade hardware.
 
@@ -180,7 +180,7 @@ The calling functions from ASM to C require using \icode{\_} prefixed symbols.
 
 \subsection{z80 interrupt}
 \index{Interrupts!Programming z80}
-In order to interact with the latches properly but also be able to keep track of wall-time, the z80 needs to be interrupted regularly. Zilog's CPU does features a timer RFSH but it is intended for DRAM refresh (which the sound system does not feature anyway).
+In order to interact with the latches properly but also be able to keep track of wall-time, the z80 needs to be interrupted regularly. Zilog's CPU does feature a timer RFSH but it is intended for DRAM refresh (which the sound system does not feature anyway).
 
 Instead the interrupts are triggered by the YM2151, thanks to its two internal timers. Timer A is a 10-bit counter while Timer B is an 8-bit counter. For a YM2151 running at 3,579Hz, the trigger formula is 64 $\times$ (1024 - value) / 3579.
 
@@ -295,7 +295,7 @@ NEC entered the personal computer market in 1979 with its 8800 series. These mac
 
 Thanks to its optional kanji ROM, NEC quickly gained traction. The PC-88 accounted for 40\% of the Japanese personal market by 1981.
 
-By the mid-80s, the aging series was discontinued in favor of machines based on 16-bit Intel CPUs such as the i286. The NEC's next computer, named 9801, was be the first in the 9800 line. These machines were commonly referred to as "PC-98".
+By the mid-80s, the aging series was discontinued in favor of machines based on 16-bit Intel CPUs such as the i286. NEC's next computer, named 9801, would be the first in the 9800 line. These machines were commonly referred to as "PC-98".
 
 \begin{figure}[H]
 
@@ -327,10 +327,10 @@ Japanese market. NEC's PCs were named after what they were, \textbf{P}ersonal \t
 
 
 \subsubsection{C-Bus}
-The PC-98 uses a proprietary 16-bit C-bus instead of the IBM's ISA bus. BIOS, I/O port addressing, memory management and graphics output are also different. This architecture was both a moat that protected NEC from clone manufacturers (which plagued IBM in the USA) and a dungeon that prevented its machine from benefiting from the many peripherals built for IBM PCs.
+The PC-98 uses a proprietary 16-bit C-bus instead of IBM's ISA bus. BIOS, I/O port addressing, memory management and graphics output are also different. This architecture was both a moat that protected NEC from clone manufacturers (which plagued IBM in the USA) and a dungeon that prevented its machine from benefiting from the many peripherals built for IBM PCs.
 
 
-It was an extra effort for manufactures to create C-bus version of their card but companies such as Roland and Creative did release some of their sound cards for PC-98.
+It was extra effort for manufacturers to create C-bus version of their card but companies such as Roland and Creative did release some of their sound cards for PC-98.
 
 \begin{figure}[H]
 
@@ -341,9 +341,9 @@ It was an extra effort for manufactures to create C-bus version of their card bu
 
 
 \subsubsection{Video chip}
-Besides their proprietary bus, PC-98s were noteworthy for their, at the time, powerful graphic system.
+Besides their proprietary bus, PC-98s were noteworthy for their, at the time, powerful graphics system.
 
-The heart of it was the High-Performance Graphics Display Controller 7220, more commonly known as $\upmu$PD7220. The PC-98 used two of them, both running 2.5MHz. One handled the 8 KiB VRAM for text while the other acted as a co-processor managing a 96 KiB VRAM framebuffer.
+The heart of it was the High-Performance Graphics Display Controller 7220, more commonly known as $\upmu$PD7220. The PC-98 used two of them, both running at 2.5MHz. One handled the 8 KiB VRAM for text while the other acted as a co-processor managing a 96 KiB VRAM framebuffer.
 
 The tandem was one of the first GPUs, presenting primitives to draw lines, circles, arcs, and character graphics. In its highest resolution mode the PC-98 reached an impressive 640×400 with 8 colors. It allowed Latin alphabetic, numeric and most importantly katakana characters. An optional ROM board added 3,000 kanji glyphs to the repertory.   
 
