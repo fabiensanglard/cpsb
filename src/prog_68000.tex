@@ -776,11 +776,11 @@ The rain effect is replicated as seen on page \pageref{gg_rain} via the Text lay
 
 Final Fight was released in 1992, three years after the arcade version. Like the Ghouls'n Ghosts port, the game managed to ship on two 5.25-inch 1.2 MiB floppies.
 
-The graphics renderer uses the same trade off used by Ghouls 'n Ghosts where usage of the Tilemap plane is sacrificed in favor of the ability to feed the Sprite layer with tiles. 
+The graphics renderer uses the same trade-off used by Ghouls 'n Ghosts where usage of the Tilemap plane is sacrificed in favor of the ability to feed the Sprite layer with tiles. 
 
 Two bitmap layers are used for background elements while the Text layer is used for GUI elements. All these layers are rendered in software with a draw cost amortized thanks to hardware scrolling.
 
-The port of Final Fight to X68000 is close to the arcade version but is not considered "perfect" because of missing graphics elements and color discrepancies. 
+The Final Fight X68000 port is close to the arcade version but is not considered "perfect" because of missing graphics elements and color discrepancies. 
 
 
 \begin{figure}[H]
@@ -788,7 +788,7 @@ The port of Final Fight to X68000 is close to the arcade version but is not cons
 \caption*{Final Fight on X68000}
 \end{figure}
 
-The number of characters on screen was restricted to 7 which was less than the arcade version where up to 13 were visible. In this case, both the 32 KiB VRAM and the 128 tiles limits were the limiting factor since no multiplexing was possible with free roaming characters.
+The number of characters on screen was capped to 7 whereas the arcade version could have up to 13 visible. In this case, both the 32 KiB VRAM and the 128 tiles limits were the limiting factor since no multiplexing was possible with free roaming characters.
 
 The Sprite sandwich trick (page \pageref{finalfight_trick}), where parts of the staircase appear in front of the Sprite is done with a special blending mode were the MSBs gives precedence over the Sprite layer. This leaves 7bpp for the color indexes and the Background ends up using 128 colors instead of 256. In other levels, this blending mode is not used so the Bitmap layers go back to using 8bpp for a total of 256 colors available.
 
