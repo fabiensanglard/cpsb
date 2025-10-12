@@ -108,7 +108,7 @@ Both the z80 and the m68k have interrupt systems. These are used to solve many p
 
 Since the reader (z80) runs slower than the writer (m68k) it is possible for a latch value to be overwritten (write twice) before it is read. 
 
-Inverting the ratio is done precisely via interrupts. The m68k's IPL1 line is directly connected to the VSYNC line of the video system. Likewise, the z80 INT line is connected to the timer (CT1) line of the YM2151.
+Inverting the ratio is done precisely via interrupts. The m68k's IPL1 line is directly connected to the VSYNC line of the video system. Likewise, the z80 INT line is connected to (IRQ) line of the YM2151 (and trigger via programmable timer).
 
 \begin{figure}[H]
 \nbdraw{interrupt_snd}

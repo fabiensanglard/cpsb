@@ -7,7 +7,7 @@
    enable-background="new 0 0 320 527"
    id="svg130"
    sodipodi:docname="interrupt_snd.svg"
-   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   inkscape:version="1.2.2 (b0a84865, 2022-12-01)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -22,19 +22,21 @@
      inkscape:pagecheckerboard="0"
      showgrid="false"
      inkscape:snap-global="false"
-     inkscape:zoom="0.50060114"
-     inkscape:cx="-94.885921"
-     inkscape:cy="251.69739"
-     inkscape:window-width="1920"
-     inkscape:window-height="1010"
-     inkscape:window-x="-6"
-     inkscape:window-y="-6"
-     inkscape:window-maximized="1"
+     inkscape:zoom="1.435908"
+     inkscape:cx="519.8801"
+     inkscape:cy="221.81087"
+     inkscape:window-width="1375"
+     inkscape:window-height="723"
+     inkscape:window-x="0"
+     inkscape:window-y="34"
+     inkscape:window-maximized="0"
      inkscape:current-layer="svg130"
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
-     fit-margin-bottom="0" />
+     fit-margin-bottom="0"
+     inkscape:showpageshadow="2"
+     inkscape:deskcolor="#d1d1d1" />
   <font
      horiz-adv-x="1000"
      id="font4"
@@ -1343,7 +1345,7 @@
   </g>
   <path
      style="fill:none;stroke:#ff0000;stroke-width:2.8;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#DotM);marker-end:url(#DotM)"
-     d="m 636.20322,216.86908 h -53.3991 V 423.09985 H 1.4 v -131.4111 h 20.2549"
+     d="m 636.20322,79.673662 h -53.3991 l 0,343.426188 H 1.4 v -131.4111 h 20.2549"
      id="path68214"
      sodipodi:nodetypes="cccccc" />
   <text
