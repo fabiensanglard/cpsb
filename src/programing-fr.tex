@@ -1,0 +1,227 @@
+\chapter{Concepts logiciels}
+
+Rien ne vous en apprend plus sur un système que le fait de développer réellement un logiciel pour celui-ci.
+
+Le reste de ce livre décrit un pipeline complet de production de jeu. L'objectif est d'approfondir la compréhension de la plateforme de Capcom, non seulement en écrivant du code et en générant des ressources, mais aussi en apprenant à les traiter afin de produire des ROMs.
+
+Ce chapitre décrit l'architecture générale à un niveau élevé. Il reste volontairement léger sur les détails, lesquels sont abordés dans les chapitres suivants.
+
+Le pipeline que nous allons décrire prend en entrée le code source (\icode{.s}/\icode{.c}) écrit par les programmeurs, les échantillons audio (\icode{.wav}) et les musiques (\icode{.vgm}) fournies par les musiciens, ainsi que les éléments graphiques (\icode{.png}) créés par les artistes. Les sorties sont quatre ensembles de ROMs prêtes à être gravées sur des EPROMs.
+
+\begin{figure}[H]
+\sdraw{1.0}{game_pipeline}
+\caption*{Graphique des dépendances des ROMs du jeu}
+\end{figure}
+
+
+\pagebreak
+Certaines dépendances dans le graphique sont extrêmement simples. Le code source z80 (\icode{.c} et \icode{.s}) n'affecte que la ROM z80. De la même manière, le code m68k (également \icode{.c} et \icode{.s}) se retrouve dans la ROM du 68000.
+
+D'autres dépendances sont plus complexes. Par exemple, les fichiers d'échantillons \icode{.wav} doivent être compressés au format ADPCM avant d'être ajoutés à la ROM OKI. Pour être référencés à l'exécution, chaque échantillon se voit attribuer un identifiant numérique. Ces identifiants doivent être regroupés dans un fichier d'en-tête \icode{.h}, lequel doit être compilé avec le reste du code du 68000.
+
+De même, les fichiers \icode{.png} contenant les graphismes sont convertis en format indexé avant d'être insérés dans la ROM GFX. Ils nécessitent également la génération d'un fichier d'en-tête \icode{.h} (cette fois contenant les identifiants de tuile). En complément, un fichier \icode{.c} contenant la palette de chaque tuile est généré afin d'être compilé dans la ROM du 68000.
+
+Un graphe encore plus complexe émerge des fichiers musicaux \icode{.vgm}. La piste contient des commandes YM2151 qui doivent être transformées en bytecode, stockées dans un fichier \icode{.c}, puis compilées avec le code z80. Pour être référencées, un fichier d'en-tête contenant les identifiants musicaux doit aussi être généré et compilé avec le code du 68000. La musique est également enrichie par des échantillons audio, eux aussi compressés en ADPCM et ajoutés à la ROM OKI.
+
+Pour compliquer encore un peu plus, chacune des quatre ROM mentionnées doit utiliser une taille de mot (\icode{WORD}) différente et un entrelacement spécifique en fonction des puces qui les contiennent.
+
+\section{CCPS : Le système de compilation CPS-1}
+
+Pendant la rédaction de ce livre, plusieurs outils ont été développés pour valider la compréhension du matériel.
+
+Ces outils ont finalement été réunis dans un système de compilation appelé \icode{ccps}. Le reste du livre y fait parfois référence, mais s'efforce de rester à un niveau d'abstraction élevé afin que les lecteurs puissent créer leur propre système de compilation s'ils le souhaitent.
+
+Même si ce n'est que pour savoir quels paramètres obscurs passer au compilateur, il est disponible librement, en open source, et à quelques lignes de commande près. Il accepte également les pull requests :P !
+
+\lstinputlisting[style=BashStyle]{src/code/clone_ccps.sh}
+
+
+\section{Langage de programmation}
+
+Pour tous leurs titres sur CPS-1, les développeurs de Capcom utilisaient l'assembleur z80/m68k. Ils n'avaient pas vraiment le choix, car les langages de haut niveau ne permettaient pas à l'époque un placement précis des variables, et les humains restaient meilleurs pour optimiser les instructions à la main. De plus, l'espace mémoire des ROMs était précieux, et il était essentiel de contrôler avec précision le volume des instructions.
+
+Même avec les améliorations modernes des compilateurs en termes de compacité et d'optimisation du code, un développeur souhaitant repousser les limites de la CPS-1 utilisera sans doute encore l'assembleur.
+
+Cependant, comme l'objectif de ce livre est d'expliquer comment les choses fonctionnent, nous utilisons le langage C pour sa meilleure lisibilité et sa large base de connaissances parmi les programmeurs. Un peu d'assembleur est tout de même utilisé, mais uniquement pour initialiser les processeurs.
+
+\section{Initialisation des processeurs (CPUs Bootstrapping)}
+
+Sans bibliothèques, frameworks, linker dynamique, appels système, mémoire virtuelle, chargeur, ni même système d'exploitation, les jeux tournant sur le CP-System s'exécutent directement sur le matériel brut.
+
+L'initialisation (ou "bootstrap") consiste en des opérations simples comme le réglage du pointeur de pile (stack pointer) et du pointeur d'instruction d'un processeur. Mais cela inclut aussi des tâches plus complexes comme la configuration des interruptions et, surtout, la préparation du programme avant l'appel de sa fonction \icode{main}.
+
+Un programme C anodin de six lignes offre un aperçu de ce que cela implique.
+
+\lstinputlisting[style=CStyle]{src/code/variablesDeclaration.c}
+
+Après compilation et linkage, ce programme produit un blob binaire contenant des instructions brutes (sans conteneur du type ELF ou PE), nommé \icode{prog.rom}. Une fois gravé sur une ROM, il est mappé quelque part dans l'espace mémoire du CPU, selon la configuration d'adressage définie pour le z80 et le m68k.
+
+Lors de l'étape de linkage, toutes les variables et fonctions se voient attribuer une adresse, soit en ROM, soit en RAM.
+
+\begin{figure}[H]
+\nbdraw{prog_rom_mapping}
+\caption*{Espace mémoire CPU : ROM et RAM}
+\end{figure}
+
+\subsubsection{Lecture seule (Read-only)}
+
+Les instructions de la fonction \icode{f} vont dans la section \icode{.text}, à l'offset 0. Puisque le linker connaît à la fois l'emplacement où la ROM sera mappée et l'offset de cette section dans la ROM, il peut insérer en dur les appels vers \icode{.text + 0}. Cela correspond à l'adresse \icode{0x0000} pour le z80 comme pour le m68k.
+
+Les constantes \icode{c} et \icode{d} sont en lecture seule et vont donc elles aussi en ROM. Elles sont regroupées dans la section \icode{.rodata}, distincte de \icode{.text}. L'accès à ces symboles est codé en dur via les adresses \icode{.rodata + 0} et \icode{.rodata + 1} respectivement.
+
+\subsubsection{Lecture/écriture (Read-Write)}
+
+Le symbole \icode{a} est intéressant car il est à la fois lisible et modifiable. Le linker lui attribuera une adresse en RAM (à partir de \icode{0xD000} pour le z80 et \icode{0xFF0000} pour le m68k). Comme il n'est pas initialisé, il pointera vers une valeur aléatoire présente en RAM au démarrage.
+
+Tout comme \icode{a}, la variable \icode{b} est lisible et modifiable, mais elle est initialisée à zéro. Le linker peut faire pointer \icode{b} vers la RAM et regrouper toutes les variables initialisées à zéro dans la section \icode{.bss}, mais il ne peut pas y écrire la valeur zéro. Cette tâche devra être gérée par le code d'initialisation (bootstrap).
+
+Enfin, la variable \icode{e} est également modifiable. Le linker lui assigne la prochaine adresse disponible après \icode{a}. Mais comment initialiser cette adresse à la valeur \icode{5}, sachant qu'elle est en RAM et que le fichier \icode{prog.rom} ne couvre pas cette zone ?
+
+La réponse est : il ne le peut pas. Cette tâche, appelée "copy-down", doit être assurée par le bootstrap.
+
+Comme elles nécessitent des opérations bas niveau, les routines d'initialisation pour le z80 et le m68k sont écrites en assembleur et regroupées dans un fichier nommé \icode{crt0.s}.
+
+
+
+
+
+\section{Communication entre systèmes}
+
+De nombreuses puces de la machine doivent communiquer entre elles. Dans la hiérarchie étudiée au premier chapitre, chaque ligne représente une interface.
+
+\nbdraw{apis}
+
+On compte au total huit lignes de communication, mais celles représentées en pointillés dans le schéma ne sont pas programmables, ce qui réduit la tâche à la compréhension de cinq API.
+
+\subsection{m68k \begin{CJK}{UTF8}{min}→\end{CJK} CPS-A et m68k \begin{CJK}{UTF8}{min}→\end{CJK} CPS-B}  
+La communication s'effectue via les registres du CPS-A et du CPS-B. Les commandes de dessin supplémentaires sont écrites par le 68000 dans la GFXRAM, où elles sont lues par le CPS-A. Tous les accès à la GFXRAM sont arbités par le protocole de bus du m68k.
+
+\subsection{z80 \begin{CJK}{UTF8}{min}→\end{CJK} YM2151}  
+La communication passe par les registres du YM2151, mappés sur le bus du z80. Cet accès est régulé par le protocole de bus du z80.
+
+\subsection{z80 \begin{CJK}{UTF8}{min}→\end{CJK} MSM6295}  
+La communication s'effectue via les registres du MSM6295, également mappés sur le bus du z80. Ce bus en gère aussi l'arbitrage.
+
+\subsection{m68k \begin{CJK}{UTF8}{min}→\end{CJK} z80}  
+La communication entre ces deux processeurs n'est pas triviale. Ils ont chacun leur propre protocole de bus, tournent à des vitesses différentes, utilisent des espaces d'adressage et des tailles de données distincts.
+
+Essayez d'imaginer un design sous les contraintes suivantes : deux registres latch de 1 octet chacun. D'un côté, un m68k tournant à 10 MHz peut écrire dedans mais pas lire. De l'autre côté, un z80 tournant à 3,579 MHz peut lire mais pas écrire.
+
+Comment permettre à ces deux processeurs de se parler de manière fiable, sans doublons ni pertes dans le flux de commandes ?
+
+\subsection{Interruptions}
+\index{Interruptions!z80}
+\index{Interruptions!68000}
+
+Le z80 et le m68k disposent tous deux de systèmes d'interruption. Ils sont utilisés pour résoudre divers problèmes, en particulier celui de la communication via les registres latch.
+
+Comme le lecteur (z80) fonctionne plus lentement que l'écrivain (m68k), il est possible qu'une valeur de latch soit écrasée (écrite deux fois) avant d'être lue.
+
+L'inversion de ce ratio est précisément ce que permettent les interruptions. La ligne IPL1 du m68k est directement reliée à la ligne VSYNC du système vidéo. De même, la ligne INT du z80 est reliée à la ligne de minuterie (CT1) du YM2151.
+
+\begin{figure}[H]
+\nbdraw{interrupt_snd}
+\caption*{Système d'interruption du z80}
+\end{figure}
+
+Cette configuration permet à l'écrivain de s'activer toutes les 16 ms, tandis que le lecteur est déclenché toutes les 4 ms. Cela garantit qu'aucune valeur ne soit perdue dans le latch, mais introduit un autre problème : celui des lectures en double.
+
+Pour éviter cela, le z80 s'engage à ignorer le contenu du latch s'il est identique à la dernière valeur lue.
+
+\begin{figure}[H]
+\nbdraw{interrupt_ctrl}
+\caption*{Système d'interruption du m68k}
+\end{figure}
+
+Cela pose un dernier problème : le m68k ne peut pas envoyer deux fois de suite le même octet. Pour contourner cela, l'écrivain s'engage à ne jamais écrire deux fois le même octet consécutivement. Cela est réalisé en écrivant un octet neutre (\icode{0xFF}) après chaque octet utile.
+
+
+
+
+\subsection{À l'époque}
+\index{À l'époque ! Général}
+
+Le système et les conventions que nous venons de décrire permettent un échange de données fiable, mais ils ne donnent pas de signification aux valeurs placées dans les registres latch.
+
+Un développeur est libre d'attribuer la signification qu'il souhaite à ces octets, puisqu'il contrôle à la fois l'émetteur (m68k) et le récepteur (z80). Tu peux même prendre un moment pour réfléchir à la manière dont tu concevrais cette interface, avant de découvrir comment Capcom l'a fait.
+
+Dans un jeu comme *Street Fighter II*, les développeurs ont choisi de ne pas donner de signification "immédiate" à chaque valeur. La communication se fait sous forme d'un flux d'octets, qui doit être reconstruit côté récepteur avant d'être interprété.
+
+Lorsqu'il est interrompu, le z80 lit l'octet dans le premier latch et l'ajoute dans un tampon circulaire. L'interprétation est faite dans le thread principal. Une valeur d'octet \icode{FE} signifie que l'octet suivant est un identifiant musical qui doit déclencher une lecture.
+
+Sinon, la valeur est interprétée comme un identifiant d'effet sonore à jouer immédiatement via l'OKI. Ce système sacrifie une valeur d'octet pour la gestion du protocole, et autorise jusqu'à 256 identifiants musicaux et 254 effets sonores.
+
+\begin{figure}[H]
+\nbdraw{latches_interface}
+\caption*{Modèle de communication de Street Fighter. Encodage du flux avec \icode{0xFF}}
+\end{figure}
+
+Notez que l'encodeur, côté m68k, insère des octets neutres \icode{0xFF} après chaque écriture dans le latch, et que le décodeur les ignore.
+
+Qu'en est-il de l'autre latch ? *Street Fighter II* n'utilise que le premier. Le second reste inutilisé.
+
+
+\subsubsection{Aucun pilote audio ne peut régner sur tous les jeux}
+
+Au vu des capacités du système de communication décrit précédemment, on pourrait supposer que tous les jeux Capcom l'utilisent. Ce serait une erreur.
+
+Le "pilote audio" a continué d'évoluer, changeant parfois radicalement même entre deux jeux réalisés consécutivement par la même équipe.
+
+Dans *Final Fight*, un identifiant sonore reçu est directement transmis à l'OKI pour lecture. Dans *Street Fighter II*, une table de correspondance est utilisée. L'identifiant reçu sert d'index dans un tableau contenant l'identifiant OKI réel, ainsi que le canal et le volume à utiliser.
+
+L'intérêt d'une table de correspondance peut s'expliquer par la taille des équipes chez Capcom, et l'impossibilité à l'époque de procéder à une "compilation complète" facilement.
+
+Si l'équipe son devait modifier l'organisation des données OKI, tous les identifiants utilisés côté m68k devenaient invalides. Avec une table de correspondance, l'équipe audio pouvait effectuer tous les changements souhaités, tout en conservant la compatibilité des identifiants son et musique utilisés par les autres équipes.
+
+
+\subsection{Notre pilote audio}
+
+Le pilote audio décrit dans les pages suivantes repose sur la même architecture que celui de Capcom. Il s'appuie sur les interruptions des deux côtés. En plus de gérer la communication via les registres latch, ces interruptions permettent aussi de maintenir un compteur servant à rythmer les threads principaux.
+
+\nbdraw{latches_uml}
+
+Cependant, le protocole de communication n'est pas basé sur un flux. Bien qu'un protocole en flux soit plus puissant, il est aussi bien plus complexe. Pour simplifier, chaque octet est immédiatement interprété, sans avoir besoin de reconstruire une séquence complète.
+
+L'espace des octets est divisé en deux : si le bit de poids fort (MSB) est à 1 (\icode{0x80}), il s'agit d'une requête pour jouer un effet sonore. Si le MSB est à 0 (\icode{0x00}), il s'agit d'une requête de lecture musicale.
+
+Cela laisse "seulement" 126 valeurs pour les effets sonores et 127 pour les musiques, ce qui est amplement suffisant pour l'usage visé. Le volume est codé en dur, et une rotation en alternance (round-robin) est utilisée pour choisir entre les canaux 1 ou 2 pour chaque lecture.
+
+
+\section{Suivi du temps réel (Wall-time)}
+
+Le "temps réel" correspond au temps tel qu'il est perçu par les joueurs. Les deux processeurs doivent être capables de le mesurer. Le m68k en a besoin pour échantillonner les entrées et faire tourner le moteur du jeu à la vitesse prévue. Le z80 est soumis à la même contrainte pour la musique, afin de gérer les pauses et la durée des notes.
+
+Les systèmes modernes utilisent des puces d'horloge temps réel (RTC) pour cela, mais le CP-System n'en possède pas.
+
+La solution consiste à exploiter les compteurs qui sont incrémentés à chaque interruption du thread principal. Selon le processeur, ces accumulateurs auront une granularité différente :
+
+- Le m68k mesure le temps par tranches de 16 ms.
+- Le z80, quant à lui, le mesure en tranches de 4 ms.
+
+\section{Aléatoire}
+
+Des séries pseudo-aléatoires peuvent être générées à l'aide de LFSR (registre à décalage à rétroaction linéaire) de longueur maximale.  
+Sur le m68k, un registre de 32 bits permet d'obtenir 4 194 304 valeurs différentes avant de se répéter.  
+Sur le z80, un registre de 8 bits ne produira que 256 valeurs distinctes.
+
+La seule difficulté consiste à choisir une "graine" (seed) pour initialiser le registre.
+
+*Street Fighter II* utilise le compteur de frames comme graine, tandis que d'autres titres lisent le contenu d'un registre CPU pendant l'initialisation.
+
+Cette dernière méthode fonctionne mal avec les émulateurs (qui initialisent souvent les registres à zéro) et doit donc être évitée.
+
+\section{Système de bancs mémoire (Banking System)}
+\label{memory_bank_programming}
+
+Cette section ne concerne que le z80, qui utilise un système de bancs notoirement contraignant.  
+La contrainte principale est de s'assurer que la fenêtre mémoire mappée à l'adresse \icode{[0xB000–0xBFFF]} pointe vers la bonne portion de la ROM.
+
+Cela est contrôlé via le registre de commutation de bancs (Bank Switch), mappé à l'adresse \icode{0xF004}. La valeur écrite dans ce registre est multipliée par \icode{0x4000}, ce qui donne l'offset de départ (dans l'espace ROM) de la fenêtre mobile.
+
+Par exemple :
+- Écrire \icode{0} fait en sorte que \icode{0xB000} dans l'espace z80 corresponde à \icode{0x0000} dans l'espace ROM,
+- Écrire \icode{0x0001} mappe \icode{0xB000} vers \icode{0x4000} en ROM,
+- Écrire \icode{0x0002} mappe \icode{0xB000} vers \icode{0x8000} en ROM, etc.
+
+Cet ajustement doit impérativement être effectué **avant** tout accès à une adresse située dans l'intervalle mémoire concerné par le système de bancs.
+

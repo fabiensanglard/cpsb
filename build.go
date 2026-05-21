@@ -12,9 +12,13 @@ import "image/jpeg"
 import "image/png"
 import "image"
 import "path"
+import "regexp"
 
 var inkscapeBin = "inkscape"
 var force = false
+var mode = ""
+var out = ""
+var lang = "en" // in english by default
 
 func isOlder(src string, than string) bool {
 	if force {
@@ -187,9 +191,6 @@ func makeCover(src string, dst string) {
 	}
 }
 
-var mode = "release"
-var out = ""
-
 func cwd() string {
 	cwd, err := os.Getwd()
 	if err != nil {
@@ -216,30 +217,103 @@ func checkExecutable(bin string) {
 	fmt.Println(fmt.Sprintf("Found '%s' -> '%s'", bin, path))
 }
 
-func getMode() string {
-  var args = os.Args
-  if len(args) > 1 {
-		return args[1]
-  }
-  return mode
+// parse argument (debug|release|print -f fr|en)
+func parseArgs() {
+	var args = os.Args
+	for _, arg := range args {
+		if arg == "-f" {
+			force = true
+			continue
+		}
+
+		// lang = fr
+		if arg == "fr" {
+			lang = "fr"
+			continue
+		}
+
+		// lang = en (default)
+		if arg == "en" {
+			lang = "en"
+			continue
+		}
+
+		if arg == "debug" {
+			mode = "debug"
+			continue
+		}
+
+		if arg == "print" {
+			mode = "print"
+			continue
+		}
+
+		if arg == "release" {
+			mode = "release"
+			continue
+		}
+	}
+
+	if mode == "" {
+		fmt.Println("Mode must be either 'debug', 'release' or 'print'.")
+		os.Exit(1)
+	}
+}
+
+// hack book.tex to insert correct translation (if the file exists)
+func insertLanguageIntoBookTex() string {
+
+	// open book.tex
+	input, err := ioutil.ReadFile("src/book.tex")
+	if err != nil {
+		fmt.Println("Could not open src/book.tex file",err)
+		os.Exit(2)
+	}
+
+	// hack the \subfile if translation exists
+	lines := strings.Split(string(input), "\n")
+	langSufix := "-"+lang
+	if lang == "en" { // no sufix in filename for english
+		langSufix = ""
+	}
+	latexSubfileExpression := regexp.MustCompile(`\\subfile\{src\/([^-]+)(-.*)?\}`)
+	for i,_ := range lines {
+		if matches := latexSubfileExpression.FindStringSubmatch(lines[i]) ; matches != nil { // find subfile
+			if matches[2] == langSufix { // same language, no need to translate
+				continue
+			}
+
+			if fileExists,_ := os.Stat("src/"+matches[1]+langSufix+".tex") ; fileExists != nil { // translation file exists
+				fmt.Println("Replace subfile",matches[1]+matches[2],"with",matches[1]+langSufix)
+				lines[i] = "\\subfile{src/"+matches[1]+langSufix+"}"
+			}
+		}
+	}
+
+	// save the "hacked" book.tex
+	output := strings.Join(lines, "\n")
+	err = ioutil.WriteFile("src/book.tex", []byte(output), 0644)
+	if err != nil {
+		fmt.Println("Could not save src/book.tex file",err)
+		os.Exit(3)
+	}
+
+	return langSufix
 }
 
 func main() {
-	mode = getMode()
-	fmt.Println("Building in", mode, "mode...")
-
+	
 	checkExecutable(inkscapeBin)
-	
-	
-  var args = os.Args
-	if len(args) > 2 {
-		force = true
+	parseArgs()
+
+	if lang == "en" {
+		fmt.Println("Building in english in", mode, "mode...")
+	} else if lang == "fr" {
+		fmt.Println("Construction du livre en français en mode", mode, "...")
 	}
 
-	if mode != "debug" && mode != "release" && mode != "print" {
-		fmt.Println("Mode must be either 'debug' or 'release' or 'print'.")
-		return
-	}
+	langSufix := insertLanguageIntoBookTex()
+	//fmt.Printf("langSufix="+langSufix)
 
 	compileOptions := ""
 	if mode == "print" {
@@ -251,8 +325,8 @@ func main() {
 	out = outputDirName + "/" + mode
 	os.MkdirAll(out, os.ModePerm)
 
-	makeCover("src/cover/pdf/cover_front.svg", out+"/illu/cover_front.pdf")
-	makeCover("src/cover/pdf/cover_back.svg", out+"/illu/cover_back.pdf")
+	makeCover("src/cover/pdf/cover_front"+langSufix+".svg", out+"/illu/cover_front.pdf")
+	makeCover("src/cover/pdf/cover_back"+langSufix+".svg", out+"/illu/cover_back.pdf")
 
 	prepare("illu/img/", prepareImg)
 	prepare("illu/d/", prepareDrawing)
@@ -262,7 +336,7 @@ func main() {
 	arg1 := outputDirName
 	arg2 := `\def\base{` + out + `} ` + compileOptions + ` \input{src/book.tex}`
 	
-        var err error
+    var err error
 	var out []byte
 	draftMode := "-draftmode"
 
@@ -280,11 +354,10 @@ func main() {
 
 	if err != nil {
 		fmt.Println("%s %s", string(out), err)
-        }
+    }
 
-  // Rename
-  var src = outputDirName + "/book.pdf"
-  var dst =  outputDirName + "/" + currentDir() + "_" + getMode() + ".pdf"
+	// Rename
+	var src = outputDirName + "/book.pdf"
+	var dst =  outputDirName + "/" + currentDir() + "_" + mode + langSufix + ".pdf"
 	os.Rename(src, dst)
-
 }

@@ -23,7 +23,11 @@ sudo apt install -y texlive-full
 
 - Build
 ```
+# for english
 ./make.sh release
+
+# or for french translation
+./make.sh release fr
 ```
 
 Note: Make sure Inkscape version is at least v1.0.0 or SVG -> PNG conversion will fail.
@@ -58,6 +62,9 @@ Debug is the default mode.
 
 ```
 ./make.sh debug
+
+# or for french translation
+./make.sh debug fr
 ```
 
 ### Force asset regeneration
